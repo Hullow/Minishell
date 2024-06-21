@@ -21,3 +21,5 @@
 
 # Next meeting
 21/6/24 – 11am (Discord)
+## Items to discuss
+- Documentation, research
