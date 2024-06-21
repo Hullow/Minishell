@@ -6,4 +6,4 @@ Conférences 42sh 2019 (n.b.: Epitech) - Architecture d'un shell ([YouTube](http
 - Syntax abstraite vs concrète, arbre de parsing
 - 
 
-EnthusiastiCon - Stefanie Schirmer “OMG building a shell in 10 minutes” ([YouTube]https://www.youtube.com/watch?v=k6TTj4C0LF0)
+EnthusiastiCon - Stefanie Schirmer “OMG building a shell in 10 minutes” ([YouTube](https://www.youtube.com/watch?v=oIFRiwFRSRY&t=745s](https://www.youtube.com/watch?v=k6TTj4C0LF0))
