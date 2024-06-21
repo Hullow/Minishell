@@ -1,189 +1,191 @@
-Command Line and History Functions:
+# System Functions Documentation
 
-    readline:
-        Reads a line from standard input with line editing and auto-completion.
-        Commonly used in command interpreters.
+## Command Line and History Functions:
 
-    rl_clear_history:
-        Clears the saved command history.
+- **readline**:
+    - Reads a line from standard input with line editing and auto-completion.
+    - Commonly used in command interpreters.
 
-    rl_on_new_line:
-        Informs the system that the user is on a new line.
+- **rl_clear_history**:
+    - Clears the saved command history.
 
-    rl_replace_line:
-        Replaces the current line with a new line.
+- **rl_on_new_line**:
+    - Informs the system that the user is on a new line.
 
-    rl_redisplay:
-        Redisplays the current line.
+- **rl_replace_line**:
+    - Replaces the current line with a new line.
 
-    add_history:
-        Adds a command to the command history.
+- **rl_redisplay**:
+    - Redisplays the current line.
 
-Memory Management Functions:
+- **add_history**:
+    - Adds a command to the command history.
 
-    printf:
-        Prints formatted data to standard output.
+## Memory Management Functions:
 
-    malloc:
-        Allocates dynamic memory.
+- **printf**:
+    - Prints formatted data to standard output.
 
-    free:
-        Frees memory previously allocated by malloc.
+- **malloc**:
+    - Allocates dynamic memory.
 
-Basic I/O Functions:
+- **free**:
+    - Frees memory previously allocated by malloc.
 
-    write:
-        Writes data to a file or file descriptor.
+## Basic I/O Functions:
 
-    access:
-        Checks the existence and permissions of a file.
+- **write**:
+    - Writes data to a file or file descriptor.
 
-    open:
-        Opens a file and returns a file descriptor.
+- **access**:
+    - Checks the existence and permissions of a file.
 
-    read:
-        Reads data from a file or file descriptor.
+- **open**:
+    - Opens a file and returns a file descriptor.
 
-    close:
-        Closes a file descriptor.
+- **read**:
+    - Reads data from a file or file descriptor.
 
-Process Management Functions:
+- **close**:
+    - Closes a file descriptor.
 
-    fork:
-        Creates a new process by duplicating the calling process.
+## Process Management Functions:
 
-    wait:
-        Waits for a child process to terminate.
+- **fork**:
+    - Creates a new process by duplicating the calling process.
 
-    waitpid:
-        Waits for a specific child process to terminate.
+- **wait**:
+    - Waits for a child process to terminate.
 
-    wait3:
-        Waits for a child process to terminate and provides resource usage information.
+- **waitpid**:
+    - Waits for a specific child process to terminate.
 
-    wait4:
-        Waits for a specific child process to terminate and provides resource usage information.
+- **wait3**:
+    - Waits for a child process to terminate and provides resource usage information.
 
-Signal Management Functions:
+- **wait4**:
+    - Waits for a specific child process to terminate and provides resource usage information.
 
-    signal:
-        Sets a handler for a signal.
+## Signal Management Functions:
 
-    sigaction:
-        Changes the action taken by a process on receipt of a signal.
+- **signal**:
+    - Sets a handler for a signal.
 
-    sigemptyset:
-        Initializes a signal set to empty.
+- **sigaction**:
+    - Changes the action taken by a process on receipt of a signal.
 
-    sigaddset:
-        Adds a signal to a signal set.
+- **sigemptyset**:
+    - Initializes a signal set to empty.
 
-    kill:
-        Sends a signal to a process or group of processes.
+- **sigaddset**:
+    - Adds a signal to a signal set.
 
-Process Termination Functions:
+- **kill**:
+    - Sends a signal to a process or group of processes.
 
-    exit:
-        Terminates the current process with a given status.
+## Process Termination Functions:
 
-Directory and File Management Functions:
+- **exit**:
+    - Terminates the current process with a given status.
 
-    getcwd:
-        Gets the current working directory.
+## Directory and File Management Functions:
 
-    chdir:
-        Changes the current working directory.
+- **getcwd**:
+    - Gets the current working directory.
 
-    stat:
-        Retrieves information about a file.
+- **chdir**:
+    - Changes the current working directory.
 
-    lstat:
-        Like stat, but does not follow symbolic links.
+- **stat**:
+    - Retrieves information about a file.
 
-    fstat:
-        Retrieves information about an open file.
+- **lstat**:
+    - Like stat, but does not follow symbolic links.
 
-    unlink:
-        Deletes a file.
+- **fstat**:
+    - Retrieves information about an open file.
 
-    execve:
-        Replaces the current process image with a new program.
+- **unlink**:
+    - Deletes a file.
 
-File Descriptor Management Functions:
+- **execve**:
+    - Replaces the current process image with a new program.
 
-    dup:
-        Duplicates a file descriptor.
+## File Descriptor Management Functions:
 
-    dup2:
-        Duplicates a file descriptor to a given descriptor.
+- **dup**:
+    - Duplicates a file descriptor.
 
-    pipe:
-        Creates a pipe for inter-process communication.
+- **dup2**:
+    - Duplicates a file descriptor to a given descriptor.
 
-Directory Management Functions:
+- **pipe**:
+    - Creates a pipe for inter-process communication.
 
-    opendir:
-        Opens a directory for reading.
+## Directory Management Functions:
 
-    readdir:
-        Reads an entry from an open directory.
+- **opendir**:
+    - Opens a directory for reading.
 
-    closedir:
-        Closes an open directory.
+- **readdir**:
+    - Reads an entry from an open directory.
 
-Error Display Functions:
+- **closedir**:
+    - Closes an open directory.
 
-    strerror:
-        Returns a string describing an error.
+## Error Display Functions:
 
-    perror:
-        Prints an error message to standard error.
+- **strerror**:
+    - Returns a string describing an error.
 
-Terminal Management Functions:
+- **perror**:
+    - Prints an error message to standard error.
 
-    isatty:
-        Checks if a file descriptor is associated with a terminal.
+## Terminal Management Functions:
 
-    ttyname:
-        Returns the name of the terminal associated with a file descriptor.
+- **isatty**:
+    - Checks if a file descriptor is associated with a terminal.
 
-    ttyslot:
-        Returns the slot number of the terminal for the current terminal.
+- **ttyname**:
+    - Returns the name of the terminal associated with a file descriptor.
 
-    ioctl:
-        Controls device parameters (often used for terminals).
+- **ttyslot**:
+    - Returns the slot number of the terminal for the current terminal.
 
-Environment Variable Functions:
+- **ioctl**:
+    - Controls device parameters (often used for terminals).
 
-    getenv:
-        Gets the value of an environment variable.
+## Environment Variable Functions:
 
-Terminal Attribute Functions:
+- **getenv**:
+    - Gets the value of an environment variable.
 
-    tcsetattr:
-        Sets terminal attributes.
+## Terminal Attribute Functions:
 
-    tcgetattr:
-        Gets terminal attributes.
+- **tcsetattr**:
+    - Sets terminal attributes.
 
-Terminal Capability (termcap) Functions:
+- **tcgetattr**:
+    - Gets terminal attributes.
 
-    tgetent:
-        Loads the terminal capabilities database.
+## Terminal Capability (termcap) Functions:
 
-    tgetflag:
-        Gets the value of a terminal capability flag.
+- **tgetent**:
+    - Loads the terminal capabilities database.
 
-    tgetnum:
-        Gets the numeric value of a terminal capability.
+- **tgetflag**:
+    - Gets the value of a terminal capability flag.
 
-    tgetstr:
-        Gets a string value of a terminal capability.
+- **tgetnum**:
+    - Gets the numeric value of a terminal capability.
 
-    tgoto:
-        Generates a cursor movement control sequence.
+- **tgetstr**:
+    - Gets a string value of a terminal capability.
 
-    tputs:
-        Outputs a terminal control string with delays.
+- **tgoto**:
+    - Generates a cursor movement control sequence.
+
+- **tputs**:
+    - Outputs a terminal control string with delays.
 
 These functions cover a wide range of system operations commonly used in C programming under Unix/Linux.
