@@ -19,7 +19,12 @@
 - Branching: make branches as often as possible and as many as necessary
 	=> easier to cut things up, helps to isolate code
 
-# Next meeting
+# Call 21-6-24
 21/6/24 – 11am (Discord)
 ## Items to discuss
 - Documentation, research
+
+# Next meeting: 26/6/24 (hour to determine early next week)
+- Watch videos
+- Re-read subject
+- Start making visual schemas of projects
