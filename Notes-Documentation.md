@@ -12,3 +12,5 @@ EnthusiastiCon - Stefanie Schirmer “OMG building a shell in 10 minutes” [You
 - Documentation is useful, has schemas etc. (according to tfrily) : https://git.savannah.gnu.org/cgit/bash.git/tree/doc/README
 
 [Shell builtin Wikipedia](https://en.wikipedia.org/wiki/Shell_builtin)
+
+[Minishell Structure - Toni Schmitt - Github](https://github.com/toni-schmitt/minishell#lexer)
