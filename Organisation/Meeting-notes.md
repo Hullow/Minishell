@@ -27,4 +27,19 @@
 # Next meeting: 26/6/24 (hour to determine early next week)
 - Watch videos
 - Re-read subject
-- Start making visual schemas of projects
+- Start making visual schemas of project
+
+
+- Cmegret: thinks the execution block will not change much
+
+
+- To do:
+	- Re-read subject and make list of tasks + requirements, dependencies on Github	
+		=> make individual lists (on own Github branch) and then discuss over call, confront them => synthesize
+	- Code examples of each function
+	- Start making visual schemas of project
+	- Planning
+
+- To do after:
+	- Make most basic shell that executes basic commands
+- 
