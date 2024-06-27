@@ -20,7 +20,8 @@ pas faire un arbre de parsing complet avant de coder => plutôt, partir du truc 
 Notions to explore:
 - Abstract Syntax tree
 - Here-docs
-- 
+- [Process image](https://www.tutorialspoint.com/inter_process_communication/inter_process_communication_process_image.htm)
+- Job control ?
 
 EnthusiastiCon - Stefanie Schirmer “OMG building a shell in 10 minutes” [YouTube](https://www.youtube.com/watch?v=k6TTj4C0LF0)
 - Privileged space to interact with the kernel
@@ -29,15 +30,44 @@ EnthusiastiCon - Stefanie Schirmer “OMG building a shell in 10 minutes” [You
 	- Parse user input
 	- Run builtin commands for job control
 	- Run other system commands and show their output
+- Execvp replaces the current process with a new process image
 
+## Concepts
+### Shell builtin 
+`man builtin`: 
+> Shell builtin commands are commands that can be executed within the running shell's process.
+> If a command specified to the shell contains a slash ‘/’, the shell will not execute a builtin command, even if the last component of the specified command matches the name of a builtin command.  Thus, while specifying “echo” causes a builtin command to be executed under shells that support the echo builtin command, specifying “/bin/echo” or “./echo” does not.
+> Consult a shell's manual page for details on the operation of its builtin commands.
+=> `man bash` > search "SHELL BUILTIN COMMANDS"
+
+=> Note: not clear what to do with builtins (copy them from bash? use builtins from the computer ?)
+
+[Shell builtin – Wikipedia](https://en.wikipedia.org/wiki/Shell_builtin)
+
+### Here documents
+[Here documents - TLDP](https://tldp.org/LDP/abs/html/here-docs.html)
+[Heredocs - a deep dive](https://medium.com/@oduwoledare/heredoc-a-deep-dive-23c82992e522)
+
+### EOF
+[EOF characters – Wikipedia](https://en.wikipedia.org/wiki/End-of-file#EOF_character)
+[EOF – Baeldung](https://www.baeldung.com/linux/eof)
+
+## Minishell projects
+[Minishell Structure - Toni Schmitt - Github](https://github.com/toni-schmitt/minishell#lexer)
+
+[Conférences 42SH Redirection et Pipe  - 2019](https://www.youtube.com/watch?v=ceNaZzEoUhk)
+
+## Shells
+[ksh source code](https://github.com/openbsd/src/blob/master/bin/ksh/exec.c)
 
 [Bash git repository](https://git.savannah.gnu.org/cgit/bash.git)
 - Documentation is useful, has schemas etc. (according to tfrily) : https://git.savannah.gnu.org/cgit/bash.git/tree/doc/README
 
-[Shell builtin Wikipedia](https://en.wikipedia.org/wiki/Shell_builtin)
-
-[Minishell Structure - Toni Schmitt - Github](https://github.com/toni-schmitt/minishell#lexer)
+## Git & Github
+- [https://www.youtube.com/live/N4GAmMHnd20?si=KNtmaPRX4fybOGDc](Git avancé (50min))
+- [Git bisect plugin](https://artspb.me/posts/getting-started-with-git-bisect-run-plugin/)
+- [Conventional commits](https://www.conventionalcommits.org/en/v1.0.0/)
 
 ## Other
-- [https://www.youtube.com/live/N4GAmMHnd20?si=KNtmaPRX4fybOGDc](Git avancé (50min))
+- [Pipex with bonus (heredocs)](https://github.com/madebypixel02/pipex?tab=readme-ov-file#here-document)
 - [ExplainShell.com](https://explainshell.com/) (decomposes and explains shell commands)

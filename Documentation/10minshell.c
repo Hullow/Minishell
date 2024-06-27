@@ -6,11 +6,12 @@
 /*   By: francis <francis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/27 10:57:03 by francis           #+#    #+#             */
-/*   Updated: 2024/06/27 13:15:46 by francis          ###   ########.fr       */
+/*   Updated: 2024/06/27 17:32:41 by francis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 // From YouTube tutorial [EnthusiastiCon - Stefanie Schirmer “OMG building a shell in 10 minutes”](https://www.youtube.com/watch?v=k6TTj4C0LF0)
+// Nb: incomplete, missing functions => doesn't run
 
 #include <stdio.h> // printf
 #include <string.h> // strlen
@@ -29,6 +30,29 @@ struct command {
 	enum builtin_t {		// is argv[0] a builtin command ?
 		NONE, QUIT, JOBS, BG, FG } builtin;
 };
+
+void runSystemCommand(struct command *cmd, int bg);
+int parse(const char *cmdline, struct command *cmd);
+void eval(char *cmdline);
+
+void runSystemCommand(struct command *cmd, int bg) {
+	pid_t childPid;
+	if ((childPid = fork()) < 0)
+		error("fork() error");
+	else if (childPid == 0) { // I'm the child and could run a command
+		// EXECVP !!!
+		if (execvp(cmd->argv[0], cmd->argv) < 0) {
+			printf("%s: Command not found\n", cmd->argv[0]);
+			exit(0);
+		}
+	}
+	else { // I'm the parent. Shell continues here.
+		if (bg)
+			printf("Child in background [%d]\n", childPid);
+		else
+			wait(&childPid);
+	}
+}
 
 int parse(const char *cmdline, struct command *cmd) {
 	static char array[MAXLINE];			// local copy of command line
@@ -95,9 +119,14 @@ void eval(char *cmdline) {
 
 	// -1 means parse error
 	if (bg == -1) return;
+	// empty line - ignore
+	if (cmd.argv[0] == NULL) return;
+
+	if (cmd.builtin == NONE)
+		runSystemCommand(&cmd, bg);
+	else
+		runBuiltinCommand(&cmd, bg);
 }
-
-
 
 int main(int argc, char **argv)
 {
@@ -122,3 +151,15 @@ int main(int argc, char **argv)
 		eval(cmdline);
 	}
 }
+
+/* 
+int main(int argc, char const **argv)
+{
+	printf("Hi there\n");
+
+	// executing an ls command
+	char *argv2[] = {"ls", "-la", NULL};
+	execvp(argv2[0], argv2);
+
+	printf(".. and done!");
+} */
