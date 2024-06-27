@@ -5,7 +5,7 @@ Conférences 42sh 2019 (n.b.: Epitech) - Architecture d'un shell ([YouTube](http
 - Toujours avoir quelque chose de fonctionnel à montrer (vs "dans 2 semaines on aura qqch")
 - Ne pas faire en bloc: parsing, ensuite expanding, ensuite execution; plutôt faire parsing basique de commandes, puis rajouter de la complexité. Par exemple, être capable de parser et exécuter une seule commande, puis rajouter des if, etc.
 - Syntax abstraite vs concrète, arbre de parsing:
-pas faire un arbre de parsing complet avant de coder => plutôt, partir du truc "inratable" => parser des commandes simples et faire `fork exec` 
+pas faire un arbre de parsing complet avant de coder => plutôt, partir du truc "inratable" => parser des commandes simples et faire `fork exec`
 - Tester les choses séparément, au fur et à mesure
 - Subshell: attention à l'historique
 - Ce qui est compliqué c'est pas d'exécuter une commande, mais les variables et les substitutions
@@ -17,13 +17,18 @@ pas faire un arbre de parsing complet avant de coder => plutôt, partir du truc 
 => à chaque fois, quand on rajoute une feature, faire un test qui va avec; ça doit devenir un réflexe: "je veux que tel script marche, j'écris mon script, j'écris le shell" Permet de voir en continu si on a cassé quelque chose. Si on a le moindre bug, mettre le script dans les tests avant de faire quoi que ce soit**
 => faire du [test-driven development](https://en.wikipedia.org/wiki/Test-driven_development) => tests écrits avant le code, code écrit pour satisfaire les tests
 
-
 Notions to explore:
 - Abstract Syntax tree
 - Here-docs
-
+- 
 
 EnthusiastiCon - Stefanie Schirmer “OMG building a shell in 10 minutes” [YouTube](https://www.youtube.com/watch?v=k6TTj4C0LF0)
+- Privileged space to interact with the kernel
+- Very simplified shell:
+	- Prompt to input things
+	- Parse user input
+	- Run builtin commands for job control
+	- Run other system commands and show their output
 
 
 [Bash git repository](https://git.savannah.gnu.org/cgit/bash.git)
@@ -32,3 +37,7 @@ EnthusiastiCon - Stefanie Schirmer “OMG building a shell in 10 minutes” [You
 [Shell builtin Wikipedia](https://en.wikipedia.org/wiki/Shell_builtin)
 
 [Minishell Structure - Toni Schmitt - Github](https://github.com/toni-schmitt/minishell#lexer)
+
+## Other
+- [https://www.youtube.com/live/N4GAmMHnd20?si=KNtmaPRX4fybOGDc](Git avancé (50min))
+- [ExplainShell.com](https://explainshell.com/) (decomposes and explains shell commands)

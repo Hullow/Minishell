@@ -24,7 +24,27 @@
 ## Items to discuss
 - Documentation, research
 
-# Next meeting: 26/6/24 (hour to determine early next week)
+# Meeting: 26/6/24 (hour to determine early next week)
+## To do list (from last meeting)
 - Watch videos
 - Re-read subject
-- Start making visual schemas of projects
+- Start making visual schemas of project
+
+## Notes
+- Cmegret: thinks the execution block will not change much
+
+- To do:
+	- Iterate on:
+		- Re-read subject and make list of tasks + requirements, dependencies on Github	
+			=> make individual lists (on own Github branch) and then discuss over call, confront them => synthesize
+		- Code examples of each function
+		- Start making visual schemas of project
+
+	- Make project
+
+- To do after:
+	- Make a very basic shell that executes basic commands
+
+# Next meeting: Thursday 4/7/24
+- 
+
