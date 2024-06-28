@@ -42,26 +42,25 @@ EnthusiastiCon - Stefanie Schirmer “OMG building a shell in 10 minutes” [You
 
 => Note: not clear what to do with builtins (copy them from bash? use builtins from the computer ?)
 
-[Shell builtin – Wikipedia](https://en.wikipedia.org/wiki/Shell_builtin)
+- [Shell builtin – Wikipedia](https://en.wikipedia.org/wiki/Shell_builtin)
 
 ### Here documents
-[Here documents - TLDP](https://tldp.org/LDP/abs/html/here-docs.html)
-[Heredocs - a deep dive](https://medium.com/@oduwoledare/heredoc-a-deep-dive-23c82992e522)
+- [Here documents - TLDP](https://tldp.org/LDP/abs/html/here-docs.html)
+- [Heredocs - a deep dive](https://medium.com/@oduwoledare/heredoc-a-deep-dive-23c82992e522)
 
 ### EOF
-[EOF characters – Wikipedia](https://en.wikipedia.org/wiki/End-of-file#EOF_character)
-[EOF – Baeldung](https://www.baeldung.com/linux/eof)
+- [EOF characters – Wikipedia](https://en.wikipedia.org/wiki/End-of-file#EOF_character)
+- [EOF – Baeldung](https://www.baeldung.com/linux/eof)
 
 ## Minishell projects
-[Minishell Structure - Toni Schmitt - Github](https://github.com/toni-schmitt/minishell#lexer)
-
-[Conférences 42SH Redirection et Pipe  - 2019](https://www.youtube.com/watch?v=ceNaZzEoUhk)
+- [Minishell Structure - Toni Schmitt - Github](https://github.com/toni-schmitt/minishell#lexer)
+- [Conférences 42SH Redirection et Pipe  - 2019](https://www.youtube.com/watch?v=ceNaZzEoUhk)
 
 ## Shells
-[ksh source code](https://github.com/openbsd/src/blob/master/bin/ksh/exec.c)
-
-[Bash git repository](https://git.savannah.gnu.org/cgit/bash.git)
-- Documentation is useful, has schemas etc. (according to tfrily) : https://git.savannah.gnu.org/cgit/bash.git/tree/doc/README
+- [Shell Command Language manual](https://pubs.opengroup.org/onlinepubs/009695399/utilities/xcu_chap02.html)
+- [Bash5.2 manual](https://www.man7.org/linux/man-pages/man1/bash.1.html)
+- [ksh source code](https://github.com/openbsd/src/blob/master/bin/ksh/exec.c)
+- [Bash git repository](https://git.savannah.gnu.org/cgit/bash.git/tree/doc/README): Documentation is useful, has schemas etc. (according to tfrily)
 
 ## Git & Github
 - [https://www.youtube.com/live/N4GAmMHnd20?si=KNtmaPRX4fybOGDc](Git avancé (50min))
