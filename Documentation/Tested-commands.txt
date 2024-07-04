@@ -1,0 +1,22 @@
+echo "Hello, world!"
+echo "Hello, world!
+echo "Hello, world!" hello
+echo -n hello
+echo hello -n
+echo -h
+echo "hello world" >a test.txt
+echo "hello world" > test.txt
+echo "hello world" >a test.txt
+test.txt > b
+> e
+echo "hello world" test.txt > a > b
+echo "hello world" > a | test.txt > b
+echo "hello world" > a test.txt > b
+ls -l > directory_list.txt extra_argument
+ls -l extra_argument > directory_list.txt
+echo > c "hello world" test.txt
+echo "hello world" > a test.txt
+echo "hello world" test.txt > a
+test.txt > b && echo "hello world" > a
+test.txt > b ; echo "hello world" > a
+test.txt > b | echo "hello world" > a

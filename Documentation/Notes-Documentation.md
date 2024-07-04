@@ -62,10 +62,21 @@ EnthusiastiCon - Stefanie Schirmer “OMG building a shell in 10 minutes” [You
 - [ksh source code](https://github.com/openbsd/src/blob/master/bin/ksh/exec.c)
 - [Bash git repository](https://git.savannah.gnu.org/cgit/bash.git/tree/doc/README): Documentation is useful, has schemas etc. (according to tfrily)
 
-## Git & Github
+## Parsing
+- https://en.wikipedia.org/wiki/Abstract_syntax_tree / https://fr.wikipedia.org/wiki/Arbre_de_la_syntaxe_abstraite
+- https://en.wikipedia.org/wiki/Parse_tree / https://fr.wikipedia.org/wiki/Arbre_syntaxique
+
+
+## Tools
+### Git & Github
 - [https://www.youtube.com/live/N4GAmMHnd20?si=KNtmaPRX4fybOGDc](Git avancé (50min))
 - [Git bisect plugin](https://artspb.me/posts/getting-started-with-git-bisect-run-plugin/)
 - [Conventional commits](https://www.conventionalcommits.org/en/v1.0.0/)
+
+## Diagrams
+- https://guides.visual-paradigm.com/understanding-activity-diagrams-in-uml-a-comprehensive-guide/
+- https://www.geeksforgeeks.org/unified-modeling-language-uml-activity-diagrams/?ref=lbp
+- https://www.lucidchart.com/pages/uml-activity-diagram
 
 ## Other
 - [Pipex with bonus (heredocs)](https://github.com/madebypixel02/pipex?tab=readme-ov-file#here-document)
