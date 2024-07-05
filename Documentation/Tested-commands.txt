@@ -20,3 +20,4 @@ echo "hello world" test.txt > a
 test.txt > b && echo "hello world" > a
 test.txt > b ; echo "hello world" > a
 test.txt > b | echo "hello world" > a
+echo "hello" > hellofile.txt && cat hellofile.txt | echo > hello2.txt

@@ -1,14 +1,18 @@
 # System Functions Documentation
 
 ## Command Line and History Functions:
-
+[The GNU Readline Library](https://www.gnu.org/software/readline/)
 - **readline**:
     - Reads a line from standard input with line editing and auto-completion.
     - Commonly used in command interpreters.
 
+- **add_history**:
+    - Adds a command to the command history.
+
 - **rl_clear_history**:
     - Clears the saved command history.
 
+NB: the following functions are useful for handling signals and subshells
 - **rl_on_new_line**:
     - Informs the system that the user is on a new line.
 
@@ -18,8 +22,6 @@
 - **rl_redisplay**:
     - Redisplays the current line.
 
-- **add_history**:
-    - Adds a command to the command history.
 
 ## Memory Management Functions:
 

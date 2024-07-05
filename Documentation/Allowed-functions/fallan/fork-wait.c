@@ -2,7 +2,8 @@
 #include <stdlib.h>
 #include <unistd.h>
 
-int main() {
+int main()
+{
 	pid_t childPid;
 	printf("Before fork %d\n", getpid());
 

@@ -16,7 +16,7 @@
 - [Shell builtin – Wikipedia](https://en.wikipedia.org/wiki/Shell_builtin)
 
 ### Readline
-- [The GNU Readline library](https://tiswww.cwru.edu/php/chet/readline/rltop.html)
+- [The GNU Readline Library](https://www.gnu.org/software/readline/)
 
 ## Processes
 - [Process image](https://www.tutorialspoint.com/inter_process_communication/inter_process_communication_process_image.htm)

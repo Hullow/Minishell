@@ -1,14 +1,16 @@
 # Questions to elucidate
 ### To-do
 #### General
+- Finish requirements list
 - Cut the project into pieces and agree on what we need to do
+- Find answer to questions in Meeting-notes.md
 
 #### Organisational
 - Scheduling meetings (2, 3 times a week ?)
 - Organise tasks using Github projects
 
 #### Technical
-- Set up bash as default instead of zsh on our personal Macs
+- Figure out environment: Linux VM/emulator ? + set up bash 5.1.16 as default instead of zsh on our personal Macs
 - Testing system for each "module"
 	=> okay, if it doesn't take too much time to code them
 

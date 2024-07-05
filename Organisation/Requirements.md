@@ -8,6 +8,7 @@
 => Use readline
 > Have a working history.
 => Use add_history, rl_clear_history (or clear_history), and ... ?
+=> Subshell history ?
 
 ### Builtins
 - Re-hardcode 
