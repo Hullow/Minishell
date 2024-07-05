@@ -6,7 +6,7 @@
     - Reads a line from standard input with line editing and auto-completion.
     - Commonly used in command interpreters.
 
-- **rl_clear_history**:
+- **rl_clear_history**: 
     - Clears the saved command history.
 
 - **rl_on_new_line**:
@@ -18,7 +18,7 @@
 - **rl_redisplay**:
     - Redisplays the current line.
 
-- **add_history**:
+- **add_history**: `man 3 history`
     - Adds a command to the command history.
 
 ## Memory Management Functions:

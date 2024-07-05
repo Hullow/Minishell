@@ -66,3 +66,12 @@
 
 - redirection: `<non_executable_file> > <non_existent_file.txt>` => "command not found" AND creates a file with name `non_existent_file.txt`
 	> Redirection is used to open and close files for the current shell execution environment (see Shell Execution Environment) or for any command. ([SCL](https://pubs.opengroup.org/onlinepubs/9699919799/utilities/V3_chap02.html#tag_18_07))
+
+# 5/7/24
+- Re-reading subject, topics and questions:
+	- Readline/history:
+		- should we implement indexing of history to navigate history with up/down arrows, or is it implemented by one of the authorized functions ?
+		- Readline commands: ctrl + k, ctrl + a
+	- Execution:
+		- how to call echo with -n ? Something special to do ?
+		- pberset: to code builtins, use functions tsetaddr, etc.
