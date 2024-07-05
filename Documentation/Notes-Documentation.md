@@ -70,3 +70,4 @@ EnthusiastiCon - Stefanie Schirmer “OMG building a shell in 10 minutes” [You
 ## Other
 - [Pipex with bonus (heredocs)](https://github.com/madebypixel02/pipex?tab=readme-ov-file#here-document)
 - [ExplainShell.com](https://explainshell.com/) (decomposes and explains shell commands)
+- Show current shell in use: `ps -p $$`
