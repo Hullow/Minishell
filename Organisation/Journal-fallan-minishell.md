@@ -16,3 +16,10 @@
 # 28/6/24
 - Setting own computer to bash (from zsh)
 - Housekeeping (folders)
+
+# 4/7/24
+- Call cmegret
+
+# 5/7/24
+- Work with cmegret
+- Admin, merges
