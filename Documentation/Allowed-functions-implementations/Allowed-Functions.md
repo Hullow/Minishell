@@ -1,7 +1,7 @@
 # System Functions Documentation
 
 ## Command Line and History Functions:
-
+[The GNU Readline Library](https://tiswww.case.edu/php/chet/readline/readline.html)
 - **readline**:
     - Reads a line from standard input with line editing and auto-completion.
     - Commonly used in command interpreters.
@@ -12,11 +12,13 @@
 - **rl_on_new_line**:
     - Informs the system that the user is on a new line.
 
-- **rl_replace_line**:
-    - Replaces the current line with a new line.
+- **rl_replace_line**: `void rl_replace_line (const char *text, int clear_undo)`
+    - Replaces the current line with a new line:
+> Replace the contents of rl_line_buffer with text. The point and mark are preserved, if possible. If clear_undo is non-zero, the undo list associated with the current line is cleared.
 
-- **rl_redisplay**:
-    - Redisplays the current line.
+- **rl_redisplay**: `void rl_redisplay (void)`
+    - Redisplays the current line:
+> Change what’s displayed on the screen to reflect the current contents of rl_line_buffer.
 
 - **add_history**: `man 3 history`
     - Adds a command to the command history.

@@ -7,13 +7,14 @@ int main() {
 	char *input;
 	int i;
 	
-	i = 0;
+	i = 1;
 	while ((input = readline("Minishell : ")) != NULL)
 	{
 		if (*input) // Vérifie si la chaîne n'est pas vide
 			add_history(input); // Traiter la commande
-		if (i % 5 == 0)
-			clear_history();
+		// if (i % 5 == 0)
+		// 	clear_history();
+		rl_redisplay();
 		if (i % 5 == 0)
 			rl_on_new_line();
 		free(input); // Libérer la mémoire allouée par readline

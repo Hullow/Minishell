@@ -6,6 +6,8 @@
 # Functionalities
 > Display a prompt when waiting for a new command
 => Use readline
+> Have a working history.
+=> Use add_history, rl_clear_history (or clear_history), and ... ?
 
 ## Builtins
 - Re-hardcode 
