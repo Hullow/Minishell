@@ -10,15 +10,22 @@
 => Use add_history, rl_clear_history (or clear_history), and ... ?
 => Subshell history ?
 
-### Character handling
-- `$`:
-> - Handle " (double quote) which should prevent the shell from interpreting the meta-
-characters in the quoted sequence **except for \$ (dollar sign)**.
-> - Handle environment variables (**\$ followed by a sequence of characters**) which
-should expand to their values.
-> - Handle **$?** which should expand to the exit status of the most recently executed
-foreground pipeline.
-Normal shells: see Shell-functioning.md#Token recognition# 2.2.5. Parameter and arithmetic expansion, command substitution
+### Metacharacter handling
+#### `\`:
+> Not interpret unclosed quotes or special characters which are not required by the
+subject such as **\ (backslash)** or ; (semicolon).
+
+
+#### `$`:
+> - Handle " (double quote) which should prevent the shell from interpreting the meta-characters in the quoted sequence **except for \$ (dollar sign)**.
+> - Handle environment variables (**\$ followed by a sequence of characters**) which should expand to their values.
+> - Handle **$?** which should expand to the exit status of the most recently executed foreground pipeline.
+=> see Shell-functioning.md#Token recognition# 2.2.5. Parameter and arithmetic expansion, command substitution
+
+**Summary:**
+- `$?`
+- `$ENVIRONMENTAL_VARIABLE`
+- `$?` and `$ENVIRONMENTAL_VARIABLE` between double quotes
 
 ### Builtins
 - Re-hardcoded
@@ -33,7 +40,7 @@ Normal shells: see Shell-functioning.md#Token recognition# 2.2.5. Parameter and 
 - ctrl + a
 - ctrl + \42
 - Command substitution: `$(command)` or \`command\`
-
+- Arithmetic substitution: 
 
 ### To clarify
 ## Shell input
@@ -42,5 +49,5 @@ Normal shells: see Shell-functioning.md#Token recognition# 2.2.5. Parameter and 
 - `#!` : "If the first line of a file of shell commands starts with the characters "#!", the results are unspecified." (SCL)
 
 ## Tokenization
-- Parameter expansion
+- Parameter expansion for `$`: `${` also ?
 - Command substitution: what to do instead ? E.g. `echo $(ls) >> file`

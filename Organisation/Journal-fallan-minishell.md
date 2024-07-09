@@ -28,4 +28,5 @@
 
 # 9/7/24
 - Corrected dcortes and bwach's minishell, took some notes of things to test
-- Reading through SCL and taking notes in Shell-functioning.md
+- Reading through SCL and taking notes in Shell-functioning.md, as well as Requirements.md
+	- Going through token recognition (parsing), not finished

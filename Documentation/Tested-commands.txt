@@ -21,3 +21,32 @@ test.txt > b && echo "hello world" > a
 test.txt > b ; echo "hello world" > a
 test.txt > b | echo "hello world" > a
 echo "hello" > hellofile.txt && cat hellofile.txt | echo > hello2.txt
+
+${USER}
+$(USER)
+echo $(USER)
+echo ${USER}
+echo $USER
+echo ${#USER}
+
+echo "hello" >> file
+cat cat file
+echo "blabla" >> file
+echo `cat file`
+echo $(cat file)
+echo $(ls) >> file
+echo $(cat file)
+
+echo $TERM_PROGRAM
+echo ${TERM_PROGRAM}
+echo $(TERM_PROGRAM)
+
+echo ($?)
+echo "$?"
+echo "$?"
+echo '$?'
+
+echo $((2 +1))
+echo $(2 +1)
+
+---
