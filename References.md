@@ -1,6 +1,6 @@
 # Minishell references
 ## Shells
-- [Shell Command Language manual](https://pubs.opengroup.org/onlinepubs/009695399/utilities/xcu_chap02.html)
+- [Shell Command Language manual](https://pubs.opengroup.org/onlinepubs/9699919799/utilities/V3_chap02.html) => check 2018 and not 2004 version !
 - [Bash5.2 manual](https://www.man7.org/linux/man-pages/man1/bash.1.html)
 - [ksh source code](https://github.com/openbsd/src/blob/master/bin/ksh/exec.c)
 - [Bash git repository](https://git.savannah.gnu.org/cgit/bash.git/tree/doc/README): Documentation is useful, has schemas etc. (according to tfrily)

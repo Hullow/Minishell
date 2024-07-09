@@ -18,7 +18,7 @@ int main() {
 		if (i % 5 == 0)
 			rl_on_new_line();
 		if (!(strcmp(input, "clear"))) // remplace with ft_strcmp
-			clear_history();
+			rl_clear_history();
 		free(input); // Libérer la mémoire allouée par readline
 		i++;
 	}

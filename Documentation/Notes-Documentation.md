@@ -2,7 +2,7 @@
 (see References.md for all references)
 ## 42sh - Architecture d'un shell (Epitech 2019) - [YouTube](https://www.youtube.com/watch?v=oIFRiwFRSRY&t=745s)
 - What matters is to be able to execute a command => if's, etc. come after
-- Read [Shell Command Language manual](https://pubs.opengroup.org/onlinepubs/009695399/utilities/xcu_chap02.html)
+- Read [Shell Command Language manual](https://pubs.opengroup.org/onlinepubs/9699919799/utilities/V3_chap02.html)
  	=> remark by Cmegret: we probably won't read too much in detail in the beginning
 - Toujours avoir quelque chose de fonctionnel à montrer (vs "dans 2 semaines on aura qqch")
 - Ne pas faire en bloc: parsing, ensuite expanding, ensuite execution; plutôt faire parsing basique de commandes, puis rajouter de la complexité. Par exemple, être capable de parser et exécuter une seule commande, puis rajouter des if, etc.
@@ -53,6 +53,8 @@ From [42sh - architecture d'un shell](#42sh---architecture-dun-shell-epitech-201
 
 => `man bash` > search "SHELL BUILTIN COMMANDS"
 <br>=> Note: not clear what to do with builtins; copy the code from bash ? or re-code them ourselves ?
+
+- pberset: to code builtins, use functions tsetaddr, etc.
 
 ### Signals
 - [Bash manual](https://www.gnu.org/software/bash/manual/html_node/Signals.html):

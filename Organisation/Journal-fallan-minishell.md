@@ -25,3 +25,7 @@
 - Admin, merges
 
 - question to cmegret: why does `echo "hello" > hello1.txt && cat hello1.txt | echo > hello2.txt` not put anything into hello2, while `echo > hello2.txt hello` does ?
+
+# 9/7/24
+- Corrected dcortes and bwach's minishell, took some notes of things to test
+- Reading through SCL and taking notes in Shell-functioning.md
