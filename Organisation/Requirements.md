@@ -40,7 +40,11 @@ subject such as **\ (backslash)** or ; (semicolon).
 
 
 ### Builtins
+See [Builtins - Bash Reference Manual (v5.2)](https://www.gnu.org/software/bash/manual/bash.html#Shell-Builtin-Commands)
 - Re-hardcoded
+
+#### Export
+- how to do it without setenv ?
 
 ### Keybindings
 #### Signals
@@ -69,13 +73,15 @@ subject such as **\ (backslash)** or ; (semicolon).
 - in
 - `!`
 
-
-
 ### To clarify
 ## Shell input
 - from a file
 - `#!` : "If the first line of a file of shell commands starts with the characters "#!", the results are unspecified." (SCL)
 - `{}`
+
+## Variables
+- Variable creation ?
+- Env variable creation
 
 ## Tokenization
 - Parameter expansion for `$`: `${` also ?

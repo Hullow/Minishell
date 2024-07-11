@@ -21,6 +21,7 @@ test.txt > b && echo "hello world" > a
 test.txt > b ; echo "hello world" > a
 test.txt > b | echo "hello world" > a
 echo "hello" > hellofile.txt && cat hellofile.txt | echo > hello2.txt
+echo "hello |
 
 ${USER}
 $(USER)
@@ -153,3 +154,46 @@ ls f*
 touch file$
 ls f*
 history >> history.txt
+
+<< here << now << then
+> now
+> then
+> sfh
+> here
+> jhdfgrdyh
+> now
+> then
+
+cat | cat | ls
+cat cat
+
+
+touch /
+touch /rt
+touch h/rt
+ls
+mkdir h
+touch h/rt
+ls
+cd h
+ls
+history >> 1 | tail -n 15
+history >> 1
+history > 1
+history > file
+cat file
+history >&1 | tail -n 15
+history >&1 | tail -n 25
+vim filenames.txt
+èpwd
+pwd
+cp filenames.txt ~/Minishell/Documentation/
+touch file0n
+ls
+touch file\0
+ls
+touch \0
+ls
+touch >\0
+history >&1 | tail -n 25
+history >&1 | tail -n 35

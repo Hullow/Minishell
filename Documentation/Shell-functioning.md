@@ -99,7 +99,7 @@ How the shell works according to [Shell Command Language](https://pubs.opengroup
 
 	=> append the current character to that word
 
-	#### 2.2.9. Comment (`#`)
+	#### 2.2.9. Comment (`#`) `=> don't implement`
 	IF
 	- the current character is a `#`
 
