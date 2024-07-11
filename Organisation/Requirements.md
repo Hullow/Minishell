@@ -27,6 +27,11 @@ subject such as **\ (backslash)** or ; (semicolon).
 - `$ENVIRONMENTAL_VARIABLE`
 - `$?` and `$ENVIRONMENTAL_VARIABLE` between double quotes
 
+#### newline
+
+#### pipe  |
+
+
 ### Builtins
 - Re-hardcoded
 
@@ -36,17 +41,34 @@ subject such as **\ (backslash)** or ; (semicolon).
 
 
 ### Not required
+#### Signals
 - ctrl + k
 - ctrl + a
 - ctrl + \42
+
+#### Input
+- `-c`, `-i`, `-s`
 - Command substitution: `$(command)` or \`command\`
 - Arithmetic substitution: 
+
+#### Control operators
+- &   &&   (   )   ;   ;;    ||
+
+#### Reserved words
+- If    Then    Else    Elif    Fi    Do    Done
+- Case    Esac    While    Until    For
+
+#### Other
+- in
+- `!`
+
+
 
 ### To clarify
 ## Shell input
 - from a file
-- `-c`
 - `#!` : "If the first line of a file of shell commands starts with the characters "#!", the results are unspecified." (SCL)
+- `{}`
 
 ## Tokenization
 - Parameter expansion for `$`: `${` also ?

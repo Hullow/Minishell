@@ -50,3 +50,6 @@ echo $((2 +1))
 echo $(2 +1)
 
 ---
+
+echo "man man"
+echo "man man" | sh -s
