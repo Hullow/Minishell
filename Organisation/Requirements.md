@@ -31,6 +31,13 @@ subject such as **\ (backslash)** or ; (semicolon).
 
 #### pipe  |
 
+#### redirections
+
+##### `>>`
+> \>\> should redirect output in append mode.
+- (maybe) use `access` to check existence and rights (if not readable, return error and print error message)
+- use `open` with O_WRONLY | O_APPND | O_CREAT : `fd = open(tmpname, O_WRONLY | O_APPEND | O_CREAT, 0644);`
+
 
 ### Builtins
 - Re-hardcoded

@@ -7,5 +7,7 @@ All questions we need answers to
 - Readline commands/signals: ctrl + k, ctrl + a
 	- clear history: rl_clear_history => not found on OS X/Macbook M1 => clang recommends clear_history from readline.h => which one to use ?
 
+
+
 # Execution:
 - how to call echo with -n ? Something special to do ?

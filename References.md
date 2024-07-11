@@ -21,6 +21,10 @@
 ### Readline
 - [The GNU Readline Library](https://www.gnu.org/software/readline/)
 
+### File handling
+#### Open
+- [Using open to create a file in C - StackOverflow](https://stackoverflow.com/questions/28466715/using-open-to-create-a-file-in-c)
+
 ## Processes
 - [Process image](https://www.tutorialspoint.com/inter_process_communication/inter_process_communication_process_image.htm)
 

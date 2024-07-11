@@ -53,3 +53,103 @@ echo $(2 +1)
 
 echo "man man"
 echo "man man" | sh -s
+
+
+touch textfile
+echo "blabla" >> textfile
+echo "blabla" >> stdout
+echo "blabla" >> stdin
+echo "blabla" >> 1
+echo "blabla" >> 2
+echo "blabla" >> 3
+echo "blabla" >> textfile
+
+ls **
+ls 3*
+>&
+echo "hello" >&2
+echo "hello" >&3
+echo "hello" >&1
+echo "hello" >&2
+echo "hello" >&0
+echo "hello" >&4
+>5
+ls 5*
+> &
+>$
+ls $*
+>$?
+echo $?
+bash
+echo $?
+echo $?
+>$?
+ls 0*
+rm 0
+ls 0*
+>$?
+ls 0*
+ls 2*
+>2
+ls 2*
+ls $?*
+bash
+ls $?*
+ls "$?"*
+><
+>%
+ls %*
+&&&&
+touch >fiel
+touch >file
+touch &file
+touch £file
+touch $file
+touch file$
+ls file*
+touch file>
+touch file&
+ls file&
+touch f>ile
+ls *f
+ls ile
+touch "f>ile"
+rm f
+rm ile
+touch "f>ile"
+ls ile
+ls *f
+ls f*
+touch "test>file
+touch "test>filess
+ls f*
+$TESTVAR="testvalue"
+$TESTVAR=testvalue
+TESTVAR=testvalue
+echo $TESTVAR
+touch file$TESTVAR
+ls f*
+touch file$TESTVARs
+ls f*
+rm file$
+ls f*
+touch file$TESTVARs
+ls f*
+rm f>ile
+rm fiel
+rm file
+rm file.txt
+rm file.test
+rm file.text
+rm filetestvqlu
+rm filetestvalue
+ls f*
+rm f>ile
+rm "f>ile"
+rm f>ile
+ls f*
+touch file$TESTVARs
+ls f*
+touch file$
+ls f*
+history >> history.txt
