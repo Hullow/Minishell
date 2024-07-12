@@ -197,3 +197,155 @@ ls
 touch >\0
 history >&1 | tail -n 25
 history >&1 | tail -n 35
+
+echo "'"
+echo '
+echo '''
+
+echo > 4 "hello world" | >> file.txt
+cat 4
+rm 4
+cat file.txt
+rm file.txt
+echo "ls -l" |
+echo "ls -l" | -l
+echo "-l" | ls
+
+echo "hello" >|4
+
+
+
+echo $OLDPWFD
+
+echo $OLDPWD
+/Users/francis
+echo ${OLDPWD}
+/Users/francis
+
+
+echo $VAR
+VAR=2
+echo $VAR
+export VAR1=1
+echo $VAR1
+_=/usr/bin/env
+export VAR2 = 2
+zsh: bad assignment
+export VAR2 =2
+zsh: 2 not found
+export VAR2=2
+COMMAND=ls
+echo "$COMMAND"
+echo "S$COMMAND"
+echo "$COMMAND$"
+echo "$$COMMAND"
+42572COMMAND
+VAR="ls /etc/*.conf"
+echo $VAR
+echo $(echo $VAR)
+ 515  echo "$VAR"
+  516  echo $$VAR
+  517  echo $$VAR$
+  518  echo $VAR$
+  519* echo $VAR
+  520  echo $VAR$USER
+  521  VAR="=test"
+  522  echo $VAR
+  523  =test=value
+  524  "=test"=value
+  525  test=value
+  526  echo $test
+  527  foo=asdf
+  528  echo $foo
+  529  echo ${foo-bar}xyz}
+  530  foo=
+  531  echo ${foo-bar}xyz}
+  532  unset foo
+  533  echo ${foo-bar}xyz}
+  534  echo $USER
+  535  env$(echo $PATH)
+
+free | grep Mem: | awk '{print $2}'
+
+echo {COLORTERM-USER}
+echo ${COLORTERM-USER}
+echo ${COLORTERM-}
+echo ${-USER}
+echo ${USER-}
+echo $USER-
+man substr
+zsh
+test=1234
+TEST=5678
+echo $test$TEST
+export ls=1234
+echo $ls
+ls
+env
+export ls =1234
+getconf
+getconf system_var
+man getconf
+man sysconf
+echo $(getconf ARG_MAX)
+echo $USER$
+echo $USER$U
+echo $
+echo $@
+export @=2
+@=2
+export __testvar=2
+echo $__testvar
+env | grep testvar
+export $?a=b
+export ?a=b
+echo $?a
+export 0a=b
+echo $1
+echo $a
+echo $555545
+echo $2
+echo $3
+echo $4
+echo $5
+echo $9
+echo $10
+echo $11
+echo $VAR
+echo $+
+echo $1+1
+echo $
+echo $ 1
+echo $+
+echo $$USER
+echo $$
+echo $
+echo $$
+echo $$$
+echo $USER$
+echo $USER$A
+$1=1 ; ercho
+$1="SALUT" ; echo $1
+1="SALUT" ; echo $1
+export
+env
+export
+echo $ls
+echo "$ls"
+echo
+echo '$ls'"$ls"
+echo "'$ls'"
+echo '$ls'"$ls"
+echo "'$ls'"
+echo '"$ls"'
+echo '"$ls"'"$HOME"
+echo '"$ls"'"$HOME
+echo '"$ls"'"$HOME
+echo '"$ls"'"$HOME
+<< EOF
+<< EOF echo
+<< EOF cat
+<< EOF cat
+<< 'EOF' cat
+<< 'EOF' cat
+<< "'EOF'" cat

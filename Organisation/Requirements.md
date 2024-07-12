@@ -25,7 +25,7 @@ subject such as **\ (backslash)** or ; (semicolon).
 **Summary:**
 - `$?`
 - `$ENVIRONMENTAL_VARIABLE`
-- `$?` and `$ENVIRONMENTAL_VARIABLE` between double quotes
+- `$?` and `$ENVIRONMENTAL_VARIABLE` expansion if between double quotes (not between single quotes)
 
 #### newline
 

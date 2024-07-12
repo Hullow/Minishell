@@ -41,9 +41,22 @@ see above: [42sh - architecture d'un shell#POSIX](#posix)
 ### Notions to explore
 From [42sh - architecture d'un shell](#42sh---architecture-dun-shell-epitech-2019---youtube)
 - Abstract Syntax tree
-- Here-docs
 - [Process image](https://www.tutorialspoint.com/inter_process_communication/inter_process_communication_process_image.htm)
 - Job control ?
+
+### Quoting
+- Unclosed quotes: don't manage with a `>` prompt, just return an error message ("\double/single quote not closed")
+- @tfrily: start a counter when a quote is opened
+- External quotes are determining, e.g. for expansion "'$USER'"
+
+### Heredocuments
+- expansion is different (cf. @tfrily): 
+```bash
+<< 'EOF' cat
+<< 'EOF' cat
+<< "'EOF'" cat
+```
+etc.
 
 ### Redirections
 #### File name restrictions
@@ -58,6 +71,31 @@ From [42sh - architecture d'un shell](#42sh---architecture-dun-shell-epitech-201
 - Control characters (ASCII 0-31 and 127): Can be problematic in shell and other utilities.
 >It's generally recommended to stick to alphanumeric characters, dashes (-), and underscores (_) for maximum compatibility and ease of use in file names on Unix systems.
 
+### Environmental variables
+#### [Open group specification - 8. Environment Variables](https://pubs.opengroup.org/onlinepubs/9699919799/basedefs/V1_chap08.html)
+> See the ENVIRONMENT VARIABLES section of the utility descriptions in the Shell and Utilities volume of POSIX.1-2017 for information on environment variable usage.
+
+>The value of an environment variable is a string of characters. For a C-language program, an array of strings called the environment shall be made available when a process begins. The array is pointed to by the external variable environ, which is defined as:
+
+`extern char **environ;`
+
+>These strings have the form name=value; names shall not contain the character '='. For values to be portable across systems conforming to POSIX.1-2017, the value shall be composed of characters from the portable character set (except NUL and as indicated below). There is no meaning associated with the order of strings in the environment. If more than one string in an environment of a process has the same name, the consequences are undefined.
+
+>Environment variable names used by the utilities in the Shell and Utilities volume of POSIX.1-2017 consist solely of uppercase letters, digits, and the <underscore> ( '_' ) from the characters defined in Portable Character Set and do not begin with a digit. Other characters may be permitted by an implementation; applications shall tolerate the presence of such names. Uppercase and lowercase letters shall retain their unique identities and shall not be folded together. The name space of environment variable names containing lowercase letters is reserved for applications. Applications can define any environment variables with names from this name space without modifying the behavior of the standard utilities.
+
+>Note:
+>    Other applications may have difficulty dealing with environment variable names that start with a digit. For this reason, use of such names is not recommended anywhere.
+
+>The values that the environment variables may be assigned are not restricted except that they are considered to end with a null byte and the total space used to store the environment and the arguments to the process is limited to {ARG_MAX} bytes.
+=> to get ARG_MAX: `echo $(getconf ARG_MAX)` => 1048576 on Macbook M1
+
+>Other name= value pairs may be placed in the environment by, for example, calling any of the setenv(), unsetenv(), [XSI] [Option Start]  or putenv() [Option End] functions, assigning a new value to the environ variable, or by using envp arguments when creating a process; see exec in the System Interfaces volume of POSIX.1-2017.
+
+>If the application modifies the pointers to which environ points, the behavior of all interfaces described in the System Interfaces volume of POSIX.1-2017 is undefined.
+
+#### Conseils @tfrily
+=> get environmental variables from `char **envp` (in main), then store them, in linked list (easier to modify) or array of strings. `Execve()` takes an array of strings for env parameters.
+
 ### Shell builtins
 - pberset: to code builtins, use functions tsetaddr, etc.
 
@@ -68,7 +106,6 @@ From [42sh - architecture d'un shell](#42sh---architecture-dun-shell-epitech-201
 
 => `man bash` > search "SHELL BUILTIN COMMANDS"
 <br>=> Note: not clear what to do with builtins; copy the code from bash ? or re-code them ourselves ?
-
 
 #### Export
 [Export - Bash Reference Manual (v5.2)](https://www.gnu.org/software/bash/manual/bash.html#index-export)
@@ -103,10 +140,54 @@ export(struct tbl *vp, const char *val)
 }
 ```
 
+#### Unset
+From [Shell Command Language manual - Parameter expansion]( https://pubs.opengroup.org/onlinepubs/9699919799/utilities/V3_chap02.html#tag_18_06_02)
+> ${parameter-word}
+>    This example demonstrates the difference between unset and set to the empty string, as well as the rules for finding the delimiting close brace.
+```bash
+        foo=asdf
+        echo ${foo-bar}xyz}
+        asdfxyz}foo=
+        echo ${foo-bar}xyz}
+        xyz}unset foo
+        echo ${foo-bar}xyz}
+        barxyz}
+```
+
 ### Signals
 - Doable in the beginning
 - [Bash manual](https://www.gnu.org/software/bash/manual/html_node/Signals.html):
 > When job control is not enabled, and Bash is waiting for a foreground command to complete, the shell receives keyboard-generated signals such as SIGINT (usually generated by ‘^C’) that users commonly intend to send to that command. This happens because the shell and the command are in the same process group as the terminal, and ‘^C’ sends SIGINT to all processes in that process group. See Job Control, for a more in-depth discussion of process groups.
+
+#### Ctrl + D
+`C-D` in [Bash manual](https://www.gnu.org/software/bash/manual/html_node/Signals.html)
+
+8.2.1 Readline Bare Essentials
+C-d
+
+    Delete the character underneath the cursor. 
+
+Arguments ?
+>8.2.4 Readline Arguments
+
+>You can pass numeric arguments to Readline commands. Sometimes the argument acts as a repeat count, other times it is the sign of the argument that is significant. If you pass a negative argument to a command which normally acts in a forward direction, that command will act in a backward direction. For example, to kill text back to the start of the line, you might type ‘M-- C-k’.
+
+>The general way to pass numeric arguments to a command is to type meta digits before the command. If the first ‘digit’ typed is a minus sign (‘-’), then the sign of the argument will be negative. Once you have typed one meta digit to get the argument started, you can type the remainder of the digits, and then the command. **For example, to give the C-d command an argument of 10, you could type ‘M-1 0 C-d’, which will delete the next ten characters on the input line**.
+
+>8.4.3 Commands For Changing Text
+
+end-of-file (usually C-d)
+
+    The character indicating end-of-file as set, for example, by stty. If this character is read when there are no characters on the line, and point is at the beginning of the line, Readline interprets it as the end of input and returns EOF.
+delete-char (C-d)
+
+    Delete the character at point. If this function is bound to the same character as the tty EOF character, as C-d commonly is, see above for the effects.
+
+
+#### Ctrl + \
+Probably SIGQUIT
+
+
 
 ## Useful commands
 - Show current shell in use: `ps -p $$`

@@ -75,6 +75,30 @@ How the shell works according to [Shell Command Language](https://pubs.opengroup
 	=> The token shall not be delimited by the end of the substitution.
 	
 	See Requirements.md#Metacharacter_handling
+
+	### Parsing of $/Parameter Expansion rules according to cmegret & fallan
+	=> See ft_check_export (nb fallan: should be ft_check_expansion)
+
+	- When `$`, start
+	- if digit
+		=> expand with empty string `char *str; str[0] = '\0' and skip the 2 characters (`$` + `digits`)
+	- if `?`, expand => call ft_expansion avec parameter 1
+	- while lowercase letter, uppercase letter, `_`, digits 0-9
+		=> continue
+	- else
+		=> if possible to expand to the previous character, expand
+		=> else: don't expand, return to `$`
+	- if ` ` or `EOF`
+
+	# Parameter expansion
+	> If parameter is not in braces `{}`, and is a name, the expansion shall use the longest valid name (see XBD Name), whether or not the variable represented by that name exists. Otherwise, the parameter is a single-character symbol, and behavior is unspecified if that character is neither a digit nor one of the special parameters (see Special Parameters).
+
+IF
+- a parameter expansion occurs inside double-quotes
+
+=> Pathname expansion shall not be performed on the results of the expansion. (e.g. `VAR="ls /etc/*.conf" && echo $VAR` will not expand the `*`))
+
+=> Field splitting shall not be performed on the results of the expansion.
  
 	#### 2.2.6. New operator token
 	IF
@@ -114,13 +138,24 @@ How the shell works according to [Shell Command Language](https://pubs.opengroup
 ## 3. Shell Grammar
 Rules for determining what a token is
 
-### 3. Initial classification
+### 3.1 Initial classification
+Apply the following rules in order (if, else if, else if, else)
+### 3.1.1 Newline
 IF
+- a newline is found
+
+=> return the newline as token identifier NEWLINE
+
+### 3.1.2 Operator
+ELSE IF
 - the token is an operator (n.b.: in our case redirections `>`, `<`, `>>`, `<<`, or a pipe `|`)
 
-=> return the token identifier for that operator ("the token identifier for that operator shall result")
+=> return the token identifier for that operator `=> ???`
+>("If the token is an operator, the token identifier for that operator shall result")
+=> does this mean `|` 
 
-ELSE IF
+### 3.1.2 Operator
+IF
 - the string consists solely of digits and the delimiter character is `<` or `>`
 
 => return the token identifier IO_NUMBER
@@ -131,9 +166,36 @@ ELSE
 N.b.: further distinction on TOKEN is context-dependent. The same TOKEN can be considered a WORD, a NAME, an ASSIGNMENT_WORD, or a reserved below from the below list. Some of the productions in the grammar below are annotated with a rule number from the following list. When a TOKEN
 
 ### 3.2. Shell grammar rules
-#### 3.3. Reserved word
-#### 3.4. Redirection to or from filename
-#### 3.5. Redirection to or from filename
+#### 3.2.3. Reserved word
+#### 3.2.4. Redirection to or from filename
+#### 3.2.5. Name
+IF
+- the token meets requirements for a name (see [definition](https://pubs.opengroup.org/onlinepubs/009695399/basedefs/xbd_chap03.html#tag_03_230))
+
+- the token identifier is NAME
+
+ELSE
+- the token identifier is WORD
+#### 3.2.7 Assignment preceding command name
+a. IF
+- the first word does not contain the character `=`
+
+=> apply rule 3.1.
+
+ELSE
+=> apply rule b.
+b. IF
+- the token contains the equal sign character:
+	- if it begins with `=`
+		=> the token identifier is WORD
+	- if all characters preceding '=' form a valid name (see [definition](https://pubs.opengroup.org/onlinepubs/009695399/basedefs/xbd_chap03.html#tag_03_230))
+		=> the token identifier is ASSIGNMENT_WORD (quoted characters cannot participate in forming a valid name)
+	- else
+		=> the token identifier is either ASSIGNMENT_WORD or WORD (unspecified)
+
+#### 3.2.9. Body of function
+When the token is exact
+
 
 
 ## Definitions

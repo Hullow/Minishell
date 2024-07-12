@@ -17,6 +17,5 @@ int main() {
 		free(input); // Libérer la mémoire allouée par readline
 		i++;
 	}
-
 	return 0;
 }

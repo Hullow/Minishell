@@ -10,8 +10,8 @@ All questions we need answers to
 - Restrictions on file names (asked Copilot already)
 
 - Variable management:
-	- variable creation ? `VAR=blabla`
-	- env variable creation
+	- variable creation ? `VAR=blabla` => no (Thenguye)
+	- env variable creation => yes, with export
 
 # Execution:
 - how to call echo with -n ? Something special to do ?

@@ -1,7 +1,7 @@
 # Minishell references
 ## Shells
 - [Shell Command Language manual](https://pubs.opengroup.org/onlinepubs/9699919799/utilities/V3_chap02.html) => check 2018 and not 2004 version !
-- [Bash Reference Manua (v5.2)](https://www.gnu.org/software/bash/manual/bash.html)
+- [Bash Reference Manual (v5.2)](https://www.gnu.org/software/bash/manual/bash.html)
 - [`man Bash`(v5.2)](https://www.man7.org/linux/man-pages/man1/bash.1.html)
 - [POSIX.1-2017 standard definitions](https://pubs.opengroup.org/onlinepubs/9699919799/basedefs/V1_chap03.html)
 - [ksh source code](https://github.com/openbsd/src/blob/master/bin/ksh/exec.c)
@@ -11,6 +11,9 @@
 - [EnthusiastiCon - Stefanie Schirmer “OMG building a shell in 10 minutes”](https://www.youtube.com/watch?v=k6TTj4C0LF0)
 - [Conférences 42SH Redirection et Pipe  - 2019](https://www.youtube.com/watch?v=ceNaZzEoUhk)
 - [Minishell Structure - Toni Schmitt - Github](https://github.com/toni-schmitt/minishell#lexer)
+
+## Testing
+- [Conférences 42sh 2019 - Python & Testsuite fonctionnelle](https://www.youtube.com/watch?v=1CoFy6eM7_I&list=PLo31Bhg3nNkZHhqAjlwo5tNOa-FEXKnEe&index=6)
 
 ## Functions
 ### Builtins
@@ -28,8 +31,15 @@
 ## Processes
 - [Process image](https://www.tutorialspoint.com/inter_process_communication/inter_process_communication_process_image.htm)
 
+## Variables
+### Environment variables
+- [Environmental variables - Open group specification](https://pubs.opengroup.org/onlinepubs/9699919799/basedefs/V1_chap08.html)
+
+- [What is pathname expansion](https://bash.cyberciti.biz/guide/Path_name_expansion)
+
 ## Signals
 - [Bash manual - Signals](https://www.gnu.org/software/bash/manual/html_node/Signals.html)
+- [Shell Command Language - Signals and Error handling](https://pubs.opengroup.org/onlinepubs/009695399/utilities/xcu_chap02.html#tag_02_11)
 
 ## Here documents
 - [Here documents - TLDP](https://tldp.org/LDP/abs/html/here-docs.html)
