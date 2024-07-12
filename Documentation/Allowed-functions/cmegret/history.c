@@ -11,7 +11,7 @@ int main() {
 	while ((input = readline("Minishell : ")) != NULL)
 	{
 		if (*input) // Vérifie si la chaîne n'est pas vide
-			add_history(input); // Traiter la commande
+			//add_history(input); // Traiter la commande
 		if (i % 5 == 0)
 			clear_history();
 		free(input); // Libérer la mémoire allouée par readline
