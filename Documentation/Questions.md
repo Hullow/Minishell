@@ -1,7 +1,7 @@
 # Questions on Minishell
 All questions we need answers to
 
-# Input
+# Input and parsing
 - Here-docs: can be implemented after regular parsing ?
 - Readline/history: should we implement indexing of history to navigate history with up/down arrows, or is it implemented by one of the authorized functions ?
 - Readline commands/signals: ctrl + k, ctrl + a
@@ -12,6 +12,8 @@ All questions we need answers to
 - Variable management:
 	- variable creation ? `VAR=blabla` => no (Thenguye)
 	- env variable creation => yes, with export
+
+- How to treat unclosed quotes ?
 
 # Execution:
 - how to call echo with -n ? Something special to do ?

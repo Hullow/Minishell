@@ -330,6 +330,7 @@ $1="SALUT" ; echo $1
 export
 env
 export
+export "New env Var"=2
 echo $ls
 echo "$ls"
 echo
@@ -342,6 +343,7 @@ echo '"$ls"'"$HOME"
 echo '"$ls"'"$HOME
 echo '"$ls"'"$HOME
 echo '"$ls"'"$HOME
+echo $'PATH'
 << EOF
 << EOF echo
 << EOF cat
@@ -349,3 +351,14 @@ echo '"$ls"'"$HOME
 << 'EOF' cat
 << 'EOF' cat
 << "'EOF'" cat
+
+touch \"newfile
+vim \"newfile
+ls '"newfile'
+ls newfile
+ls -l
+ls '"newfile'
+ls -l '"newfile'
+ls -l "newfile
+ls -l ""newfile"
+ls -l \"newfile"'

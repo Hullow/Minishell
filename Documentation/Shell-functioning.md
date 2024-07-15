@@ -1,5 +1,5 @@
 # Shell functioning
-How the shell works according to [Shell Command Language](https://pubs.opengroup.org/onlinepubs/9699919799/utilities/V3_chap02.html) (summarized and paraphrased)
+How the shell works according to the [Shell Command Language definition](https://pubs.opengroup.org/onlinepubs/9699919799/utilities/V3_chap02.html) and [Bash reference manual](https://www.gnu.org/savannah-checkouts/gnu/bash/manual/bash.html), summarized, paraphrased and simplified for the Minishell project.
 
 ## 1. Reads input
 ### Input sources
@@ -13,126 +13,166 @@ How the shell works according to [Shell Command Language](https://pubs.opengroup
 - length: unlimited
 
 ## 2. Tokenization
-- Shell breaks input into tokens: **words** and **operators**
-- Two modes of parsing:
-	### 2.1. here-documents processing
-	 => if an **io_here** token has been recognized by the grammar, one or more of the subsequent lines immediately following the next NEWLINE token form the body of one of more here-documents and shall be parsed according to the rules of Here-Document (LINK TO PARAGRAPH)
-	### 2.2. [ordinary token recognition](https://pubs.opengroup.org/onlinepubs/9699919799/utilities/V3_chap02.html#tag_18_03)
-	How to delimit tokens:<br>
-	- break input into tokens by applying the first applicable rule below to the next character in its input.
-	- the token shall be from the current position in the input until a token is delimited according to one of the rules below
-	- the characters forming the token are exactly those in the input, including any quoting characters.
-	- if is indicated that a token is delimited, and no characters have been included in a token, processing shall continue until an actual token is delimited. `=>?`
+### 2.0 Tokenization summary
+- Shell breaks input into tokens:
+	- [**words**](https://www.gnu.org/savannah-checkouts/gnu/bash/manual/bash.html#Definitions):
+	> A sequence of characters treated as a unit by the shell. Words may not include unquoted metacharacters.
+	- [**operators**](https://www.gnu.org/savannah-checkouts/gnu/bash/manual/bash.html#Definitions):
+    > A **control operator** or a **redirection operator**. Operators contain at least one unquoted metacharacter.
+- Tokens are separated by [metacharacters](https://www.gnu.org/savannah-checkouts/gnu/bash/manual/bash.html#Definitions):
+	> A character that, when unquoted, separates words:
+	- space, tab, newline
+	- `|` (pipe)
+	- `<`, `>` (redirection)
+	- (`&` , `;` , `(`, `)`. `=> don't implement`)
+- Metacharacters between quotes are not interpreted as metacharacers, except for `$` between double quotes
+- Redirections operators:
+	- `> < <> >& <& <<< << >> &>> &> >|`
+### 2.1. [Quoting rules](https://www.gnu.org/savannah-checkouts/gnu/bash/manual/bash.html#Quoting)
+- Tokenization follows the quoting rules:
+> Quoting is used to remove the special meaning of certain characters or words to the shell. Quoting can be used to disable special treatment for special characters, (..), and to prevent parameter expansion.
+> Each of the shell metacharacters has special meaning to the shell and must be quoted if it is to represent itself.
+- Quoting mechanisms:
+	- Single quotes `'`:
+		- Preserves the literal value of each character within the quotes
+		- A single quote may not occur between single quotes
+	- Double quotes `"`:
+		- Preserves the literal value of all characters within the quotes, except `$`
+		- A double quote may not occur between double quotes
+		<br>(n.b.: because "A double quote may be quoted within double quotes by preceding it with a backslash." `=> don't implement backslash`
 
-	<br>**Rules**:
-	#### 2.2.1. end of input
-	IF 
-	- end of input is recognized
+### 2.2. Token classification
+#### 2.2.1. Here-documents processing
+IF
+- an **io_here** token has been recognized by the grammar
 
-	AND	EITHER:
-	- there is a current token
+=> one or more of the subsequent lines immediately following the next NEWLINE token form the body of one of more here-documents<br>
+=> the here-document(s) are parsed according to the [rules of Here-Document](https://pubs.opengroup.org/onlinepubs/9699919799/utilities/V3_chap02.html#tag_18_07_04)
+#### 2.2.2. [Ordinary token recognition](https://pubs.opengroup.org/onlinepubs/9699919799/utilities/V3_chap02.html#tag_18_03)
+How to delimit tokens:<br>
+- break input into tokens by applying the first applicable rule below to the next character in its input.
+- the token shall be from the current position in the input until a token is delimited according to one of the rules below
+- the characters forming the token are exactly those in the input, including any quoting characters.
+- if is indicated that a token is delimited, and no characters have been included in a token, processing shall continue until an actual token is delimited. `=>?`
 
-	=> delimit the current token
-	
-	OR:
-	- there is no current token
+<br>**Rules**:
+#### Tokenization functions requirements
+Based on the rules below, here are some requirements for our tokenization functions:
+- Token status: is there a current token ?
+- Usage of the previous character : word or operator token ?
+- Quoting status : is current character quoted or not ?
+- Delimitation of token to previous character
 
-	=> return the end-of-input indicator as the token
+##### 2.2.2.1. End of input
+IF 
+- end of input is recognized
 
-	#### 2.2.2. continued operator token and current character usable
-	IF
-	- previous character used as part of an operator
-	- current character can be used with the current characters to form an operator
-	- current character **not quoted** `=> ?`
+AND	EITHER:
+- there is a current token
 
-	=> use character as part of that (operator) token
+=> delimit the current token
 
-	#### 2.2.3. continued operator token and current character not usable
-	IF
-	- previous character used as part of an operator
-	- current character cannot be used with the current characters to form an operator
+OR:
+- there is no current token
 
-	=> delimit the operator containing the previous character
+=> return the end-of-input indicator as the token
 
-	#### 2.2.4. backslash, single-quote, double-quote
-	IF
-	- the current character is single-quote `'` (**implement**), double-quote `"` (**implement**), or backslash `\` (**don't implement**)
-	- the current character is **not quoted** `=> ?`
+##### 2.2.2.2. Continued operator token and current character usable
+IF
+- previous character used as part of an operator
+- current character can be used with the current characters to form an operator
+- current character not quoted
 
-	=> affects quoting for subsequent characters up to the end of the quoted text (see Quoting - LINK TO PARAGRAPH). During token recognition, no substitutions shall be actually performed, and the result token shall contain exactly the characters that appear in the input (except for <newline> joining) `=> ?`, unmodified, including any embedded or enclosing quotes or substitution operators, between the quote mark and the end of the quoted text. The token shall not be delimited by the end of the quoted field.
+=> use character as part of that (operator) token
 
-	#### 2.2.5. Parameter and arithmetic expansion, command substitution (`$` and '`')
-	IF
-	- the current character is an unquoted `$` or '`'
-	
-	=> identify introductory sequence :
-	- `$` or `${` : [parameter expansion](https://pubs.opengroup.org/onlinepubs/9699919799/utilities/V3_chap02.html#tag_18_06_02) **=> implement partially**
-	- `$(` or '\`' : command substitution **=> don't implement**
-	- `$((` : arithmetic expansion **=> don't implement**<br>
+##### 2.2.2.3. Continued operator token and current character not usable
+IF
+- previous character used as part of an operator
+- current character cannot be used with the current characters to form an operator
 
-	=> read sufficient input to determine the end of the unit to be expanded (see [parameter expansion](https://pubs.opengroup.org/onlinepubs/9699919799/utilities/V3_chap02.html#tag_18_06_02))<br>
-	=> recursion (nested $) **=> don't implement**<br>
-	=> The token shall not be delimited by the end of the substitution.
-	
-	See Requirements.md#Metacharacter_handling
+=> delimit the operator containing the previous character
 
-	### Parsing of $/Parameter Expansion rules according to cmegret & fallan
-	=> See ft_check_export (nb fallan: should be ft_check_expansion)
+##### 2.2.2.4. Quotes
+IF
+- the current character is single-quote `'` or double-quote `"`
+- the current character is not quoted
 
-	- When `$`, start
-	- if digit
-		=> expand with empty string `char *str; str[0] = '\0' and skip the 2 characters (`$` + `digits`)
-	- if `?`, expand => call ft_expansion avec parameter 1
-	- while lowercase letter, uppercase letter, `_`, digits 0-9
-		=> continue
-	- else
-		=> if possible to expand to the previous character, expand
-		=> else: don't expand, return to `$`
-	- if ` ` or `EOF`
+=> affects quoting for subsequent characters up to the end of the quoted text (see [Quoting rules](#21-quoting-rules))<br>
+=> During token recognition, no substitutions shall be actually performed, and the result token shall contain exactly the characters that appear in the input (except for <newline> joining), unmodified, including any embedded or enclosing quotes or substitution operators, between the quotation mark and the end of the quoted text. `=> ?`<br>
+=> The token shall not be delimited by the end of the quoted field.
 
-	# Parameter expansion
-	> If parameter is not in braces `{}`, and is a name, the expansion shall use the longest valid name (see XBD Name), whether or not the variable represented by that name exists. Otherwise, the parameter is a single-character symbol, and behavior is unspecified if that character is neither a digit nor one of the special parameters (see Special Parameters).
+##### 2.2.2.5. Parameter and arithmetic expansion, command substitution (`$` and '`')
+IF
+- the current character is an unquoted `$` or '`'
+
+=> identify introductory sequence :
+- `$` or `${` : [parameter expansion](https://pubs.opengroup.org/onlinepubs/9699919799/utilities/V3_chap02.html#tag_18_06_02) **=> implement partially**
+- `$(` or '\`' : command substitution **=> don't implement**
+- `$((` : arithmetic expansion **=> don't implement**<br>
+
+=> read sufficient input to determine the end of the unit to be expanded (see [parameter expansion](https://pubs.opengroup.org/onlinepubs/9699919799/utilities/V3_chap02.html#tag_18_06_02))<br>
+=> recursion (nested $) **=> don't implement**<br>
+=> The token shall not be delimited by the end of the substitution.
+
+See Requirements.md#Metacharacter_handling
+
+###### Parsing of $/Parameter Expansion rules according to cmegret & fallan
+=> See ft_check_export (nb fallan: should be ft_check_expansion)
+
+- When `$`, start
+- if digit
+	=> expand with empty string `char *str; str[0] = '\0' and skip the 2 characters (`$` + `digits`)
+- if `?`, expand => call ft_expansion avec parameter 1
+- while lowercase letter, uppercase letter, `_`, digits 0-9
+	=> continue
+- else
+	=> if possible to expand to the previous character, expand
+	=> else: don't expand, return to `$`
+- if ` ` or `EOF`
+
+###### Parameter expansion
+> If parameter is not in braces `{}`, and is a name, the expansion shall use the longest valid name (see XBD Name), whether or not the variable represented by that name exists. Otherwise, the parameter is a single-character symbol, and behavior is unspecified if that character is neither a digit nor one of the special parameters (see Special Parameters).
 
 IF
 - a parameter expansion occurs inside double-quotes
 
-=> Pathname expansion shall not be performed on the results of the expansion. (e.g. `VAR="ls /etc/*.conf" && echo $VAR` will not expand the `*`))
+=> Pathname expansion shall not be performed on the results of the expansion. (e.g. `VAR="ls /etc/*.conf" && echo $VAR` will not expand the `*`)
 
 => Field splitting shall not be performed on the results of the expansion.
- 
-	#### 2.2.6. New operator token
-	IF
-	- the current character is unquoted
-	- the current character can be used as the first character of a new operator
 
-	=> delimit the current token, if any<br>
-	=> use the current character as the beginning of the next (operator) token
+##### 2.2.2.6. New operator token
+IF
+- the current character is unquoted
+- the current character can be used as the first character of a new operator
 
-	#### 2.2.7. Blank character
-	N.b.: a "blank" is a space or tab character. (cf. [Bash reference manual - Definitions](https://www.gnu.org/software/bash/manual/bash.html#Definitions))
-	
-	IF
-	- the current character is an unquoted \<blank\>
+=> delimit the current token, if any<br>
+=> use the current character as the beginning of the next (operator) token
 
-	=> delimit any token containing the previous character<br>
-	=> discard the current character
-	
-	#### 2.2.8. Previous character part of a word
-	IF
-	- the previous character was part of a word
+#### 2.2.2.7. Blank character
+N.b.: a "blank" is a space or tab character. (cf. [Bash reference manual - Definitions](https://www.gnu.org/software/bash/manual/bash.html#Definitions))
 
-	=> append the current character to that word
+IF
+- the current character is an unquoted \<blank\>
 
-	#### 2.2.9. Comment (`#`) `=> don't implement`
-	IF
-	- the current character is a `#`
+=> delimit any token containing the previous character<br>
+=> discard the current character
 
-	=> discard as a comment the current character and all subsequent characters up to but not including the next \<newline\>
+#### 2.2.2.8. Previous character part of a word
+IF
+- the previous character was part of a word
 
-	#### 2.2.10 New word
-	=> use the current character as the start of a new word
+=> append the current character to that word
 
-	After delimiting a token, the next step is to categorize it following the [Shell Grammar](https://pubs.opengroup.org/onlinepubs/9699919799/utilities/V3_chap02.html#tag_18_10)
+#### 2.2.2.9. Comment (`#`) `=> don't implement`
+IF
+- the current character is a `#`
+
+=> discard as a comment the current character and all subsequent characters up to but not including the next \<newline\>
+
+#### 2.2.2.10 New word
+=> use the current character as the start of a new word
+
+After delimiting a token, the next step is to categorize it following the [Shell Grammar](https://pubs.opengroup.org/onlinepubs/9699919799/utilities/V3_chap02.html#tag_18_10)
 
 
 ## 3. Shell Grammar

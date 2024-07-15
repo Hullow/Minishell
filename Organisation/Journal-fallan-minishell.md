@@ -30,3 +30,13 @@
 - Corrected dcortes and bwach's minishell, took some notes of things to test
 - Reading through SCL and taking notes in Shell-functioning.md, as well as Requirements.md
 	- Going through token recognition (parsing), not finished
+
+
+# 15/7/24
+- Read about field splitting in the SCL and the IFS ([Input Field Separators](https://en.wikipedia.org/wiki/Input_Field_Separators)) => likely not needed because no expansion except enviromental variable expansion and exit status expansion, where there are no whitespaces
+- Read the Bash reference manual, especially the [Shell operation section](https://www.gnu.org/savannah-checkouts/gnu/bash/manual/bash.html#Shell-Operation).
+- Note: parameter expansion happens after the parsing of tokens into simple and compound commands
+
+- History expansion with `!`: `!-25` to display to the command 25 lines back. `!!` to refer to the previous command. `!string` to refer to the most recent command preceding the current position in the history list starting with *string*.
+
+- Look at how quoting is implemented in other shells, in particular nested quoting.

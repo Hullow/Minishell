@@ -192,3 +192,4 @@ Probably SIGQUIT
 ## Useful commands
 - Show current shell in use: `ps -p $$`
 - View Git commands executed by VSCode: View > Output, select Log (Git)
+- Clone the bash git repo : `git clone https://git.savannah.gnu.org/git/bash.git`

@@ -6,6 +6,7 @@
 - [POSIX.1-2017 standard definitions](https://pubs.opengroup.org/onlinepubs/9699919799/basedefs/V1_chap03.html)
 - [ksh source code](https://github.com/openbsd/src/blob/master/bin/ksh/exec.c)
 - [Bash git repository](https://git.savannah.gnu.org/cgit/bash.git/tree/doc/README): Documentation is useful, has schemas etc. (according to tfrily)
+- [Advanced Bash-Scripting Guide - TLDP](https://tldp.org/LDP/abs/html/)
 
 ## Minishell projects
 - [EnthusiastiCon - Stefanie Schirmer “OMG building a shell in 10 minutes”](https://www.youtube.com/watch?v=k6TTj4C0LF0)
@@ -38,10 +39,11 @@
 - [What is pathname expansion](https://bash.cyberciti.biz/guide/Path_name_expansion)
 
 ## Signals
-- [Bash manual - Signals](https://www.gnu.org/software/bash/manual/html_node/Signals.html)
+- [Bash reference manual - Signals](https://www.gnu.org/software/bash/manual/html_node/Signals.html)
 - [Shell Command Language - Signals and Error handling](https://pubs.opengroup.org/onlinepubs/009695399/utilities/xcu_chap02.html#tag_02_11)
 
 ## Here documents
+- [Bash reference manual - Here Documents](https://www.gnu.org/savannah-checkouts/gnu/bash/manual/bash.html#Here-Documents)
 - [Here documents - TLDP](https://tldp.org/LDP/abs/html/here-docs.html)
 - [Heredocs - a deep dive](https://medium.com/@oduwoledare/heredoc-a-deep-dive-23c82992e522)
 
@@ -52,6 +54,14 @@
 ## Parsing
 - https://en.wikipedia.org/wiki/Abstract_syntax_tree / https://fr.wikipedia.org/wiki/Arbre_de_la_syntaxe_abstraite
 - https://en.wikipedia.org/wiki/Parse_tree / https://fr.wikipedia.org/wiki/Arbre_syntaxique
+
+## Execution
+- [Bash reference manual - Executing commands](https://www.gnu.org/savannah-checkouts/gnu/bash/manual/bash.html#Executing-Commands)
+
+## Redirections
+- [Bash reference manual - Redirections](https://www.gnu.org/savannah-checkouts/gnu/bash/manual/bash.html#Redirections)
+
+
 
 ## Tools
 ### Git & Github
