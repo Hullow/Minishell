@@ -21,16 +21,16 @@ How the shell works according to the [Shell Command Language definition](https:/
     > A **control operator** or a **redirection operator**. Operators contain at least one unquoted metacharacter.
 - Tokens are separated by [metacharacters](https://www.gnu.org/savannah-checkouts/gnu/bash/manual/bash.html#Definitions):
 	> A character that, when unquoted, separates words:
-	- space, tab, newline
+	- space, tab, newline (whitespace)
 	- `|` (pipe)
 	- `<`, `>` (redirection)
 	- (`&` , `;` , `(`, `)`. `=> don't implement`)
-- Metacharacters between quotes are not interpreted as metacharacers, except for `$` between double quotes
+- Metacharacters and other special characters between quotes are not interpreted, except for `$` between double quotes
 - Redirections operators:
 	- `> < <> >& <& <<< << >> &>> &> >|`
 ### 2.1. [Quoting rules](https://www.gnu.org/savannah-checkouts/gnu/bash/manual/bash.html#Quoting)
 - Tokenization follows the quoting rules:
-> Quoting is used to remove the special meaning of certain characters or words to the shell. Quoting can be used to disable special treatment for special characters, (..), and to prevent parameter expansion.
+> Quoting is used to remove the special meaning of certain characters or words to the shell, including to prevent parameter expansion.
 > Each of the shell metacharacters has special meaning to the shell and must be quoted if it is to represent itself.
 - Quoting mechanisms:
 	- Single quotes `'`:
@@ -40,6 +40,30 @@ How the shell works according to the [Shell Command Language definition](https:/
 		- Preserves the literal value of all characters within the quotes, except `$`
 		- A double quote may not occur between double quotes
 		<br>(n.b.: because "A double quote may be quoted within double quotes by preceding it with a backslash." `=> don't implement backslash`
+- Example:
+```bash
+bash-3.2$ VAR=2
+bash-3.2$ echo VAR
+VAR
+bash-3.2$ echo $VAR
+2
+bash-3.2$ echo "$VAR"
+2
+bash-3.2$ echo '$VAR'
+$VAR
+bash-3.2$ echo "'$VAR'"
+'2'
+bash-3.2$ echo '"$VAR"'
+"$VAR"
+bash-3.2$ echo "'"$VAR"'"
+'2'
+bash-3.2$ echo ""'"$VAR"'""
+"$VAR"
+bash-3.2$ echo """'"$VAR"'"""
+'2'
+bash-3.2$ echo """"'"$VAR"'""""
+"$VAR"
+```
 
 ### 2.2. Token classification
 #### 2.2.1. Here-documents processing

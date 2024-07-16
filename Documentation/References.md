@@ -76,4 +76,5 @@
 
 ## Other
 - [Pipex with bonus (heredocs)](https://github.com/madebypixel02/pipex?tab=readme-ov-file#here-document)
-- [ExplainShell.com](https://explainshell.com/) (decomposes and explains shell commands)
+- [ExplainShell.com](https://explainshell.com/) (decomposes and explains shell commands)\
+- [The Meaning of IFS (Internal Field Separator) in Bash Scripting - Baeldung](https://www.baeldung.com/linux/ifs-shell-variable)

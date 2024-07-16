@@ -243,27 +243,27 @@ echo "$$COMMAND"
 VAR="ls /etc/*.conf"
 echo $VAR
 echo $(echo $VAR)
- 515  echo "$VAR"
-  516  echo $$VAR
-  517  echo $$VAR$
-  518  echo $VAR$
-  519* echo $VAR
-  520  echo $VAR$USER
-  521  VAR="=test"
-  522  echo $VAR
-  523  =test=value
-  524  "=test"=value
-  525  test=value
-  526  echo $test
-  527  foo=asdf
-  528  echo $foo
-  529  echo ${foo-bar}xyz}
-  530  foo=
-  531  echo ${foo-bar}xyz}
-  532  unset foo
-  533  echo ${foo-bar}xyz}
-  534  echo $USER
-  535  env$(echo $PATH)
+echo "$VAR"
+echo $$VAR
+echo $$VAR$
+echo $VAR$
+echo $VAR
+echo $VAR$USER
+VAR="=test"
+echo $VAR
+=test=value
+"=test"=value
+test=value
+echo $test
+foo=asdf
+echo $foo
+echo ${foo-bar}xyz}
+foo=
+echo ${foo-bar}xyz}
+unset foo
+echo ${foo-bar}xyz}
+echo $USER
+env$(echo $PATH)
 
 free | grep Mem: | awk '{print $2}'
 
@@ -331,6 +331,8 @@ export
 env
 export
 export "New env Var"=2
+echo '"'
+echo "'"
 echo $ls
 echo "$ls"
 echo
@@ -344,6 +346,18 @@ echo '"$ls"'"$HOME
 echo '"$ls"'"$HOME
 echo '"$ls"'"$HOME
 echo $'PATH'
+VAR=2
+echo VAR
+echo $VAR
+echo "$VAR"
+echo '$VAR'
+echo "'$VAR'"
+echo '"$VAR"'
+echo "'"$VAR"'"
+echo ""'"$VAR"'""
+echo """'"$VAR"'"""
+echo """"'"$VAR"'""""
+
 << EOF
 << EOF echo
 << EOF cat
