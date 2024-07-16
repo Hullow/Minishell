@@ -1,6 +1,6 @@
 # Research
-- Re-read subject in depth + quick read of allowed functions to understand
-their purpose
+- Go through token recognition process manually with a few examples
+- Quick read of allowed functions to understand their purpose
 - Readings:
 	- man execve
 	- man fork

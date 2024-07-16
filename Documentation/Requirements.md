@@ -15,7 +15,6 @@
 > Not interpret unclosed quotes or special characters which are not required by the
 subject such as **\ (backslash)** or ; (semicolon).
 
-
 #### `$`:
 > - Handle " (double quote) which should prevent the shell from interpreting the meta-characters in the quoted sequence **except for \$ (dollar sign)**.
 > - Handle environment variables (**\$ followed by a sequence of characters**) which should expand to their values.
@@ -25,11 +24,11 @@ subject such as **\ (backslash)** or ; (semicolon).
 **Summary:**
 - `$?`
 - `$ENVIRONMENTAL_VARIABLE`
-- `$?` and `$ENVIRONMENTAL_VARIABLE` expansion if between double quotes (not between single quotes)
+- Expand between double quotes but not between single quotes
 
 #### newline
 
-#### pipe  |
+#### pipe `|`
 
 #### redirections
 
@@ -37,7 +36,6 @@ subject such as **\ (backslash)** or ; (semicolon).
 > \>\> should redirect output in append mode.
 - (maybe) use `access` to check existence and rights (if not readable, return error and print error message)
 - use `open` with O_WRONLY | O_APPND | O_CREAT : `fd = open(tmpname, O_WRONLY | O_APPEND | O_CREAT, 0644);`
-
 
 ### Builtins
 See [Builtins - Bash Reference Manual (v5.2)](https://www.gnu.org/software/bash/manual/bash.html#Shell-Builtin-Commands)

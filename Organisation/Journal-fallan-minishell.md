@@ -37,6 +37,19 @@
 - Read the Bash reference manual, especially the [Shell operation section](https://www.gnu.org/savannah-checkouts/gnu/bash/manual/bash.html#Shell-Operation).
 - Note: parameter expansion happens after the parsing of tokens into simple and compound commands
 
+Learning:
 - History expansion with `!`: `!-25` to display to the command 25 lines back. `!!` to refer to the previous command. `!string` to refer to the most recent command preceding the current position in the history list starting with *string*.
 
 - Look at how quoting is implemented in other shells, in particular nested quoting.
+
+# 16/7/24
+- Examined some quoting examples
+- Reading the bash manual and SCL. Things make more and more sense, for instance Shell Grammar in SCL.
+- Re-reading and rewriting Shell-functioning.md for more detail and clarity. Added examples of quoting sequences and expected output
+- Reorganized documentation files 
+
+Learning:
+- Tab in Markdown: `&emsp;`
+- `<command>&` :
+	> If a command is terminated by the control operator ‘&’, the shell executes the command asynchronously in a subshell. This is known as executing the command in the background, and these are referred to as asynchronous commands. The shell does not wait for the command to finish, and the return status is 0 (true). When job control is not active (see Job Control), the standard input for asynchronous commands, in the absence of any explicit redirections, is redirected from /dev/null.
+	<br>([Bash reference manual - Lists of commands](https://www.gnu.org/savannah-checkouts/gnu/bash/manual/bash.html#Lists))

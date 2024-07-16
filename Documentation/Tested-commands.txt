@@ -357,6 +357,12 @@ echo "'"$VAR"'"
 echo ""'"$VAR"'""
 echo """'"$VAR"'"""
 echo """"'"$VAR"'""""
+echo '"""'"$VAR"'"""'
+echo '""''"$VAR'""'"'
+echo '"'"'"'"$VAR'""'"'"'
+echo '"'"'"'"$VAR'""'"'"''
+echo '"'"'"'"$VAR'""'"'"
+echo '"'"'"'"$VAR'""'"'"'"
 
 << EOF
 << EOF echo
@@ -376,3 +382,18 @@ ls -l '"newfile'
 ls -l "newfile
 ls -l ""newfile"
 ls -l \"newfile"'
+
+
+echo "brah" >> redirfile
+cat redirfile
+>|redirfile
+cat redirfile
+echo "brah" >> redirfile
+2>|redirfile
+cat redirfile
+
+echo # hello
+echo #hello
+echo #
+echo '#'
+ls f#

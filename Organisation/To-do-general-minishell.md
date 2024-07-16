@@ -13,6 +13,7 @@
 - Figure out environment: Linux VM/emulator ? + set up bash 5.1.16 as default instead of zsh on our personal Macs
 - Testing system for each "module"
 	=> okay, if it doesn't take too much time to code them
+- Understand nested quoting
 
 ### Done
 - English language (comments, journaling, etc.): yes
