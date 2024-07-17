@@ -10,7 +10,7 @@ All questions we need answers to
 - Restrictions on file names (asked Copilot already)
 
 - Variable management:
-	- variable creation ? `VAR=blabla` => no (Thenguye)
+	- variable creation ? `VAR=blabla` => no (@Thenguye)
 	- env variable creation => yes, with export
 
 - How to treat unclosed quotes ?
@@ -18,6 +18,9 @@ All questions we need answers to
 - multi-character operator tokens: what to do with e.g. `>|` tokenize `>` separately from `|` and then try to execute it, or parse them together like bash and then return an error message ?
 
 - unexpected characters like `$$` => what to do ?
+
+- "the end-of-input indicator used internally by the shell is also considered a control operator." (see [control operator](https://pubs.opengroup.org/onlinepubs/9699919799/basedefs/V1_chap03.html#tag_03_113))
+=> what is the end-of-input indicator used internally ?
 
 ## Redirections
 - implement `>|` ?

@@ -7,12 +7,20 @@
 > Consult a shell's manual page for details on the operation of its builtin commands.
 
 => `man bash` > search "SHELL BUILTIN COMMANDS"
-<br>=> Note: not clear what to do with builtins; copy the code from bash ? or re-code them ourselves ?
 
-## cd
+
+
+## Execution and environment
+- @erabbath: builtins in pipe do not change global environment, but otherwise they do
+
+## Description of builtins
+## [Special builtins](https://www.gnu.org/software/bash/manual/bash.html#Special-Builtins)
+> When Bash is not executing in POSIX mode, these builtins (including `exit`, `export`, `unset`) behave no differently than the rest of the Bash builtin commands.
+
+### cd
 See [Open Group Specification - POSIX.1-2017](https://pubs.opengroup.org/onlinepubs/9699919799/utilities/cd.html)
 
-## Exit
+### Exit
 `exit` - cause the shell to exit([Shell Command Language - Special builtins](https://pubs.opengroup.org/onlinepubs/9699919799/utilities/V3_chap02.html#exit)):<br>
 >SYNOPSIS<br>
 >`exit [n]`<br><br>
@@ -44,8 +52,11 @@ A trap on EXIT shall be executed before the shell terminates, except when the ex
 >CONSEQUENCES OF ERRORS<br>
 >Default.
 
-## Export
-`man bash`:
+### Export
+[General note on variable assignment](https://pubs.opengroup.org/onlinepubs/9699919799/basedefs/V1_chap04.html#tag_foot_1):
+> When a variable assignment is done, the variable shall be created if it did not already exist. If value is not specified, the variable shall be given a null value.
+
+#### `man bash`
 > `export` [`-fn`] [name[=word]] ...<br>
 > `export -p` <br>
 	The supplied names are marked for automatic export to the environment of subsequently exe-
@@ -56,7 +67,7 @@ A trap on EXIT shall be executed before the shell terminates, except when the ex
 	returns an exit status of 0 unless an invalid option is encountered, one of the names is
 	not a valid shell variable name, or -f is supplied with a name that is not a function.
 
-[Export - Bash Reference Manual (v5.2)](https://www.gnu.org/software/bash/manual/bash.html#index-export)
+#### [Export - Bash Reference Manual (v5.2)](https://www.gnu.org/software/bash/manual/bash.html#index-export)
 `export [-fn] [-p] [name[=value]]`
 
 > Mark each name to be passed to child processes in the environment. If the -f option is supplied, the names refer to shell functions; otherwise the names refer to shell variables. The -n option means to no longer mark each name for export. If no names are supplied, or if the -p option is given, a list of names of all exported variables is displayed. The -p option displays output in a form that may be reused as input. If a variable name is followed by =value, the value of the variable is set to value.
@@ -105,7 +116,7 @@ A trap on EXIT shall be executed before the shell terminates, except when the ex
 >CONSEQUENCES OF ERRORS<br>
 >Default.
 
-- [ksh code (var.c)](https://github.com/openbsd/src/blob/7520e8fab0993b4a897a2774a7038459b8b069e4/bin/ksh/var.c#L576) :
+#### [ksh code (var.c)](https://github.com/openbsd/src/blob/7520e8fab0993b4a897a2774a7038459b8b069e4/bin/ksh/var.c#L576) :
 
 ```c
 /*
@@ -130,8 +141,8 @@ export(struct tbl *vp, const char *val)
 }
 ```
 
-## Unset
-From [Shell Command Language manual - Parameter expansion]( https://pubs.opengroup.org/onlinepubs/9699919799/utilities/V3_chap02.html#tag_18_06_02)
+### Unset
+#### [Shell Command Language manual - Parameter expansion]( https://pubs.opengroup.org/onlinepubs/9699919799/utilities/V3_chap02.html#tag_18_06_02)
 > ${parameter-word}
 >    This example demonstrates the difference between unset and set to the empty string, as well as the rules for finding the delimiting close brace.
 ```bash
@@ -183,5 +194,5 @@ is not equivalent to an unset of VARIABLE; in the example, VARIABLE is set to ""
 >CONSEQUENCES OF ERRORS<br>
 >Default.
 
-## pwd
+### pwd
 See [Open Group Specification - POSIX.1-2017](https://pubs.opengroup.org/onlinepubs/9699919799/)

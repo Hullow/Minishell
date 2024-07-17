@@ -41,6 +41,10 @@ subject such as **\ (backslash)** or ; (semicolon).
 See [Builtins - Bash Reference Manual (v5.2)](https://www.gnu.org/software/bash/manual/bash.html#Shell-Builtin-Commands)
 - Re-hardcoded
 
+#### cd
+- with options
+
+
 #### Export
 - how to do it without setenv ?
 
@@ -72,15 +76,20 @@ See [Builtins - Bash Reference Manual (v5.2)](https://www.gnu.org/software/bash/
 - `!`
 
 ### To clarify
-## Shell input
+#### Error management
+`strerror`, `perror` => what to do with them ?
+
+#### Shell input
 - from a file
 - `#!` : "If the first line of a file of shell commands starts with the characters "#!", the results are unspecified." (SCL)
 - `{}`
 
-## Variables
+- filename expansion
+
+#### Variables
 - Variable creation ?
 - Env variable creation
 
-## Tokenization
+#### Tokenization
 - Parameter expansion for `$`: `${` also ?
 - Command substitution: what to do instead ? E.g. `echo $(ls) >> file`

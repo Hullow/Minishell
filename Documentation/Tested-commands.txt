@@ -231,6 +231,9 @@ echo ${OLDPWD}
 /Users/francis
 
 
+export VAR="  touch newfile    "
+echo $VAR
+
 echo $VAR
 VAR=2
 echo $VAR
@@ -242,6 +245,12 @@ zsh: bad assignment
 export VAR2 =2
 zsh: 2 not found
 export VAR2=2
+echo $VAR
+export VAR=foo | echo $VAR
+export VAR=foo && echo $VAR
+export VAR=$PWD
+echo $VAR
+
 COMMAND=ls
 echo "$COMMAND"
 echo "S$COMMAND"
@@ -371,6 +380,12 @@ echo '"'"'"'"$VAR'""'"'"'
 echo '"'"'"'"$VAR'""'"'"''
 echo '"'"'"'"$VAR'""'"'"
 echo '"'"'"'"$VAR'""'"'"'"
+'VAR=FOO'
+echo $VAR
+VAR=FOO
+echo $VAR
+VAR='BAR'
+echo $VAR
 
 << EOF
 << EOF echo
@@ -405,3 +420,26 @@ echo #hello
 echo #
 echo '#'
 ls f#
+
+
+<<hello
+> echo $(cat $(ls *.txt))
+> hello
+
+cat <<hello
+> echo $VAR
+> hello
+
+cat <<'h'ello
+> echo $VAR
+> hello
+
+cat <<'h'ello'
+> echo $VAR
+> hello
+
+cat <<'h'ello'
+> echo $VAR
+> 'hello
+
+cat '<<hello'

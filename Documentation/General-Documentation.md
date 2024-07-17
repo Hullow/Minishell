@@ -49,9 +49,6 @@ From [42sh - architecture d'un shell](#42sh---architecture-dun-shell-epitech-201
 - @tfrily: start a counter when a quote is opened
 - External quotes are determining, e.g. for expansion "'$USER'"
 
-### Pathname resolution
-See [Open Group POSIX.1 - 2017 specification](https://pubs.opengroup.org/onlinepubs/9699919799/basedefs/V1_chap04.html#tag_04_13)
-
 
 ## Useful commands
 - Show current shell in use: `ps -p $$`

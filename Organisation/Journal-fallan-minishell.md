@@ -53,3 +53,17 @@ Learning:
 - `<command>&` :
 	> If a command is terminated by the control operator ‘&’, the shell executes the command asynchronously in a subshell. This is known as executing the command in the background, and these are referred to as asynchronous commands. The shell does not wait for the command to finish, and the return status is 0 (true). When job control is not active (see Job Control), the standard input for asynchronous commands, in the absence of any explicit redirections, is redirected from /dev/null.
 	<br>([Bash reference manual - Lists of commands](https://www.gnu.org/savannah-checkouts/gnu/bash/manual/bash.html#Lists))
+
+# 17/7/24
+- Re-reading and re-writing Shell-functioning.md
+- Wrote a proposal for milestone organization
+- Learning:
+>Create a collapsible section in Markdown
+>You can create collapsible sections in Markdown using HTML \<details\> and \<summary\> tags. Let's break down the example below:
+
+>\<details\>
+>\<summary\>Click to expand\</summary\>
+
+>This is the content of the collapsible section. You can include any Markdown-formatted text, lists, or code here.
+
+>\</details\>
