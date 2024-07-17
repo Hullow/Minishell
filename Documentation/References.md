@@ -41,6 +41,7 @@
 ## Signals
 - [Bash reference manual - Signals](https://www.gnu.org/software/bash/manual/html_node/Signals.html)
 - [Shell Command Language - Signals and Error handling](https://pubs.opengroup.org/onlinepubs/009695399/utilities/xcu_chap02.html#tag_02_11)
+- [CTRL + D in a terminal - Quora](https://www.quora.com/What-is-Ctrl-D-in-a-terminal)
 
 ## Here documents
 - [Bash reference manual - Here Documents](https://www.gnu.org/savannah-checkouts/gnu/bash/manual/bash.html#Here-Documents)

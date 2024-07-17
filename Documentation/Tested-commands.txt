@@ -30,6 +30,17 @@ echo ${USER}
 echo $USER
 echo ${#USER}
 
+echo $TERM_PROGRAM
+echo ${TERM_PROGRAM}
+echo $(TERM_PROGRAM)
+
+VAR=fish
+echo $VAR
+echo $VARA
+echo $VARa
+echo $VAR1
+echo $VAR_
+
 echo "hello" >> file
 cat cat file
 echo "blabla" >> file
@@ -38,9 +49,6 @@ echo $(cat file)
 echo $(ls) >> file
 echo $(cat file)
 
-echo $TERM_PROGRAM
-echo ${TERM_PROGRAM}
-echo $(TERM_PROGRAM)
 
 echo ($?)
 echo "$?"

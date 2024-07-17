@@ -162,7 +162,7 @@ Based on the rules below, here are some requirements for our tokenization functi
 - Delimitation of token to previous character
 
 ##### 2.2.2.1. End of input
-IF 
+IF
 - end of input is recognized
 
 AND	EITHER:
@@ -206,15 +206,28 @@ IF
 
 => identify introductory sequence :
 - `$` : see [parameter expansion (SCL)](https://pubs.opengroup.org/onlinepubs/9699919799/utilities/V3_chap02.html#tag_18_06_02) **=> implement partially**
-- `$?`
-> Expands to the decimal exit status of the most recently executed foreground pipeline.
-[Bash reference manual - Special parameters](https://www.gnu.org/savannah-checkouts/gnu/bash/manual/bash.html#Special-Parameters)
+- `$?`: "Expands to the decimal exit status of the most recently executed foreground pipeline." - [Bash reference manual - Special parameters](https://www.gnu.org/savannah-checkouts/gnu/bash/manual/bash.html#Special-Parameters)
 
 => read sufficient input to determine the end of the unit to be expanded (see [parameter expansion](https://pubs.opengroup.org/onlinepubs/9699919799/utilities/V3_chap02.html#tag_18_06_02))<br>
 => recursion (nested $) **=> don't implement**<br>
 => The token shall not be delimited by the end of the substitution.
 
 See Requirements.md#Metacharacter_handling
+
+###### Parameter expansion
+IF
+- parameter is not in braces `{}`
+- parameter is a name
+
+=> the expansion shall use the longest valid name (see XBD Name), whether or not the variable represented by that name exists
+=> Otherwise, the parameter is a single-character symbol, and behavior is unspecified if that character is not `?`
+
+IF
+- a parameter expansion occurs inside double-quotes
+
+=> Pathname expansion shall not be performed on the results of the expansion. (e.g. `VAR="ls /etc/*.conf" && echo $VAR` will not expand the `*`)
+
+=> Field splitting shall not be performed on the results of the expansion.
 
 ###### Parsing of $/Parameter Expansion rules according to cmegret & fallan
 => See ft_check_export (nb fallan: should be ft_check_expansion)
@@ -229,16 +242,7 @@ See Requirements.md#Metacharacter_handling
 	=> if possible to expand to the previous character, expand
 	=> else: don't expand, return to `$`
 - if ` ` or `EOF`
-
-###### Parameter expansion
-> If parameter is not in braces `{}`, and is a name, the expansion shall use the longest valid name (see XBD Name), whether or not the variable represented by that name exists. Otherwise, the parameter is a single-character symbol, and behavior is unspecified if that character is neither a digit nor one of the special parameters (see Special Parameters).
-
-IF
-- a parameter expansion occurs inside double-quotes
-
-=> Pathname expansion shall not be performed on the results of the expansion. (e.g. `VAR="ls /etc/*.conf" && echo $VAR` will not expand the `*`)
-
-=> Field splitting shall not be performed on the results of the expansion.
+	`=> ?`
 
 ##### 2.2.2.6. New operator token
 IF
@@ -248,11 +252,11 @@ IF
 => delimit the current token, if any<br>
 => use the current character as the beginning of the next (operator) token
 
-#### 2.2.2.7. Blank character
-N.b.: a "blank" is a space or tab character. (cf. [Bash reference manual - Definitions](https://www.gnu.org/software/bash/manual/bash.html#Definitions))
+#### 2.2.2.7. Space or tab
+(N.b.: "A blank is a space or tab character" cf. [Bash reference manual - Definitions](https://www.gnu.org/software/bash/manual/bash.html#Definitions))
 
 IF
-- the current character is an unquoted \<blank\>
+- the current character is an unquoted <space> or <tab>
 
 => delimit any token containing the previous character<br>
 => discard the current character
@@ -274,6 +278,7 @@ n.b.: see how zsh does it (doesn't interpret them in interactive mode) ([Stackex
 #### 2.2.2.10 New word
 => use the current character as the start of a new word
 
+
 After delimiting a token, the next step is to categorize it following the [Shell Grammar](https://pubs.opengroup.org/onlinepubs/9699919799/utilities/V3_chap02.html#tag_18_10)
 
 
@@ -282,21 +287,20 @@ Rules for determining what a token is
 
 ### 3.1 Initial classification
 Apply the following rules in order (if, else if, else if, else)
-### 3.1.1 Newline
+#### 3.1.1. Newline
 IF
 - a newline is found
 
 => return the newline as token identifier NEWLINE
 
-### 3.1.2 Operator
+#### 3.1.2 Operator
 ELSE IF
 - the token is an operator (n.b.: in our case redirections `>`, `<`, `>>`, `<<`, or a pipe `|`)
 
-=> return the token identifier for that operator `=> ???`
+=> return the token identifier for that operator `=> ?`
 >("If the token is an operator, the token identifier for that operator shall result")
-=> does this mean `|` 
 
-### 3.1.2 Operator
+#### 3.1.3. IO_number
 IF
 - the string consists solely of digits and the delimiter character is `<` or `>`
 
@@ -304,28 +308,21 @@ IF
 
 ELSE
 => return the token identifier TOKEN
-
-N.b.: further distinction on TOKEN is context-dependent. The same TOKEN can be considered a WORD, a NAME, an ASSIGNMENT_WORD, or a reserved below from the below list. Some of the productions in the grammar below are annotated with a rule number from the following list. When a TOKEN
-
-### 3.2. Shell grammar rules
-How to classify tokens
-1. If the token is an operator, the token identifier for that operator shall result
-2. If the string consists solely of digits and the delimiter character is one of `<` or `>`, the token identifier IO_NUMBER shall be returned.
-3. Else, the token identifier TOKEN results and further distinction depends on context (see rules below)
+=> follow the rules below to categorize TOKEN as WORD, NAME, or ASSIGNMENT_WORD
 
 TOKEN identifiers:
 - Operator token identifier:
-> If the token is an operator, the token identifier for that operator shall result.
-- WORD
-- ASSIGNMENT_WORD
-- NAME
-- NEWLINE
-- PIPELINE `|`
-- INPUT_REDIRECT `<`
-- OUTPUT_REDIRECT  `>`
+	> If the token is an operator, the token identifier for that operator shall result:
+	- NEWLINE
+	- PIPELINE `|`
+	- INPUT_REDIRECT `<`
+	- OUTPUT_REDIRECT  `>`
+	- DGREAT `>>` (redirect output in append mode)
+	- DLESS `<<` (Here Documents)
 - IO_NUMBER
-- DGREAT `>>` (redirect output in append mode)
-- DLESS `<<` (Here Documents)
+- WORD
+- NAME
+- ASSIGNMENT_WORD
 
 Tokens are classified according to the following rules applied in order:
 #### 3.2.3. Reserved word
