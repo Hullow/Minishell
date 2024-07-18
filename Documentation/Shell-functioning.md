@@ -1,5 +1,17 @@
 # Shell functioning
-How the shell works according to the [Shell Command Language definition](https://pubs.opengroup.org/onlinepubs/9699919799/utilities/V3_chap02.html) and [Bash reference manual](https://www.gnu.org/savannah-checkouts/gnu/bash/manual/bash.html), summarized, paraphrased and simplified for the Minishell project.
+How the shell works according to the [Shell Command Language definition](https://pubs.opengroup.org/onlinepubs/9699919799/utilities/V3_chap02.html) and [Bash reference manual](https://www.gnu.org/savannah-checkouts/gnu/bash/manual/bash.html), summarized, paraphrased and simplified for the Minishell project (Ecole 42, common core).
+
+## Sources
+- The [Shell Command Language definition](https://pubs.opengroup.org/onlinepubs/9699919799/utilities/V3_chap02.html) chapter of the [Shell and Utilities](https://pubs.opengroup.org/onlinepubs/9699919799/utilities/contents.html) volume of POSIX.1-2017, which is simultaneously IEEE Std 1003.1™-2017 and The Open Group Technical Standard Base Specifications, Issue 7:
+	> POSIX.1-2017 defines a standard operating system interface and environment, including a command interpreter (or “shell”), and common utility programs to support applications portability at the source code level. POSIX.1-2017 is intended to be used by both application developers and system implementors and comprises four major components (each in an associated volume):
+	> - (...)
+	> - Definitions for a standard source code-level interface to command interpretation services (a “shell”) and common utility programs for application programs are included in the Shell and Utilities volume.
+
+	> POSIX.1-2017 describes the external characteristics and facilities that are of importance to application developers, rather than the internal construction techniques employed to achieve these capabilities.
+
+- The [Bash reference manual](https://www.gnu.org/savannah-checkouts/gnu/bash/manual/bash.html) is "a brief description of the features that are present in the Bash shell (version 5.2, 19 September 2022) (...) [and] is meant as a brief introduction to features found in Bash. The Bash manual page should be used as the definitive reference on shell behavior."
+
+- Note: there is substantial overlap between the two documents, such that each helps to understand the other.
 
 ## 1. Reads input
 ### Input sources
@@ -354,33 +366,42 @@ IF<br>
 
 ### 4.2.1. No slash  `/`  characters in the command<br>
 IF<br>
-- the command name does not contain any <slash> characters
+- the command name does not contain any slash `/` characters
 
 => the first successful step in the following sequence shall occur:
 
-	a. special built-in utility
+	a. built-in
 	IF
-	- the command name matches the name of a special built-in utility
+	- the command name matches the name of a built-in utility
 
-		=> invoke that special built-in utility
+		=> invoke that built-in utility
 
 	(..)
 
-	d. Match
-	IF
-	- the command name matches the name of a utility listed in the following table:
-		- `cd`
-		- `pwd`
-		- (`bg alias command false fc fg getopts hash jobs kill newgrp read true umask type ulimit`)
-
-		=> invoke that utility
-
-	e. search command in PATH
-	OTHERWISE
+	b. search command in PATH
+	ELSE
 
 	=> search for the command using the PATH environment variable as described in XBD Environment Variables :
 
 		(...)
+	IF<br>
+	- search is successful
+
+	a. IF<br>
+	- the utility is a built-in
+
+	=> invoke the utility
+
+	b. ELSE<br>
+
+	=> execute the utility in a separate utility environment (see [Shell Execution Environment](https://pubs.opengroup.org/onlinepubs/9699919799/utilities/V3_chap02.html#tag_18_12)):
+		=> with actions equivalent to calling the execl() function as defined in the [System Interface volume of POSIX.1-2017](https://pubs.opengroup.org/onlinepubs/9699919799/basedefs/V1_chap02.html#tag_02_01_03_01) (), with :
+			- the *path* argument set to the pathname resulting from the search
+			- arg0 set to the command name
+			- the remaining execl() arguments set to the command arguments (if any) and the null terminator
+		
+		IF<br>
+		- the execl() function fails du to an error equivalent to the [ENOEXEC] error defined in System Interface
 
 ### 4.2.2. Slash `/` characters in the command<br>
 IF<br>

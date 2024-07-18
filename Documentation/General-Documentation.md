@@ -49,6 +49,8 @@ From [42sh - architecture d'un shell](#42sh---architecture-dun-shell-epitech-201
 - @tfrily: start a counter when a quote is opened
 - External quotes are determining, e.g. for expansion "'$USER'"
 
+### Subshells
+- Maybe check [POSIX.1-2017 - 11. General Terminal Interface](https://pubs.opengroup.org/onlinepubs/9699919799/)
 
 ## Useful commands
 - Show current shell in use: `ps -p $$`

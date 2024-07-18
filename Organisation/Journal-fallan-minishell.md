@@ -73,3 +73,7 @@ Thinking about Copilot prompting, maybe we could make some prompt tool like Fabr
 
 # 18/7/24
 - Re-writing Shell-functioning.md
+
+- Learning:
+POSIX.1-2017's special grammar notation is based on the syntax used by the `yacc` ([yet-another-compiler-compiler](https://en.wikipedia.org/wiki/Yacc)) utility. It is used to portray the complex syntax of certain program input.
+([Grammar Conventions](https://pubs.opengroup.org/onlinepubs/9699919799/utilities/V3_chap01.html#tag_17_03))
