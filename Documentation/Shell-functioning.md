@@ -222,10 +222,9 @@ Rules for determining what a token is:
 Apply the following rules in order:
 #### 3.1.1 Operator
 IF
-- the token is an operator (n.b.: in our case redirections `>`, `<`, `>>`, `<<`, or a pipe `|`)
+- the token is an operator (n.b.: in our case \<newline\>, redirections, `>`, `<`, `>>`, `<<`, or a pipe `|`)
 
-=> return the token identifier for that operator `=> ?`
->("If the token is an operator, the token identifier for that operator shall result")
+=> return the token identifier for that operator
 
 #### 3.1.2. IO_number
 ELSE IF
@@ -238,6 +237,8 @@ ELSE<br>
 => return the token identifier TOKEN<br>
 => follow the rules below to categorize TOKEN as WORD, NAME, or ASSIGNMENT_WORD
 
+
+### 3.2. Unclassified token
 Tokens are classified in a context-dependent way, according to the following rules applied in order:
 <details>
 <summary><b><i>Grammar rules we don't need to implement</i></b></summary>
