@@ -67,3 +67,9 @@ Learning:
 >This is the content of the collapsible section. You can include any Markdown-formatted text, lists, or code here.
 
 >\</details\>
+
+Thinking about Copilot prompting, maybe we could make some prompt tool like Fabric to answer questions about whether something is required to be done in Minishell. A mini-web app where you deposit your pdf, then it extracts the relevant information, demands you check it, then produces system prompts and indications to answer questions about what is required by the subject, but also how POSIX.1-2017 and the Bash reference manual do it, how Bash code is, etc.
+=> make a GPT ? any way to augment Copilot ? Claude plugin/agent ?
+
+# 18/7/24
+- Re-writing Shell-functioning.md

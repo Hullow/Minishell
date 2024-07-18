@@ -174,7 +174,7 @@ IF
 (N.b.: "A blank is a space or tab character" cf. [Bash reference manual - Definitions](https://www.gnu.org/software/bash/manual/bash.html#Definitions))
 
 IF
-- current character is an unquoted <space> or <tab>
+- current character is an unquoted \<space\> or \<tab\>
 
 => delimit any token containing previous character<br>
 => discard current character
@@ -199,34 +199,12 @@ n.b.: see how zsh does it (doesn't interpret them in interactive mode) ([Stackex
 => use current character as the start of a new word
 
 
-After delimiting a token, the next step is to categorize it following the [Shell Grammar](https://pubs.opengroup.org/onlinepubs/9699919799/utilities/V3_chap02.html#tag_18_10)
+After delimiting a token, the next step is to categorize it following the Shell Grammar.
 
 
-## 3. Shell Grammar
-Rules for determining what a token is
-
-### 3.1 Initial classification
-Apply the following rules in order (if, else if, else if, else)
-#### 3.1.1 Operator
-ELSE IF
-- the token is an operator (n.b.: in our case redirections `>`, `<`, `>>`, `<<`, or a pipe `|`)
-
-=> return the token identifier for that operator `=> ?`
->("If the token is an operator, the token identifier for that operator shall result")
-
-#### 3.1.2. IO_number
-IF
-- the string consists solely of digits and the delimiter character is `<` or `>`
-
-=> return the token identifier IO_NUMBER
-
-ELSE
-=> return the token identifier TOKEN
-=> follow the rules below to categorize TOKEN as WORD, NAME, or ASSIGNMENT_WORD
-
-TOKEN identifiers:
+## 3. [Shell Grammar](https://pubs.opengroup.org/onlinepubs/9699919799/utilities/V3_chap02.html#tag_18_10)
+### 3.0. Token identifiers:
 - Operator token identifier:
-	> If the token is an operator, the token identifier for that operator shall result:
 	- NEWLINE
 	- PIPELINE `|`
 	- INPUT_REDIRECT `<`
@@ -238,9 +216,29 @@ TOKEN identifiers:
 - NAME
 - ASSIGNMENT_WORD
 
-Tokens are classified according to the following rules applied in order:
-### 3.2. Token interpretation
+Rules for determining what a token is:
 
+### 3.1. Token classification
+Apply the following rules in order:
+#### 3.1.1 Operator
+IF
+- the token is an operator (n.b.: in our case redirections `>`, `<`, `>>`, `<<`, or a pipe `|`)
+
+=> return the token identifier for that operator `=> ?`
+>("If the token is an operator, the token identifier for that operator shall result")
+
+#### 3.1.2. IO_number
+ELSE IF
+- the string consists solely of digits and the delimiter character is `<` or `>`
+
+=> return the token identifier IO_NUMBER
+
+#### 3.1.3. Unclassified token
+ELSE<br>
+=> return the token identifier TOKEN<br>
+=> follow the rules below to categorize TOKEN as WORD, NAME, or ASSIGNMENT_WORD
+
+Tokens are classified in a context-dependent way, according to the following rules applied in order:
 <details>
 <summary><b><i>Grammar rules we don't need to implement</i></b></summary>
 3.2.4. Reserved word 'esac' `=> don't implement`<br>
@@ -249,12 +247,11 @@ Tokens are classified according to the following rules applied in order:
 </details>
 
 #### 3.2.1. Reserved word
-N.b.: "Rule 1 is not directly referenced in the grammar, but is referred to by other rules, or applies globally."
+N.b.: "Rule 1 is not directly referenced in the grammar, but is referred to by other rules, or applies globally."<br>
 IF
 - token is not exactly a reserved word
 
-=> the token WORD shall be returned
-
+=> the token WORD shall be returned<br>
 => note: at this point quotes are retained in the token, so they must be included in the comparison with reserved words
 #### 3.2.2. Redirection to or from filename
 > the expansions specified in [Redirection](https://pubs.opengroup.org/onlinepubs/9699919799/utilities/V3_chap02.html#tag_18_10) shall occur. As specified there, exactly one field can result (or the result is unspecified), and there are additional requirements on pathname expansion.
@@ -262,7 +259,7 @@ IF
 IF
 - any part of the delimiting word is quoted
 
-=> remove quotes to determine the delimiter
+=> remove quotes to determine the delimiter<br>
 => don't perform parameter expansion in the here-document
 
 ELSE IF
@@ -271,22 +268,22 @@ ELSE IF
 => all lines of the here-document are subjected to parameter expansion
 #### 3.2.5. Name in `for` `=> implement or not ?`
 IF
-- the token consisting solely of underscores, digits, and alphabetics from the [portable character set](https://pubs.opengroup.org/onlinepubs/009695399/basedefs/xbd_chap06.html#tag_06_01) (see [definition of a name](https://pubs.opengroup.org/onlinepubs/009695399/basedefs/xbd_chap03.html#tag_03_230))
+- the token consists solely of underscores, digits, and alphabetics from the [portable character set](https://pubs.opengroup.org/onlinepubs/009695399/basedefs/xbd_chap06.html#tag_06_01) (see [definition of a name](https://pubs.opengroup.org/onlinepubs/009695399/basedefs/xbd_chap03.html#tag_03_230))
 
 => the token identifier is NAME
 
-ELSE
+ELSE<br>
 => the token identifier is WORD
 
 #### 3.2.7 Assignment preceding command name
-a. IF
-- the first word does not contain the character `=`
+a) IF
+- the first word `=> of what ?` does not contain the character `=`
 
-=> apply rule 3.2.1.
+=> apply rule 3.2.1. (return token identifier WORD)
 
-ELSE
-=> apply rule b.
-b. IF
+ELSE<br>
+=> apply rule b:<br>
+b) IF
 - the token contains an unquoted `=` that is not part of an embedded parameter expansion construct (see [rule 5 in Token recognition](#2225-parameter-expansion)):
 	- if it begins with `=`
 		=> the token identifier is WORD
@@ -319,13 +316,13 @@ Command execution sequence:
 IF
 - some words recognized as variable assignments or redirections according to the [Shell Grammar](#3-shell-grammar)
 
-=> save these words for processing in steps 3. and 4.
+	=> save these words for processing in steps 3. and 4.
 
 2. expansion of the other words:<br>
 IF
 - some words are not variable assignments or redirections
 
-=> expand those words `=> parameter expansion` ; `=> pathname expansion ?`<br>
+	=> expand those words `=> parameter expansion` ; `=> pathname expansion ?`<br>
 => IF<br>
 &emsp;-  any fields (if there are \<space\> or \<tab\>) remain following the expansion of the words
 
@@ -354,55 +351,40 @@ IF
 IF<br>
 - a simple command results in a command name and an optional list of arguments, the following actions shall be performed:
 
-1. No slash  `/`  characters
+### 4.2.1. No slash  `/`  characters in the command<br>
 IF<br>
 - the command name does not contain any <slash> characters
 
 => the first successful step in the following sequence shall occur:
 
-a. special built-in utility
+	a. special built-in utility
+	IF
+	- the command name matches the name of a special built-in utility
+
+		=> invoke that special built-in utility
+
+	(..)
+
+	d. Match
+	IF
+	- the command name matches the name of a utility listed in the following table:
+		- `cd`
+		- `pwd`
+		- (`bg alias command false fc fg getopts hash jobs kill newgrp read true umask type ulimit`)
+
+		=> invoke that utility
+
+	e. search command in PATH
+	OTHERWISE
+
+	=> search for the command using the PATH environment variable as described in XBD Environment Variables :
+
+		(...)
+
+### 4.2.2. Slash `/` characters in the command<br>
 IF<br>
-- the command name matches the name of a special built-in utility
-
-=> invoke that special built-in utility
-
-
-d. Match
-IF<br>
-- the command name matches the name of the `type` or `ulimit` utility, or of a utility listed in the following table:
-
-alias
-bg
-cd
-command
- 
-false
-fc
-fg
-getopts
- 
-hash
-jobs
-kill
-newgrp
- 
-pwd
-read
-true
-umask
-
-=> invoke that utility
-
-e. search command in PATH
-OTHERWISE
-
-=> search for the command using the PATH environment variable as described in XBD Environment Variables :
-
-(...)
-
-2. Slash characters
-IF<br>
-- the command name contains at least one slash `/` character
+	- the command name contains at least one slash `/` character
+	<br>(..)
 
 #### [Quote removal](https://www.gnu.org/software/bash/manual/bash.html#Quote-Removal)
 > After the preceding expansions, all unquoted occurrences of the characters ‘\’, ‘'’, and ‘"’ that did not result from one of the above expansions are removed.
