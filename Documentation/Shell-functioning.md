@@ -1,5 +1,5 @@
 # Shell functioning
-How the shell works according to the [Shell Command Language definition](https://pubs.opengroup.org/onlinepubs/9699919799/utilities/V3_chap02.html) and [Bash reference manual](https://www.gnu.org/savannah-checkouts/gnu/bash/manual/bash.html), summarized, paraphrased and simplified for the Minishell project (Ecole 42, common core).
+This document describes how the minishell should work, based on the [Shell Command Language definition](https://pubs.opengroup.org/onlinepubs/9699919799/utilities/V3_chap02.html) and the [Bash reference manual](https://www.gnu.org/savannah-checkouts/gnu/bash/manual/bash.html), summarized, paraphrased and simplified to fit the Minishell project requirements (Ecole 42, common core).
 
 ## Sources
 - The [Shell Command Language definition](https://pubs.opengroup.org/onlinepubs/9699919799/utilities/V3_chap02.html) chapter of the [Shell and Utilities](https://pubs.opengroup.org/onlinepubs/9699919799/utilities/contents.html) volume of POSIX.1-2017, which is simultaneously IEEE Std 1003.1™-2017 and The Open Group Technical Standard Base Specifications, Issue 7:
@@ -12,6 +12,8 @@ How the shell works according to the [Shell Command Language definition](https:/
 - The [Bash reference manual](https://www.gnu.org/savannah-checkouts/gnu/bash/manual/bash.html) is "a brief description of the features that are present in the Bash shell (version 5.2, 19 September 2022) (...) [and] is meant as a brief introduction to features found in Bash. The Bash manual page should be used as the definitive reference on shell behavior."
 
 - Note: there is substantial overlap between the two documents, such that each helps to understand the other.
+
+- Note 2: "(..)" means part of the original document is ignored.
 
 ## 1. Reads input
 ### Input sources
@@ -215,6 +217,16 @@ After delimiting a token, the next step is to categorize it following the Shell 
 
 
 ## 3. [Shell Grammar](https://pubs.opengroup.org/onlinepubs/9699919799/utilities/V3_chap02.html#tag_18_10)
+
+Note: (from [Introduction - Grammar Conventions - POSIX.1-2017](https://pubs.opengroup.org/onlinepubs/9699919799/utilities/V3_chap01.html#tag_17_03))
+> The following typographical conventions are used in the grammar; they have no significance except to aid in reading.
+
+- The identifiers for the reserved words of the language are shown with a leading capital letter. (These are terminals in the grammar; for example, While, Case.)
+
+- The identifiers for terminals in the grammar are all named with uppercase letters and underscores; for example, NEWLINE, ASSIGN_OP, NAME.
+
+- The identifiers for non-terminals are all lowercase.
+
 ### 3.0. Token identifiers:
 - Operator token identifier:
 	- NEWLINE
@@ -315,25 +327,28 @@ c. ELSE
 => Each TOKEN is returned as a single WORD consisting of characters that are exactly the token described in Token Recognition
 
 
-## 4. [Shell Commands](https://pubs.opengroup.org/onlinepubs/9699919799/utilities/V3_chap02.html#tag_18_09)
+## 4. [Command execution](https://pubs.opengroup.org/onlinepubs/9699919799/utilities/V3_chap02.html#tag_18_09)
 A **command** is either a **simple command** or a **pipeline**.
 - Unless otherwise cited, the exit status of a command shall be that of the last simple command executed by the command.
 - No limit on the size of a command except the system limits (memory constraints, {ARG_MAX}, etc.)
 
+### 4.0. Shell Execution environment
+- See [Shell Execution Environment](https://pubs.opengroup.org/onlinepubs/9699919799/utilities/V3_chap02.html#tag_18_12)
+
 ### 4.1. Command types
-### 4.1.1. [Simple commands](https://pubs.opengroup.org/onlinepubs/9699919799/utilities/V3_chap02.html#tag_18_09_01)
+#### 4.1.1. [Simple commands](https://pubs.opengroup.org/onlinepubs/9699919799/utilities/V3_chap02.html#tag_18_09_01)
 A sequence of optional variable assignments and redirections, in any sequence, optionally followed by words and redirections, terminated by a control operator (\<newline\>, `|`, "the end-of-input indicator used internally by the shell").
 
 Command execution sequence:
 1. variable assignments and redirection recognition:<br>
 IF
-- some words recognized as variable assignments or redirections according to the [Shell Grammar](#3-shell-grammar)
+	- some words recognized as variable assignments or redirections according to the [Shell Grammar](#3-shell-grammar)
 
 	=> save these words for processing in steps 3. and 4.
 
 2. expansion of the other words:<br>
 IF
-- some words are not variable assignments or redirections
+	- some words are not variable assignments or redirections
 
 	=> expand those words `=> parameter expansion` ; `=> pathname expansion ?`<br>
 => IF<br>
@@ -341,14 +356,14 @@ IF
 
 3. redirections<br>
 IF
-- there are any redirections
+	- there are any redirections
 
 => perform the redirections (see [Redirection](https://pubs.opengroup.org/onlinepubs/9699919799/utilities/V3_chap02.html#tag_18_07))
 
 4. variable assignment expansion<br>
 IF
-- there are any variable assignments
-- the variable assignments have possible expansions (parameter expansion or quote removal)
+	- there are any variable assignments
+	- the variable assignments have possible expansions (parameter expansion or quote removal)
 
 => perform the expansions before assigning the value
 
@@ -358,60 +373,100 @@ IF
 
 (..)
 
-### 4.1.2. Pipelines
+#### 4.1.2. Pipelines
 
 ### 4.2. [Command Search and Execution](https://pubs.opengroup.org/onlinepubs/9699919799/utilities/V3_chap02.html#tag_18_09_01_01)
 IF<br>
-- a simple command results in a command name and an optional list of arguments, the following actions shall be performed:
+	- a simple command results in a command name and an optional list of arguments, the following actions shall be performed:
 
-### 4.2.1. No slash  `/`  characters in the command<br>
+#### 4.2.1. No slash  `/`  characters in the command<br>
 IF<br>
-- the command name does not contain any slash `/` characters
+	- the command name does not contain any slash `/` characters
 
 => the first successful step in the following sequence shall occur:
 
-	a. built-in
+##### 4.2.1.a. built-in match
 	IF
 	- the command name matches the name of a built-in utility
-
 		=> invoke that built-in utility
 
-	(..)
-
-	b. search command in PATH
+##### 4.2.1.b. PATH search
 	ELSE
-
 	=> search for the command using the PATH environment variable as described in XBD Environment Variables :
-
 		(...)
-	IF<br>
+##### 4.2.1.b.1. successful PATH search
+IF<br>
 	- search is successful
 
-	a. IF<br>
+	IF
 	- the utility is a built-in
+		=> invoke the utility
 
-	=> invoke the utility
+	ELSE
+		=> execute the utility in a separate utility environment (see Shell Execution Environment) with actions equivalent to calling the execl() function with :
 
-	b. ELSE<br>
+		- path argument:
+		set to the pathname resulting from the search
 
-	=> execute the utility in a separate utility environment (see [Shell Execution Environment](https://pubs.opengroup.org/onlinepubs/9699919799/utilities/V3_chap02.html#tag_18_12)):
-		=> with actions equivalent to calling the execl() function as defined in the [System Interface volume of POSIX.1-2017](https://pubs.opengroup.org/onlinepubs/9699919799/basedefs/V1_chap02.html#tag_02_01_03_01) (), with :
-			- the *path* argument set to the pathname resulting from the search
-			- arg0 set to the command name
-			- the remaining execl() arguments set to the command arguments (if any) and the null terminator
-		
-		IF<br>
-		- the execl() function fails du to an error equivalent to the [ENOEXEC] error defined in System Interface
+		- arg0:
+		set to the command name
+
+		- remaining execl() arguments:
+		set to the command arguments (if any) and the null terminator
+			
+		IF
+		- execl() fails due to an error equivalent to the [ENOEXEC] error defined in (POSIX.1-2017 - System Interfaces)
+		=> execute a command equivalent to having a shell invoke with:
+		- the pathname resulting from the search as its first operand
+		- any remaining arguments passed to the shell
+
+			IF
+			- the executable file is not a text file
+			=> the shell may bypass this command execution, and:
+			=> return an exit status of 126
+			=> write an error message
+
+##### 4.2.1.b.2. unsuccessful PATH search
+ELSE<br>
+	- search is unsuccessful<br>
+
+=> command fails with exit status 127<br>
+=> shell writes an error message
 
 ### 4.2.2. Slash `/` characters in the command<br>
 IF<br>
 	- the command name contains at least one slash `/` character
 	<br>(..)
 
+=> execute the utility in a separate utility environment with actions 
+
+=> execute the utility in a separate utility environment with actions equivalent to calling the execl() function with :
+- path argument:
+set to the command name
+- arg0:
+set to the command name
+- remaining execl() arguments:
+		set to the command arguments (if any) and the null terminator
+
+	IF<br>
+		- execl() fails due to an error equivalent to the [ENOEXEC] error defined in (POSIX.1-2017 - System Interfaces)
+
+	=> execute a command equivalent to having a shell invoked with:
+	- the command name as its first operand
+	- any remaining arguments passed to the shell<br><br>
+		IF
+		- the executable file is not a text file:<br>
+
+		=> the shell may bypass this command execution, and:<br>
+		=> return an exit status of 126<br>
+		=> write an error message
+
 #### [Quote removal](https://www.gnu.org/software/bash/manual/bash.html#Quote-Removal)
 > After the preceding expansions, all unquoted occurrences of the characters ‘\’, ‘'’, and ‘"’ that did not result from one of the above expansions are removed.
 
 ## Definitions
+See: [POSIX.1-2017 - Definitions](https://pubs.opengroup.org/onlinepubs/9699919799/basedefs/V1_chap03.html)
+
 ### [Name](https://www.gnu.org/software/bash/manual/bash.html#index-name)
 > A word consisting solely of letters, numbers, and underscores, and beginning with a letter or underscore. Names are used as shell variable and function names. Also referred to as an identifier.
 
