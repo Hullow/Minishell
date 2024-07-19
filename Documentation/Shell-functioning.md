@@ -403,9 +403,9 @@ IF<br>
 		=> invoke the utility
 
 	ELSE
-		=> execute the utility in a separate utility environment (see Shell Execution Environment) with actions equivalent to calling the execl() function with :
+		=> execute the utility in a separate utility environment (see Shell Execution Environment) with actions equivalent to calling the execl() function with arguments:
 
-		- path argument:
+		- path:
 		set to the pathname resulting from the search
 
 		- arg0:
@@ -416,8 +416,8 @@ IF<br>
 			
 		IF
 		- execl() fails due to an error equivalent to the [ENOEXEC] error defined in (POSIX.1-2017 - System Interfaces)
-		=> execute a command equivalent to having a shell invoke with:
-		- the pathname resulting from the search as its first operand
+		=> execute a command equivalent to having a shell invoke with arguments:
+		- first operand: the pathname resulting from the search
 		- any remaining arguments passed to the shell
 
 			IF
@@ -438,10 +438,8 @@ IF<br>
 	- the command name contains at least one slash `/` character
 	<br>(..)
 
-=> execute the utility in a separate utility environment with actions 
-
-=> execute the utility in a separate utility environment with actions equivalent to calling the execl() function with :
-- path argument:
+=> execute the utility in a separate utility environment with actions equivalent to calling the execl() function with arguments:
+- path:
 set to the command name
 - arg0:
 set to the command name

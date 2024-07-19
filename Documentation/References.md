@@ -62,8 +62,6 @@
 ## Redirections
 - [Bash reference manual - Redirections](https://www.gnu.org/savannah-checkouts/gnu/bash/manual/bash.html#Redirections)
 
-
-
 ## Tools
 ### Git & Github
 - [Git avancé (50min) - 42sh](https://www.youtube.com/live/N4GAmMHnd20?si=KNtmaPRX4fybOGDc)
