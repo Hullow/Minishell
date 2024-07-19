@@ -1,6 +1,9 @@
 # Questions on Minishell
 All questions we need answers to
 
+## Authorized functions
+- `rl_clear_history`: function not found, gcc on Mac ARM suggests `clear_history()` instead
+
 ## Input and parsing
 - Here-docs: can be implemented after regular parsing ?
 - Readline/history: should we implement indexing of history to navigate history with up/down arrows, or is it implemented by one of the authorized functions ?

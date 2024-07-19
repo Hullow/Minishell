@@ -20,5 +20,8 @@
 ### Tokenizing and parsing
 - implementing `=` in the parsing (requires: `export`; references: see Shell-functioning.md#Shell grammar#Assignment)
 
+### History
+- Add history : different with here doc
+
 ### Execution
 - Pathname resolution
