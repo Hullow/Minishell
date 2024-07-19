@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_itoa.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
+/*   By: cmegret <cmegret@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/21 11:18:52 by fallan            #+#    #+#             */
-/*   Updated: 2023/12/01 18:34:36 by fallan           ###   ########.fr       */
+/*   Updated: 2024/07/19 14:59:58 by cmegret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ static int	ft_count_digits(int n)
 		digits++;
 	}
 	return (digits);
-}	
+}
 
 static char	*ft_int_min(char	*str)
 {

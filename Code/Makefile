@@ -6,7 +6,7 @@
 #    By: cmegret <cmegret@student.42lausanne.ch>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/07/19 14:53:36 by cmegret           #+#    #+#              #
-#    Updated: 2024/07/19 15:10:51 by cmegret          ###   ########.fr        #
+#    Updated: 2024/07/19 15:29:24 by cmegret          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,6 +24,9 @@ HEADER10 =
 
 # Délai d'affichage du logo
 DELAY = 0.1
+
+# Redirection des erreurs
+REDIRECT = > /dev/null 2>&1
 
 # Codes de couleur
 RED = \033[0;31m
@@ -91,20 +94,20 @@ $(NAME): $(LIBFT) $(FT_PRINTF) $(OBJ)
 # Règle pour les fichiers objets
 %.o: %.c
 	@echo "$(BLUE)Compiling: $<$(RESET)"
-	$(CC) $(CFLAGS) -c $< -o $@
+	@$(CC) $(CFLAGS) -c $< -o $@
 
 $(FT_PRINTF): $(LIBFT)
 	@echo "$(BLUE)Compiling: lib/ft_printf$(RESET)"
-	@$(MAKE) -C ./lib/ft_printf -f Makefile > /dev/null 2>&1
+	@$(MAKE) -C ./lib/ft_printf -f Makefile $(REDIRECT)
 
 $(LIBFT):
 	@echo "$(BLUE)Compiling: lib/libft$(RESET)"
-	@$(MAKE) -C ./lib/libft -f Makefile > /dev/null 2>&1
+	@$(MAKE) -C ./lib/libft -f Makefile $(REDIRECT)
 
 # Règle pour la norminette
 norm:
-	@echo "$(YELLOW)Exécution de norminette...$(RESET)"
-	@norminette > norminette_output.txt || (echo "")
+	@echo "$(YELLOW)Exécution de norminette sur les fichiers spécifiés dans SRC...$(RESET)"
+	@norminette $(SRC) > norminette_output.txt || (echo "")
 	@error=0; \
 	while IFS= read -r line; do \
 		if ! echo "$$line" | grep -q 'OK!$$'; then \
@@ -113,7 +116,7 @@ norm:
 		fi; \
 	done < norminette_output.txt || (echo "$(MAGENTA)Erreur lors de la vérification du résultat de norminette$(RESET)"); \
 	if [ $$error -eq 0 ]; then \
-		echo "$(GREEN)Tous les fichiers sont conformes à la norme.$(RESET)"; \
+		echo "$(GREEN)Tous les fichiers spécifiés dans SRC sont conformes à la norme.$(RESET)"; \
 	fi
 	@rm norminette_output.txt
 	@echo " "
@@ -125,12 +128,12 @@ debug: CFLAGS += -g
 debug: re
 
 clean_libs:
-	@$(MAKE) -C lib/libft/ clean > /dev/null 2>&1
-	@$(MAKE) -C lib/ft_printf/ clean > /dev/null 2>&1
+	@$(MAKE) -C lib/libft/ clean $(REDIRECT)
+	@$(MAKE) -C lib/ft_printf/ clean $(REDIRECT)
 
 fclean_libs:
-	@$(MAKE) -C lib/libft/ fclean > /dev/null 2>&1
-	@$(MAKE) -C lib/ft_printf/ fclean > /dev/null 2>&1
+	@$(MAKE) -C lib/libft/ fclean $(REDIRECT)
+	@$(MAKE) -C lib/ft_printf/ fclean $(REDIRECT)
 
 # Règle pour nettoyer les fichiers objets
 clean: clean_libs
