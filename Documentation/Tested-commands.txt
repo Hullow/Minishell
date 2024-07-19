@@ -442,4 +442,86 @@ cat <<'h'ello'
 > echo $VAR
 > 'hello
 
-cat '<<hello'
+cat '<<he
+
+
+$TEST
+ls
+TEST=ls
+$TEST
+echgo "$TEST"
+echo "$TEST"
+clwear
+clear
+cd pipex
+make re
+make fclean
+$ TEST
+$TEST
+export TEST$
+export TEST$=test
+$TEST$
+$TEST
+env
+export TEST=test
+env
+export TEST$=test
+unset $TEST
+env
+unset TEST
+env
+clear
+TEST=test
+$TEST
+echo $TEST
+TES=test2
+echo $TES
+echo $TEST
+echo $TEST-TES
+unset TEST
+unset TES
+clear
+TEST=test
+echo $TEST-
+123=test
+echo $123
+unset 123
+clear
+-=test
+clear
+echo $TEST
+echo $TESTq
+echo $TEST+
+TEST_test
+TEST_test=test
+echo $TEST_test
+unset TEST_test
+clear
+env
+clear
+echo $(getconf ARG_MAX)
+clear
+echo $TESTA
+echo $
+echo test | echo tes2 | echo test3
+echo test > file1
+echo test > file1 | echo test2 > file2
+echo > file1 test
+echo > file3 test
+cat file3
+> file4 echo test
+cat file4
+> ./file4 echo test
+> ./file4 echo blabla
+cat file4
+> ./file5 echo test
+cd Documentation
+> ../file6 echo test
+> echo test
+echo test >
+export test=file1
+echo blabla > $test
+echo blabla > $testhgfhghgvlkhhfxjhf
+echo blabla > $testhgfhghgvlkhhfxjhf | cat file1
+history tail -n 50
+history | tail -n 50
