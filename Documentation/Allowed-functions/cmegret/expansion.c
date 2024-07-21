@@ -22,7 +22,7 @@ int is_digit(char c)
 	return (0);
 }
 
-char *ft_check_export(char *input, int i, int *end)
+char *ft_check_expansion(char *input, int i, int *end)
 {
 	int j;
 
@@ -57,7 +57,7 @@ void parsing(char *input)
 	{
 		if (input[i] == '$')
 		{
-			env = ft_check_export(input, i, &end); // Passage de l'adresse de end
+			env = ft_check_expansion(input, i, &end); // Passage de l'adresse de end
 			if (env)
 			{
 				replace_value(input, env);
