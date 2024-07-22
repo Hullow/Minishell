@@ -17,19 +17,7 @@
 
 // Token types
 
-#define WORD 1
-#define NEWLINE 2
-#define REDIR_INPUT 3
-#define REDIR_OUTPUT 4
-#define REDIR_APPEND 5
-#define REDIR_HEREDOC 6
-#define PIPE 7
-#define END_OF_INPUT 8
-
-typedef struct s_token
+typedef struct s_tools
 {
-	char			*str;
-	int				type;
-	struct token	*next;
-	int				is_delimited;
-}			t_token;
+	char					**envp;
+}	t_tools;

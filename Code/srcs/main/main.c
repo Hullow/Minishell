@@ -10,59 +10,15 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../header/Minishell.h"
+#include "../../../header/minishell.h"
 
-int	is_quote(char c)
+int		main(int ac, char **av, char **env)
 {
-	if (c == '\'' || c == '\"')
-		return (1);
-	return (0);
-}
+	t_tools	tools;
 
-int	is_blank(char c)
-{
-	if (c == ' ' || c == '\t'
-		|| c == '\n' || c == '\v'
-		|| c == '\f' || c == '\r')
-		return (1);
-	return (0);
-}
-
-void	ft_tokenizer(char *prompt)
-{
-	int	i;
-	int	in_quote;
-
-	i = 0;
-	in_quote = 0;
-	while (prompt[i])
+	if (argc != 1 || argv[1])
 	{
-		if (is_quote(prompt[i]))
-			in_quote = !in_quote;
-		if (is_blank(prompt[i]) && in_quote == 0)
-		{
-			i++;
-			continue ;
-		}
-		i++;
+		printf("This program does not accept arguments\n");
+		exit(0);
 	}
-}
-
-int	main(void)
-{
-	char	*prompt;
-
-	while (1)
-	{
-		prompt = readline("Minishell : ");
-		if (!prompt)
-			break ;
-		if (*prompt)
-		{
-			add_history(prompt);
-			ft_tokenizer(prompt);
-		}
-		free(prompt);
-	}
-	return (0);
 }
