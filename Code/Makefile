@@ -53,7 +53,7 @@ CFLAGS = -Wall -Wextra -Werror
 LIBFLAGS = -L./lib -lft -lftprintf -lreadline
 
 # Fichiers sources et objets
-SRC = srcs/main.c
+SRC = srcs/main/main.c
 
 # Fichiers objets
 OBJ = $(SRC:.c=.o)

@@ -21,3 +21,6 @@ typedef struct s_tools
 {
 	char					**envp;
 }	t_tools;
+
+
+int	main(int argc, char **argv, char **env);
