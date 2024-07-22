@@ -1,4 +1,6 @@
 # Research
+- Finish shell-functioning.md
+- learn about abstract/concrete syntax trees and their implementation
 - Go through token recognition process manually with a few examples
 - Quick read of allowed functions to understand their purpose
 - Readings:

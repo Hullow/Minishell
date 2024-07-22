@@ -523,5 +523,43 @@ export test=file1
 echo blabla > $test
 echo blabla > $testhgfhghgvlkhhfxjhf
 echo blabla > $testhgfhghgvlkhhfxjhf | cat file1
-history tail -n 50
-history | tail -n 50
+
+>> textfile echo "hello"
+cat textfile
+echo blabla>
+echo blabla>i
+cat i
+rm i
+
+echo "hello" >> textfile1
+cat textfile1 
+echo "hello" >>> textfile1
+echo "hello" >| textfile1
+cat textfile1 
+echo "hello" >| textfile1
+cat textfile1 
+echo "bklabk" >| textfile1
+cat textfile1 
+echo "bklabk" >( textfile1
+echo "bklabk" >* textfile1
+echo "bklabk" >\ textfile1
+cat textfile1 
+echo "bklabk" >+ textfile1
+cat textfile1 
+echo "bklabk" >° textfile1
+cat textfile1 
+rm textfile1 
+echo "bklabk" >° textfile1
+cat textfile1 
+
+"hello everyone" > textfile1
+"hello everyone" > textfile1
+> textfile1 "hello everyone"
+echo "hello everyone" > textfile1
+cat textfile1 
+cat textfile1 > 1 | < 1 echo 
+cat textfile1 > 1 | < 1 echo ""
+
+touch " textfile1"
+rm textfile1
+rm " textfile1"

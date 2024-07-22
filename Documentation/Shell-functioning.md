@@ -123,19 +123,22 @@ OR:
 
 ##### 2.2.2.2. Continued operator token and current character usable
 IF
-- previous character used as part of an operator
-- current character can be used with the previous characterS to form an operator
 - current character not quoted
+- previous character used as part of an operator ==> 
+- current character can be used with the previous characterS to form an operator 
+<br> &emsp;=> only `>>` or `<<` in our case
 
 => use character as part of that (operator) token
-<br>e.g.: previous character is `>`, current character is `>` => add it to `>>`
 
 ##### 2.2.2.3. Continued operator token and current character not usable
 IF
 - previous character used as part of an operator
-- current character cannot be used with the current characters to form an operator
+- current character cannot be used with the previous characters to form an operator
+<br> &emsp;e.g. `>>` + `>` => no implementation of `>>>` in our case
 
 => delimit the operator containing the previous character
+
+=> question: when do we mark tok->is_operator ?
 
 ##### 2.2.2.4. Quotes
 IF
