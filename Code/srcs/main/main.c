@@ -10,11 +10,13 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../../header/minishell.h"
+#include "../../header/Minishell.h"
 
-int		main(int ac, char **av, char **env)
+int		main(int argc, char **argv, char **env)
 {
 	t_tools	tools;
+	(void)tools;
+	(void)env;
 
 	if (argc != 1 || argv[1])
 	{
