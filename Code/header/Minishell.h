@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: francis <francis@student.42.fr>            +#+  +:+       +#+        */
+/*   By: cmegret <cmegret@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/19 13:48:14 by francis           #+#    #+#             */
-/*   Updated: 2024/07/19 14:38:01 by francis          ###   ########.fr       */
+/*   Updated: 2024/07/19 15:20:20 by cmegret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,10 +26,10 @@
 #define PIPE 7
 #define END_OF_INPUT 8
 
-struct token
+struct s_token
 {
-	char *str;
-	int type;
-	struct token *next;
-	bool	is_delimited;
+	char			*str;
+	int				type;
+	struct token	*next;
+	int			is_delimited;
 };

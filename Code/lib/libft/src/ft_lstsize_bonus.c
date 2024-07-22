@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_lstsize_bonus.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
+/*   By: cmegret <cmegret@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/28 13:13:16 by fallan            #+#    #+#             */
-/*   Updated: 2023/12/01 18:32:48 by fallan           ###   ########.fr       */
+/*   Updated: 2024/07/19 14:59:41 by cmegret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,6 @@ int	ft_lstsize(t_list *lst)
 	{
 		lst = lst->next;
 		lstsize++;
-	}	
+	}
 	return (lstsize);
 }
