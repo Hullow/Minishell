@@ -105,6 +105,10 @@ POSIX.1-2017's special grammar notation is based on the syntax used by the `yacc
 			
 			=> issue fixed: needed to pass **tok (by reference) rather than as a parameter in all functions that create or edit a token.
 - Simple tokenizer done. To do:
+	- Check if behavior is correct !!!
 	- test it with various sequences, check if behavior is adequate
 	- test for leaks
 	- refactor for clarity of code (and to prevent issues)
+- New commit: removed printf statements, refactored a tiny bit (put conditions in functions)
+- New commit: more refactoring and cleaning up. Couldn't make ft_tokenize work with a call to ft_create_token at the beginning, need to initialize tok separately which takes up space. => maybe do this soon
+- Norminette: not done

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: francis <francis@student.42.fr>            +#+  +:+       +#+        */
+/*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/19 13:48:14 by francis           #+#    #+#             */
-/*   Updated: 2024/07/19 16:23:58 by francis          ###   ########.fr       */
+/*   Updated: 2024/07/23 18:24:06 by fallan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,3 +38,10 @@ struct token
 	bool			is_operator;
 	struct token	*next;
 };
+
+// Tokenisation
+	// Checkers
+int	ft_previous_char_is_undelimited_operator(struct token *tok);
+int	ft_is_redir_character(char c);
+int	ft_is_blank(char c);
+int	ft_previous_char_part_of_word(struct token *tok);

@@ -202,6 +202,8 @@ IF
 
 => append current character to that word
 
+N.b.: added => check if previous token delimited
+
 <details>
 ####<summary><b>2.2.2.9. Comment (#) <i>=> don't implement</i></b></summary>
 IF

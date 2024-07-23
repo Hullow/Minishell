@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: francis <francis@student.42.fr>            +#+  +:+       +#+         #
+#    By: fallan <fallan@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/07/19 13:37:49 by francis           #+#    #+#              #
-#    Updated: 2024/07/22 16:48:52 by francis          ###   ########.fr        #
+#    Updated: 2024/07/23 18:26:37 by fallan           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,7 +22,7 @@ CFLAGS = -Wall -Wextra -Werror
 
 LIBFLAGS = -L./lib -lft -lftprintf -lreadline
 
-SRCS = main.c tokenization.c
+SRCS = main.c tokenization.c tokenization-checkers.c
 
 SRC = $(addprefix srcs/, $(SRCS))
 
