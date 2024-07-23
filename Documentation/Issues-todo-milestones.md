@@ -19,6 +19,7 @@
 ## To-do by topic
 ### Tokenizing and parsing
 - implementing `=` in the parsing (requires: `export`; references: see Shell-functioning.md#Shell grammar#Assignment)
+- keep track of quotes in parsing
 
 ### History
 - Add history : different with here doc

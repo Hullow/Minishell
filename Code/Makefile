@@ -6,7 +6,7 @@
 #    By: francis <francis@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/07/19 13:37:49 by francis           #+#    #+#              #
-#    Updated: 2024/07/19 14:38:01 by francis          ###   ########.fr        #
+#    Updated: 2024/07/22 16:48:52 by francis          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,7 +22,9 @@ CFLAGS = -Wall -Wextra -Werror
 
 LIBFLAGS = -L./lib -lft -lftprintf -lreadline
 
-SRC = srcs/main.c
+SRCS = main.c tokenization.c
+
+SRC = $(addprefix srcs/, $(SRCS))
 
 OBJ = $(SRC:.c=.o)
 
@@ -36,7 +38,6 @@ $(FT_PRINTF): $(LIBFT)
 
 $(LIBFT):
 	make -C ./lib/libft -f Makefile
-
 
 $(NAME): $(LIBFT) $(FT_PRINTF) $(OBJ)
 	$(CC) $(CFLAGS) $(OBJ) $(LIBFLAGS) -o minishell
