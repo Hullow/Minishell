@@ -77,3 +77,19 @@ Thinking about Copilot prompting, maybe we could make some prompt tool like Fabr
 - Learning:
 POSIX.1-2017's special grammar notation is based on the syntax used by the `yacc` ([yet-another-compiler-compiler](https://en.wikipedia.org/wiki/Yacc)) utility. It is used to portray the complex syntax of certain program input.
 ([Grammar Conventions](https://pubs.opengroup.org/onlinepubs/9699919799/utilities/V3_chap01.html#tag_17_03))
+
+# 19/7/24
+- Workday with cmegret
+- Started coding the tokenization
+
+# 22/7/24
+- Tokenization: separating code into functions
+
+# 23/7/24
+- Tokenization:
+	- fixed issue with first character not printed out
+	- linked list,
+	- refactoring,
+	- continued operator token
+	- issue with sequence: `Hello >>    ???     kk` => "Hello", ">>", "k" tokens only
+		=> to fix

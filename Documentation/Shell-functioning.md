@@ -472,7 +472,6 @@ See: [POSIX.1-2017 - Definitions](https://pubs.opengroup.org/onlinepubs/96999197
 > A word consisting solely of letters, numbers, and underscores, and beginning with a letter or underscore. Names are used as shell variable and function names. Also referred to as an identifier.
 
 #### Operator
-
 > In the shell command language, either a control operator or a redirection operator.
 
 ### [Control Operator](https://pubs.opengroup.org/onlinepubs/9699919799/basedefs/V1_chap03.html#tag_03_113)
@@ -486,11 +485,9 @@ See: [POSIX.1-2017 - Definitions](https://pubs.opengroup.org/onlinepubs/96999197
 > A word that has a special meaning to the shell. Most reserved words introduce shell flow control constructs, such as for and while.
 
 ### Redirection
-
 > In the shell command language, a method of associating files with the input or output of commands. 
 
 ### Redirection Operator
-
 >In the shell command language, a token that performs a redirection function. It is one of the following symbols:
 
 <     >     >|     <<     >>     <&     >&     <<-     <>

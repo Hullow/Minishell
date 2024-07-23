@@ -3,15 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   tokenization.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: francis <francis@student.42.fr>            +#+  +:+       +#+        */
+/*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/22 16:35:11 by francis           #+#    #+#             */
-/*   Updated: 2024/07/23 13:00:47 by francis          ###   ########.fr       */
+/*   Updated: 2024/07/23 16:32:11 by fallan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../header/Minishell.h"
 
+// checks if token is an operator token
 int	ft_token_is_operator(struct token *tok)
 {
 	if (tok == NULL)
@@ -22,7 +23,18 @@ int	ft_token_is_operator(struct token *tok)
 		return (0);
 }
 
+// checks if character is end of input
+int	ft_is_end_of_input(char character)
+{
+	if (character == '\0')
+		return (1);
+	else if (character == EOF)
+		return (1);
+	else
+		return (0);
+}
 
+// checks if character is a blank (space or tab)
 int	ft_is_blank(char c)
 {
 	if (c == ' ' || c == '\t')
@@ -30,14 +42,46 @@ int	ft_is_blank(char c)
 	return (0);
 }
 
-int	ft_is_end_of_input(char character)
+// checks if previous character was part of an undelimited operator token
+int	ft_previous_char_is_undelimited_operator(struct token *tok)
 {
-	if (character == '\n')
+	if (tok->str && tok->is_operator == true && tok->is_delimited == false)
+	{
+		printf("previous char was part of an undelimited operator token\n");
 		return (1);
-	else if (character == EOF)
-		return (1);
+	}
 	else
+	{
+		printf("previous char was ***not*** part of an undelimited operator token\n");
+		printf(" values:tok->str: {%s}\n", tok->str);
 		return (0);
+	}
+}
+
+// if anything is in the token (tok->str not NULL):
+// delimits the token
+// creates a new token
+// sets the new token to undelimited
+// adds the new token to our token list 
+struct token	*ft_create_new_token(struct token *tok)
+{
+	struct token	*newtoken;
+
+	if (tok->str)
+	{
+		printf("ft_create_new_token: adding token to the chain. previous string: %s\n", tok->str);
+		newtoken = malloc(sizeof(struct token));
+		if (!newtoken)
+			return (0);
+		newtoken->next = NULL;
+		newtoken->is_delimited = false;
+		tok->is_delimited = true;
+		tok->next = newtoken;
+		tok = tok->next;
+	}
+	else
+		printf("ft_create_new_token: no previous string\n");
+	return (tok);
 }
 
 struct token	*ft_tokenize_end_of_input(struct token *tok)
@@ -64,29 +108,27 @@ struct token	*ft_tokenize_end_of_input(struct token *tok)
 	return (tok);
 }
 
-int	ft_previous_char_is_undelimited_operator(struct token *tok)
-{
-	if (tok->str && tok->is_operator == true && tok->is_delimited == false)
-		return (1);
-	else
-		return (0);
-}
-
 // Function for rules:
+//
 // ##### 2.2.2.2. Continued operator token and current character usable
-// ##### 2.2.2.3. Continued operator token and current character not usable
 // IF
 // - previous character used as part of an operator 
-// - current character can be used with 
-// the previous characterS to form an operator
+// - current character can be used with the previous characterS to form an operator
 // - current character not quoted
-//=> use character as part of that (operator) token
+//		=> use character as part of that (operator) token
 // n.b.: only `>>` or `<<` in our case
 //
 // returns 1 if the current character was added to the previous (operator) token,
 // returns 0 if the previous (operator) character was delimited
+//
+// ##### 2.2.2.3. Continued operator token and current character not usable
+// - current character can NOT be used with the previous characterS to form an operator
+// - current character not quoted
+// 		=> use character as part of that (operator) token
+// 		=> delimit the operator containing the previous character
 int	ft_continue_operator_token(char *prompt, int i, struct token *tok)
 {
+	printf("ft_continue_operator_token: handling '%c'\n", prompt[i]);
 	if (ft_strlen(tok->str) != 1) // if token was of length > 1, the current character cannot be used with the previous characters to form an operator, because or only multi-character operators are '>>' and '<<'
 		tok->is_delimited = true; // therefore: apply rule 2.2.2.3. and delimit operator containing previous token
 	else if (prompt[i] == '>' && prompt[i - 1] == '>') // && tok->is_quoted == false)
@@ -121,28 +163,18 @@ int	ft_continue_operator_token(char *prompt, int i, struct token *tok)
 //
 // => delimit the current token, if any<br>
 // => use the current character as the beginning of the next (operator) token
-int	ft_new_operator_token(char *prompt, int i, struct token *tok)
+int	ft_new_operator_token(char *prompt, int i, struct token **tok)
 {
-	struct token	*newtoken;
-
-	newtoken = malloc(sizeof(struct token));
-	if (!newtoken)
-		return (0);
+	printf("ft_new_operator_token with '%c' at index %d\n", prompt[i], i);
+	(*tok) = ft_create_new_token(*tok);
 	if (prompt[i] == '>')
-		newtoken->str = ft_strdup(">");
+		(*tok)->str = ft_strdup(">");
 	else if (prompt[i] == '<')
-		newtoken->str = ft_strdup("<");
-	newtoken->is_operator = true;
-	newtoken->is_delimited = true;
-	newtoken->next = NULL;
-	if (tok->str)
-	{
-		tok->is_delimited = true;
-		tok->next = newtoken;
-		tok = tok->next;
-	}
-	else
-		tok = newtoken;
+		(*tok)->str = ft_strdup("<");
+	(*tok)->is_operator = true;
+	(*tok)->is_delimited = false;
+	(*tok)->next = NULL;
+	printf("ft_new_operator_token values:(*tok)->str: {%s}\n", (*tok)->str);
 	return (1);
 }
 
@@ -150,6 +182,7 @@ int	ft_tokenize_blank(struct token *tok)
 {
 	if (tok->str)
 		tok->is_delimited = true;
+	printf("ft_tokenize_blank\n");
 	return (1);
 }
 
@@ -159,7 +192,6 @@ int	ft_append_char_to_word(struct token *tok, char c)
 	char character[2];
 
 	temp = ft_strdup(tok->str);
-	printf("ft_append_char_to_word: tok->str : {%s} – temp: {%s}\n", tok->str, temp);
 	character[0] = c;
 	character[1] = '\0';
 	tok->str = ft_strjoin(temp, character);
@@ -167,19 +199,16 @@ int	ft_append_char_to_word(struct token *tok, char c)
 	return (1);
 }
 
-int	ft_new_word(struct token **tok, char c)
+int	ft_new_word(struct token *tok, char c)
 {
 	char character[2];
 
 	character[0] = c;
 	character[1] = '\0';
-	printf("ft_new_word: character: %c\n", c);
-	(*tok)->type = WORD;
-	(*tok)->str = ft_strdup(character);
-	printf("ft_new_word: (*tok)->str: %s\n", (*tok)->str);
-	(*tok)->is_delimited = false;
-	(*tok)->is_operator = false;
-	(*tok)->next = NULL;
+	tok = ft_create_new_token(tok);
+	tok->type = WORD;
+	tok->is_operator = false;
+	tok->str = ft_strdup(character);
 	return (1);
 }
 
@@ -215,9 +244,9 @@ void	ft_tokenize(char *prompt)
 	struct token 	*head;
 	int				i;
 
-	tok = malloc(sizeof(struct token *));
+	tok = malloc(sizeof(struct token));
 	if (!tok)
-		return ; // return (NULL);
+		return ; // return (NULL); ?
 	tok->str = NULL;
 	tok->is_delimited = false;
 	tok->is_operator = NULL;
@@ -229,39 +258,30 @@ void	ft_tokenize(char *prompt)
 	// To do:
 	// - linked list of tokens
 	// - harmonize ifs and thens
-	
 	while (prompt[i]) // Problem: not sure about the sequence of rule application: when to go back to rule 1 ?
 	{
+		printf("ft_tokenize while loop: i == %d, prompt[i] : %c\n", i, prompt[i]);
 		if (ft_previous_char_is_undelimited_operator(tok))
 		{
 			i += ft_continue_operator_token(prompt, i, tok);
-			printf("ft_previous_char_is_undelimited_operator: i = %d\n", i);
 		}
 		else if (prompt[i] == '>' || prompt[i] == '<') // && tok->is_quoted == false => handle quotes later
 		{
-			i+= ft_new_operator_token(prompt, i, tok);
-			printf("ft_new_operator_token: i = %d\n", i);
+			i+= ft_new_operator_token(prompt, i, &tok);
 		}
 		else if (ft_is_blank(prompt[i]))
 		{
 			i += ft_tokenize_blank(tok);
-			printf("ft_tokenize_blank: i = %d\n", i);
 		}
 		else if (tok->type == WORD)
 		{
-			printf("ft_append_char_to_word: tok->str: %s\n", tok->str);
 			i += ft_append_char_to_word(tok, prompt[i]);
-			printf("ft_append_char_to_word: i = %d\n", i);
 		}
 		else
 		{
-			tok->str = ft_strdup("blabla");
-			printf("ft_new_word: tok->str: %s\n", tok->str);
-			i += ft_new_word(&tok, prompt[i]);
-			printf("ft_new_word: i = %d\n", i);
-			printf("ft_new_word: tok->str: %s\n", tok->str);
+			// printf("ft_new_word: tok->str: %s\n", tok->str);
+			i += ft_new_word(tok, prompt[i]);
 		}
-		// printf("i is: %d\n", i);
 		// how to verify if current character is unquoted ?
 			// => initialize a token every time, but set the tok->string to NULL
 			// => if quotes appear, 
@@ -279,21 +299,3 @@ void	ft_tokenize(char *prompt)
 		printf("ft_tokenizer: tok not found\n");
 	ft_print_all_token_strings(&head);
 }
-
-
-/* ft_tokenizer(char *prompt)
-{
-	int	i;
-	int start;
-	int end;
-
-	while(prompt[i])
-	{
-		if (ft_is_end_of_input(prompt[i]))
-			ft_tokenize_end_of_input(prompt, i, tok);
-		// If the prompt[i] is a space, we skip it
-		if (is_blank(prompt[i]))
-			i++;
-		
-	}
-} */
