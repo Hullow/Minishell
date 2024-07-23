@@ -91,5 +91,20 @@ POSIX.1-2017's special grammar notation is based on the syntax used by the `yacc
 	- linked list,
 	- refactoring,
 	- continued operator token
-	- issue with sequence: `Hello >>    ???     kk` => "Hello", ">>", "k" tokens only
-		=> to fix
+	- issue with some sequences like `Hello >>    ???     kk` => "Hello", ">>", "k" tokens only (see Tokenization.md)
+		=> to fix<br>
+		- `Hello ??? >>>` :<br>
+			- token: Hello???
+			- token: >>
+			- token: >
+		- `Hello ??? >>> ??? kkk` :<br>
+			- token: Hello???
+			- token: >>
+			- token: >
+			- token: k
+			
+			=> issue fixed: needed to pass **tok (by reference) rather than as a parameter in all functions that create or edit a token.
+- Simple tokenizer done. To do:
+	- test it with various sequences, check if behavior is adequate
+	- test for leaks
+	- refactor for clarity of code (and to prevent issues)

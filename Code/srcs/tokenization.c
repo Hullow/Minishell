@@ -6,7 +6,7 @@
 /*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/22 16:35:11 by francis           #+#    #+#             */
-/*   Updated: 2024/07/23 16:32:11 by fallan           ###   ########.fr       */
+/*   Updated: 2024/07/23 17:42:45 by fallan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,13 +47,13 @@ int	ft_previous_char_is_undelimited_operator(struct token *tok)
 {
 	if (tok->str && tok->is_operator == true && tok->is_delimited == false)
 	{
-		printf("previous char was part of an undelimited operator token\n");
+		// printf("previous char was part of an undelimited operator token\n");
 		return (1);
 	}
 	else
 	{
-		printf("previous char was ***not*** part of an undelimited operator token\n");
-		printf(" values:tok->str: {%s}\n", tok->str);
+		// printf("previous char was ***not*** part of an undelimited operator token\n");
+		// printf(" values:tok->str: {%s}\n", tok->str);s
 		return (0);
 	}
 }
@@ -126,32 +126,32 @@ struct token	*ft_tokenize_end_of_input(struct token *tok)
 // - current character not quoted
 // 		=> use character as part of that (operator) token
 // 		=> delimit the operator containing the previous character
-int	ft_continue_operator_token(char *prompt, int i, struct token *tok)
+int	ft_continue_operator_token(char *prompt, int i, struct token **tok)
 {
 	printf("ft_continue_operator_token: handling '%c'\n", prompt[i]);
-	if (ft_strlen(tok->str) != 1) // if token was of length > 1, the current character cannot be used with the previous characters to form an operator, because or only multi-character operators are '>>' and '<<'
-		tok->is_delimited = true; // therefore: apply rule 2.2.2.3. and delimit operator containing previous token
+	if (ft_strlen((*tok)->str) != 1) // if token was of length > 1, the current character cannot be used with the previous characters to form an operator, because or only multi-character operators are '>>' and '<<'
+		(*tok)->is_delimited = true; // therefore: apply rule 2.2.2.3. and delimit operator containing previous token
 	else if (prompt[i] == '>' && prompt[i - 1] == '>') // && tok->is_quoted == false)
 	// there is only '>' in the operator token => we can form a '>>' with it
 	{
-		free(tok->str);
-		tok->str = ft_strdup(">>");
-		tok->type = REDIR_APPEND;
-		tok->is_delimited = true; // do this or not ?
+		free((*tok)->str);
+		(*tok)->str = ft_strdup(">>");
+		(*tok)->type = REDIR_APPEND;
+		(*tok)->is_delimited = true; // do this or not ?
 		// e.g. `echo "hello" >>> 3` gives the error:
 		// => bash: syntax error near unexpected token `>'
 		return (1); // because we assigned the character to a token
 	}
-	else if (prompt[i] == '<' && prompt[i - 1] == '<' && tok->is_quoted == false) // only '>' in the operator token, we can form a '>>' with it
+	else if (prompt[i] == '<' && prompt[i - 1] == '<' && (*tok)->is_quoted == false) // only '>' in the operator token, we can form a '>>' with it
 	{
-		free(tok->str);
-		tok->str = ft_strdup("<<");
-		tok->type = REDIR_HEREDOC; // do this or not ?
-		tok->is_delimited = true;
+		free((*tok)->str);
+		(*tok)->str = ft_strdup("<<");
+		(*tok)->type = REDIR_HEREDOC; // do this or not ?
+		(*tok)->is_delimited = true;
 		return (1); // because we assigned the character to a token
 	}
 	else
-		tok->is_delimited = 1;
+		(*tok)->is_delimited = 1;
 			// => need to create a new operator token ? no
 	return (0); // we did not assign the character to a token
 }
@@ -178,37 +178,40 @@ int	ft_new_operator_token(char *prompt, int i, struct token **tok)
 	return (1);
 }
 
-int	ft_tokenize_blank(struct token *tok)
+int	ft_tokenize_blank(struct token **tok)
 {
-	if (tok->str)
-		tok->is_delimited = true;
+	if ((*tok)->str)
+		(*tok)->is_delimited = true;
 	printf("ft_tokenize_blank\n");
 	return (1);
 }
 
-int	ft_append_char_to_word(struct token *tok, char c)
+int	ft_append_char_to_word(struct token **tok, char c)
 {
 	char *temp;
 	char character[2];
 
-	temp = ft_strdup(tok->str);
+	printf("ft_append_char_to_word called\n");
+	temp = ft_strdup((*tok)->str);
 	character[0] = c;
 	character[1] = '\0';
-	tok->str = ft_strjoin(temp, character);
+	(*tok)->str = ft_strjoin(temp, character);
 	free(temp);
 	return (1);
 }
 
-int	ft_new_word(struct token *tok, char c)
+int	ft_new_word(struct token **tok, char c)
 {
 	char character[2];
 
+	printf("ft_new_word called\n");
 	character[0] = c;
 	character[1] = '\0';
-	tok = ft_create_new_token(tok);
-	tok->type = WORD;
-	tok->is_operator = false;
-	tok->str = ft_strdup(character);
+	(*tok) = ft_create_new_token(*tok);
+	(*tok)->type = WORD;
+	(*tok)->is_operator = false;
+	(*tok)->str = ft_strdup(character);
+	printf("ft_new_word: added token to the chain. previous string is now: %s\n", (*tok)->str);
 	return (1);
 }
 
@@ -263,7 +266,7 @@ void	ft_tokenize(char *prompt)
 		printf("ft_tokenize while loop: i == %d, prompt[i] : %c\n", i, prompt[i]);
 		if (ft_previous_char_is_undelimited_operator(tok))
 		{
-			i += ft_continue_operator_token(prompt, i, tok);
+			i += ft_continue_operator_token(prompt, i, &tok);
 		}
 		else if (prompt[i] == '>' || prompt[i] == '<') // && tok->is_quoted == false => handle quotes later
 		{
@@ -271,16 +274,16 @@ void	ft_tokenize(char *prompt)
 		}
 		else if (ft_is_blank(prompt[i]))
 		{
-			i += ft_tokenize_blank(tok);
+			i += ft_tokenize_blank(&tok);
 		}
-		else if (tok->type == WORD)
+		else if (tok->type == WORD && tok->is_delimited == false)
 		{
-			i += ft_append_char_to_word(tok, prompt[i]);
+			i += ft_append_char_to_word(&tok, prompt[i]);
 		}
 		else
 		{
 			// printf("ft_new_word: tok->str: %s\n", tok->str);
-			i += ft_new_word(tok, prompt[i]);
+			i += ft_new_word(&tok, prompt[i]);
 		}
 		// how to verify if current character is unquoted ?
 			// => initialize a token every time, but set the tok->string to NULL
