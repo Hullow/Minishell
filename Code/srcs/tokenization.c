@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokenization.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
+/*   By: francis <francis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/22 16:35:11 by francis           #+#    #+#             */
-/*   Updated: 2024/07/23 18:46:05 by fallan           ###   ########.fr       */
+/*   Updated: 2024/07/25 17:52:14 by francis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -141,6 +141,8 @@ int	ft_new_operator_token(char *prompt, int i, struct token **tok)
 		(*tok)->str = ft_strdup(">");
 	else if (prompt[i] == '<')
 		(*tok)->str = ft_strdup("<");
+	else if (prompt[i] == '|')
+		(*tok)->str = ft_strdup("|");
 	(*tok)->is_operator = true;
 	(*tok)->is_delimited = false;
 	(*tok)->next = NULL;
@@ -238,7 +240,7 @@ void	ft_tokenize(char *prompt)
 		{
 			i += ft_continue_operator_token(prompt, i, &tok);
 		}
-		else if (ft_is_redir_character(prompt[i])) // && tok->is_quoted == false => handle quotes later
+		else if (ft_is_operator_character(prompt[i])) // && tok->is_quoted == false => handle quotes later
 		{
 			i += ft_new_operator_token(prompt, i, &tok);
 		}

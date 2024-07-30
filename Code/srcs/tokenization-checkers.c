@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokenization-checkers.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
+/*   By: francis <francis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/22 16:35:11 by francis           #+#    #+#             */
-/*   Updated: 2024/07/23 18:44:11 by fallan           ###   ########.fr       */
+/*   Updated: 2024/07/25 17:50:40 by francis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,10 +26,10 @@ int	ft_previous_char_is_undelimited_operator(struct token *tok)
 }
 
 // checks if character is a redirection operator character:
-// either '>' or '<'
-int	ft_is_redir_character(char c)
+// either '>', '<', or '|'
+int	ft_is_operator_character(char c)
 {
-	if (c == '>' || c == '<')
+	if (c == '>' || c == '<' || c == '|')
 		return (1);
 	else
 		return (0);

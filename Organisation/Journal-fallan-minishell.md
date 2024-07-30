@@ -112,3 +112,9 @@ POSIX.1-2017's special grammar notation is based on the syntax used by the `yacc
 - New commit: removed printf statements, refactored a tiny bit (put conditions in functions)
 - New commit: more refactoring and cleaning up. Couldn't make ft_tokenize work with a call to ft_create_token at the beginning, need to initialize tok separately which takes up space. => maybe do this soon
 - Norminette: not done
+
+# 25/7/24
+- Read about Abstract Syntax Trees, Backus-Naur Form grammars, parsing
+
+# 26/7/24
+- More research into parsing and grammars, starting to make sense (asked Claude via Double in VSCode, continued reading the slides at [CSE12 UCSD - Abstract Syntax Trees](https://cseweb.ucsd.edu/~kube/cls/12.s13/Lectures/lec16/lec16.pdf)

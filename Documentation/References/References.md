@@ -14,6 +14,9 @@
 - [Conférences 42SH Redirection et Pipe  - 2019](https://www.youtube.com/watch?v=ceNaZzEoUhk)
 - [Minishell Structure - Toni Schmitt - Github](https://github.com/toni-schmitt/minishell#lexer)
 
+## Syntax and parsing
+- [CSE12 UCSD - Abstract Syntax Trees](https://cseweb.ucsd.edu/~kube/cls/12.s13/Lectures/lec16/lec16.pdf)
+
 ## Testing
 - [Conférences 42sh 2019 - Python & Testsuite fonctionnelle](https://www.youtube.com/watch?v=1CoFy6eM7_I&list=PLo31Bhg3nNkZHhqAjlwo5tNOa-FEXKnEe&index=6)
 

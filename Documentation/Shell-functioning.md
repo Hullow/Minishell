@@ -26,6 +26,14 @@ This document describes how the minishell should work, based on the [Shell Comma
 ### Input characteristics
 - length: unlimited
 
+
+## 2.-3. Tokenizing and interpreting the grammar
+> Parts of an interpreter:<br>
+> • In designing an interpreter, follow the decomposition into two tasks, and design it to have two parts:
+> 1. A syntactic analysis engine, which takes as input a string, and outputs an appropriate tree structure
+> 2. A semantic evaluation engine, which takes as input that tree, and does what the original input string said to do
+[CSE12 UCSD - Abstract Syntax Trees](https://cseweb.ucsd.edu/~kube/cls/12.s13/Lectures/lec16/lec16.pdf)
+
 ## 2. Tokenization
 ### 2.0. Tokenization summary
 - Shell breaks input into tokens:
@@ -223,16 +231,31 @@ After delimiting a token, the next step is to categorize it following the Shell 
 
 ## 3. [Shell Grammar](https://pubs.opengroup.org/onlinepubs/9699919799/utilities/V3_chap02.html#tag_18_10)
 
+### Preliminary note: Syntax rules and BNF
+> The syntax rules for the language can be written down in Backus-Naur Form (BNF) or a similar notation
+> - A BNF grammar is a list of syntax rules
+> - Each rule defines one "nonterminal symbol", which appears at the left of a " := " sign in the rule
+> - Alternative definitions of the nonterminal symbol appear to the right of the " := " sign, separated by " | " signs
+> - Often the definition of a nonterminal in a BNF grammar is recursive: it defines the nonterminal in terms of itself
+
+>- The nonterminal symbol defined in rule listed first in the grammar is called the "start" symbol of the grammar
+>- A symbol not defined by a rule in the grammar is a "terminal symbol", and is usually taken literally
+>- If a string satisfies the definition of the "start" symbol, it is in the language defined by the BNF grammar; otherwise not
+>- The process of using the grammar to check to see if a string is in the language is called **parsing** the string
+
+Source: [CSE12 UCSD - Abstract Syntax Trees](https://cseweb.ucsd.edu/~kube/cls/12.s13/Lectures/lec16/lec16.pdf)
+
+
 Note: (from [Introduction - Grammar Conventions - POSIX.1-2017](https://pubs.opengroup.org/onlinepubs/9699919799/utilities/V3_chap01.html#tag_17_03))
 > The following typographical conventions are used in the grammar; they have no significance except to aid in reading.
 
-- The identifiers for the reserved words of the language are shown with a leading capital letter. (These are terminals in the grammar; for example, While, Case.)
+- identifiers for reserved words: leading capital letter (these are terminals in the grammar; for example, While, Case.)
 
-- The identifiers for terminals in the grammar are all named with uppercase letters and underscores; for example, NEWLINE, ASSIGN_OP, NAME.
+- identifiers for terminals: named with uppercase letters and underscores; for example, NEWLINE, ASSIGN_OP, NAME.
 
-- The identifiers for non-terminals are all lowercase.
+- identifiers for non-terminals: all lowercase
 
-### 3.0. Token identifiers:
+### 3.0. Token identifiers
 - Operator token identifier:
 	- NEWLINE
 	- PIPELINE `|`
