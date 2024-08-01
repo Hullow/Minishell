@@ -379,7 +379,12 @@ echo '""''"$VAR'""'"'
 echo '"'"'"'"$VAR'""'"'"'
 echo '"'"'"'"$VAR'""'"'"''
 echo '"'"'"'"$VAR'""'"'"
-echo '"'"'"'"$VAR'""'"'"'"
+echo '"'"'"'"$VAR'""'"'"'" => "'"$VAR"'
+echo '"'"'
+echo '"'"'"
+
+
+
 'VAR=FOO'
 echo $VAR
 VAR=FOO
@@ -563,8 +568,3 @@ cat textfile1 > 1 | < 1 echo ""
 touch " textfile1"
 rm textfile1
 rm " textfile1"
-
-VAR=10 echo $VAR
-export VAR=10 echo $VAR
-echo $VAR > 1file
-cat 1file
