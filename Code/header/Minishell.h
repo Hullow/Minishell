@@ -6,7 +6,7 @@
 /*   By: francis <francis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/19 13:48:14 by francis           #+#    #+#             */
-/*   Updated: 2024/08/01 12:02:34 by francis          ###   ########.fr       */
+/*   Updated: 2024/08/01 15:44:16 by francis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,9 @@
 #include <stdlib.h>
 #include <readline/readline.h>
 #include <readline/history.h>
+#include <signal.h>
+#include <sys/wait.h>
+#include <sys/types.h> 
 
 #include "../lib/libft/libft.h"
 #include "../lib/ft_printf/ft_printf.h"
@@ -60,3 +63,6 @@ struct token	*ft_tokenize(char *prompt);
 
 // Parsing
 struct command	*ft_parse(struct token *tok);
+
+// Execution
+int		execute_cmd(struct command *cmd, char **envp);

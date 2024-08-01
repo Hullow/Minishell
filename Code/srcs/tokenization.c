@@ -6,7 +6,7 @@
 /*   By: francis <francis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/22 16:35:11 by francis           #+#    #+#             */
-/*   Updated: 2024/08/01 11:30:57 by francis          ###   ########.fr       */
+/*   Updated: 2024/08/01 15:21:45 by francis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -216,7 +216,7 @@ void	ft_print_all_token_strings(struct token **head)
 }
 
 // Breaks the input (prompt) into tokens by calling each tokenization function
-void	ft_tokenize(char *prompt)
+struct token	*ft_tokenize(char *prompt)
 {
 	struct token	*tok;
 	struct token	*head;
@@ -224,7 +224,7 @@ void	ft_tokenize(char *prompt)
 
 	tok = malloc(sizeof(struct token)); // nb: could use ft_create_token here
 	if (!tok)
-		return ;
+		return (NULL);
 	tok->next = NULL;
 	tok->str = NULL;
 	tok->type = 0;
@@ -262,4 +262,5 @@ void	ft_tokenize(char *prompt)
 		tok = ft_tokenize_end_of_input(tok);
 	}
 	ft_print_all_token_strings(&head);
+	return (head);
 }
