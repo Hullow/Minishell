@@ -246,6 +246,8 @@ After delimiting a token, the next step is to categorize it following the Shell 
 Source: [CSE12 UCSD - Abstract Syntax Trees](https://cseweb.ucsd.edu/~kube/cls/12.s13/Lectures/lec16/lec16.pdf)
 
 
+
+
 Note: (from [Introduction - Grammar Conventions - POSIX.1-2017](https://pubs.opengroup.org/onlinepubs/9699919799/utilities/V3_chap01.html#tag_17_03))
 > The following typographical conventions are used in the grammar; they have no significance except to aid in reading.
 
@@ -254,6 +256,16 @@ Note: (from [Introduction - Grammar Conventions - POSIX.1-2017](https://pubs.ope
 - identifiers for terminals: named with uppercase letters and underscores; for example, NEWLINE, ASSIGN_OP, NAME.
 
 - identifiers for non-terminals: all lowercase
+
+### Parsing principles
+- For each derivation from a grammar, there is a corresponding **parse tree**
+- Each node in the **parse tree** corresponds to one symbol in the BNF grammar:
+	- Leaves: terminal symbols
+	- Internal nodes: nonterminal symbols
+	- Root: start symbol
+- The **children of an internal node in the parse tree** correspond to the symbols in a definition of the nonterminal symbol corresponding to their parent node
+- Reading the leaves of the parse tree left to right gives you the string that has been parsed
+
 
 ### 3.0. Token identifiers
 - Operator token identifier:

@@ -20,9 +20,13 @@
 ### Tokenizing and parsing
 - implementing `=` in the parsing (requires: `export`; references: see Shell-functioning.md#Shell grammar#Assignment)
 - keep track of quotes in parsing
+- adapt BNF grammar from POSIX standard for Minishell project
 
 ### History
 - Add history : different with here doc
 
 ### Execution
 - Pathname resolution
+
+### Documentation
+- Add parsing and tokenization summary to Shell-functioning.md
