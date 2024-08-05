@@ -3,20 +3,21 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: francis <francis@student.42.fr>            +#+  +:+       +#+        */
+/*   By: cmegret <cmegret@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/19 13:48:17 by francis           #+#    #+#             */
-/*   Updated: 2024/08/01 15:21:45 by francis          ###   ########.fr       */
+/*   Updated: 2024/08/02 12:39:39 by cmegret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../header/Minishell.h"
 
-int	main(int argc, char **envp)
+int	main(int argc, char **argv, char **envp)
 {
 	char	*prompt;
 
 	(void)argc;
+	(void)argv;
 	while ((prompt = readline("Minishell : ")) != NULL)
 	{
 		if (*prompt) // verify if chain is not empty

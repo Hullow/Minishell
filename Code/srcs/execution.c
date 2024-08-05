@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: francis <francis@student.42.fr>            +#+  +:+       +#+        */
+/*   By: cmegret <cmegret@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/19 13:48:18 by francis           #+#    #+#             */
-/*   Updated: 2024/08/01 17:33:50 by francis          ###   ########.fr       */
+/*   Updated: 2024/08/02 12:40:08 by cmegret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,17 +84,27 @@ char	*get_cmd_path(char *cmd, char **envp)
 	char	*full_path;
 	int		i;
 
-	printf("cmd: %s\n", cmd);
+	if (cmd == NULL || envp == NULL) {
+		perror("cmd or envp is NULL");
+		return (NULL);
+	}
+
 	paths = get_env_paths(envp);
 	if (!paths)
+	{
+		perror("get_env_paths failed");
 		return (NULL);
+	}
+
 	i = 0;
 	while (paths[i])
 	{
 		full_path = ft_strjoin(ft_strjoin(paths[i], "/"), cmd);
-		printf("full_path: %s\n", full_path);
 		if (!full_path)
+		{
+			perror("ft_strjoin failed");
 			return (NULL);
+		}
 		if (access(full_path, X_OK) == 0)
 		{
 			free(paths);
@@ -119,7 +129,6 @@ int execute_cmd(struct command *cmd, char **envp)
 	if (ft_is_builtin(cmd)) // if not a builtin, search
 	{
 		pid = fork();
-		printf("Outside of Child - (PID: %d)\n", pid);
 		if (pid == -1)
 		{
 			perror("fork");
@@ -127,28 +136,6 @@ int execute_cmd(struct command *cmd, char **envp)
 		}
 		if (pid == 0)
 		{
-			printf("Inside of Child - Child process started, (PID: %d)\n", getpid());
-			// kill(getpid(), SIGSTOP); // Suspend the child process for debugging
-		// Check if stdout is valid
-        if (fprintf(stdout, "Inside of Child - Child process: Checking stdout\n") < 0) {
-            perror("Child stdout error");
-            exit(EXIT_FAILURE);
-        }
-        
-        // Check if stderr is valid
-        if (fprintf(stderr, "Inside of Child - Child process: Checking stderr\n") < 0) {
-            perror("Child stderr error");
-            exit(EXIT_FAILURE);
-        }
-
-        // Add a small delay to allow for debugger attachment
-        printf("Child pausing for 5 seconds...\n");
-        // sleep(5);
-		   	// volatile int ready_to_debug = 0;
-   			// while (!ready_to_debug) {
-        	// 	// Busy-wait loop
-        	// 	usleep(100000);  // Sleep for 100ms to reduce CPU usage
-   			// }
 			cmd_path = get_cmd_path(cmd->cmd_name, envp);
 			if (cmd_path == NULL)
 			{
@@ -164,19 +151,16 @@ int execute_cmd(struct command *cmd, char **envp)
 		}
 		else
 		{
-			// Parent process
-			printf("Parent waiting for child (PID: %d)\n", pid);
-			// sleep(5);
 			waitpid(pid, &status, 0);
 			
 			if (WIFEXITED(status))
 			{
-				printf("Child exited with status %d\n", WEXITSTATUS(status));
+				//printf("Child exited with status %d\n", WEXITSTATUS(status));
 				return WEXITSTATUS(status);
 			}
 			else
 			{
-				printf("Child terminated abnormally\n");
+				//printf("Child terminated abnormally\n");
 				free(cmd_path);
 				return 1;
 			}
