@@ -6,7 +6,7 @@
 /*   By: francis <francis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/19 13:48:14 by francis           #+#    #+#             */
-/*   Updated: 2024/07/25 17:51:59 by francis          ###   ########.fr       */
+/*   Updated: 2024/08/01 15:44:16 by francis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,9 @@
 #include <stdlib.h>
 #include <readline/readline.h>
 #include <readline/history.h>
+#include <signal.h>
+#include <sys/wait.h>
+#include <sys/types.h> 
 
 #include "../lib/libft/libft.h"
 #include "../lib/ft_printf/ft_printf.h"
@@ -35,8 +38,18 @@ struct token
 	int 			type;
 	bool			is_delimited;
 	bool			is_quoted;
+	// bool			is_double_quoted;
+	// bool			is_single_quoted;
 	bool			is_operator;
 	struct token	*next;
+};
+
+struct command
+{
+	char *cmd_name;
+	char **args;
+	int fd; // redirection
+	struct command *next;
 };
 
 // Tokenisation
@@ -45,3 +58,11 @@ int	ft_previous_char_is_undelimited_operator(struct token *tok);
 int	ft_is_operator_character(char c);
 int	ft_is_blank(char c);
 int	ft_previous_char_part_of_word(struct token *tok);
+	// tokenizers
+struct token	*ft_tokenize(char *prompt);
+
+// Parsing
+struct command	*ft_parse(struct token *tok);
+
+// Execution
+int		execute_cmd(struct command *cmd, char **envp);

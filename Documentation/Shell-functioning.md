@@ -133,7 +133,7 @@ OR:
 IF
 - current character not quoted
 - previous character used as part of an operator ==> 
-- current character can be used with the previous characterS to form an operator 
+
 <br> &emsp;=> only `>>` or `<<` in our case
 
 => use character as part of that (operator) token
@@ -415,6 +415,7 @@ IF
 
 #### 4.1.2. Pipelines
 
+
 ### 4.2. [Command Search and Execution](https://pubs.opengroup.org/onlinepubs/9699919799/utilities/V3_chap02.html#tag_18_09_01_01)
 IF<br>
 	- a simple command results in a command name and an optional list of arguments, the following actions shall be performed:
@@ -440,10 +441,10 @@ IF<br>
 
 	IF
 	- the utility is a built-in
-		=> invoke the utility
+		=> invoke the built-in
 
 	ELSE
-		=> execute the utility in a separate utility environment (see Shell Execution Environment) with actions equivalent to calling the execl() function with arguments:
+		=> execute the utility in a separate ?utility? environment (see Shell Execution Environment) with actions equivalent to calling the execl() function with arguments:
 
 		- path:
 		set to the pathname resulting from the search

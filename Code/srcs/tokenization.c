@@ -6,7 +6,7 @@
 /*   By: francis <francis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/22 16:35:11 by francis           #+#    #+#             */
-/*   Updated: 2024/07/25 17:52:14 by francis          ###   ########.fr       */
+/*   Updated: 2024/08/01 15:21:45 by francis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,11 +67,11 @@ struct token	*ft_tokenize_end_of_input(struct token *tok)
 		tok = malloc (1 * sizeof(struct token));
 		if (!tok)
 			return (NULL);
-		tok->str = ft_strdup("");
+		tok->str = ft_strdup(""); // maybe not do this ?
 		tok->type = END_OF_INPUT;
-		tok->is_delimited = 1;
-		tok->is_operator = 0;
-		tok->is_quoted = 0;
+		tok->is_delimited = true;
+		tok->is_operator = false;
+		tok->is_quoted = false;
 	}
 	return (tok);
 }
@@ -100,7 +100,7 @@ int	ft_continue_operator_token(char *prompt, int i, struct token **tok)
 {
 	if (ft_strlen((*tok)->str) != 1) // if token was of length > 1, the current character cannot be used with the previous characters to form an operator, because or only multi-character operators are '>>' and '<<'
 		(*tok)->is_delimited = true; // therefore: apply rule 2.2.2.3. and delimit operator containing previous token
-	else if (prompt[i] == '>' && prompt[i - 1] == '>') // && tok->is_quoted == false)
+	else if (prompt[i] == '>' && prompt[i - 1] == '>' && (*tok)->is_quoted == false) // && tok->is_quoted == false)
 	// there is only '>' in the operator token => we can form a '>>' with it
 	{
 		free((*tok)->str);
@@ -120,7 +120,7 @@ int	ft_continue_operator_token(char *prompt, int i, struct token **tok)
 		return (1); // because we assigned the character to a token
 	}
 	else
-		(*tok)->is_delimited = 1;
+		(*tok)->is_delimited = true; // Why do that ? Not clear. Maybe we shouldn't delimit
 			// => need to create a new operator token ? no
 	return (0); // we did not assign the character to a token
 }
@@ -216,7 +216,7 @@ void	ft_print_all_token_strings(struct token **head)
 }
 
 // Breaks the input (prompt) into tokens by calling each tokenization function
-void	ft_tokenize(char *prompt)
+struct token	*ft_tokenize(char *prompt)
 {
 	struct token	*tok;
 	struct token	*head;
@@ -224,7 +224,7 @@ void	ft_tokenize(char *prompt)
 
 	tok = malloc(sizeof(struct token)); // nb: could use ft_create_token here
 	if (!tok)
-		return ;
+		return (NULL);
 	tok->next = NULL;
 	tok->str = NULL;
 	tok->type = 0;
@@ -244,7 +244,7 @@ void	ft_tokenize(char *prompt)
 		{
 			i += ft_new_operator_token(prompt, i, &tok);
 		}
-		else if (ft_is_blank(prompt[i]))
+		else if (ft_is_blank(prompt[i])) 
 		{
 			i += ft_tokenize_blank(&tok);
 		}
@@ -257,9 +257,10 @@ void	ft_tokenize(char *prompt)
 			i += ft_new_word(&tok, prompt[i]);
 		}
 	}
-	if (!prompt[i])
+	if (!prompt[i]) // empty prompt, or '\0' => maybe EOF ?
 	{
 		tok = ft_tokenize_end_of_input(tok);
 	}
 	ft_print_all_token_strings(&head);
+	return (head);
 }

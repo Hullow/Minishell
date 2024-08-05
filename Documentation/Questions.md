@@ -28,5 +28,8 @@ All questions we need answers to
 ## Redirections
 - implement `>|` ?
 
+## Quoting
+- What to do with unclosed quotes : Error or `>` ?
+
 ## Execution:
 - how to call echo with -n ? Something special to do ?
