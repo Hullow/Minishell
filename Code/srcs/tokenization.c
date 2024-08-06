@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokenization.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: francis <francis@student.42.fr>            +#+  +:+       +#+        */
+/*   By: cmegret <cmegret@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/22 16:35:11 by francis           #+#    #+#             */
-/*   Updated: 2024/08/01 15:21:45 by francis          ###   ########.fr       */
+/*   Updated: 2024/08/02 12:39:52 by cmegret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -210,7 +210,7 @@ void	ft_print_all_token_strings(struct token **head)
 	iterator = *head;
 	while (iterator != 0)
 	{
-		printf("token: %s\n", iterator->str);
+		//printf("token: %s\n", iterator->str);
 		iterator = iterator->next;
 	}
 }
