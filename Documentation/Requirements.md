@@ -10,6 +10,9 @@
 => Use add_history, rl_clear_history (or clear_history), and ... ?
 => Subshell history ?
 
+### Input
+- Open and execute a script.sh => needs `./` prefix
+
 ### Metacharacter handling
 #### `\`:
 > Not interpret unclosed quotes or special characters which are not required by the

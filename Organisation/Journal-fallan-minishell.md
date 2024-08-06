@@ -131,3 +131,7 @@ POSIX.1-2017's special grammar notation is based on the syntax used by the `yacc
 - Reading more about parsing, abstract syntax trees and semantic rules from [CSE12 UCSD - Abstract Syntax Trees](https://cseweb.ucsd.edu/~kube/cls/12.s13/Lectures/lec16/lec16.pdf)
 - made a parse tree with UML diagram tool: https://online.visual-paradigm.com/w/emnfyqki/diagrams/#diagram:proj=0&type=ClassDiagram&width=11&height=8.5&unit=inch
 - Saw an outline of how to code an AST
+
+## 6/8/24
+- Simplified the POSIX Shell Grammar to fit the Minishell project requirements (without bonuses)
+- Looking at data structures to store the parsed strings: Map ADT, hashtables, binary search trees, ...
