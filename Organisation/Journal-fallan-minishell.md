@@ -135,3 +135,7 @@ POSIX.1-2017's special grammar notation is based on the syntax used by the `yacc
 ## 6/8/24
 - Simplified the POSIX Shell Grammar to fit the Minishell project requirements (without bonuses)
 - Looking at data structures to store the parsed strings: Map ADT, hashtables, binary search trees, ...
+
+## 8/8/24
+- Reading about parsing, thinking about parsing output for execution
+- wrote some code to parse operators

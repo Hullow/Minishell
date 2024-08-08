@@ -187,6 +187,10 @@ IF
 
 => Field splitting shall not be performed on the results of the expansion.
 
+General note on Word Splitting ([AOSA Book - Bash](https://aosabook.org/en/v1/bash.html)):
+> 3.5.3. Word Splitting
+The results of the word expansions are split using the characters in the value of the shell variable `IFS` as delimiters. This is how the shell transforms a single word into more than one. Each time one of the characters in `$IFS` appears in the result, bash splits the word into two. Single and double quotes both inhibit word splitting.
+
 ##### 2.2.2.6. New operator token
 IF
 - current character is unquoted
@@ -331,15 +335,6 @@ ELSE IF
 - the delimiting word is unquoted
 
 => all lines of the here-document are subjected to parameter expansion
-#### 3.2.5. Name in `for` `=> implement or not ?`
-IF
-- the token consists solely of underscores, digits, and alphabetics from the [portable character set](https://pubs.opengroup.org/onlinepubs/009695399/basedefs/xbd_chap06.html#tag_06_01) (see [definition of a name](https://pubs.opengroup.org/onlinepubs/009695399/basedefs/xbd_chap03.html#tag_03_230))
-
-=> the token identifier is NAME
-
-ELSE<br>
-=> the token identifier is WORD
-
 #### 3.2.7 Assignment preceding command name
 a) IF
 - the first word `=> of what ?` does not contain the character `=`
@@ -377,6 +372,12 @@ A **command** is either a **simple command** or a **pipeline**.
 
 ### 4.1. Command types
 #### 4.1.1. [Simple commands](https://pubs.opengroup.org/onlinepubs/9699919799/utilities/V3_chap02.html#tag_18_09_01)
+[Bash](https://www.gnu.org/software/bash/manual/bash.html#Simple-Commands):<br>
+> a sequence of words separated by blanks, terminated by one of the shell’s control operators (only `|` in our case)<br>
+> The first word generally specifies a command to be executed, with the rest of the words being that command’s arguments.<br>
+> The return status (see Exit Status) of a simple command is its exit status as provided by the POSIX 1003.1 `waitpid` function, or 128+n if the command was terminated by signal n.
+
+POSIX:<br>
 A sequence of optional variable assignments and redirections, in any sequence, optionally followed by words and redirections, terminated by a control operator (\<newline\>, `|`, "the end-of-input indicator used internally by the shell").
 
 Command execution sequence:
@@ -387,12 +388,17 @@ IF
 	=> save these words for processing in steps 3. and 4.
 
 2. expansion of the other words:<br>
-IF
+IF 
 	- some words are not variable assignments or redirections
 
-	=> expand those words `=> parameter expansion` ; `=> pathname expansion ?`<br>
-=> IF<br>
-&emsp;-  any fields (if there are \<space\> or \<tab\>) remain following the expansion of the words
+	=> expand those words:<br>
+	&emsp;	- parameter expansion<br>
+	&emsp;	- [filename expansion](https://www.gnu.org/software/bash/manual/bash.html#Filename-Expansion)/ Pathname-resolution.md<br>
+	&emsp;	- IF<br>
+	- expansion performed<br>
+	-  any fields (\<space\> or \<tab\>) remain following the expansion of the words
+
+	&emsp;&emsp;		=> perform [word splitting](https://www.gnu.org/software/bash/manual/bash.html#Word-Splitting)
 
 3. redirections<br>
 IF
@@ -405,13 +411,35 @@ IF
 	- there are any variable assignments
 	- the variable assignments have possible expansions (parameter expansion or quote removal)
 
-=> perform the expansions before assigning the value
+=> perform the expansions before assigning the value:<br>
+	- parameter expansion
+	- quote removal
 
-> Variable assignments shall be performed as follows:
->
-> If no command name results, variable assignments shall affect the current execution environment.
+Other rules for variable assignments and redirections:<br>
 
-(..)
+1. Command name results ?<br>
+IF
+	- no command name results
+
+=> variable assignments affect the current execution environment
+=> assignment statements are performed before redirections
+=> redirections are performed, but do not affect the current shell environment
+=> A redirection error causes the command to exit with a non-zero status
+
+ELSE<br>
+- the variables are added to the environment of the executed command and do not affect the current shell environment
+	(..)
+
+2. Command name left after expansion ?<br>
+IF
+	- there is a command name left after expansion
+
+=> execution proceeds as described below
+
+ELSE
+
+=> the command exits
+
 
 #### 4.1.2. Pipelines
 

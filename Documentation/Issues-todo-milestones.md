@@ -22,6 +22,10 @@
 - keep track of quotes in parsing
 - adapt BNF grammar from POSIX standard for Minishell project
 
+### Builtins
+#### Export
+- Check if valid name (see [POSIX definition](https://pubs.opengroup.org/onlinepubs/9699919799/basedefs/V1_chap03.html#tag_03_235))
+
 ### History
 - Add history : different with here doc
 

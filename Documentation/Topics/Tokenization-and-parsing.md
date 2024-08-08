@@ -143,13 +143,12 @@ public static A parse (String s)
 %token  WORD
 %token  ASSIGNMENT_WORD
 %token  NAME
-%token  NEWLINE
 %token  IO_NUMBER
 
 /* The following are the operators (either a control operator or redirection operator)
    containing more than one character. */
 
-%token  DLESS  DGREAT
+%token  REDIR_HEREDOC  REDIR_APPEND
 /*      '<<'   '>>'   */
 
 /* -------------------------------------------------------
@@ -157,52 +156,14 @@ public static A parse (String s)
    ------------------------------------------------------- */
 %start program
 %%
-program          : linebreak complete_commands linebreak
-                 | linebreak
-                 ;
-				 
-complete_commands: complete_commands newline_list complete_command
-                 |                                complete_command
+program          : pipe_sequence
                  ;
 
-complete_command : list separator_op
-                 | list
+pipe_sequence    : command
+                 | pipe_sequence '|' command
                  ;
 
-list             : list separator_op and_or
-                 |                   and_or
-                 ;
-
-pipeline         : pipe_sequence
-                 ;
-
-pipe_sequence    :                             command
-                 | pipe_sequence '|' linebreak command
-                 ;
-
-command          : simple_command
-                 ;
-
-compound_list    : linebreak term
-                 | linebreak term separator
-                 ;
-
-term             : term separator and_or
-                 |                and_or
-                 ;
-
-name             : NAME                     /* Apply rule 5 */
-                 ;
-
-wordlist         : wordlist WORD
-                 |          WORD
-                 ;
-
-pattern          :             WORD         /* Apply rule 4 */
-                 | pattern '|' WORD         /* Do not apply rule 4 */
-                 ;
-
-simple_command   : cmd_prefix cmd_word cmd_suffix
+command   		 : cmd_prefix cmd_word cmd_suffix
                  | cmd_prefix cmd_word
                  | cmd_prefix
                  | cmd_name cmd_suffix
@@ -237,37 +198,36 @@ io_redirect      :           io_file
                  | IO_NUMBER io_here
                  ;
 
-io_file          : '<'       filename
-                 | LESSAND   filename
-                 | '>'       filename
-                 | GREATAND  filename
-                 | DGREAT    filename
-                 | LESSGREAT filename
-                 | CLOBBER   filename
+io_file          : '<'			filename
+                 | '>'			filename
+                 | REDIR_APPEND	filename
                  ;
 
 filename         : WORD                      /* Apply rule 2 */
                  ;
 
-io_here          : DLESS     here_end
-                 | DLESSDASH here_end
+io_here          : REDIR_HEREDOC     here_end
                  ;
 
 here_end         : WORD                      /* Apply rule 3 */
                  ;
 
-newline_list     :              NEWLINE
-                 | newline_list NEWLINE
-                 ;
-
-linebreak        : newline_list
-                 | /* empty */
-                 ;
-
-separator        : newline_list
-                 ;
-
-sequential_sep   : newline_list
-                 ;
-
 ```
+
+
+
+
+
+
+
+
+
+
+
+
+##### Parsing examples
+`echo hello > 2 > 4` :
+
+program -> pipe_sequence -> command -> cmd_name + cmd_suffix -> WORD ('echo') + cmd_suffix -> WORD ('echo') + cmd_suffix + io_redirect -> WORD ('echo') + cmd_suffix + io_redirect + io_redirect -> WORD ('echo') + WORD ('hello') + io_redirect + io_redirect -> WORD ('echo') + WORD ('hello') + io_file + io_redirect -> WORD ('echo') + WORD ('hello') + '>' filename + io_redirect -> WORD ('echo') + WORD ('hello') + '>'	WORD ('2') + io_redirect -> WORD ('echo') + WORD ('hello') + '>' WORD ('2') + '>' filename -> WORD ('echo') + WORD ('hello') + '>' WORD ('2') + '>' WORD ('4')
+
+

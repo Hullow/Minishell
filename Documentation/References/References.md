@@ -1,10 +1,11 @@
 # Minishell references
 ## Shells
-- [Shell Command Language manual](https://pubs.opengroup.org/onlinepubs/9699919799/utilities/V3_chap02.html) => check 2018 and not 2004 version !
+- [Shell Command Language manual (POSIX Shell)](https://pubs.opengroup.org/onlinepubs/9699919799/utilities/V3_chap02.html) => check 2018 and not 2004 version !
 - [Shell Command Language manual - PDF version (1994)](https://pubs.opengroup.org/onlinepubs/009656399/toc.pdf) (n.b.: more readable)
 - [Bash Reference Manual (v5.2)](https://www.gnu.org/software/bash/manual/bash.html)
 - [`man Bash`(v5.2)](https://www.man7.org/linux/man-pages/man1/bash.1.html)
 - [POSIX.1-2017 standard definitions](https://pubs.opengroup.org/onlinepubs/9699919799/basedefs/V1_chap03.html)
+- [The Bourne-Again Shell - The Architecture of Open Source Applications (Volume 1) - Chet Ramey](https://aosabook.org/en/v1/bash.html)
 - [ksh source code](https://github.com/openbsd/src/blob/master/bin/ksh/exec.c)
 - [Bash git repository](https://git.savannah.gnu.org/cgit/bash.git/tree/doc/README): Documentation is useful, has schemas etc. (according to tfrily)
 - [Advanced Bash-Scripting Guide - TLDP](https://tldp.org/LDP/abs/html/)
