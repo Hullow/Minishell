@@ -10,55 +10,29 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../header/Minishell.h"
+#include "../header/Minishell.h"
 
-void	free_arr(char **split_arr)
+nt	main(int argc, char **argv, char **envp)
 {
-	int	i;
+	char	*prompt;
 
-	i = 0;
-	while (split_arr[i])
+	(void)argc;
+	(void)argv;
+	while ((prompt = readline("Minishell : ")) != NULL)
 	{
-		free(split_arr[i]);
-		i++;
-	}
-	free(split_arr);
-}
-
-char	**ft_arrdup(char **arr)
-{
-	char	**rtn;
-	size_t	i;
-
-	i = 0;
-	while (arr[i] != NULL)
-		i++;
-	rtn = ft_calloc(sizeof(char *), i + 1);
-	if (!rtn)
-		return (NULL);
-	i = 0;
-	while (arr[i] != NULL)
-	{
-		rtn[i] = ft_strdup(arr[i]);
-		if (rtn[i] == NULL)
+		if (*prompt) // verify if chain is not empty
 		{
-			free_arr(rtn);
-			return (rtn);
+			add_history(prompt); // Move it later when here doc will be implemented, to avoid to add the here doc in the history
+			(void)envp;
+			ft_parse(ft_tokenize(prompt));
+			ft_tokenization_checker(ft_parse_operators(ft_tokenize(prompt)));
+			// execute_cmd(ft_parse(ft_tokenize(prompt)), envp);
+			
 		}
-		i++;
-	}
-	return (rtn);
-}
+		// if (i % 5 == 0) // clean history 
+		// 	rl_clear_history();
 
-int		main(int argc, char **argv, char **env)
-{
-	t_tools	tools;
-	(void)tools;
-
-	if (argc != 1 || argv[1])
-	{
-		printf("This program does not accept arguments\n");
-		exit(0);
+		free(prompt); // free the memory allocated by readline
 	}
-	tools.envp = ft_arrdup(env);
+	return 0;
 }

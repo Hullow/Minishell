@@ -10,19 +10,63 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../lib/libft/libft.h"
-#include "../lib/ft_printf/ft_printf.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <readline/readline.h>
 #include <readline/history.h>
+#include <signal.h>
+#include <sys/wait.h>
+#include <sys/types.h> 
+
+#include "../lib/libft/libft.h"
+#include "../lib/ft_printf/ft_printf.h"
 
 // Token types
+#define WORD 1
+#define NEWLINE 2
+#define REDIR_INPUT 3
+#define REDIR_OUTPUT 4
+#define REDIR_APPEND 5
+#define REDIR_HEREDOC 6
+#define PIPE 7
+#define END_OF_INPUT 8
 
-typedef struct s_tools
+#include <stdbool.h>
+struct token
 {
-	char					**envp;
-}	t_tools;
+	char 			*str;
+	int 			type;
+	bool			is_delimited;
+	bool			is_quoted;
+	// bool			is_double_quoted;
+	// bool			is_single_quoted;
+	bool			is_operator;
+	struct token	*next;
+};
 
+struct command
+{
+	char *cmd_name;
+	char **args;
+	int fd; // redirection
+	struct command *next;
+};
 
-int	main(int argc, char **argv, char **env);
+// Tokenisation
+	// Checkers
+int	ft_previous_char_is_undelimited_operator(struct token *tok);
+int	ft_is_operator_character(char c);
+int	ft_is_blank(char c);
+int	ft_previous_char_part_of_word(struct token *tok);
+	// tokenizers
+struct token	*ft_tokenize(char *prompt);
+
+// Parsing
+struct token	*ft_parse(struct token *head);
+
+// Execution
+int		execute_cmd(struct command *cmd, char **envp);
+
+// debugging
+	// Parsing
+void	ft_tokenization_checker(struct token *head);
