@@ -1,3 +1,0 @@
-/usr/local/munki/Python.framework/Versions/3.8/lib/python3.8/test/ziptestdata/README.md
-/usr/share/examshell/venv/lib/python3.8/site-packages/traitlets-5.0.5.dist-info/COPYING.md
-/usr/share/examshell/venv/lib/python3.8/site-packages/idna-3.1.dist-info/LICENSE.md
