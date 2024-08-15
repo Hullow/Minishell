@@ -569,6 +569,50 @@ touch " textfile1"
 rm textfile1
 rm " textfile1"
 
+echo "ls" > ls.sh
+ls.sh
+./ls.sh
+chmod +x ls.sh
+./ls.sh
+rm ls.sh
+
+export "Mashed potatoes"=34
+export Mashed potatoes=34
+env | grep Mashed
+env | grep potatoes
+
+export VAR=find
+$VAR . *
+unset VAR
+$VAR . *
+
+export VAR="ls -la"
+$VAR
+unset VAR
+$VAR
+
+export A="ech"
+export B="o hello world"
+$A$B
+unset A B
+$A$B
+
+export VAR-OH_VAR=22
+export VAR_OH_VAR=22
+env | grep VAR
+unset VAR_OH_VAR
+
+VAR=ls
+"$VAR"
+'$VAR'
+
+echo hello > 2 > 4
+echo hello > 2
+echo hello > 1
+echo hello
+> 2 echo hell9
+> 2 echo hello
+
 
 find / -name "/etc" 2>/dev/null
 echo "content of file1" > file1

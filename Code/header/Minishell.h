@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: francis <francis@student.42.fr>            +#+  +:+       +#+        */
+/*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/19 13:48:14 by francis           #+#    #+#             */
-/*   Updated: 2024/08/01 15:44:16 by francis          ###   ########.fr       */
+/*   Updated: 2024/08/08 15:37:43 by fallan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,11 @@ int	ft_previous_char_part_of_word(struct token *tok);
 struct token	*ft_tokenize(char *prompt);
 
 // Parsing
-struct command	*ft_parse(struct token *tok);
+struct token	*ft_parse(struct token *head);
 
 // Execution
 int		execute_cmd(struct command *cmd, char **envp);
+
+// debugging
+	// Parsing
+void	ft_tokenization_checker(struct token *head);

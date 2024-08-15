@@ -56,6 +56,13 @@ A trap on EXIT shall be executed before the shell terminates, except when the ex
 [General note on variable assignment](https://pubs.opengroup.org/onlinepubs/9699919799/basedefs/V1_chap04.html#tag_foot_1):
 > When a variable assignment is done, the variable shall be created if it did not already exist. If value is not specified, the variable shall be given a null value.
 
+Note on valid names [POSIX](https://pubs.opengroup.org/onlinepubs/9699919799/basedefs/V1_chap03.html#tag_03_235:~:text=unlocks%20the%20mutex.-,3.235,-Name):
+> In the shell command language, a word consisting solely of underscores, digits, and alphabetics from the portable character set. The first character of a name is not a digit.
+> Note: The Portable Character Set is defined in detail in Portable Character Set.
+
+=> in bash, `export VAR-OH_VAR=22` => error: `bash: export: VAR-OH_VAR=22: not a valid identifier`
+But `export VAR_OH_VAR=22` works
+
 #### `man bash`
 > `export` [`-fn`] [name[=word]] ...<br>
 > `export -p` <br>
