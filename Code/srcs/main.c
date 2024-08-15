@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
+/*   By: francis <francis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/19 13:48:17 by francis           #+#    #+#             */
-/*   Updated: 2024/08/08 15:41:14 by fallan           ###   ########.fr       */
+/*   Updated: 2024/08/15 10:49:13 by francis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,6 @@ int	main(int argc, char **argv, char **envp)
 			ft_parse(ft_tokenize(prompt));
 			ft_tokenization_checker(ft_parse_operators(ft_tokenize(prompt)));
 			// execute_cmd(ft_parse(ft_tokenize(prompt)), envp);
-			
 		}
 		// if (i % 5 == 0) // clean history 
 		// 	rl_clear_history();

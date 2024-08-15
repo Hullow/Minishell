@@ -509,7 +509,37 @@ A **command** is either a **simple command** or a **pipeline**.
 ### 4.0.1. Shell Execution environment
 - See [Shell Execution Environment](https://pubs.opengroup.org/onlinepubs/9699919799/utilities/V3_chap02.html#tag_18_12)
 
+- A shell execution environment consists of the following:
+
+	- Open files inherited upon invocation of the shell, plus open files controlled by exec
+	- Working directory as set by `cd`
+	- Shell parameters from the environment inherited by the shell when it begins (see the `export` built-in)
+
+- Utilities other than the built-in
+=> shall be invoked in a separate environment that consists of the following. The initial value of these objects shall be the same as that for the parent shell, except as noted below:
+
+	- Files:
+		- Open files inherited on invocation of the shell
+		- open files controlled by the exec special built-in plus any modifications
+		- additions specified by any redirections to the utility
+
+    - Current working directory
+
+    - Variables with the export attribute, along with those explicitly exported for the duration of the command, shall be passed to the utility environment variables
+
+	- The environment of the shell process shall not be changed by the utility unless explicitly specified by the utility description (for example, `cd`)
+
+	- A subshell environment shall be created as a duplicate of the shell environment
+
+	- Changes made to the subshell environment shall not affect the shell environment. 
+
+	- each command of a multi-command pipeline is in a subshell environment. All other commands shall be executed in the current shell environment.
+
 #### 4.0.2. Environment
+- The environment for any simple command or function may be augmented temporarily by prefixing it with parameter assignments, as described in Shell Parameters. These assignment statements affect only the environment seen by that command.
+
+=> `export VAR=2 | echo $VAR` => ""
+=> `export` or `unset` in a subshell have not effect outside the subshell
 
 #### 4.0.3. Exit status
 
@@ -603,6 +633,11 @@ ELSE
 	=> the standard input, standard output, or both of a command shall be considered to be assigned by the pipeline before any redirections
 
 - The shell shall wait for the last command specified in the pipeline to complete, and may also wait for all commands to complete
+
+- Execution environment:
+	- A subshell environment shall be created as a duplicate of the shell environment, except that signal traps that are not being ignored shall be set to the default action.
+	- Each command of a multi-command pipeline is in a subshell environment; as an extension, however, any or all commands in a pipeline may be executed in the current environment.
+	- All other commands shall be executed in the current shell environment.
 
 - Exit Status: the exit status of the last command specified in the pipeline
 

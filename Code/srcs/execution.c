@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cmegret <cmegret@student.42lausanne.ch>    +#+  +:+       +#+        */
+/*   By: francis <francis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/19 13:48:18 by francis           #+#    #+#             */
-/*   Updated: 2024/08/02 12:40:08 by cmegret          ###   ########.fr       */
+/*   Updated: 2024/08/15 09:55:42 by francis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,8 @@ ft_has_redir(struct token *head)
 	return (0);
 } */
 
+
+// Builtin checker: checks if the command corresponds to a builtin
 int	ft_is_builtin(struct command *cmd)
 {
 	if (ft_strncmp(cmd->cmd_name, "echo", 4) == 0)
@@ -59,6 +61,7 @@ int	ft_is_builtin(struct command *cmd)
 	else
 		return (1);
 }
+
 
 char	**get_env_paths(char **envp)
 {

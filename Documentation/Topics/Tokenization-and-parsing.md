@@ -215,7 +215,34 @@ here_end         : WORD                      /* Apply rule 3 */
 ```
 
 
+#### Illustrations
+if (ft_parse_pipe)
+{
+	if (ft_find_pipe_in_list)
+		ft_pipe_
 
+}
+else if (ft_parse_command)
+
+
+cmd1
+
+cmd1 | cmd2 | cmd3
+
+=> cmd1 | cmd2 | cmd3 => command
+
+
+export VAR = 14
+
+echo "VAR=14"
+
+
+echo "hello, world" > file1
+ls > ls.txt | grep file1
+
+
+find . -name "file*" 2>error.txt
+find . -name "file*" 1>find.txt | 
 
 
 

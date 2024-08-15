@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cmegret <cmegret@student.42lausanne.ch>    +#+  +:+       +#+        */
+/*   By: francis <francis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/05 14:17:16 by cmegret           #+#    #+#             */
-/*   Updated: 2024/04/19 13:57:46 by cmegret          ###   ########.fr       */
+/*   Updated: 2024/08/15 11:48:39 by francis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,7 @@ int	main(int argc, char **argv, char **envp)
 	assign_file_values(&file1, &file2, argv);
 	if (pipe(fd) == -1)
 		error_and_exit("pipe");
+	printf("fd[0], fd[1]: {%d, %d}\n", fd[0], fd[1]);
 	pid = fork();
 	if (pid == -1)
 		error_and_exit("fork");
