@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: francis <francis@student.42.fr>            +#+  +:+       +#+        */
+/*   By: cmegret <cmegret@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/19 13:48:18 by francis           #+#    #+#             */
-/*   Updated: 2024/08/15 09:55:42 by francis          ###   ########.fr       */
+/*   Updated: 2024/08/15 14:53:00 by cmegret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -140,6 +140,9 @@ int execute_cmd(struct command *cmd, char **envp)
 		if (pid == 0)
 		{
 			cmd_path = get_cmd_path(cmd->cmd_name, envp);
+			/*	int i = 0;
+				while (cmd->args[i])
+					printf("cmd->args: %s\n", cmd->args[i++]);	*/
 			if (cmd_path == NULL)
 			{
 				perror("get_cmd_path");

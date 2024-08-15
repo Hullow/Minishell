@@ -4,6 +4,7 @@
 1. Simple tokenizing: no parameter expansion, no quotes `+ no pipes and redirections ?`
 2. Simple execution of commands: no variable assignment, no redirection, no quote removal
 => with echo only ?
+Filename expansion/Pathname resolution
 3. env
 4. exit status handling
 6. Pipeline execution : subshell
@@ -19,8 +20,9 @@
 ## To-do by topic
 ### Tokenizing and parsing
 - implementing `=` in the parsing (requires: `export`; references: see Shell-functioning.md#Shell grammar#Assignment)
-- keep track of quotes in parsing
-- adapt BNF grammar from POSIX standard for Minishell project
+- keep track of quotes in parsing => see header: `struct token // bool	is_double_quoted;// bool is_single_quoted;` (to try)
+- adapt BNF grammar from POSIX standard for Minishell project => almost done
+- Check that if no token is found (input empty), struct token is NULL
 
 ### Builtins
 #### Export

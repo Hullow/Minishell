@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: francis <francis@student.42.fr>            +#+  +:+       +#+        */
+/*   By: cmegret <cmegret@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/19 13:48:14 by francis           #+#    #+#             */
-/*   Updated: 2024/08/15 13:46:46 by francis          ###   ########.fr       */
+/*   Updated: 2024/08/15 14:30:45 by cmegret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,9 @@ struct token	*ft_tokenize(char *prompt);
 // Parsing
 struct command	*ft_parse(struct token *head);
 struct token	*ft_parse_operators(struct token *head);
+
+	// Parsing utils
+int	ft_count_token_list_args(struct token *tok);
 
 // Execution
 int		execute_cmd(struct command *cmd, char **envp);

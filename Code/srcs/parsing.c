@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: francis <francis@student.42.fr>            +#+  +:+       +#+        */
+/*   By: cmegret <cmegret@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/01 14:26:30 by francis           #+#    #+#             */
-/*   Updated: 2024/08/15 13:46:46 by francis          ###   ########.fr       */
+/*   Updated: 2024/08/15 15:01:36 by cmegret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,37 +79,58 @@ struct token	*ft_parse_operators(struct token *head)
 //	- parameter expansion
 // - filename expansion (., .., )
 
-
 struct command	*ft_parse(struct token *head)
 {
 	struct command	*cmd_sequence;
-	char			**args_array;
 	int				i;
+	struct token	*tkn;
 
 	cmd_sequence = malloc (sizeof(struct command));
 	if (!cmd_sequence)
 		return (NULL);
-	args_array = NULL;
 	i = 0;
-	if (head->type == WORD)
+	tkn = head;
+	if (tkn->type == WORD)
 	{
-		cmd_sequence->cmd_name = ft_strdup(head->str);
-		head = head->next;
-		if (head)
-			args_array = malloc(sizeof(char **)); // CHECK MALLOC
-		while (head)
+		cmd_sequence->cmd_name = ft_strdup(tkn->str);
+		i = ft_count_token_list_args(tkn);
+		if (i == 1)
 		{
-			if (head->type == WORD)
-			{
-				args_array[i] = ft_strdup(head->str);
-				if (args_array[i] == NULL)
-					return (NULL);
-			}
-			i++;
-			head = head->next;
+			cmd_sequence->args = malloc((2) * sizeof(char *));
+			if (!cmd_sequence->args)
+				return (NULL); // call error function ?
+			cmd_sequence->args[0] = ft_strdup(tkn->str);
+			cmd_sequence->args[1] = NULL;
 		}
-		//args_array[i] = "";
-		cmd_sequence->args = args_array;
+		else
+		{
+			tkn = tkn->next;
+			cmd_sequence->args = malloc((i + 1) * sizeof(char *));
+			if (!cmd_sequence->args)
+				return (NULL); // call error function ?
+			i = 0;
+			while (tkn)
+			{
+				// printf("parsing - tkn->type: %d\n", tkn->type);
+				if (tkn->type == WORD)
+				{
+					// printf("tkn->str: {%s}\n", tkn->str);
+					cmd_sequence->args[i] = ft_strdup(tkn->str);
+					// printf("parsing - arg %d: %s\n", i, cmd_sequence->args[i]);
+					if (cmd_sequence->args[i] == NULL)
+						return (NULL);
+				}
+				i++;
+				tkn = tkn->next;
+			}
+			cmd_sequence->args[i] = NULL;
+			i = 0;
+			while (cmd_sequence->args[i])
+			{
+				// printf("parsing - cmd->args: %s\n", cmd_sequence->args[i]);
+				i++;	
+			}
+		}
 	}
 	return (cmd_sequence);
 }
