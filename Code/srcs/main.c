@@ -6,13 +6,13 @@
 /*   By: cmegret <cmegret@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/19 13:48:17 by francis           #+#    #+#             */
-/*   Updated: 2024/07/19 16:45:31 by cmegret          ###   ########.fr       */
+/*   Updated: 2024/08/15 10:24:08 by cmegret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../header/Minishell.h"
 
-nt	main(int argc, char **argv, char **envp)
+int	main(int argc, char **argv, char **envp)
 {
 	char	*prompt;
 
