@@ -568,3 +568,194 @@ cat textfile1 > 1 | < 1 echo ""
 touch " textfile1"
 rm textfile1
 rm " textfile1"
+
+
+find / -name "/etc" 2>/dev/null
+echo "content of file1" > file1
+cat file1
+cat file1 | grep -c file
+"hello file" >> file1
+echo "hello file" >> file1
+cat file1 | grep -c file
+"hello world" > file2
+cat file3
+cat file2
+rm file1
+rm file2
+cat file2
+cat file2 | grep -c file
+cat file2 2>/dev/null | grep -c file
+command_
+command_ 2>/dev/null
+command_ 2>&1
+cat file 2>&1 | grep -c file
+command_ 2>&1 > outfile
+cat outfile
+command_ 2>&1 | outfile
+command_ 2>&1 | > outfile
+cat outfile
+command_  > outfile 2>&1
+cat outfile
+rm outfile
+command_ 2>&1 > outfile
+cat outfile
+command_  > outfile 2>&1
+cat outfile
+rm outfile
+command_  > outfile
+cat outfile
+> outfile echo "hello"
+cat outfile
+> outfile echo "hello" > 1
+cat outfile
+rm outfile
+> outfile echo "hello" > 1
+cat outfile
+2>1
+command_
+command_ 1>/dev/null
+command_ 2>/dev/null
+command_ 2>/dev/null
+command_ 1>/dev/null
+cat file1
+echo "hello" > file1
+ls file1
+rm file1
+echo "hello" > file1
+grep -c file < file1
+grep -c h y< file1
+grep -c h < file1
+
+
+echo line1 > file3
+cat file3
+echo line2 > file3
+cat file3
+echo line3 >> file3
+cat file3
+
+cat file1
+cat file1 < file3
+echo "contents of file3" >> file3
+cat file1 < file3
+cat < file3
+cat
+cat 0<file3
+cat 1<file3
+cat 2<file3
+cat 3<file3
+cat file3 >3
+echo "hello" 3<file3
+echo "hello" 1>file3
+cat file3
+echo "hello" 1>>file3
+cat file3
+echo__ "hello" 2>>file3
+cat file3
+echo "hello" 3>file3
+echo "hello" 1>3 3>file3
+cat file3 < file1
+cat file1
+rm file1
+cat file3 < file1
+cat file3
+echo "hello" 1>3 3>file3
+cat file3
+echo "hello" 1>2
+echo "hello" 2>§1
+echo "hello" 2>§1
+echo "hello" 2>11
+echo "apple
+banana
+cherry" > fruits.txt
+cat fruits.txt
+echo "grape,
+melon,
+orange" > fruits.txt
+cat fruits.txt
+sort fruits.txt
+echo "apple" >> fruits.txt
+sort fruits.txt
+man sort
+cat fruits.txt
+sort < fruits.txt
+man man
+echo "ls" > file2
+man < file2
+cat file2
+man sort
+file2=ls
+man $file2
+unset file2
+man $file2
+cat file2
+echo "hello" >> file2
+wc -l < file2
+wc -l file2
+wc -l file2 file1
+wc -l file2 file3
+cat file2
+find / -name "etc" > /dev/null 2>&1
+bc
+echo "2+2"
+echo "2+2" > bc
+echo "2+2" | bc
+echo "80^45" > eighty.txt
+bc < eighty.txt 
+cat eighty.txt | bc
+bc eighty.txt 
+man bc
+cat "aaa bbb ccc"
+cat < "aaa bbb ccc"
+"aaa bbb ccc" > file1 cat < file1
+echo "aaa bbb ccc" > file1 cat < file1
+cat file1
+rm file1
+echo "aaa bbb ccc" > file1 cat < file1
+cat file1
+bc eighty.txt
+bc < eighty.txt
+cat << EOF
+cat << EOF
+grep "hello" << EOF
+history | tail -n 5
+cat << EOF > heredoc.txt
+cat heredoc.txt
+cat << EOF
+cat heredoc.txt 
+cat heredocs.txt 
+cat eighty.txt | bc
+cat /usr/share/dict/words | head -5
+cat /usr/share/dict/words | tail -25
+cat /usr/share/dict/words | grep Zyr* 
+cat /usr/share/dict/words | grep Mor* 
+apropos search
+cat /usr/share/dict/words | wc -l
+cat /usr/share/dict/words | wc -w
+clear
+echo "aaa bbb ccc" > file1 && cat < file1
+echo cat
+echo "aaa bbb ccc" > file1 cat < file1
+cat file1
+cat file2
+echo "aaa bbb ccc" > file1 cat < file2
+cat < file2
+cat file1
+echo "aaa bbb ccc" > file1 && cat < file2
+cat file1
+echo 2 + 2 > four.txt
+cat four.txt
+bc four.txt 
+cat four.txt nota-file.txt > output.txt
+cat out
+cat output.txt 
+cat four.txt nota-file.txt > output.txt 2>1
+cat output.txt 
+catnota-file.txt  2>1
+cat nota-file.txt  2>1
+cat four.txt nota-file.txt > output.txt 2>&1
+cat output
+ps -ef
+ls -l /etc | less
+ls -l /etc
+ls -l /private/etc |

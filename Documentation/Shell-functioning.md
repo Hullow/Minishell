@@ -354,14 +354,159 @@ c. ELSE
 => Word expansion and assignment don't occur
 => Each TOKEN is returned as a single WORD consisting of characters that are exactly the token described in Token Recognition
 
+### 3.3 Parameter expansion
+
+
+### 3.4 Redirections
+#### 3.4.1. Types of redirection
+#### 3.4.1.1. Input redirection
+- IF
+	- General format: `[n]<word`
+
+	=> perform filename expansion of *word*<br>
+	=> open the resulting file for reading:<br>
+		&emsp;- IF<br>
+				- n is specified<br>
+					=> on file descriptor n<br>
+		&emsp;- ELSE<br>
+				- on stdin (file descriptor 0)<br>
+
+#### 3.4.1.2. Output redirection
+- IF
+	- General format: `[n]>word`
+
+	=> perform filename expansion of *word*:<br>
+
+	&emsp; IF<br>
+	&emsp;&emsp;- the file does not exist:<br>
+	&emsp;&emsp;=> create the file<br>
+	&emsp; ELSE<br>
+	&emsp;&emsp;=> truncate the file to zero size<br>
+
+	=> open the resulting file for writing:<br>
+
+	&emsp; - IF<br>
+				- n is specified<br>
+					=> on file descriptor n<br>
+	&emsp; - ELSE<br>
+				- on stdout (file descriptor 1)<br>
+
+#### 3.4.1.3. Append redirected output
+- IF
+	- General format: `[n]>>word`
+
+	=> perform filename expansion of *word*:<br>
+
+	&emsp; IF<br>
+	&emsp;&emsp;- the file does not exist:<br>
+	&emsp;&emsp;=> create the file<br>
+
+	=> open the resulting file for appending:<br>
+
+	&emsp; - IF<br>
+				- n is specified<br>
+					=> on file descriptor n<br>
+	&emsp; - ELSE<br>
+				- on stdout (file descriptor 1)<br>
+
+#### 3.4.1.4. Here Documents
+IF
+	- General format:
+	```bash
+	[n]<<word
+		here-document
+	delimiter
+	```
+
+	=> do not perform any parameter expansion or filename expansion on *word*
+	=> read input from the current source until a line containing only *word* (with no trailing tabs or spaces) is seen
+	=> use all the lines read up to that point as the standard input (or file descriptor *n* if *n* is specified) for a command
+
+- IF
+	- any part of *word* is quoted
+
+	=> the *delimiter* is the result of quote removal on *word*
+	=> the lines in the here-document are not expanded
+
+- ELSE
+	=> the lines in the here-document are subject to parameter expansion
+	=> ignore the character sequence `\newline`
+
+#### 3.4.2. Expansions in redirections
+- IF
+	- a parameter or filename expansion can be performed on the word following the redirection operator 
+
+	=> Perform the expansion
+
+		- IF
+			- the expansion produces more than one word
+				=> report an error
+
+#### 3.4.3. Failure to open or create a file
+- IF
+	- there is a failure to open or create a file for a redirection
+
+	=> the redirection fails
+
+#### 3.4.4. Special filenames in redirections
+- IF
+	- the operating system on which Bash is running provides these special files, 
+	
+	=> use them
+	
+ELSE
+
+	=> emulate them internally with the behavior described below
+
+```
+/dev/fd/fd
+
+    If fd is a valid integer, file descriptor fd is duplicated.
+/dev/stdin
+
+    File descriptor 0 is duplicated.
+/dev/stdout
+
+    File descriptor 1 is duplicated.
+/dev/stderr
+
+    File descriptor 2 is duplicated.
+/dev/tcp/host/port
+
+    If host is a valid hostname or Internet address, and port is an integer port number or service name, Bash attempts to open the corresponding TCP socket.
+/dev/udp/host/port
+
+    If host is a valid hostname or Internet address, and port is an integer port number or service name, Bash attempts to open the corresponding UDP socket. 
+```
+
+#### 3.4.5. Lack of file descriptor number (Implicit redirections)
+- IF
+	- the file descriptor number is omitted, and
+	- the first character of the redirection operator is ‘<’
+
+=> the redirection refers to the standard input (file descriptor 0)
+
+- IF
+	- the file descriptor number is omitted, and
+	- the first character of the redirection operator is ‘>’
+
+=> the redirection refers to the standard output (file descriptor 1)
+
 
 ## 4. [Command execution](https://pubs.opengroup.org/onlinepubs/9699919799/utilities/V3_chap02.html#tag_18_09)
 A **command** is either a **simple command** or a **pipeline**.
 - Unless otherwise cited, the exit status of a command shall be that of the last simple command executed by the command.
 - No limit on the size of a command except the system limits (memory constraints, {ARG_MAX}, etc.)
 
-### 4.0. Shell Execution environment
+### 4.0. General execution considerations
+### 4.0.1. Shell Execution environment
 - See [Shell Execution Environment](https://pubs.opengroup.org/onlinepubs/9699919799/utilities/V3_chap02.html#tag_18_12)
+
+#### 4.0.2. Environment
+
+#### 4.0.3. Exit status
+
+#### 4.0.4. Signals
 
 ### 4.1. Command types
 #### 4.1.1. [Simple commands](https://pubs.opengroup.org/onlinepubs/9699919799/utilities/V3_chap02.html#tag_18_09_01)
@@ -402,7 +547,24 @@ IF
 (..)
 
 #### 4.1.2. Pipelines
+- Pipeline: a sequence of one or more commands separated by the control operator `'|'`
+- For each command, except the last, the shell shall:
+	- connect the standard output of the command to the standard input of the next command
+	- as if by creating a pipe, and passing the *write end of the pipe* as **the standard output of the command** and the *read end of the pipe* as the **standard input of the next command**
 
+- Format for a pipeline: `command1 [ | command2 ...]`
+
+- The standard output of command1 shall be connected to the standard input of command2.
+
+- Redirections: 
+	IF
+	- a command has redirections specified by redirection operators
+
+	=> the standard input, standard output, or both of a command shall be considered to be assigned by the pipeline before any redirections
+
+- The shell shall wait for the last command specified in the pipeline to complete, and may also wait for all commands to complete
+
+- Exit Status: the exit status of the last command specified in the pipeline
 
 ### 4.2. [Command Search and Execution](https://pubs.opengroup.org/onlinepubs/9699919799/utilities/V3_chap02.html#tag_18_09_01_01)
 IF<br>
@@ -490,6 +652,9 @@ set to the command name
 
 #### [Quote removal](https://www.gnu.org/software/bash/manual/bash.html#Quote-Removal)
 > After the preceding expansions, all unquoted occurrences of the characters ‘\’, ‘'’, and ‘"’ that did not result from one of the above expansions are removed.
+
+## Built-ins
+Built-ins implement functionality impossible or inconvenient to obtain via separate utilities. For example, `cd`, `break`, `continue`, and `exec` cannot be implemented outside of the shell because they directly manipulate the shell itself. The `history`, `pwd`, `kill`, or `getopts` builtins, among others, could be implemented in separate utilities, but they are more convenient to use as builtin commands.
 
 ## Definitions
 See: [POSIX.1-2017 - Definitions](https://pubs.opengroup.org/onlinepubs/9699919799/basedefs/V1_chap03.html)

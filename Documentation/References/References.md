@@ -48,7 +48,10 @@
 - [CTRL + D in a terminal - Quora](https://www.quora.com/What-is-Ctrl-D-in-a-terminal)
 - [Signals - Learning the Korn Shell](https://docstore.mik.ua/orelly/unix2.1/ksh/ch08_03.htm)
 
-## Here documents
+## Redirections
+- [Unix for the Bootcamp Grad: Part 1. Redirection and Pipelines - Kerry Sheldon](https://medium.com/@KerrySheldon/unix-for-the-bootcamp-grad-part-1-redirection-and-pipelines-470a7f6609c8)
+
+### Here documents
 - [Bash reference manual - Here Documents](https://www.gnu.org/savannah-checkouts/gnu/bash/manual/bash.html#Here-Documents)
 - [Here documents - TLDP](https://tldp.org/LDP/abs/html/here-docs.html)
 - [Heredocs - a deep dive](https://medium.com/@oduwoledare/heredoc-a-deep-dive-23c82992e522)
@@ -66,6 +69,7 @@
 
 ## Redirections
 - [Bash reference manual - Redirections](https://www.gnu.org/savannah-checkouts/gnu/bash/manual/bash.html#Redirections)
+- [Pipes and redirects - Master the bash shell - Educative.io](https://www.educative.io/courses/master-the-bash-shell/pipes-and-redirects)
 
 ## Tools
 ### Git & Github
