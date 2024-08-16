@@ -1,24 +1,23 @@
 # Issues and milestones
 
 ## Proposed sequence
-1. Simple tokenizing: no parameter expansion, no quotes `+ no pipes and redirections ?`
-2. Simple execution of commands: no variable assignment, no redirection, no quote removal
-3. Filename expansion/Pathname resolution
-4. Execution environment
-5. exit status handling
-6. Pipeline execution : subshell => cmegret ?
-7. parse command prefix and suffixes => fallan ?
-7. parse and execute redirections => fallan ?
-7. cd, pwd, and pathname resolution => cmegret ?
-8. env
-8. echo
-9. exit
-8. signal handling
-9. parameter expansion + $?
-9. export and unset (variable assignment)
-10. quote interpretation
-11. Redirections
-12. Here-docs ?
+. Simple tokenizing and parsing: no parameter expansion, no quotes `+ no pipes and redirections ?`
+. Simple execution of commands: no variable assignment, no redirection, no quote removal
+. Execution environment
+. exit status and error handling => cmegret ?
+. Filename expansion/Pathname resolution => cmegret ?
+. Pipeline execution : subshell => cmegret ?
+. parse command prefix and suffixes => fallan ?
+. parse and execute redirections => fallan ?
+. cd, pwd, and pathname resolution => cmegret ?
+. signal handling => fallan ?
+. quote interpretation => cmegret ?
+. env => cmegret ?
+. echo => cmegret ?
+. exit => cmegret ?
+. parameter expansion (`$`)=> fallan ?
+. export and unset (variable assignment) => cmegret ?
+. Here-docs ? => fallan ?
 
 ## To-do by topic
 ### Tokenizing and parsing

@@ -6,7 +6,7 @@
 /*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/16 12:08:31 by fallan            #+#    #+#             */
-/*   Updated: 2024/08/16 12:08:58 by fallan           ###   ########.fr       */
+/*   Updated: 2024/08/16 13:12:09 by fallan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ int is_digit(char c)
 	return (0);
 }
 
-char *ft_check_export(char *input, int i, int *end)
+char *ft_check_expansion(char *input, int i, int *end)
 {
 	int j;
 
@@ -59,7 +59,7 @@ void set_env_value(char *input, char *env)
 	
 }
 
-void parsing(char *input)
+void parsing_expansion(char *input)
 {
 	int i;
 	int end;

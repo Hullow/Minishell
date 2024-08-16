@@ -540,8 +540,61 @@ A **command** is either a **simple command** or a **pipeline**.
 => `export` or `unset` in a subshell have not effect outside the subshell
 
 #### 4.0.3. Exit status
+- The exit status of an executed command is the value returned by the `waitpid` system call or equivalent function.
+- Exit statuses fall between 0 and 255, although the shell may use values above 125 specially (see explanations below). Exit statuses from shell builtins are also limited to this range. Under certain circumstances, the shell will use special values to indicate specific failure modes.
+
+#### 4.0.3.1. Success and failure:
+	- IF
+		- a command succeeds
+		
+		=> exit status zero
+
+	- ELSE
+
+		=> non-zero exit status (indicates failure)
+
+#### 4.0.3.2. Types of failure
+- IF
+	- a command terminates on a fatal signal
+	- the fatal signal number is N, Bash uses the value 
+	
+	=> the exit status is 128+N
+
+- IF
+	- a command is not found
+	
+	=> the child process created to execute it returns a status of 127
+
+- IF
+	- a command is found
+	- the command is not executable
+	
+	=> the child process created to execute it returns a status of 16
+
+- IF
+
+	- an error during expansion or redirection causes a command to fail
+	
+	=> the exit status is greater than zero (POSIX: between 1 and 125 inclusive)
+
+
+#### 4.0.3.2. Exit status of builtins
+- All of the Bash builtins return an exit status of zero if they succeed and a non-zero status on failure, so they may be used by the conditional and list constructs.
+
+- IF
+	- the builtin is used incorrectly
+	OR
+	- there are generally invalid options
+	OR
+	- there are missing arguments
+	
+	=> exit status is 2
+
+#### 4.0.3.2. Exit status of last command
+- Store the exit status of the last command (== "the most recently executed foreground pipeline") in the special parameter `$?` 
 
 #### 4.0.4. Signals
+See [Bash reference manual - Signals](https://gnu.org/software/bash/manual/bash.html#Signals)
 
 ### 4.1. Command types
 #### 4.1.1. [Simple commands](https://pubs.opengroup.org/onlinepubs/9699919799/utilities/V3_chap02.html#tag_18_09_01)

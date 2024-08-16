@@ -273,11 +273,13 @@ The '$' character is used to introduce parameter expansion, command substitution
     A <left-parenthesis>
 
 the result is unspecified.
+
 2.6.1 Tilde Expansion
 
 A "tilde-prefix" consists of an unquoted <tilde> character at the beginning of a word, followed by all of the characters preceding the first unquoted <slash> in the word, or all the characters in the word if there is no <slash>. In an assignment (see XBD Variable Assignment), multiple tilde-prefixes can be used: at the beginning of the word (that is, following the <equals-sign> of the assignment), following any unquoted <colon>, or both. A tilde-prefix in an assignment is terminated by the first unquoted <colon> or <slash>. If none of the characters in the tilde-prefix are quoted, the characters in the tilde-prefix following the <tilde> are treated as a possible login name from the user database. A portable login name cannot contain characters outside the set given in the description of the LOGNAME environment variable in XBD Other Environment Variables. If the login name is null (that is, the tilde-prefix contains only the tilde), the tilde-prefix is replaced by the value of the variable HOME. If HOME is unset, the results are unspecified. Otherwise, the tilde-prefix shall be replaced by a pathname of the initial working directory associated with the login name obtained using the getpwnam() function as defined in the System Interfaces volume of POSIX.1-2017. If the system does not recognize the login name, the results are undefined.
 
 The pathname resulting from tilde expansion shall be treated as if quoted to prevent it being altered by field splitting and pathname expansion.
+
 2.6.2 Parameter Expansion
 
 The format for parameter expansion is as follows:
@@ -316,7 +318,6 @@ ${parameter:+[word]}
 In the parameter expansions shown previously, use of the <colon> in the format shall result in a test for a parameter that is unset or null; omission of the <colon> shall result in a test for a parameter that is only unset. If parameter is '#' and the colon is omitted, the application shall ensure that word is specified (this is necessary to avoid ambiguity with the string length expansion). The following table summarizes the effect of the <colon>:
 
  
-	
 
 parameter
 Set and Not Null
@@ -516,6 +517,7 @@ ${x#"*"}
     The literal <asterisk> is quoted and not special.
 
 End of informative text.
+
 2.6.3 Command Substitution
 
 Command substitution allows the output of a command to be substituted in place of the command name itself. Command substitution shall occur when the command is enclosed as follows:
@@ -604,9 +606,11 @@ The shell shall treat each character of the IFS as a delimiter and use the delim
 2.6.6 Pathname Expansion
 
 After field splitting, if set -f is not in effect, each field in the resulting command line shall be expanded using the algorithm described in Pattern Matching Notation, qualified by the rules in Patterns Used for Filename Expansion.
+
 2.6.7 Quote Removal
 
 The quote characters ( <backslash>, single-quote, and double-quote) that were present in the original word shall be removed unless they have themselves been quoted.
+
 2.7 Redirection
 
 Redirection is used to open and close files for the current shell execution environment (see Shell Execution Environment) or for any command. Redirection operators can be used with numbers representing file descriptors (see XBD File Descriptor) as described below.
@@ -857,6 +861,7 @@ An expansion error is one that occurs when the shell expansions define in wordex
 If any of the errors shown as "shall exit" or "may exit" occur in a subshell environment, the shell shall (respectively, may) exit from the subshell environment with a non-zero status and continue in the environment from which that subshell environment was invoked.
 
 In all of the cases shown in the table where an interactive shell is required not to exit, the shell shall not perform any further processing of the command in which the error occurred.
+
 2.8.2 Exit Status for Commands
 
 Each command has an exit status that can influence the behavior of other shell commands. The exit status of commands that are not utilities is documented in this section. The exit status of the standard utilities is documented in their respective sections.
@@ -1614,6 +1619,7 @@ If job control is disabled (see the description of set -m) when the shell execut
 When a signal for which a trap has been set is received while the shell is waiting for the completion of a utility executing a foreground command, the trap associated with that signal shall not be executed until after the foreground command has completed. When the shell is waiting, by means of the wait utility, for asynchronous commands to complete, the reception of a signal for which a trap has been set shall cause the wait utility to return immediately with an exit status >128, immediately after which the trap associated with that signal shall be taken.
 
 If multiple signals are pending for the shell for which there are associated trap actions, the order of execution of trap actions is unspecified.
+
 2.12. Shell Execution Environment
 
 A shell execution environment consists of the following:
@@ -1653,34 +1659,13 @@ Utilities other than the special built-ins (see Special Built-In Utilities) shal
 The environment of the shell process shall not be changed by the utility unless explicitly specified by the utility description (for example, cd and umask).
 
 A subshell environment shall be created as a duplicate of the shell environment, except that signal traps that are not being ignored shall be set to the default action. Changes made to the subshell environment shall not affect the shell environment. Command substitution, commands that are grouped with parentheses, and asynchronous lists shall be executed in a subshell environment. Additionally, each command of a multi-command pipeline is in a subshell environment; as an extension, however, any or all commands in a pipeline may be executed in the current environment. All other commands shall be executed in the current shell environment.
+
 2.13. Pattern Matching Notation
 
-The pattern matching notation described in this section is used to specify patterns for matching strings in the shell. Historically, pattern matching notation is related to, but slightly different from, the regular expression notation described in XBD Regular Expressions. For this reason, the description of the rules for this pattern matching notation are based on the description of regular expression notation, modified to account for the differences.
-2.13.1 Patterns Matching a Single Character
+The pattern matching notation described in this section is used to specify patterns for matching strings in the shell. 
+Historically, pattern matching notation is related to, but slightly different from, the regular expression notation described in XBD Regular Expressions. 
+For this reason, the description of the rules for this pattern matching notation are based on the description of regular expression notation, modified to account for the differences.
 
-The following patterns matching a single character shall match a single character: ordinary characters, special pattern characters, and pattern bracket expressions. The pattern bracket expression also shall match a single collating element. A <backslash> character shall escape the following character. The escaping <backslash> shall be discarded. If a pattern ends with an unescaped <backslash>, it is unspecified whether the pattern does not match anything or the pattern is treated as invalid.
-
-An ordinary character is a pattern that shall match itself. It can be any character in the supported character set except for NUL, those special shell characters in Quoting that require quoting, and the following three special pattern characters. Matching shall be based on the bit pattern used for encoding the character, not on the graphic representation of the character. If any character (ordinary, shell special, or pattern special) is quoted, that pattern shall match the character itself. The shell special characters always require quoting.
-
-When unquoted and outside a bracket expression, the following three characters shall have special meaning in the specification of patterns:
-
-?
-    A <question-mark> is a pattern that shall match any character.
-*
-    An <asterisk> is a pattern that shall match multiple characters, as described in Patterns Matching Multiple Characters.
-[
-    If an open bracket introduces a bracket expression as in XBD RE Bracket Expression, except that the <exclamation-mark> character ( '!' ) shall replace the <circumflex> character ( '^' ) in its role in a non-matching list in the regular expression notation, it shall introduce a pattern bracket expression. A bracket expression starting with an unquoted <circumflex> character produces unspecified results. Otherwise, '[' shall match the character itself.
-
-When pattern matching is used where shell quote removal is not performed (such as in the argument to the find - name primary when find is being called using one of the exec functions as defined in the System Interfaces volume of POSIX.1-2017, or in the pattern argument to the fnmatch() function), special characters can be escaped to remove their special meaning by preceding them with a <backslash> character. This escaping <backslash> is discarded. The sequence "\\" represents one literal <backslash>. All of the requirements and effects of quoting on ordinary, shell special, and special pattern characters shall apply to escaping in this context.
-2.13.2 Patterns Matching Multiple Characters
-
-The following rules are used to construct patterns matching multiple characters from patterns matching a single character:
-
-    The <asterisk> ( '*' ) is a pattern that shall match any string, including the null string.
-
-    The concatenation of patterns matching a single character is a valid pattern that shall match the concatenation of the single characters or collating elements matched by each of the concatenated patterns.
-
-    The concatenation of one or more patterns matching a single character with one or more <asterisk> characters is a valid pattern. In such patterns, each <asterisk> shall match a string of zero or more characters, matching the greatest possible number of characters that still allows the remainder of the pattern to match the string.
 
 2.13.3 Patterns Used for Filename Expansion
 
@@ -1708,6 +1693,7 @@ The rules described so far in Patterns Matching a Single Character and Patterns 
     If the pattern contains an open bracket ( '[' ) that does not introduce a bracket expression as in XBD RE Bracket Expression, it is unspecified whether other unquoted pattern matching characters within the same slash-delimited component of the pattern retain their special meanings or are treated as ordinary characters. For example, the pattern "a*[/b*" may match all filenames beginning with 'b' in the directory "a*[" or it may match all filenames beginning with 'b' in all directories with names beginning with 'a' and ending with '['.
 
     If the pattern does not match any existing filenames or pathnames, the pattern string shall be left unchanged.
+
 
 2.14. Special Built-In Utilities
 
