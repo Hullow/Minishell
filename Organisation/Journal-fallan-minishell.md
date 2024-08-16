@@ -139,3 +139,15 @@ POSIX.1-2017's special grammar notation is based on the syntax used by the `yacc
 ## 8/8/24
 - Reading about parsing, thinking about parsing output for execution
 - wrote some code to parse operators
+
+# ?/8/24
+- 
+
+# 12-14/8/24
+- See git logs Hullow branch
+
+# 15/8/24
+- Work with cmegret @42 on parsing + executing basic commands (ls with and without arguments)
+
+# 16/8/24
+- Work (distance) with cmegret

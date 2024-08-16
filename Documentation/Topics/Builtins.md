@@ -1,4 +1,14 @@
 # Shell builtins
+## Minishell
+Your shell must implement the following builtins:
+◦ `echo` with option -n
+◦ `cd` with only a relative or absolute path
+◦ `pwd` with no options
+◦ `export` with no options
+◦ `unset` with no options
+◦ `env` with no options or arguments
+◦ `exit` with no options
+
 - pberset: to code builtins, use functions tsetaddr, etc.
 
 `man builtin`:
@@ -7,8 +17,6 @@
 > Consult a shell's manual page for details on the operation of its builtin commands.
 
 => `man bash` > search "SHELL BUILTIN COMMANDS"
-
-
 
 ## Execution and environment
 - @erabbath: builtins in pipe do not change global environment, but otherwise they do

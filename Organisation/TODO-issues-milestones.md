@@ -3,18 +3,18 @@
 ## Proposed sequence
 1. Simple tokenizing: no parameter expansion, no quotes `+ no pipes and redirections ?`
 2. Simple execution of commands: no variable assignment, no redirection, no quote removal
-=> with echo only ?
-Filename expansion/Pathname resolution
-3. env
-4. exit status handling
-6. Pipeline execution : subshell
-5. signal handling
-6. cd, pwd, and pathname resolution
-7. parameter expansion + $?
-8. export and unset (variable assignment)
-9. quote interpretation
-10. Redirections
-11. Pipes ?
+3. Filename expansion/Pathname resolution
+4. Execution environment
+5. exit status handling
+6. Pipeline execution : subshell => cmegret ?
+7. cd, pwd, and pathname resolution => cmegret ?
+8. echo
+9. exit
+8. signal handling
+9. parameter expansion + $?
+9. export and unset (variable assignment)
+10. quote interpretation
+11. Redirections
 12. Here-docs ?
 
 ## To-do by topic
