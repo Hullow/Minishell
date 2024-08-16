@@ -71,7 +71,7 @@ void parsing_expansion(char *input)
 	{
 		if (input[i] == '$')
 		{
-			env = ft_check_export(input, i, &end); // Passage de l'adresse de end
+			env = ft_check_expansion(input, i, &end); // Passage de l'adresse de end
 			if (env)
 			{
 				replace_value(input, env);
