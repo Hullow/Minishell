@@ -3,14 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: cmegret <cmegret@student.42lausanne.ch>    +#+  +:+       +#+         #
+#    By: fallan <fallan@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/07/19 14:53:36 by cmegret           #+#    #+#              #
-<<<<<<< HEAD
-#    Updated: 2024/07/19 15:29:24 by cmegret          ###   ########.fr        #
-=======
-#    Updated: 2024/08/15 14:42:01 by cmegret          ###   ########.fr        #
->>>>>>> af2cd92bb1edc90e079b67c5a7e511c2d21adf3c
+#    Updated: 2024/08/16 12:07:57 by fallan           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -57,9 +53,6 @@ CFLAGS = -Wall -Wextra -Werror
 LIBFLAGS = -L./lib -lft -lftprintf -lreadline
 
 # Fichiers sources et objets
-<<<<<<< HEAD
-SRC = srcs/main.c
-=======
 SRCS = main.c \
 	  execution.c \
 	  parsing.c \
@@ -69,7 +62,6 @@ SRCS = main.c \
 
 # Add path prefix to SRCS files
 SRC = $(addprefix srcs/, $(SRCS))
->>>>>>> af2cd92bb1edc90e079b67c5a7e511c2d21adf3c
 
 # Fichiers objets
 OBJ = $(SRC:.c=.o)

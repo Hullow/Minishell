@@ -1,3 +1,17 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parameter_expansion.c                              :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/08/16 12:08:31 by fallan            #+#    #+#             */
+/*   Updated: 2024/08/16 12:08:58 by fallan           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "../header/Minishell.h"
+
 char ft_find_env(char *input, int i, int j)
 {
 	// return the env variable in the env list or NULL
