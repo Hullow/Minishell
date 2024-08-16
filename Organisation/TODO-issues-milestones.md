@@ -7,7 +7,10 @@
 4. Execution environment
 5. exit status handling
 6. Pipeline execution : subshell => cmegret ?
+7. parse command prefix and suffixes => fallan ?
+7. parse and execute redirections => fallan ?
 7. cd, pwd, and pathname resolution => cmegret ?
+8. env
 8. echo
 9. exit
 8. signal handling
