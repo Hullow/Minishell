@@ -26,6 +26,14 @@ This document describes how the minishell should work, based on the [Shell Comma
 ### Input characteristics
 - length: unlimited
 
+
+## 2.-3. Tokenizing and interpreting the grammar
+> Parts of an interpreter:<br>
+> • In designing an interpreter, follow the decomposition into two tasks, and design it to have two parts:
+> 1. A syntactic analysis engine, which takes as input a string, and outputs an appropriate tree structure
+> 2. A semantic evaluation engine, which takes as input that tree, and does what the original input string said to do
+[CSE12 UCSD - Abstract Syntax Trees](https://cseweb.ucsd.edu/~kube/cls/12.s13/Lectures/lec16/lec16.pdf)
+
 ## 2. Tokenization
 ### 2.0. Tokenization summary
 - Shell breaks input into tokens:
@@ -125,7 +133,7 @@ OR:
 IF
 - current character not quoted
 - previous character used as part of an operator ==> 
-- current character can be used with the previous characterS to form an operator 
+
 <br> &emsp;=> only `>>` or `<<` in our case
 
 => use character as part of that (operator) token
@@ -179,6 +187,10 @@ IF
 
 => Field splitting shall not be performed on the results of the expansion.
 
+General note on Word Splitting ([AOSA Book - Bash](https://aosabook.org/en/v1/bash.html)):
+> 3.5.3. Word Splitting
+The results of the word expansions are split using the characters in the value of the shell variable `IFS` as delimiters. This is how the shell transforms a single word into more than one. Each time one of the characters in `$IFS` appears in the result, bash splits the word into two. Single and double quotes both inhibit word splitting.
+
 ##### 2.2.2.6. New operator token
 IF
 - current character is unquoted
@@ -202,6 +214,8 @@ IF
 
 => append current character to that word
 
+N.b.: added => check if previous token delimited
+
 <details>
 ####<summary><b>2.2.2.9. Comment (#) <i>=> don't implement</i></b></summary>
 IF
@@ -221,16 +235,41 @@ After delimiting a token, the next step is to categorize it following the Shell 
 
 ## 3. [Shell Grammar](https://pubs.opengroup.org/onlinepubs/9699919799/utilities/V3_chap02.html#tag_18_10)
 
+### Preliminary note: Syntax rules and BNF
+> The syntax rules for the language can be written down in Backus-Naur Form (BNF) or a similar notation
+> - A BNF grammar is a list of syntax rules
+> - Each rule defines one "nonterminal symbol", which appears at the left of a " := " sign in the rule
+> - Alternative definitions of the nonterminal symbol appear to the right of the " := " sign, separated by " | " signs
+> - Often the definition of a nonterminal in a BNF grammar is recursive: it defines the nonterminal in terms of itself
+
+>- The nonterminal symbol defined in rule listed first in the grammar is called the "start" symbol of the grammar
+>- A symbol not defined by a rule in the grammar is a "terminal symbol", and is usually taken literally
+>- If a string satisfies the definition of the "start" symbol, it is in the language defined by the BNF grammar; otherwise not
+>- The process of using the grammar to check to see if a string is in the language is called **parsing** the string
+
+Source: [CSE12 UCSD - Abstract Syntax Trees](https://cseweb.ucsd.edu/~kube/cls/12.s13/Lectures/lec16/lec16.pdf)
+
+
 Note: (from [Introduction - Grammar Conventions - POSIX.1-2017](https://pubs.opengroup.org/onlinepubs/9699919799/utilities/V3_chap01.html#tag_17_03))
 > The following typographical conventions are used in the grammar; they have no significance except to aid in reading.
 
-- The identifiers for the reserved words of the language are shown with a leading capital letter. (These are terminals in the grammar; for example, While, Case.)
+- identifiers for reserved words: leading capital letter (these are terminals in the grammar; for example, While, Case.)
 
-- The identifiers for terminals in the grammar are all named with uppercase letters and underscores; for example, NEWLINE, ASSIGN_OP, NAME.
+- identifiers for terminals: named with uppercase letters and underscores; for example, NEWLINE, ASSIGN_OP, NAME.
 
-- The identifiers for non-terminals are all lowercase.
+- identifiers for non-terminals: all lowercase
 
-### 3.0. Token identifiers:
+### Parsing principles
+- For each derivation from a grammar, there is a corresponding **parse tree**
+- Each node in the **parse tree** corresponds to one symbol in the BNF grammar:
+	- Leaves: terminal symbols
+	- Internal nodes: nonterminal symbols
+	- Root: start symbol
+- The **children of an internal node in the parse tree** correspond to the symbols in a definition of the nonterminal symbol corresponding to their parent node
+- Reading the leaves of the parse tree left to right gives you the string that has been parsed
+
+
+### 3.0. Token identifiers
 - Operator token identifier:
 	- NEWLINE
 	- PIPELINE `|`
@@ -294,15 +333,6 @@ ELSE IF
 - the delimiting word is unquoted
 
 => all lines of the here-document are subjected to parameter expansion
-#### 3.2.5. Name in `for` `=> implement or not ?`
-IF
-- the token consists solely of underscores, digits, and alphabetics from the [portable character set](https://pubs.opengroup.org/onlinepubs/009695399/basedefs/xbd_chap06.html#tag_06_01) (see [definition of a name](https://pubs.opengroup.org/onlinepubs/009695399/basedefs/xbd_chap03.html#tag_03_230))
-
-=> the token identifier is NAME
-
-ELSE<br>
-=> the token identifier is WORD
-
 #### 3.2.7 Assignment preceding command name
 a) IF
 - the first word `=> of what ?` does not contain the character `=`
@@ -329,17 +359,198 @@ c. ELSE
 => Word expansion and assignment don't occur
 => Each TOKEN is returned as a single WORD consisting of characters that are exactly the token described in Token Recognition
 
+### 3.3 Parameter expansion
+
+
+### 3.4 Redirections
+#### 3.4.1. Types of redirection
+#### 3.4.1.1. Input redirection
+- IF
+	- General format: `[n]<word`
+
+	=> perform filename expansion of *word*<br>
+	=> open the resulting file for reading:<br>
+		&emsp;- IF<br>
+				- n is specified<br>
+					=> on file descriptor n<br>
+		&emsp;- ELSE<br>
+				- on stdin (file descriptor 0)<br>
+
+#### 3.4.1.2. Output redirection
+- IF
+	- General format: `[n]>word`
+
+	=> perform filename expansion of *word*:<br>
+
+	&emsp; IF<br>
+	&emsp;&emsp;- the file does not exist:<br>
+	&emsp;&emsp;=> create the file<br>
+	&emsp; ELSE<br>
+	&emsp;&emsp;=> truncate the file to zero size<br>
+
+	=> open the resulting file for writing:<br>
+
+	&emsp; - IF<br>
+				- n is specified<br>
+					=> on file descriptor n<br>
+	&emsp; - ELSE<br>
+				- on stdout (file descriptor 1)<br>
+
+#### 3.4.1.3. Append redirected output
+- IF
+	- General format: `[n]>>word`
+
+	=> perform filename expansion of *word*:<br>
+
+	&emsp; IF<br>
+	&emsp;&emsp;- the file does not exist:<br>
+	&emsp;&emsp;=> create the file<br>
+
+	=> open the resulting file for appending:<br>
+
+	&emsp; - IF<br>
+				- n is specified<br>
+					=> on file descriptor n<br>
+	&emsp; - ELSE<br>
+				- on stdout (file descriptor 1)<br>
+
+#### 3.4.1.4. Here Documents
+IF
+	- General format:
+	```bash
+	[n]<<word
+		here-document
+	delimiter
+	```
+
+	=> do not perform any parameter expansion or filename expansion on *word*
+	=> read input from the current source until a line containing only *word* (with no trailing tabs or spaces) is seen
+	=> use all the lines read up to that point as the standard input (or file descriptor *n* if *n* is specified) for a command
+
+- IF
+	- any part of *word* is quoted
+
+	=> the *delimiter* is the result of quote removal on *word*
+	=> the lines in the here-document are not expanded
+
+- ELSE
+	=> the lines in the here-document are subject to parameter expansion
+	=> ignore the character sequence `\newline`
+
+#### 3.4.2. Expansions in redirections
+- IF
+	- a parameter or filename expansion can be performed on the word following the redirection operator 
+
+	=> Perform the expansion
+
+		- IF
+			- the expansion produces more than one word
+				=> report an error
+
+#### 3.4.3. Failure to open or create a file
+- IF
+	- there is a failure to open or create a file for a redirection
+
+	=> the redirection fails
+
+#### 3.4.4. Special filenames in redirections
+- IF
+	- the operating system on which Bash is running provides these special files, 
+	
+	=> use them
+	
+ELSE
+
+	=> emulate them internally with the behavior described below
+
+```
+/dev/fd/fd
+
+    If fd is a valid integer, file descriptor fd is duplicated.
+/dev/stdin
+
+    File descriptor 0 is duplicated.
+/dev/stdout
+
+    File descriptor 1 is duplicated.
+/dev/stderr
+
+    File descriptor 2 is duplicated.
+/dev/tcp/host/port
+
+    If host is a valid hostname or Internet address, and port is an integer port number or service name, Bash attempts to open the corresponding TCP socket.
+/dev/udp/host/port
+
+    If host is a valid hostname or Internet address, and port is an integer port number or service name, Bash attempts to open the corresponding UDP socket. 
+```
+
+#### 3.4.5. Lack of file descriptor number (Implicit redirections)
+- IF
+	- the file descriptor number is omitted, and
+	- the first character of the redirection operator is ‘<’
+
+=> the redirection refers to the standard input (file descriptor 0)
+
+- IF
+	- the file descriptor number is omitted, and
+	- the first character of the redirection operator is ‘>’
+
+=> the redirection refers to the standard output (file descriptor 1)
+
 
 ## 4. [Command execution](https://pubs.opengroup.org/onlinepubs/9699919799/utilities/V3_chap02.html#tag_18_09)
 A **command** is either a **simple command** or a **pipeline**.
 - Unless otherwise cited, the exit status of a command shall be that of the last simple command executed by the command.
 - No limit on the size of a command except the system limits (memory constraints, {ARG_MAX}, etc.)
 
-### 4.0. Shell Execution environment
+### 4.0. General execution considerations
+### 4.0.1. Shell Execution environment
 - See [Shell Execution Environment](https://pubs.opengroup.org/onlinepubs/9699919799/utilities/V3_chap02.html#tag_18_12)
+
+- A shell execution environment consists of the following:
+
+	- Open files inherited upon invocation of the shell, plus open files controlled by exec
+	- Working directory as set by `cd`
+	- Shell parameters from the environment inherited by the shell when it begins (see the `export` built-in)
+
+- Utilities other than the built-in
+=> shall be invoked in a separate environment that consists of the following. The initial value of these objects shall be the same as that for the parent shell, except as noted below:
+
+	- Files:
+		- Open files inherited on invocation of the shell
+		- open files controlled by the exec special built-in plus any modifications
+		- additions specified by any redirections to the utility
+
+    - Current working directory
+
+    - Variables with the export attribute, along with those explicitly exported for the duration of the command, shall be passed to the utility environment variables
+
+	- The environment of the shell process shall not be changed by the utility unless explicitly specified by the utility description (for example, `cd`)
+
+	- A subshell environment shall be created as a duplicate of the shell environment
+
+	- Changes made to the subshell environment shall not affect the shell environment. 
+
+	- each command of a multi-command pipeline is in a subshell environment. All other commands shall be executed in the current shell environment.
+
+#### 4.0.2. Environment
+- The environment for any simple command or function may be augmented temporarily by prefixing it with parameter assignments, as described in Shell Parameters. These assignment statements affect only the environment seen by that command.
+
+=> `export VAR=2 | echo $VAR` => ""
+=> `export` or `unset` in a subshell have not effect outside the subshell
+
+#### 4.0.3. Exit status
+
+#### 4.0.4. Signals
 
 ### 4.1. Command types
 #### 4.1.1. [Simple commands](https://pubs.opengroup.org/onlinepubs/9699919799/utilities/V3_chap02.html#tag_18_09_01)
+[Bash](https://www.gnu.org/software/bash/manual/bash.html#Simple-Commands):<br>
+> a sequence of words separated by blanks, terminated by one of the shell’s control operators (only `|` in our case)<br>
+> The first word generally specifies a command to be executed, with the rest of the words being that command’s arguments.<br>
+> The return status (see Exit Status) of a simple command is its exit status as provided by the POSIX 1003.1 `waitpid` function, or 128+n if the command was terminated by signal n.
+
+POSIX:<br>
 A sequence of optional variable assignments and redirections, in any sequence, optionally followed by words and redirections, terminated by a control operator (\<newline\>, `|`, "the end-of-input indicator used internally by the shell").
 
 Command execution sequence:
@@ -350,12 +561,17 @@ IF
 	=> save these words for processing in steps 3. and 4.
 
 2. expansion of the other words:<br>
-IF
+IF 
 	- some words are not variable assignments or redirections
 
-	=> expand those words `=> parameter expansion` ; `=> pathname expansion ?`<br>
-=> IF<br>
-&emsp;-  any fields (if there are \<space\> or \<tab\>) remain following the expansion of the words
+	=> expand those words:<br>
+	&emsp;	- parameter expansion<br>
+	&emsp;	- [filename expansion](https://www.gnu.org/software/bash/manual/bash.html#Filename-Expansion)/ Pathname-resolution.md<br>
+	&emsp;	- IF<br>
+	- expansion performed<br>
+	-  any fields (\<space\> or \<tab\>) remain following the expansion of the words
+
+	&emsp;&emsp;		=> perform [word splitting](https://www.gnu.org/software/bash/manual/bash.html#Word-Splitting)
 
 3. redirections<br>
 IF
@@ -368,15 +584,60 @@ IF
 	- there are any variable assignments
 	- the variable assignments have possible expansions (parameter expansion or quote removal)
 
-=> perform the expansions before assigning the value
+=> perform the expansions before assigning the value:<br>
+	- parameter expansion
+	- quote removal
 
-> Variable assignments shall be performed as follows:
->
-> If no command name results, variable assignments shall affect the current execution environment.
+Other rules for variable assignments and redirections:<br>
 
-(..)
+1. Command name results ?<br>
+IF
+	- no command name results
+
+=> variable assignments affect the current execution environment
+=> assignment statements are performed before redirections
+=> redirections are performed, but do not affect the current shell environment
+=> A redirection error causes the command to exit with a non-zero status
+
+ELSE<br>
+- the variables are added to the environment of the executed command and do not affect the current shell environment
+	(..)
+
+2. Command name left after expansion ?<br>
+IF
+	- there is a command name left after expansion
+
+=> execution proceeds as described below
+
+ELSE
+
+=> the command exits
+
 
 #### 4.1.2. Pipelines
+- Pipeline: a sequence of one or more commands separated by the control operator `'|'`
+- For each command, except the last, the shell shall:
+	- connect the standard output of the command to the standard input of the next command
+	- as if by creating a pipe, and passing the *write end of the pipe* as **the standard output of the command** and the *read end of the pipe* as the **standard input of the next command**
+
+- Format for a pipeline: `command1 [ | command2 ...]`
+
+- The standard output of command1 shall be connected to the standard input of command2.
+
+- Redirections: 
+	IF
+	- a command has redirections specified by redirection operators
+
+	=> the standard input, standard output, or both of a command shall be considered to be assigned by the pipeline before any redirections
+
+- The shell shall wait for the last command specified in the pipeline to complete, and may also wait for all commands to complete
+
+- Execution environment:
+	- A subshell environment shall be created as a duplicate of the shell environment, except that signal traps that are not being ignored shall be set to the default action.
+	- Each command of a multi-command pipeline is in a subshell environment; as an extension, however, any or all commands in a pipeline may be executed in the current environment.
+	- All other commands shall be executed in the current shell environment.
+
+- Exit Status: the exit status of the last command specified in the pipeline
 
 ### 4.2. [Command Search and Execution](https://pubs.opengroup.org/onlinepubs/9699919799/utilities/V3_chap02.html#tag_18_09_01_01)
 IF<br>
@@ -403,10 +664,10 @@ IF<br>
 
 	IF
 	- the utility is a built-in
-		=> invoke the utility
+		=> invoke the built-in
 
 	ELSE
-		=> execute the utility in a separate utility environment (see Shell Execution Environment) with actions equivalent to calling the execl() function with arguments:
+		=> execute the utility in a separate ?utility? environment (see Shell Execution Environment) with actions equivalent to calling the execl() function with arguments:
 
 		- path:
 		set to the pathname resulting from the search
@@ -465,6 +726,9 @@ set to the command name
 #### [Quote removal](https://www.gnu.org/software/bash/manual/bash.html#Quote-Removal)
 > After the preceding expansions, all unquoted occurrences of the characters ‘\’, ‘'’, and ‘"’ that did not result from one of the above expansions are removed.
 
+## Built-ins
+Built-ins implement functionality impossible or inconvenient to obtain via separate utilities. For example, `cd`, `break`, `continue`, and `exec` cannot be implemented outside of the shell because they directly manipulate the shell itself. The `history`, `pwd`, `kill`, or `getopts` builtins, among others, could be implemented in separate utilities, but they are more convenient to use as builtin commands.
+
 ## Definitions
 See: [POSIX.1-2017 - Definitions](https://pubs.opengroup.org/onlinepubs/9699919799/basedefs/V1_chap03.html)
 
@@ -472,7 +736,6 @@ See: [POSIX.1-2017 - Definitions](https://pubs.opengroup.org/onlinepubs/96999197
 > A word consisting solely of letters, numbers, and underscores, and beginning with a letter or underscore. Names are used as shell variable and function names. Also referred to as an identifier.
 
 #### Operator
-
 > In the shell command language, either a control operator or a redirection operator.
 
 ### [Control Operator](https://pubs.opengroup.org/onlinepubs/9699919799/basedefs/V1_chap03.html#tag_03_113)
@@ -486,11 +749,9 @@ See: [POSIX.1-2017 - Definitions](https://pubs.opengroup.org/onlinepubs/96999197
 > A word that has a special meaning to the shell. Most reserved words introduce shell flow control constructs, such as for and while.
 
 ### Redirection
-
 > In the shell command language, a method of associating files with the input or output of commands. 
 
 ### Redirection Operator
-
 >In the shell command language, a token that performs a redirection function. It is one of the following symbols:
 
 <     >     >|     <<     >>     <&     >&     <<-     <>

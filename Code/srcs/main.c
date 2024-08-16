@@ -3,29 +3,35 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cmegret <cmegret@student.42lausanne.ch>    +#+  +:+       +#+        */
+/*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/19 13:48:17 by francis           #+#    #+#             */
-/*   Updated: 2024/07/19 15:22:00 by cmegret          ###   ########.fr       */
+/*   Updated: 2024/08/16 12:06:10 by fallan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../header/Minishell.h"
 
-int	main(void)
+int	main(int argc, char **argv, char **envp)
 {
 	char	*prompt;
 
-	while (1)
+	(void)argc;
+	(void)argv;
+	while ((prompt = readline("Minishell : ")) != NULL)
 	{
-		prompt = readline("Minishell : ");
-		if (!prompt)
-			break ;
-		if (*prompt)
+		if (*prompt) // verify if chain is not empty
 		{
-			add_history(prompt);
+			add_history(prompt); // Move it later when here doc will be implemented, to avoid to add the here doc in the history
+			(void)envp;
+			// ft_parse(ft_tokenize(prompt));
+			ft_tokenization_checker(ft_parse_operators(ft_tokenize(prompt)));
+			execute_cmd(ft_parse(ft_tokenize(prompt)), envp);
 		}
-		free(prompt);
+		// if (i % 5 == 0) // clean history 
+		// 	rl_clear_history();
+
+		free(prompt); // free the memory allocated by readline
 	}
 	return (0);
 }

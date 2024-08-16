@@ -10,6 +10,9 @@
 => Use add_history, rl_clear_history (or clear_history), and ... ?
 => Subshell history ?
 
+### Input
+- Open and execute a script.sh => needs `./` prefix
+
 ### Metacharacter handling
 #### `\`:
 > Not interpret unclosed quotes or special characters which are not required by the
@@ -84,8 +87,6 @@ See [Builtins - Bash Reference Manual (v5.2)](https://www.gnu.org/software/bash/
 - `#!` : "If the first line of a file of shell commands starts with the characters "#!", the results are unspecified." (SCL)
 - `{}`
 
-- filename expansion
-
 #### Variables
 - Variable creation ?
 - Env variable creation
@@ -93,3 +94,4 @@ See [Builtins - Bash Reference Manual (v5.2)](https://www.gnu.org/software/bash/
 #### Tokenization
 - Parameter expansion for `$`: `${` also ?
 - Command substitution: what to do instead ? E.g. `echo $(ls) >> file`
+- Newlines => don't tokenize, correct ?

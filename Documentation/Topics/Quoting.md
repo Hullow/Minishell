@@ -1,5 +1,8 @@
 # Quoting
 
+## Method
+- how to verify if current character is unquoted: have a "quote" struct that counts how many quotes we are in ?
+
 ## Examples
 ```bash
 bash-3.2$ VAR=2

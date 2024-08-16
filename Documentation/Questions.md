@@ -5,6 +5,7 @@ All questions we need answers to
 - `rl_clear_history`: function not found, gcc on Mac ARM suggests `clear_history()` instead
 
 ## Input and parsing
+- Newline tokens: don't implement right ?
 - Here-docs: can be implemented after regular parsing ?
 - Readline/history: should we implement indexing of history to navigate history with up/down arrows, or is it implemented by one of the authorized functions ?
 - Readline commands/signals: ctrl + k, ctrl + a
@@ -27,6 +28,9 @@ All questions we need answers to
 
 ## Redirections
 - implement `>|` ?
+
+## Quoting
+- What to do with unclosed quotes : Error or `>` ?
 
 ## Execution:
 - how to call echo with -n ? Something special to do ?
