@@ -3,26 +3,51 @@
 ## Proposed sequence
 . Simple tokenizing and parsing: no parameter expansion, no quotes `+ no pipes and redirections ?`
 . Simple execution of commands: no variable assignment, no redirection, no quote removal
-. Execution environment
+. Execution environment: 
+- check that is correct (except cd?)
+
 . exit status and error handling => cmegret ?
-. Filename expansion/Pathname resolution => cmegret ?
-. Pipeline execution : subshell => cmegret ?
-. parse command prefix and suffixes => fallan ?
-. parse and execute redirections => fallan ?
-. cd, pwd, and pathname resolution => cmegret ?
-. signal handling => fallan ?
-. quote interpretation => cmegret ?
-. env => cmegret ?
-. echo => cmegret ?
+
 . exit => cmegret ?
-. parameter expansion (`$`)=> fallan ?
-. export and unset (variable assignment) => cmegret ?
-. Here-docs ? => fallan ?
+Requires: exit status
+
+. Pipeline (parse and execute): subshell => cmegret ?
+
+
+. Signals handling => fallan ?
+. parse command prefixes and suffixes => fallan ?
+
+. Redirections (parse and execute) => fallan ?
+Parse and execute redirections:
+- parse IO_NUMBER (*`2`* `>`)
+
+- execute various redirections:
+	- manage file retrieval, creation, appending
+	- implement the various redirections:
+		- redirect output (`>`)
+		- redirect input (`<`)
+		- append output (`>>`)
+
+- manage redirection errors
+
+Requires:
+- Parse command prefixes and suffixes
+- filename expansion/pathname resolution
+
+. Filename expansion/Pathname resolution => cmegret ?
+. cd, pwd, and pathname resolution => cmegret ?
+Requires: filename expansion/pathname resolution
+
+. quote interpretation => cmegret + fallan (subdivide)
+. echo => cmegret ?
+. parameter expansion (`$`) => fallan ?
+. env, export and unset (environmental variable management) => cmegret ?
+. `=` parsing (for export) => fallan ?
+. Here-docs ? => fallan + cmegret ? (subdivide)
+
 
 ## To-do by topic
 ### Tokenizing and parsing
-- implementing `=` in the parsing (requires: `export`; references: see Shell-functioning.md#Shell grammar#Assignment)
-- keep track of quotes in parsing => see header: `struct token // bool	is_double_quoted;// bool is_single_quoted;` (to try)
 - adapt BNF grammar from POSIX standard for Minishell project => almost done
 - Check that if no token is found (input empty), struct token is NULL
 
