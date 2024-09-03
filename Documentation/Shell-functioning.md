@@ -540,8 +540,61 @@ A **command** is either a **simple command** or a **pipeline**.
 => `export` or `unset` in a subshell have not effect outside the subshell
 
 #### 4.0.3. Exit status
+- The exit status of an executed command is the value returned by the `waitpid` system call or equivalent function.
+- Exit statuses fall between 0 and 255, although the shell may use values above 125 specially (see explanations below). Exit statuses from shell builtins are also limited to this range. Under certain circumstances, the shell will use special values to indicate specific failure modes.
+
+#### 4.0.3.1. Success and failure:
+	- IF
+		- a command succeeds
+		
+		=> exit status zero
+
+	- ELSE
+
+		=> non-zero exit status (indicates failure)
+
+#### 4.0.3.2. Types of failure
+- IF
+	- a command terminates on a fatal signal
+	- the fatal signal number is N, Bash uses the value 
+	
+	=> the exit status is 128+N
+
+- IF
+	- a command is not found
+	
+	=> the child process created to execute it returns a status of 127
+
+- IF
+	- a command is found
+	- the command is not executable
+	
+	=> the child process created to execute it returns a status of 126
+
+- IF
+
+	- an error during parameter expansion or redirection causes a command to fail
+	
+	=> the exit status is greater than zero (POSIX: between 1 and 125 inclusive)
+
+
+#### 4.0.3.2. Exit status of builtins
+- All of the Bash builtins return an exit status of zero if they succeed and a non-zero status on failure
+
+- IF
+	- the builtin is used incorrectly
+	OR
+	- there are generally invalid options
+	OR
+	- there are missing arguments
+	
+	=> exit status is 2
+
+#### 4.0.3.2. Exit status of last command
+- Store the exit status of the last command (== "the most recently executed foreground pipeline") in the special parameter `$?`
 
 #### 4.0.4. Signals
+See [Bash reference manual - Signals](https://gnu.org/software/bash/manual/bash.html#Signals)
 
 ### 4.1. Command types
 #### 4.1.1. [Simple commands](https://pubs.opengroup.org/onlinepubs/9699919799/utilities/V3_chap02.html#tag_18_09_01)
@@ -757,4 +810,11 @@ See: [POSIX.1-2017 - Definitions](https://pubs.opengroup.org/onlinepubs/96999197
 <     >     >|     <<     >>     <&     >&     <<-     <>
 
 ### [Word](https://www.gnu.org/software/bash/manual/bash.html#index-word)
+Bash reference manual:
 > A sequence of characters treated as a unit by the shell. Words may not include unquoted metacharacters.
+
+POSIX definition:
+> In the shell command language, a token other than an operator. In some cases a word is also a portion of a word token: in the various forms of parameter expansion, such as `${name-word}`, and variable assignment, such as `name=word`, the word is the portion of the token depicted by `word`. The concept of a word is no longer applicable following word expansions—only fields remain.
+
+Note:
+    For further information, see [XCU 2.6.2 Parameter Expansion](https://pubs.opengroup.org/onlinepubs/9799919799/utilities/V3_chap02.html#tag_19_06_02) and [2.6 Word Expansions](https://pubs.opengroup.org/onlinepubs/9799919799/utilities/V3_chap02.html#tag_19_06) . 
