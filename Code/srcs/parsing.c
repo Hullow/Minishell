@@ -3,156 +3,100 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
+/*   By: cmegret <cmegret@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/08/01 14:26:30 by francis           #+#    #+#             */
-/*   Updated: 2024/08/08 17:39:18 by fallan           ###   ########.fr       */
+/*   Created: 2024/09/04 09:18:48 by cmegret           #+#    #+#             */
+/*   Updated: 2024/09/04 10:23:20 by cmegret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../header/Minishell.h"
 
-// Parses our linked list of tokens, starting from left (head)
-// Extracts the command and the arguments 
-// Outputs a struct command with the command name, the arguments
-void	ft_tokenization_checker(struct token *head)
+struct s_token	*ft_parse_operators(struct s_token *head)
 {
-	const char *token_type_strings[9] = {
-	"UNDEFINED TOKEN",
-    "WORD",
-    "NEWLINE",
-    "REDIR_INPUT",
-    "REDIR_OUTPUT",
-    "REDIR_APPEND",
-    "REDIR_HEREDOC",
-    "PIPE",
-    "END_OF_INPUT"};
-
-	while (head)
-	{
-		if (head->str && head->type)
-			printf("string: %s | token type: %s\n", head->str, token_type_strings[head->type]);
-		else
-		{
-			printf("type or string not found: ");
-			if (head->type)
-				printf("head-type: %s, head->str not found\n", token_type_strings[head->type]);
-			if (head->str)
-				printf("head-str: %s, head->type not found\n", head->str);
-			else
-				printf("nor head->str nor head-type found\n");
-		}
-		head = head->next;
-	}
-}
-
-struct token	*ft_parse_operators(struct token *head)
-{
-	struct token	*iterator;
+	struct s_token	*iterator;
 
 	iterator = head;
 	while (iterator)
 	{
 		if (!(iterator->type))
 		{
-			// printf("iterator->str: %s, type not found; ", iterator->str);
 			if (!(ft_strncmp(iterator->str, ">", 2)))
-			{	iterator->type = REDIR_OUTPUT; }	// printf("assigned type REDIR_OUTPUT"); }
+				iterator->type = REDIR_OUTPUT;
 			else if (!(ft_strncmp(iterator->str, "<", 2)))
-			{	iterator->type = REDIR_INPUT;} //	printf("assigned type REDIR_INPUT"); }
+				iterator->type = REDIR_INPUT;
 			else if (!(ft_strncmp(iterator->str, ">>", 3)))
-			{	iterator->type = REDIR_APPEND; }	// printf("assigned type REDIR_APPEND"); }
+				iterator->type = REDIR_APPEND;
 			else if (!(ft_strncmp(iterator->str, "<<", 3)))
-			{	iterator->type = REDIR_HEREDOC;} //	printf("assigned type REDIR_HEREDOC"); }
+				iterator->type = REDIR_HEREDOC;
 			else if (!(ft_strncmp(iterator->str, "|", 2)))
-			{	iterator->type = PIPE;} //printf("assigned type PIPE"); 
-			// printf("\n");
+				iterator->type = PIPE;
 		}
 		iterator = iterator->next;
 	}
 	return (head);
 }
 
-
-// To parse our string and prepare for execution
-// possible operations:
-//	- parameter expansion
-// - filename expansion (., .., )
-
-
-struct command	*ft_parse(struct token *head)
+static struct s_command	*init_command(void)
 {
-	struct command	*cmd_sequence;
-	char			**args_array;
-	int				i;
+	struct s_command	*cmd;
 
-	cmd = malloc (sizeof(struct command));
+	cmd = malloc(sizeof(struct s_command));
 	if (!cmd)
 		return (NULL);
-	args_array = NULL;
-	i = 0;
-	if (head->type == WORD)
-	{
-		cmd->cmd_name = ft_strdup(head->str);
-		head = head->next;
-		if (head)
-			args_array = malloc(sizeof(char **)); // CHECK MALLOC
-		while (head)
-		{
-			if (head->type == WORD)
-			{
-				args_array[i] = ft_strdup(head->str);
-				if (args_array[i] == NULL)
-					return (NULL);
-			}
-			i++;
-			head = head->next;
-		}
-		//args_array[i] = "";
-		cmd->args = args_array;
-	}
+	cmd->cmd_name = NULL;
+	cmd->args = NULL;
 	return (cmd);
 }
 
-// Old version
-/* struct command	*ft_parse(struct token *head)
+static char	**allocate_and_fill_args(struct s_token *head, int *arg_count)
 {
-	struct command	*cmd;
-	char			**args_array;
-	int				i;
+	char	**args_array;
+	int		i;
 
-	cmd = malloc (sizeof(struct command));
-	if (!cmd)
+	args_array = malloc(sizeof(char *) * (*arg_count + 1));
+	if (!args_array)
 		return (NULL);
-	args_array = NULL;
 	i = 0;
+	while (head)
+	{
+		if (head->type == WORD)
+		{
+			args_array[i] = ft_strdup(head->str);
+			if (args_array[i] == NULL)
+				return (NULL);
+			i++;
+		}
+		head = head->next;
+	}
+	args_array[i] = NULL;
+	return (args_array);
+}
+
+struct s_command	*ft_parse(struct s_token *head)
+{
+	struct s_command	*cmd_sequence;
+	int					arg_count;
+	struct s_token		*current;
+
+	cmd_sequence = init_command();
+	if (!cmd_sequence)
+		return (NULL);
+	arg_count = 0;
 	if (head->type == WORD)
 	{
-		cmd->cmd_name = ft_strdup(head->str);
+		cmd_sequence->cmd_name = ft_strdup(head->str);
 		head = head->next;
-		if (head)
-			args_array = malloc(sizeof(char **)); // CHECK MALLOC
-		while (head)
+		current = head;
+		while (current)
 		{
-			if (head->type == WORD)
-			{
-				args_array[i] = ft_strdup(head->str);
-				if (args_array[i] == NULL)
-					return (NULL);
-			}
-			i++;
-			head = head->next;
+			if (current->type == WORD)
+				arg_count++;
+			current = current->next;
 		}
-		//args_array[i] = "";
-		cmd->args = args_array;
+		cmd_sequence->args = allocate_and_fill_args(head, &arg_count);
+		if (!cmd_sequence->args)
+			return (NULL);
 	}
-	return (cmd);
-} */
-
-
-/* 
-// See Shell-functioning.md#Simple commands
-ft_command_expansion()
-{
-	
-} */
+	return (cmd_sequence);
+}

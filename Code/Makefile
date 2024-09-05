@@ -6,7 +6,7 @@
 #    By: cmegret <cmegret@student.42lausanne.ch>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/07/19 14:53:36 by cmegret           #+#    #+#              #
-#    Updated: 2024/07/19 15:29:24 by cmegret          ###   ########.fr        #
+#    Updated: 2024/09/04 10:03:43 by cmegret          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -54,10 +54,15 @@ LIBFLAGS = -L./lib -lft -lftprintf -lreadline
 
 # Fichiers sources et objets
 SRC = srcs/main.c \
-	  srcs/execution.c \
+	  srcs/checker.c \
 	  srcs/parsing.c \
 	  srcs/tokenization.c \
-	  srcs/tokenization-checkers.c \
+	  srcs/tokenization_word.c \
+	  srcs/tokenization_blank.c \
+	  srcs/tokenization_helpers.c \
+	  srcs/tokenization_operator.c \
+	  srcs/command_path.c \
+	  srcs/execution.c \
 
 # Fichiers objets
 OBJ = $(SRC:.c=.o)
