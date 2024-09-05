@@ -6,7 +6,7 @@
 /*   By: francis <francis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/01 14:26:30 by francis           #+#    #+#             */
-/*   Updated: 2024/09/04 15:36:33 by francis          ###   ########.fr       */
+/*   Updated: 2024/09/05 14:53:21 by francis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,8 +71,6 @@ struct token	*ft_parse_operators(struct token *head)
 	}
 	return (head);
 }
-
-ft_assign_command_sequence(struct token *head)
 
 // To parse our string and prepare for execution
 // possible operations:
