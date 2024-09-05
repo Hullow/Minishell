@@ -76,3 +76,8 @@
 	- Execution:
 		- how to call echo with -n ? Something special to do ?
 		- pberset: to code builtins, use functions tsetaddr, etc.
+
+
+# 16/8/24
+- Two sources of documentation: Shell-functioning.md, Topics/*.md (Builtins, Quoting, ...). Follow them !
+- 

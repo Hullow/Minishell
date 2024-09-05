@@ -26,15 +26,41 @@ Your shell must implement the following builtins:
 > When Bash is not executing in POSIX mode, these builtins (including `exit`, `export`, `unset`) behave no differently than the rest of the Bash builtin commands.
 
 ### cd
-See [Open Group Specification - POSIX.1-2017](https://pubs.opengroup.org/onlinepubs/9699919799/utilities/cd.html)
+See [Open Group Specification - POSIX.1-2017](https://pubs.opengroup.org/onlinepubs/9799919799/utilities/cd.html)
 
 ### Exit
-`exit` - cause the shell to exit([Shell Command Language - Special builtins](https://pubs.opengroup.org/onlinepubs/9699919799/utilities/V3_chap02.html#exit)):<br>
+`exit` - cause the shell to exit([Shell Command Language - Special builtins](https://pubs.opengroup.org/onlinepubs/9799919799/utilities/V3_chap02.html#exit)):<br>
 >SYNOPSIS<br>
 >`exit [n]`<br><br>
 >DESCRIPTION<br>
->The exit utility shall cause the shell to exit from its current execution environment with the exit status specified by the unsigned decimal integer n. If the current execution environment is a subshell environment, the shell shall exit from the subshell environment with the specified exit status and continue in the environment from which that subshell environment was invoked; otherwise, the shell utility shall terminate with the specified exit status. If n is specified, but its value is not between 0 and 255 inclusively, the exit status is undefined.<br><br>
-A trap on EXIT shall be executed before the shell terminates, except when the exit utility is invoked in that trap itself, in which case the shell shall exit immediately.<br><br>
+>The exit utility shall cause the shell to exit from its current execution environment.
+
+IF
+	- the current execution environment is a subshell environment
+
+	=> the shell shall exit from the subshell environment and continue in the environment from which that subshell environment was invoked; otherwise, the shell utility shall terminate. The wait status of the shell or subshell shall be determined by the unsigned decimal integer n, if specified.
+
+IF
+	- n is specified and has a value between 0 and 255 inclusive
+
+	=> the wait status of the shell or subshell shall indicate that it exited with exit status n.
+	
+IF
+	- n is specified and has a value greater than 256 that corresponds to an exit status the shell assigns to commands terminated by a valid signal
+
+	=> (see 2.8.2 Exit Status for Commands ), the wait status of the shell or subshell shall indicate that it was terminated by that signal. No other actions associated with the signal, such as execution of trap actions or creation of a core image, shall be performed by the shell.
+
+IF
+	- n is specified and is not an unsigned decimal integer, or has a value of 256, or has a value greater than 256 but not corresponding to an exit status the shell assigns to commands terminated by a valid signal
+	
+	=> the wait status of the shell or subshell is unspecified
+
+IF
+- n is not specified
+
+=> the result shall be as if n were specified with the current value of the special parameter '?' (see 2.5.2 Special Parameters ), except that if the exit command would cause the end of execution of a trap action, the value for the special parameter '?' that is considered "current" shall be the value it had immediately preceding the trap action.<br><br>
+
+A trap action on EXIT shall be executed before the shell terminates, except when the exit utility is invoked in that trap action itself, in which case the shell shall exit immediately. It is unspecified whether setting a new trap action on EXIT during execution of a trap action on EXIT will cause the new trap action to be executed before the shell terminates.<br><br>
 >OPTIONS<br>
 >None.<br><br>
 >OPERANDS<br>
@@ -61,10 +87,10 @@ A trap on EXIT shall be executed before the shell terminates, except when the ex
 >Default.
 
 ### Export
-[General note on variable assignment](https://pubs.opengroup.org/onlinepubs/9699919799/basedefs/V1_chap04.html#tag_foot_1):
+[General note on variable assignment](https://pubs.opengroup.org/onlinepubs/9799919799/basedefs/V1_chap04.html#tag_foot_1):
 > When a variable assignment is done, the variable shall be created if it did not already exist. If value is not specified, the variable shall be given a null value.
 
-Note on valid names [POSIX](https://pubs.opengroup.org/onlinepubs/9699919799/basedefs/V1_chap03.html#tag_03_235:~:text=unlocks%20the%20mutex.-,3.235,-Name):
+Note on valid names [POSIX](https://pubs.opengroup.org/onlinepubs/9799919799/basedefs/V1_chap03.html#tag_03_235:~:text=unlocks%20the%20mutex.-,3.235,-Name):
 > In the shell command language, a word consisting solely of underscores, digits, and alphabetics from the portable character set. The first character of a name is not a digit.
 > Note: The Portable Character Set is defined in detail in Portable Character Set.
 
@@ -89,7 +115,7 @@ But `export VAR_OH_VAR=22` works
 
 > The return status is zero unless an invalid option is supplied, one of the names is not a valid shell variable name, or -f is supplied with a name that is not a shell function.
 
-`export` - set the export attribute for variables ([Shell Command Language - Special builtins](https://pubs.opengroup.org/onlinepubs/9699919799/utilities/V3_chap02.html#export)):<br>
+`export` - set the export attribute for variables ([Shell Command Language - Special builtins](https://pubs.opengroup.org/onlinepubs/9799919799/utilities/V3_chap02.html#export)):<br>
 >SYNOPSIS<br>
 >`export name[=word]...`<br>
 >`export -p`<br><br>
@@ -157,7 +183,7 @@ export(struct tbl *vp, const char *val)
 ```
 
 ### Unset
-#### [Shell Command Language manual - Parameter expansion]( https://pubs.opengroup.org/onlinepubs/9699919799/utilities/V3_chap02.html#tag_18_06_02)
+#### [Shell Command Language manual - Parameter expansion]( https://pubs.opengroup.org/onlinepubs/9799919799/utilities/V3_chap02.html#tag_18_06_02)
 > ${parameter-word}
 >    This example demonstrates the difference between unset and set to the empty string, as well as the rules for finding the delimiting close brace.
 ```bash
@@ -170,7 +196,7 @@ export(struct tbl *vp, const char *val)
         barxyz}
 ```
 
-`unset` - unset values and attributes of variables and functions ([Shell Command Language - Special builtins](https://pubs.opengroup.org/onlinepubs/9699919799/utilities/V3_chap02.html#unset)):<br>
+`unset` - unset values and attributes of variables and functions ([Shell Command Language - Special builtins](https://pubs.opengroup.org/onlinepubs/9799919799/utilities/V3_chap02.html#unset)):<br>
 >SYNOPSIS<br>
 >`unset [-fv] name...`<br><br>
 >DESCRIPTION<br>
@@ -179,10 +205,10 @@ If -v is specified, name refers to a variable name and the shell shall unset it 
 If -f is specified, name refers to a function and the shell shall unset the function definition.<br><br>
 If neither -f nor -v is specified, name refers to a variable; if a variable by that name does not exist, it is unspecified whether a function by that name, if any, shall be unset.<br><br>
 Unsetting a variable or function that was not previously set shall not be considered an error and does not cause the shell to abort.<br><br>
-The unset special built-in shall support XBD [Utility Syntax Guidelines](https://pubs.opengroup.org/onlinepubs/9699919799/basedefs/V1_chap12.html#tag_12_02).<br><br>
+The unset special built-in shall support XBD [Utility Syntax Guidelines](https://pubs.opengroup.org/onlinepubs/9799919799/basedefs/V1_chap12.html#tag_12_02).<br><br>
 Note that:<br>
 `VARIABLE=`<br>
-is not equivalent to an unset of VARIABLE; in the example, VARIABLE is set to "". Also, the variables that can be unset should not be misinterpreted to include the special parameters (see [Special Parameters](https://pubs.opengroup.org/onlinepubs/9699919799/utilities/V3_chap02.html#tag_18_05_02)).<br><br>
+is not equivalent to an unset of VARIABLE; in the example, VARIABLE is set to "". Also, the variables that can be unset should not be misinterpreted to include the special parameters (see [Special Parameters](https://pubs.opengroup.org/onlinepubs/9799919799/utilities/V3_chap02.html#tag_18_05_02)).<br><br>
 >OPTIONS<br>
 >See the DESCRIPTION.<br><br>
 >OPERANDS<br>
@@ -210,4 +236,4 @@ is not equivalent to an unset of VARIABLE; in the example, VARIABLE is set to ""
 >Default.
 
 ### pwd
-See [Open Group Specification - POSIX.1-2017](https://pubs.opengroup.org/onlinepubs/9699919799/)
+See [Open Group Specification - POSIX.1-2017](https://pubs.opengroup.org/onlinepubs/9799919799/)

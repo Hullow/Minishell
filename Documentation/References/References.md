@@ -1,7 +1,8 @@
 # Minishell references
 ## Shells
-- [Shell Command Language manual (POSIX Shell)](https://pubs.opengroup.org/onlinepubs/9699919799/utilities/V3_chap02.html) => check 2018 and not 2004 version !
-- [Shell Command Language manual - PDF version (1994)](https://pubs.opengroup.org/onlinepubs/009656399/toc.pdf) (n.b.: more readable)
+- [Shell Command Language manual - 2018 version (POSIX Shell)](https://pubs.opengroup.org/onlinepubs/9699919799/utilities/V3_chap02.html) => check 2018 and not 2004 version !
+- [Shell Command Language manual - 2024 version (POSIX Shell)](https://pubs.opengroup.org/onlinepubs/9799919799/) => last version (August)
+- [Shell Command Language manual - PDF version (1994) (POSIX Shell)](https://pubs.opengroup.org/onlinepubs/009656399/toc.pdf) (n.b.: more readable)
 - [Bash Reference Manual (v5.2)](https://www.gnu.org/software/bash/manual/bash.html)
 - [`man Bash`(v5.2)](https://www.man7.org/linux/man-pages/man1/bash.1.html)
 - [POSIX.1-2017 standard definitions](https://pubs.opengroup.org/onlinepubs/9699919799/basedefs/V1_chap03.html)
