@@ -803,3 +803,8 @@ ps -ef
 ls -l /etc | less
 ls -l /etc
 ls -l /private/etc |
+
+
+/bin/sh/ls
+/bin/sh/exit
+clear

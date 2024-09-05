@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
+/*   By: francis <francis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/19 13:48:17 by francis           #+#    #+#             */
-/*   Updated: 2024/08/16 12:06:10 by fallan           ###   ########.fr       */
+/*   Updated: 2024/09/04 15:33:43 by francis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,8 @@ int	main(int argc, char **argv, char **envp)
 			add_history(prompt); // Move it later when here doc will be implemented, to avoid to add the here doc in the history
 			(void)envp;
 			// ft_parse(ft_tokenize(prompt));
-			ft_tokenization_checker(ft_parse_operators(ft_tokenize(prompt)));
-			execute_cmd(ft_parse(ft_tokenize(prompt)), envp);
+			ft_print_token_type(ft_parse_operators(ft_tokenize(prompt)));
+			execute_cmd(ft_assign_command_sequence(ft_tokenize(prompt)), envp);
 		}
 		// if (i % 5 == 0) // clean history 
 		// 	rl_clear_history();

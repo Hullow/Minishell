@@ -6,7 +6,7 @@
 /*   By: francis <francis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/19 13:48:14 by francis           #+#    #+#             */
-/*   Updated: 2024/08/16 14:52:32 by francis          ###   ########.fr       */
+/*   Updated: 2024/09/04 15:30:49 by francis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@
 struct token
 {
 	char 			*str;
-	int 			type;
+	int 			type; // 0 if type unassigned, 1-8 depending on type (see defines above)
 	bool			is_delimited;
 	bool			is_quoted;
 	// bool			is_double_quoted;
@@ -73,4 +73,4 @@ int		execute_cmd(struct command *cmd, char **envp);
 
 // debugging
 	// Parsing
-void	ft_tokenization_checker(struct token *head);
+void	ft_print_token_type(struct token *head);

@@ -3,19 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cmegret <cmegret@student.42lausanne.ch>    +#+  +:+       +#+        */
+/*   By: francis <francis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/01 14:26:30 by francis           #+#    #+#             */
-/*   Updated: 2024/08/15 15:01:36 by cmegret          ###   ########.fr       */
+/*   Updated: 2024/09/04 15:36:33 by francis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../header/Minishell.h"
 
-// Parses our linked list of tokens, starting from left (head)
-// Extracts the command and the arguments 
-// Outputs a struct command with the command name, the arguments
-void	ft_tokenization_checker(struct token *head)
+void	ft_print_token_type(struct token *head)
 {
 	const char *token_type_strings[9] = {
 	"UNDEFINED TOKEN",
@@ -46,6 +43,8 @@ void	ft_tokenization_checker(struct token *head)
 	}
 }
 
+// checks if the token only contains an operator
+// if so, assigns the correct operator token type
 struct token	*ft_parse_operators(struct token *head)
 {
 	struct token	*iterator;
@@ -73,13 +72,14 @@ struct token	*ft_parse_operators(struct token *head)
 	return (head);
 }
 
+ft_assign_command_sequence(struct token *head)
 
 // To parse our string and prepare for execution
 // possible operations:
 //	- parameter expansion
 // - filename expansion (., .., )
 
-struct command	*ft_parse(struct token *head)
+struct command	*ft_assign_command_sequence(struct token *head)
 {
 	struct command	*cmd_sequence;
 	int				i;

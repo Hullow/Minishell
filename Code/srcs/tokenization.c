@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokenization.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cmegret <cmegret@student.42lausanne.ch>    +#+  +:+       +#+        */
+/*   By: francis <francis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/22 16:35:11 by francis           #+#    #+#             */
-/*   Updated: 2024/08/02 12:39:52 by cmegret          ###   ########.fr       */
+/*   Updated: 2024/09/04 11:23:37 by francis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -227,12 +227,13 @@ struct token	*ft_tokenize(char *prompt)
 		return (NULL);
 	tok->next = NULL;
 	tok->str = NULL;
-	tok->type = 0;
+	tok->type = 0; // type undefined
 	tok->is_operator = NULL;
 	tok->is_delimited = false;
 	head = tok;
 	i = 0;
 
+	// Applies basic tokenization rules in order from POSIX standard
 	while (prompt[i])
 	{
 		// printf("ft_tokenize while loop: i == %d, prompt[i] : %c\n", i, prompt[i]);

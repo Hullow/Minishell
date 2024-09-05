@@ -145,11 +145,10 @@ public static A parse (String s)
 %token  NAME
 %token  IO_NUMBER
 
-/* The following are the operators (either a control operator or redirection operator)
-   containing more than one character. */
+/* The following are the operators (either a control operator or redirection operator) containing more than one character. */
 
 %token  REDIR_HEREDOC  REDIR_APPEND
-/*      '<<'   '>>'   */
+/*     		 '<<'   	   '>>'   */
 
 /* -------------------------------------------------------
    The Grammar
