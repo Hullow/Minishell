@@ -80,4 +80,10 @@
 
 # 16/8/24
 - Two sources of documentation: Shell-functioning.md, Topics/*.md (Builtins, Quoting, ...). Follow them !
-- 
+
+# 5/9/24
+- fallan back from break
+- 2hour call, discussed execution, errors and exit, builtins, makefile, parsing, next steps
+- To do next: 
+	- cmegret => refactoring execution, builtins
+	- fallan => read more about parsing methods, refactor tokenization/parsing a bit

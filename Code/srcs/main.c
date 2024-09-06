@@ -6,7 +6,7 @@
 /*   By: francis <francis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/19 13:48:17 by francis           #+#    #+#             */
-/*   Updated: 2024/09/04 15:33:43 by francis          ###   ########.fr       */
+/*   Updated: 2024/09/06 13:18:24 by francis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ int	main(int argc, char **argv, char **envp)
 			ft_print_token_type(ft_parse_operators(ft_tokenize(prompt)));
 			execute_cmd(ft_assign_command_sequence(ft_tokenize(prompt)), envp);
 		}
-		// if (i % 5 == 0) // clean history 
+		// if (i % 5 == 0) // clean history
 		// 	rl_clear_history();
 
 		free(prompt); // free the memory allocated by readline

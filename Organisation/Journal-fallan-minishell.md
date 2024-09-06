@@ -151,3 +151,11 @@ POSIX.1-2017's special grammar notation is based on the syntax used by the `yacc
 
 # 16/8/24
 - Work (distance) with cmegret
+
+# 4/9/24
+- Back to work after 2-week break
+- Read about parsing principles and methods
+
+# 5/9/24
+- Read about parsing principles and methods
+- Call with cmegret, discussed exeuction
