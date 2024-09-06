@@ -803,3 +803,7 @@ ps -ef
 ls -l /etc | less
 ls -l /etc
 ls -l /private/etc |
+
+
+touch file
+rm FILE

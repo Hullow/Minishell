@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
+/*   By: cmegret <cmegret@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/19 13:48:17 by francis           #+#    #+#             */
-/*   Updated: 2024/08/16 12:06:10 by fallan           ###   ########.fr       */
+/*   Updated: 2024/09/05 15:34:34 by cmegret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ int	main(int argc, char **argv, char **envp)
 			ft_tokenization_checker(ft_parse_operators(ft_tokenize(prompt)));
 			execute_cmd(ft_parse(ft_tokenize(prompt)), envp);
 		}
-		// if (i % 5 == 0) // clean history 
+		// if (i % 5 == 0) // clean history
 		// 	rl_clear_history();
 
 		free(prompt); // free the memory allocated by readline
