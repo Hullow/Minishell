@@ -6,7 +6,7 @@
 /*   By: francis <francis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/01 14:26:30 by francis           #+#    #+#             */
-/*   Updated: 2024/09/05 14:53:21 by francis          ###   ########.fr       */
+/*   Updated: 2024/09/06 18:37:05 by francis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,10 +72,75 @@ struct token	*ft_parse_operators(struct token *head)
 	return (head);
 }
 
-// To parse our string and prepare for execution
-// possible operations:
-//	- parameter expansion
-// - filename expansion (., .., )
+
+///// ATTEMPT TO IMPLEMENT Recursive Decent Parsing
+/////
+// typedef enum {command, cmd_name, cmd_word, cmd_prefix, cmd_suffix} Symbol;
+// To parse our string using the grammar (see Tokenization-and-parsing####Minishell_grammar)
+// if we are attempting to match e.g. a "command" symbol (left-hand side),
+// e.g. for the string: grep hello
+// => tokenization: 'grep', 'hello' 
+// for *cmd_prefix cmd_word cmd_suffix*:
+	// what do we check for "cmd_prefix" ? "grep" or "grep hello"
+	// it's minimum 3 tokens, so it cannot be can only be a subset by definition, so we remove two
+
+	// e.g. for the string: find . -name "hello"
+	// cmd_prefix => find .
+/* struct token	*ft_parse_using_grammar(struct token *head)
+{
+
+	// Example:
+	// 
+	ft_parse_pipe_sequence
+	{
+		if (ft_parse_command != NULL)
+		{
+			// To implement later:
+				// string satisfies definition of "cmd_prefix cmd_word cmd_suffix"
+				// string satisfies definition of "cmd_prefix cmd_word"
+				// string satisfies definition of "cmd_prefix"
+
+			// string satisfies definition of "cmd_name cmd_suffix"
+			if (ft_parse_command_name != NULL)
+			// string satisfies definition of "cmd_name"
+			else if (ft_parse_command_name != NULL)
+
+			else
+				return NULL;
+		}
+		// else if (ft_parse_pipe_sequence != NULL)
+		// {
+
+		// }
+		else
+			return NULL;
+	}
+} */
+
+/* ft_parse_command_suffix(struct token *tok)
+{
+// io_redirect
+// 		=> TO IMPLEMENT
+
+// | cmd_suffix io_redirect
+// 		=> TO IMPLEMENT
+
+// |            WORD
+	if (tok)
+		tok->type = WORD;
+	
+// | cmd_suffix WORD
+// 		=> TO IMPLEMENT
+}
+
+ft_parse_command_name(struct token *tok)
+{
+	if (ft_strchr(tok->str, '=') == NULL)
+		tok->type = WORD;
+	else	
+		return (NULL); // should be 7b : ft_parse_command_word(tok);
+	return (tok);
+} */
 
 struct command	*ft_assign_command_sequence(struct token *head)
 {

@@ -158,7 +158,7 @@ public static A parse (String s)
 program          : pipe_sequence
                  ;
 
-pipe_sequence    : command
+pipe_sequence	 : command
                  | pipe_sequence '|' command
                  ;
 
@@ -169,10 +169,10 @@ command   		 : cmd_prefix cmd_word cmd_suffix
                  | cmd_name
                  ;
 
-cmd_name         : WORD                   /* Apply rule 7a */
+cmd_name         : WORD                   /* Apply rule 7a (see Shell-functioning.md)*/
                  ;
 
-cmd_word         : WORD                   /* Apply rule 7b */
+cmd_word         : WORD                   /* Apply rule 7b (see Shell-functioning.md)*/
                  ;
 
 cmd_prefix       :            io_redirect
@@ -202,16 +202,19 @@ io_file          : '<'			filename
                  | REDIR_APPEND	filename
                  ;
 
-filename         : WORD                      /* Apply rule 2 */
+filename         : WORD                      /* Apply rule 2 (see Shell-functioning.md)*/
                  ;
 
 io_here          : REDIR_HEREDOC     here_end
                  ;
 
-here_end         : WORD                      /* Apply rule 3 */
+here_end         : WORD                      /* Apply rule 3 (see Shell-functioning.md)*/
                  ;
 
 ```
+
+##### Notes on the grammar
+- It is [left-recursive](https://en.wikipedia.org/wiki/Left_recursion), for instance with `pipe_sequence : pipe_sequence '|' command`
 
 
 #### Illustrations
@@ -256,4 +259,19 @@ find . -name "file*" 1>find.txt |
 
 program -> pipe_sequence -> command -> cmd_name + cmd_suffix -> WORD ('echo') + cmd_suffix -> WORD ('echo') + cmd_suffix + io_redirect -> WORD ('echo') + cmd_suffix + io_redirect + io_redirect -> WORD ('echo') + WORD ('hello') + io_redirect + io_redirect -> WORD ('echo') + WORD ('hello') + io_file + io_redirect -> WORD ('echo') + WORD ('hello') + '>' filename + io_redirect -> WORD ('echo') + WORD ('hello') + '>'	WORD ('2') + io_redirect -> WORD ('echo') + WORD ('hello') + '>' WORD ('2') + '>' filename -> WORD ('echo') + WORD ('hello') + '>' WORD ('2') + '>' WORD ('4')
 
+## Parsing techniques
+> The basic connection between a sentence and the grammar it derives from is the parse tree, which describes how the grammar was used to produce the sentence. For the reconstruction of this connection we need a parsing technique. When we consult the extensive literature on parsing techniques, we seem to find dozens of them, yet **there are only two techniques to do parsing**; all the rest is technical detail and embellishment.<br>
+> The first method tries to imitate the original production process by rederiving the sentence from the start symbol. This method is called *top-down*, because the parse tree is reconstructed from the top downwards.<br>
+> The second method tries to roll back the production process and to reduce the sentence back to the start symbol. Quite naturally this technique is called *bottom-up*.<br>
+From *Parsing Techniques – Grune & Jacobs (2008)*
 
+## Ambiguity
+
+### Essential and spurious ambiguity
+A sentence from a grammar can easily have more than one production tree, i.e., there can easily be more than one way to produce the sentence. From a formal point of view this is a non-issue (a set does not count how many times it contains an el- ement), but as soon as we are interested in the semantics, the difference becomes significant. Not surprisingly, a sentence with more than one production tree is called ambiguous, but we must immediately distinguish between essential ambiguity and spurious ambiguity. The difference comes from the fact that we are not interested in the production trees per se, but rather in the semantics they describe. An ambiguous sentence is spuriously ambiguous if all its production trees describe the same seman- tics; if some of them differ in their semantics, the ambiguity is essential. The notion of “ambiguity” can also be defined for grammars: a grammar is essentially ambigu- ous if it can produce an essentially ambiguous sentence, spuriously ambiguous if it can produce a spuriously ambiguous sentence (but not an essentially ambiguous one) and unambiguous if it cannot do either.<br>
+From *Parsing Techniques – Grune & Jacobs (2008)*
+
+### Evaluating ambiguity
+> **It is often important to be sure that a grammar is not ambiguous, but unfortunately that property is undecidable**: it can be proved that there cannot be an algorithm that can, for every CF grammar, decide whether it is ambiguous or unambiguous.<br>(..)<br>
+> **The most effective ambiguity test for a CF grammar we have at present is the construction of the corresponding LR(k) automaton, but it is not a perfect test**: if the construction succeeds, the grammar is guaranteed to be unambiguous; if it fails, in principle nothing is known. In practice, however, the reported conflicts will often point to genuine ambiguities. The construction of an LR-regular parser (Section 9.13.2) is an even stronger, but more complicated test<br>
+From *Parsing Techniques – Grune & Jacobs (2008)*
