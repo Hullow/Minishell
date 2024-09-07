@@ -1,29 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   tokenization_helpers.c                             :+:      :+:    :+:   */
+/*   token_creation.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cmegret <cmegret@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/09/04 09:24:36 by cmegret           #+#    #+#             */
-/*   Updated: 2024/09/04 09:27:20 by cmegret          ###   ########.fr       */
+/*   Created: 2024/09/06 17:21:26 by cmegret           #+#    #+#             */
+/*   Updated: 2024/09/06 17:31:36 by cmegret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../header/Minishell.h"
+#include "../../header/Minishell.h"
 
-void	ft_print_all_token_strings(struct s_token **head)
-{
-	struct s_token	*iterator;
-
-	iterator = *head;
-	while (iterator != 0)
-	{
-		printf("token: %s\n", iterator->str);
-		iterator = iterator->next;
-	}
-}
-
+// function to create (malloc) a new token and add it to the linked list
 struct s_token	*ft_create_new_token(struct s_token *tok)
 {
 	struct s_token	*newtoken;
@@ -45,12 +34,11 @@ struct s_token	*ft_create_new_token(struct s_token *tok)
 	return (tok);
 }
 
+// Rule to tokenize the end of input
 struct s_token	*ft_tokenize_end_of_input(struct s_token *tok)
 {
 	if (tok)
-	{
 		tok->is_delimited = 1;
-	}
 	else
 	{
 		tok = malloc (1 * sizeof(struct s_token));
@@ -63,4 +51,39 @@ struct s_token	*ft_tokenize_end_of_input(struct s_token *tok)
 		tok->is_quoted = false;
 	}
 	return (tok);
+}
+
+// Rule for blanks (spaces or tabs)
+int	ft_tokenize_blank(struct s_token **tok)
+{
+	(*tok)->is_delimited = true;
+	return (1);
+}
+
+// Rule for new word
+int	ft_new_word(struct s_token **tok, char c)
+{
+	char	character[2];
+
+	character[0] = c;
+	character[1] = '\0';
+	(*tok) = ft_create_new_token(*tok);
+	(*tok)->type = WORD;
+	(*tok)->is_operator = false;
+	(*tok)->str = ft_strdup(character);
+	return (1);
+}
+
+// Rule for appending character to word
+int	ft_append_char_to_word(struct s_token **tok, char c)
+{
+	char	*temp;
+	char	character[2];
+
+	temp = ft_strdup((*tok)->str);
+	character[0] = c;
+	character[1] = '\0';
+	(*tok)->str = ft_strjoin(temp, character);
+	free(temp);
+	return (1);
 }

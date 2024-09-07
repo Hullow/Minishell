@@ -1,28 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   tokenization_blank.c                               :+:      :+:    :+:   */
+/*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cmegret <cmegret@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/09/04 09:22:41 by cmegret           #+#    #+#             */
-/*   Updated: 2024/09/04 09:22:49 by cmegret          ###   ########.fr       */
+/*   Created: 2024/09/02 14:30:52 by cmegret           #+#    #+#             */
+/*   Updated: 2024/09/07 19:21:42 by cmegret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../header/Minishell.h"
+#include "../../header/Minishell.h"
 
-// checks if character is a blank (space or tab)
-int	ft_is_blank(char c)
+int	main(int argc, char **argv, char **envp)
 {
-	if (c == ' ' || c == '\t')
-		return (1);
+	char	*prompt;
+
+	ft_check_args(argc, argv);
+	prompt = readline("Minishell : ");
+	while (prompt != NULL)
+	{
+		add_history(prompt);
+		ft_tokenization_checker(ft_parse_operators(ft_tokenize(prompt)));
+		execute_cmd(ft_parse(ft_tokenize(prompt)), envp);
+		free(prompt);
+		prompt = readline("Minishell : ");
+	}
 	return (0);
-}
-
-int	ft_tokenize_blank(struct s_token **tok)
-{
-	if ((*tok)->str)
-		(*tok)->is_delimited = true;
-	return (1);
 }

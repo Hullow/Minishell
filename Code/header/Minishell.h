@@ -6,7 +6,7 @@
 /*   By: cmegret <cmegret@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/19 13:48:14 by francis           #+#    #+#             */
-/*   Updated: 2024/09/05 13:57:10 by cmegret          ###   ########.fr       */
+/*   Updated: 2024/09/07 19:19:55 by cmegret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 #include <signal.h>
 #include <sys/wait.h>
 #include <sys/types.h> 
+#include <stdbool.h>
 
 #include "../lib/libft/libft.h"
 #include "../lib/ft_printf/ft_printf.h"
@@ -31,9 +32,7 @@
 #define PIPE 7
 #define END_OF_INPUT 8
 
-#include <stdbool.h>
-
-struct	s_token
+struct s_token
 {
 	char			*str;
 	int				type;
@@ -45,12 +44,12 @@ struct	s_token
 	struct s_token	*next;
 };
 
-struct	s_command
+struct s_command
 {
-	char			*cmd_name;
-	char			**args;
-	int				fd; // redirection
-	struct command	*next;
+	char				*cmd_name;
+	char				**args;
+	int					fd; // redirection
+	struct s_command	*next;
 };
 
 // Main
@@ -58,31 +57,28 @@ int					main(int argc, char **argv, char **envp);
 void				ft_check_args(int argc, char **argv);
 void				error_and_exit(const char *message);
 
-// Tokenization
+// Token
+struct s_token		*ft_create_new_token(struct s_token *tok);
+struct s_token		*ft_tokenize_end_of_input(struct s_token *tok);
+int					ft_continue_operator_token(char *prompt, int i, struct s_token **tok);
+int					ft_new_operator_token(char *prompt, int i, struct s_token **tok);
+int					ft_tokenize_blank(struct s_token **tok);
+int					ft_append_char_to_word(struct s_token **tok, char c);
+int					ft_new_word(struct s_token **tok, char c);
 struct s_token		*ft_tokenize(char *prompt);
-
-// Tokenization utils
 int					ft_previous_char_is_undelimited_operator(struct s_token *tok);
 int					ft_is_operator_character(char c);
 int					ft_is_blank(char c);
 int					ft_previous_char_part_of_word(struct s_token *tok);
-int					ft_continue_operator_token(char *prompt,
-						int i, struct s_token **tok);
-int					ft_new_operator_token(char *prompt, int i,
-						struct s_token **tok);
-int					ft_tokenize_blank(struct s_token **tok);
-int					ft_append_char_to_word(struct s_token **tok, char c);
-int					ft_new_word(struct s_token **tok, char c);
-struct s_token		*initialize_token(void);
-struct s_token		*ft_tokenize_end_of_input(struct s_token *tok);
-struct s_token		*ft_create_new_token(struct s_token *tok);
-
-void				ft_print_all_token_strings(struct s_token **head);
 
 // Parsing
 struct s_token		*ft_parse_operators(struct s_token *head);
+void				ft_tokenization_checker(struct s_token *head);
 struct s_command	*ft_parse(struct s_token *head);
+int					ft_count_token_list_args(struct s_token *tok);
 
 // Execution
-int					execute_cmd(struct s_command *cmd, char **envp);
+int					ft_is_builtin(struct s_command *cmd);
+char				**get_env_paths(char **envp);
 char				*get_cmd_path(char *cmd, char **envp);
+int					execute_cmd(struct s_command *cmd, char **envp);
