@@ -3,11 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: francis <francis@student.42.fr>            +#+  +:+       +#+         #
+#    By: cmegret <cmegret@student.42lausanne.ch>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/07/19 14:53:36 by cmegret           #+#    #+#              #
-#    Updated: 2024/09/05 15:45:16 by francis          ###   ########.fr        #
-#                                                                              #
+#    Updated: 2024/09/11 15:38:16 by cmegret          ###   ########.fr        #
 # **************************************************************************** #
 
 # Header ASCII
@@ -53,13 +52,17 @@ CFLAGS = -Wall -Wextra -Werror
 LIBFLAGS = -L./lib -lft -lftprintf -lreadline
 
 # Fichiers sources et objets
-SRCS = main.c \
-	  execution.c \
-	  parsing.c \
-	  parsing_utils.c \
-	  tokenization_checkers.c \
-	  tokenization.c
-
+SRCS = srcs/main/main.c \
+      srcs/main/main_utils.c \
+      srcs/token/token_main.c \
+      srcs/token/token_utils.c \
+      srcs/token/token_creation.c \
+      srcs/token/token_operator.c \
+	  srcs/parsing/parse_main.c \
+	  srcs/parsing/parse_utils.c \
+	  srcs/execution/execution_main.c \
+	  srcs/execution/execution_env_path.c \
+	  srcs/builtin/cd/main_cd.c \
 # Add path prefix to SRCS files
 SRC = $(addprefix srcs/, $(SRCS))
 
