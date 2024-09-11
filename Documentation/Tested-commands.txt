@@ -1,0 +1,809 @@
+echo "Hello, world!"
+echo "Hello, world!
+echo "Hello, world!" hello
+echo -n hello
+echo hello -n
+echo -h
+echo "hello world" >a test.txt
+echo "hello world" > test.txt
+echo "hello world" >a test.txt
+test.txt > b
+> e
+echo "hello world" test.txt > a > b
+echo "hello world" > a | test.txt > b
+echo "hello world" > a test.txt > b
+ls -l > directory_list.txt extra_argument
+ls -l extra_argument > directory_list.txt
+echo > c "hello world" test.txt
+echo "hello world" > a test.txt
+echo "hello world" test.txt > a
+test.txt > b && echo "hello world" > a
+test.txt > b ; echo "hello world" > a
+test.txt > b | echo "hello world" > a
+echo "hello" > hellofile.txt && cat hellofile.txt | echo > hello2.txt
+echo "hello |
+
+${USER}
+$(USER)
+echo $(USER)
+echo ${USER}
+echo $USER
+echo ${#USER}
+
+echo $TERM_PROGRAM
+echo ${TERM_PROGRAM}
+echo $(TERM_PROGRAM)
+
+VAR=fish
+echo $VAR
+echo $VARA
+echo $VARa
+echo $VAR1
+echo $VAR_
+
+echo "hello" >> file
+cat cat file
+echo "blabla" >> file
+echo `cat file`
+echo $(cat file)
+echo $(ls) >> file
+echo $(cat file)
+
+
+echo ($?)
+echo "$?"
+echo "$?"
+echo '$?'
+
+echo $((2 +1))
+echo $(2 +1)
+
+---
+
+echo "man man"
+echo "man man" | sh -s
+
+
+touch textfile
+echo "blabla" >> textfile
+echo "blabla" >> stdout
+echo "blabla" >> stdin
+echo "blabla" >> 1
+echo "blabla" >> 2
+echo "blabla" >> 3
+echo "blabla" >> textfile
+
+ls **
+ls 3*
+>&
+echo "hello" >&2
+echo "hello" >&3
+echo "hello" >&1
+echo "hello" >&2
+echo "hello" >&0
+echo "hello" >&4
+>5
+ls 5*
+> &
+>$
+ls $*
+>$?
+echo $?
+bash
+echo $?
+echo $?
+>$?
+ls 0*
+rm 0
+ls 0*
+>$?
+ls 0*
+ls 2*
+>2
+ls 2*
+ls $?*
+bash
+ls $?*
+ls "$?"*
+><
+>%
+ls %*
+&&&&
+touch >fiel
+touch >file
+touch &file
+touch £file
+touch $file
+touch file$
+ls file*
+touch file>
+touch file&
+ls file&
+touch f>ile
+ls *f
+ls ile
+touch "f>ile"
+rm f
+rm ile
+touch "f>ile"
+ls ile
+ls *f
+ls f*
+touch "test>file
+touch "test>filess
+ls f*
+$TESTVAR="testvalue"
+$TESTVAR=testvalue
+TESTVAR=testvalue
+echo $TESTVAR
+touch file$TESTVAR
+ls f*
+touch file$TESTVARs
+ls f*
+rm file$
+ls f*
+touch file$TESTVARs
+ls f*
+rm f>ile
+rm fiel
+rm file
+rm file.txt
+rm file.test
+rm file.text
+rm filetestvqlu
+rm filetestvalue
+ls f*
+rm f>ile
+rm "f>ile"
+rm f>ile
+ls f*
+touch file$TESTVARs
+ls f*
+touch file$
+ls f*
+history >> history.txt
+
+<< here << now << then
+> now
+> then
+> sfh
+> here
+> jhdfgrdyh
+> now
+> then
+
+cat | cat | ls
+cat cat
+
+
+touch /
+touch /rt
+touch h/rt
+ls
+mkdir h
+touch h/rt
+ls
+cd h
+ls
+history >> 1 | tail -n 15
+history >> 1
+history > 1
+history > file
+cat file
+history >&1 | tail -n 15
+history >&1 | tail -n 25
+vim filenames.txt
+èpwd
+pwd
+cp filenames.txt ~/Minishell/Documentation/
+touch file0n
+ls
+touch file\0
+ls
+touch \0
+ls
+touch >\0
+history >&1 | tail -n 25
+history >&1 | tail -n 35
+
+echo "'"
+echo '
+echo '''
+
+echo > 4 "hello world" | >> file.txt
+cat 4
+rm 4
+cat file.txt
+rm file.txt
+echo "ls -l" |
+echo "ls -l" | -l
+echo "-l" | ls
+
+echo "hello" >|4
+
+
+
+echo $OLDPWFD
+
+echo $OLDPWD
+/Users/francis
+echo ${OLDPWD}
+/Users/francis
+
+
+export VAR="  touch newfile    "
+echo $VAR
+
+echo $VAR
+VAR=2
+echo $VAR
+export VAR1=1
+echo $VAR1
+_=/usr/bin/env
+export VAR2 = 2
+zsh: bad assignment
+export VAR2 =2
+zsh: 2 not found
+export VAR2=2
+echo $VAR
+export VAR=foo | echo $VAR
+export VAR=foo && echo $VAR
+export VAR=$PWD
+echo $VAR
+
+COMMAND=ls
+echo "$COMMAND"
+echo "S$COMMAND"
+echo "$COMMAND$"
+echo "$$COMMAND"
+42572COMMAND
+VAR="ls /etc/*.conf"
+echo $VAR
+echo $(echo $VAR)
+echo "$VAR"
+echo $$VAR
+echo $$VAR$
+echo $VAR$
+echo $VAR
+echo $VAR$USER
+VAR="=test"
+echo $VAR
+=test=value
+"=test"=value
+test=value
+echo $test
+foo=asdf
+echo $foo
+echo ${foo-bar}xyz}
+foo=
+echo ${foo-bar}xyz}
+unset foo
+echo ${foo-bar}xyz}
+echo $USER
+env$(echo $PATH)
+
+free | grep Mem: | awk '{print $2}'
+
+echo {COLORTERM-USER}
+echo ${COLORTERM-USER}
+echo ${COLORTERM-}
+echo ${-USER}
+echo ${USER-}
+echo $USER-
+man substr
+zsh
+test=1234
+TEST=5678
+echo $test$TEST
+export ls=1234
+echo $ls
+ls
+env
+export ls =1234
+getconf
+getconf system_var
+man getconf
+man sysconf
+echo $(getconf ARG_MAX)
+echo $USER$
+echo $USER$U
+echo $
+echo $@
+export @=2
+@=2
+export __testvar=2
+echo $__testvar
+env | grep testvar
+export $?a=b
+export ?a=b
+echo $?a
+export 0a=b
+echo $1
+echo $a
+echo $555545
+echo $2
+echo $3
+echo $4
+echo $5
+echo $9
+echo $10
+echo $11
+echo $VAR
+echo $+
+echo $1+1
+echo $
+echo $ 1
+echo $+
+echo $$USER
+echo $$
+echo $
+echo $$
+echo $$$
+echo $USER$
+echo $USER$A
+$1=1 ; ercho
+$1="SALUT" ; echo $1
+1="SALUT" ; echo $1
+export
+env
+export
+export "New env Var"=2
+echo '"'
+echo "'"
+echo $ls
+echo "$ls"
+echo
+echo '$ls'"$ls"
+echo "'$ls'"
+echo '$ls'"$ls"
+echo "'$ls'"
+echo '"$ls"'
+echo '"$ls"'"$HOME"
+echo '"$ls"'"$HOME
+echo '"$ls"'"$HOME
+echo '"$ls"'"$HOME
+echo $'PATH'
+VAR=2
+echo VAR
+echo $VAR
+echo "$VAR"
+echo '$VAR'
+echo "'$VAR'"
+echo '"$VAR"'
+echo "'"$VAR"'"
+echo ""'"$VAR"'""
+echo """'"$VAR"'"""
+echo """"'"$VAR"'""""
+echo '"""'"$VAR"'"""'
+echo '""''"$VAR'""'"'
+echo '"'"'"'"$VAR'""'"'"'
+echo '"'"'"'"$VAR'""'"'"''
+echo '"'"'"'"$VAR'""'"'"
+echo '"'"'"'"$VAR'""'"'"'" => "'"$VAR"'
+echo '"'"'
+echo '"'"'"
+
+
+
+'VAR=FOO'
+echo $VAR
+VAR=FOO
+echo $VAR
+VAR='BAR'
+echo $VAR
+
+<< EOF
+<< EOF echo
+<< EOF cat
+<< EOF cat
+<< 'EOF' cat
+<< 'EOF' cat
+<< "'EOF'" cat
+
+touch \"newfile
+vim \"newfile
+ls '"newfile'
+ls newfile
+ls -l
+ls '"newfile'
+ls -l '"newfile'
+ls -l "newfile
+ls -l ""newfile"
+ls -l \"newfile"'
+
+
+echo "brah" >> redirfile
+cat redirfile
+>|redirfile
+cat redirfile
+echo "brah" >> redirfile
+2>|redirfile
+cat redirfile
+
+echo # hello
+echo #hello
+echo #
+echo '#'
+ls f#
+
+
+<<hello
+> echo $(cat $(ls *.txt))
+> hello
+
+cat <<hello
+> echo $VAR
+> hello
+
+cat <<'h'ello
+> echo $VAR
+> hello
+
+cat <<'h'ello'
+> echo $VAR
+> hello
+
+cat <<'h'ello'
+> echo $VAR
+> 'hello
+
+cat '<<he
+
+
+$TEST
+ls
+TEST=ls
+$TEST
+echgo "$TEST"
+echo "$TEST"
+clwear
+clear
+cd pipex
+make re
+make fclean
+$ TEST
+$TEST
+export TEST$
+export TEST$=test
+$TEST$
+$TEST
+env
+export TEST=test
+env
+export TEST$=test
+unset $TEST
+env
+unset TEST
+env
+clear
+TEST=test
+$TEST
+echo $TEST
+TES=test2
+echo $TES
+echo $TEST
+echo $TEST-TES
+unset TEST
+unset TES
+clear
+TEST=test
+echo $TEST-
+123=test
+echo $123
+unset 123
+clear
+-=test
+clear
+echo $TEST
+echo $TESTq
+echo $TEST+
+TEST_test
+TEST_test=test
+echo $TEST_test
+unset TEST_test
+clear
+env
+clear
+echo $(getconf ARG_MAX)
+clear
+echo $TESTA
+echo $
+echo test | echo tes2 | echo test3
+echo test > file1
+echo test > file1 | echo test2 > file2
+echo > file1 test
+echo > file3 test
+cat file3
+> file4 echo test
+cat file4
+> ./file4 echo test
+> ./file4 echo blabla
+cat file4
+> ./file5 echo test
+cd Documentation
+> ../file6 echo test
+> echo test
+echo test >
+export test=file1
+echo blabla > $test
+echo blabla > $testhgfhghgvlkhhfxjhf
+echo blabla > $testhgfhghgvlkhhfxjhf | cat file1
+
+>> textfile echo "hello"
+cat textfile
+echo blabla>
+echo blabla>i
+cat i
+rm i
+
+echo "hello" >> textfile1
+cat textfile1 
+echo "hello" >>> textfile1
+echo "hello" >| textfile1
+cat textfile1 
+echo "hello" >| textfile1
+cat textfile1 
+echo "bklabk" >| textfile1
+cat textfile1 
+echo "bklabk" >( textfile1
+echo "bklabk" >* textfile1
+echo "bklabk" >\ textfile1
+cat textfile1 
+echo "bklabk" >+ textfile1
+cat textfile1 
+echo "bklabk" >° textfile1
+cat textfile1 
+rm textfile1 
+echo "bklabk" >° textfile1
+cat textfile1 
+
+"hello everyone" > textfile1
+"hello everyone" > textfile1
+> textfile1 "hello everyone"
+echo "hello everyone" > textfile1
+cat textfile1 
+cat textfile1 > 1 | < 1 echo 
+cat textfile1 > 1 | < 1 echo ""
+
+touch " textfile1"
+rm textfile1
+rm " textfile1"
+
+echo "ls" > ls.sh
+ls.sh
+./ls.sh
+chmod +x ls.sh
+./ls.sh
+rm ls.sh
+
+export "Mashed potatoes"=34
+export Mashed potatoes=34
+env | grep Mashed
+env | grep potatoes
+
+export VAR=find
+$VAR . *
+unset VAR
+$VAR . *
+
+export VAR="ls -la"
+$VAR
+unset VAR
+$VAR
+
+export A="ech"
+export B="o hello world"
+$A$B
+unset A B
+$A$B
+
+export VAR-OH_VAR=22
+export VAR_OH_VAR=22
+env | grep VAR
+unset VAR_OH_VAR
+
+VAR=ls
+"$VAR"
+'$VAR'
+
+echo hello > 2 > 4
+echo hello > 2
+echo hello > 1
+echo hello
+> 2 echo hell9
+> 2 echo hello
+
+
+find / -name "/etc" 2>/dev/null
+echo "content of file1" > file1
+cat file1
+cat file1 | grep -c file
+"hello file" >> file1
+echo "hello file" >> file1
+cat file1 | grep -c file
+"hello world" > file2
+cat file3
+cat file2
+rm file1
+rm file2
+cat file2
+cat file2 | grep -c file
+cat file2 2>/dev/null | grep -c file
+command_
+command_ 2>/dev/null
+command_ 2>&1
+cat file 2>&1 | grep -c file
+command_ 2>&1 > outfile
+cat outfile
+command_ 2>&1 | outfile
+command_ 2>&1 | > outfile
+cat outfile
+command_  > outfile 2>&1
+cat outfile
+rm outfile
+command_ 2>&1 > outfile
+cat outfile
+command_  > outfile 2>&1
+cat outfile
+rm outfile
+command_  > outfile
+cat outfile
+> outfile echo "hello"
+cat outfile
+> outfile echo "hello" > 1
+cat outfile
+rm outfile
+> outfile echo "hello" > 1
+cat outfile
+2>1
+command_
+command_ 1>/dev/null
+command_ 2>/dev/null
+command_ 2>/dev/null
+command_ 1>/dev/null
+cat file1
+echo "hello" > file1
+ls file1
+rm file1
+echo "hello" > file1
+grep -c file < file1
+grep -c h y< file1
+grep -c h < file1
+
+
+echo line1 > file3
+cat file3
+echo line2 > file3
+cat file3
+echo line3 >> file3
+cat file3
+
+cat file1
+cat file1 < file3
+echo "contents of file3" >> file3
+cat file1 < file3
+cat < file3
+cat
+cat 0<file3
+cat 1<file3
+cat 2<file3
+cat 3<file3
+cat file3 >3
+echo "hello" 3<file3
+echo "hello" 1>file3
+cat file3
+echo "hello" 1>>file3
+cat file3
+echo__ "hello" 2>>file3
+cat file3
+echo "hello" 3>file3
+echo "hello" 1>3 3>file3
+cat file3 < file1
+cat file1
+rm file1
+cat file3 < file1
+cat file3
+echo "hello" 1>3 3>file3
+cat file3
+echo "hello" 1>2
+echo "hello" 2>§1
+echo "hello" 2>§1
+echo "hello" 2>11
+echo "apple
+banana
+cherry" > fruits.txt
+cat fruits.txt
+echo "grape,
+melon,
+orange" > fruits.txt
+cat fruits.txt
+sort fruits.txt
+echo "apple" >> fruits.txt
+sort fruits.txt
+man sort
+cat fruits.txt
+sort < fruits.txt
+man man
+echo "ls" > file2
+man < file2
+cat file2
+man sort
+file2=ls
+man $file2
+unset file2
+man $file2
+cat file2
+echo "hello" >> file2
+wc -l < file2
+wc -l file2
+wc -l file2 file1
+wc -l file2 file3
+cat file2
+find / -name "etc" > /dev/null 2>&1
+bc
+echo "2+2"
+echo "2+2" > bc
+echo "2+2" | bc
+echo "80^45" > eighty.txt
+bc < eighty.txt 
+cat eighty.txt | bc
+bc eighty.txt 
+man bc
+cat "aaa bbb ccc"
+cat < "aaa bbb ccc"
+"aaa bbb ccc" > file1 cat < file1
+echo "aaa bbb ccc" > file1 cat < file1
+cat file1
+rm file1
+echo "aaa bbb ccc" > file1 cat < file1
+cat file1
+bc eighty.txt
+bc < eighty.txt
+cat << EOF
+cat << EOF
+grep "hello" << EOF
+history | tail -n 5
+cat << EOF > heredoc.txt
+cat heredoc.txt
+cat << EOF
+cat heredoc.txt 
+cat heredocs.txt 
+cat eighty.txt | bc
+cat /usr/share/dict/words | head -5
+cat /usr/share/dict/words | tail -25
+cat /usr/share/dict/words | grep Zyr* 
+cat /usr/share/dict/words | grep Mor* 
+apropos search
+cat /usr/share/dict/words | wc -l
+cat /usr/share/dict/words | wc -w
+clear
+echo "aaa bbb ccc" > file1 && cat < file1
+echo cat
+echo "aaa bbb ccc" > file1 cat < file1
+cat file1
+cat file2
+echo "aaa bbb ccc" > file1 cat < file2
+cat < file2
+cat file1
+echo "aaa bbb ccc" > file1 && cat < file2
+cat file1
+echo 2 + 2 > four.txt
+cat four.txt
+bc four.txt 
+cat four.txt nota-file.txt > output.txt
+cat out
+cat output.txt 
+cat four.txt nota-file.txt > output.txt 2>1
+cat output.txt 
+catnota-file.txt  2>1
+cat nota-file.txt  2>1
+cat four.txt nota-file.txt > output.txt 2>&1
+cat output
+ps -ef
+ls -l /etc | less
+ls -l /etc
+ls -l /private/etc |
+
+
+touch file
+rm FILE

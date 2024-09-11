@@ -7,7 +7,6 @@
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/07/19 14:53:36 by cmegret           #+#    #+#              #
 #    Updated: 2024/09/11 15:38:16 by cmegret          ###   ########.fr        #
-#                                                                              #
 # **************************************************************************** #
 
 # Header ASCII
@@ -53,7 +52,7 @@ CFLAGS = -Wall -Wextra -Werror
 LIBFLAGS = -L./lib -lft -lftprintf -lreadline
 
 # Fichiers sources et objets
-SRC = srcs/main/main.c \
+SRCS = srcs/main/main.c \
       srcs/main/main_utils.c \
       srcs/token/token_main.c \
       srcs/token/token_utils.c \
@@ -64,6 +63,8 @@ SRC = srcs/main/main.c \
 	  srcs/execution/execution_main.c \
 	  srcs/execution/execution_env_path.c \
 	  srcs/builtin/cd/main_cd.c \
+# Add path prefix to SRCS files
+SRC = $(addprefix srcs/, $(SRCS))
 
 # Fichiers objets
 OBJ = $(SRC:.c=.o)

@@ -16,7 +16,7 @@
 #include <readline/history.h>
 #include <signal.h>
 #include <sys/wait.h>
-#include <sys/types.h> 
+#include <sys/types.h>
 #include <stdbool.h>
 
 #include "../lib/libft/libft.h"
