@@ -6,7 +6,7 @@
 /*   By: cmegret <cmegret@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/19 13:48:14 by francis           #+#    #+#             */
-/*   Updated: 2024/09/07 19:19:55 by cmegret          ###   ########.fr       */
+/*   Updated: 2024/09/11 15:37:57 by cmegret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,9 +52,14 @@ struct s_command
 	struct s_command	*next;
 };
 
+struct s_shell_state
+{
+	char	*current_directory;
+};
+
 // Main
 int					main(int argc, char **argv, char **envp);
-void				ft_check_args(int argc, char **argv);
+void				ft_initialize(int argc, char **argv, struct s_shell_state *shell_state);
 void				error_and_exit(const char *message);
 
 // Token
@@ -78,7 +83,10 @@ struct s_command	*ft_parse(struct s_token *head);
 int					ft_count_token_list_args(struct s_token *tok);
 
 // Execution
-int					ft_is_builtin(struct s_command *cmd);
+int					ft_is_builtin(struct s_command *cmd, struct s_shell_state *shell_state);
 char				**get_env_paths(char **envp);
 char				*get_cmd_path(char *cmd, char **envp);
-int					execute_cmd(struct s_command *cmd, char **envp);
+int					execute_cmd(struct s_command *cmd, char **envp, struct s_shell_state *shell_state);
+
+// Builtin
+void				ft_cd(struct s_command *cmd, struct s_shell_state *shell_state);

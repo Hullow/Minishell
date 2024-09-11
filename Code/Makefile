@@ -6,7 +6,7 @@
 #    By: cmegret <cmegret@student.42lausanne.ch>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/07/19 14:53:36 by cmegret           #+#    #+#              #
-#    Updated: 2024/09/07 19:20:04 by cmegret          ###   ########.fr        #
+#    Updated: 2024/09/11 15:38:16 by cmegret          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -63,6 +63,7 @@ SRC = srcs/main/main.c \
 	  srcs/parsing/parse_utils.c \
 	  srcs/execution/execution_main.c \
 	  srcs/execution/execution_env_path.c \
+	  srcs/builtin/cd/main_cd.c \
 
 # Fichiers objets
 OBJ = $(SRC:.c=.o)

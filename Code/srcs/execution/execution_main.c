@@ -6,19 +6,22 @@
 /*   By: cmegret <cmegret@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/07 12:23:09 by cmegret           #+#    #+#             */
-/*   Updated: 2024/09/07 19:18:57 by cmegret          ###   ########.fr       */
+/*   Updated: 2024/09/11 15:37:24 by cmegret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../header/Minishell.h"
 
 // Builtin checker: checks if the command corresponds to a builtin
-int	ft_is_builtin(struct s_command *cmd)
+int	ft_is_builtin(struct s_command *cmd, struct s_shell_state *shell_state)
 {
 	if (ft_strncmp(cmd->cmd_name, "echo", 4) == 0)
 		return (0);
 	else if (ft_strncmp(cmd->cmd_name, "cd", 2) == 0)
+	{
+		ft_cd(cmd, shell_state);
 		return (0);
+	}
 	else if (ft_strncmp(cmd->cmd_name, "pwd", 3) == 0)
 		return (0);
 	else if (ft_strncmp(cmd->cmd_name, "export", 6) == 0)
@@ -57,12 +60,14 @@ static int	handle_parent_process(pid_t pid)
 	return (status);
 }
 
-int	execute_cmd(struct s_command *cmd, char **envp)
+int	execute_cmd(struct s_command *cmd, char **envp, struct s_shell_state *shell_state)
 {
 	pid_t	pid;
 
 	if (cmd == NULL || cmd->cmd_name == NULL)
 		return (-1);
+	if (ft_is_builtin(cmd, shell_state) == 0)
+		return (0);
 	pid = fork();
 	if (pid == 0)
 		handle_child_process(cmd, envp);
