@@ -3,15 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   main_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cmegret <cmegret@student.42lausanne.ch>    +#+  +:+       +#+        */
+/*   By: francis <francis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 14:36:39 by cmegret           #+#    #+#             */
-/*   Updated: 2024/09/11 15:34:00 by cmegret          ###   ########.fr       */
+/*   Updated: 2024/09/11 21:25:03 by francis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../header/Minishell.h"
 
+ // memory allocation (getcwd)
 void	ft_initialize(int argc, char **argv, struct s_shell_state *shell_state)
 {
 	if (argc > 1)

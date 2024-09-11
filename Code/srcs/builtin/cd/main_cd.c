@@ -3,23 +3,26 @@
 /*                                                        :::      ::::::::   */
 /*   main_cd.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cmegret <cmegret@student.42lausanne.ch>    +#+  +:+       +#+        */
+/*   By: francis <francis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/11 15:00:25 by cmegret           #+#    #+#             */
-/*   Updated: 2024/09/11 15:45:59 by cmegret          ###   ########.fr       */
+/*   Updated: 2024/09/11 21:27:07 by francis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../header/Minishell.h"
 
+// Code to test the function:
+// printf("initial path: %s\n", getcwd(NULL, 0));
+// printf("path changed to: %s (path: %s)\n", getcwd(NULL, 0), path);
 void	ft_cd(struct s_command *cmd, struct s_shell_state *shell_state)
 {
-	const char	*path;
+	char	*path;
 
 	path = cmd->args[0];
-	if (!path || strcmp(path, "~") == 0)
+	if (!path || ft_strncmp(path, "~", 2) == 0)
 		path = getenv("HOME");
-	else if (strcmp(path, "-") == 0)
+	else if (ft_strncmp(path, "-", 2) == 0)
 		path = getenv("OLDPWD");
 	if (chdir(path) == -1)
 	{
