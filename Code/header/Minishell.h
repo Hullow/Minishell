@@ -6,7 +6,7 @@
 /*   By: francis <francis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/19 13:48:14 by francis           #+#    #+#             */
-/*   Updated: 2024/09/04 15:30:49 by francis          ###   ########.fr       */
+/*   Updated: 2024/09/10 18:00:59 by francis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,7 @@ struct token	*ft_tokenize(char *prompt);
 // Parsing
 struct command	*ft_parse(struct token *head);
 struct token	*ft_parse_operators(struct token *head);
+struct command	*ft_assign_command_sequence(struct token *head);
 
 	// Parsing utils
 int	ft_count_token_list_args(struct token *tok);

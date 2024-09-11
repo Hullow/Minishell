@@ -6,45 +6,14 @@
 /*   By: francis <francis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/01 14:26:30 by francis           #+#    #+#             */
-/*   Updated: 2024/09/06 18:37:05 by francis          ###   ########.fr       */
+/*   Updated: 2024/09/10 18:14:36 by francis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../header/Minishell.h"
 
-void	ft_print_token_type(struct token *head)
-{
-	const char *token_type_strings[9] = {
-	"UNDEFINED TOKEN",
-    "WORD",
-    "NEWLINE",
-    "REDIR_INPUT",
-    "REDIR_OUTPUT",
-    "REDIR_APPEND",
-    "REDIR_HEREDOC",
-    "PIPE",
-    "END_OF_INPUT"};
-
-	while (head)
-	{
-		if (head->str && head->type)
-			printf("string: %s | token type: %s\n", head->str, token_type_strings[head->type]);
-		else
-		{
-			printf("type or string not found: ");
-			if (head->type)
-				printf("head-type: %s, head->str not found\n", token_type_strings[head->type]);
-			if (head->str)
-				printf("head-str: %s, head->type not found\n", head->str);
-			else
-				printf("nor head->str nor head-type found\n");
-		}
-		head = head->next;
-	}
-}
-
-// checks if the token only contains an operator
-// if so, assigns the correct operator token type
+// parses all tokens and assigns the correct operator token type
+// (first checks if the token only contains an operator)
 struct token	*ft_parse_operators(struct token *head)
 {
 	struct token	*iterator;
@@ -72,8 +41,8 @@ struct token	*ft_parse_operators(struct token *head)
 	return (head);
 }
 
-
-///// ATTEMPT TO IMPLEMENT Recursive Decent Parsing
+///// Recursive Decent Parsing
+///// ATTEMPT TO IMPLEMENT 
 /////
 // typedef enum {command, cmd_name, cmd_word, cmd_prefix, cmd_suffix} Symbol;
 // To parse our string using the grammar (see Tokenization-and-parsing####Minishell_grammar)
@@ -142,6 +111,7 @@ ft_parse_command_name(struct token *tok)
 	return (tok);
 } */
 
+// copies the tokens to a command struct to allow for execution (n.b.: only tokens of type WORD, no operators, etc.)
 struct command	*ft_assign_command_sequence(struct token *head)
 {
 	struct command	*cmd_sequence;
