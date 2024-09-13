@@ -159,3 +159,12 @@ POSIX.1-2017's special grammar notation is based on the syntax used by the `yacc
 # 5/9/24
 - Read about parsing principles and methods
 - Call with cmegret, discussed exeuction
+
+# 12/9/24
+- Reading cmegret's code
+- Git merges and some order
+
+# 13/9/24
+- Reading cmegret's code, refactoring
+- Fixed pipe tokenization issue (when '|' at the end of prompt)
+- Git learning (learngitbranching.org), git merging, and some file reordering

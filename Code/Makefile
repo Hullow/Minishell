@@ -3,13 +3,13 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: cmegret <cmegret@student.42lausanne.ch>    +#+  +:+       +#+         #
+#    By: francis <francis@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/07/19 14:53:36 by cmegret           #+#    #+#              #
-#    Updated: 2024/09/11 15:38:16 by cmegret          ###   ########.fr        #
+#    Updated: 2024/09/13 19:22:04 by francis          ###   ########.fr        #
+#                                                                              #
 # **************************************************************************** #
 
-# Header ASCII
 HEADER1 =                                                                    
 HEADER2 =                                                                    
 HEADER3 = "███╗   ███╗██╗███╗   ██╗██╗███████╗██╗  ██╗███████╗██╗     ██╗     "
@@ -52,17 +52,17 @@ CFLAGS = -Wall -Wextra -Werror
 LIBFLAGS = -L./lib -lft -lftprintf -lreadline
 
 # Fichiers sources et objets
-SRCS = srcs/main/main.c \
-      srcs/main/main_utils.c \
-      srcs/token/token_main.c \
-      srcs/token/token_utils.c \
-      srcs/token/token_creation.c \
-      srcs/token/token_operator.c \
-	  srcs/parsing/parse_main.c \
-	  srcs/parsing/parse_utils.c \
-	  srcs/execution/execution_main.c \
-	  srcs/execution/execution_env_path.c \
-	  srcs/builtin/cd/main_cd.c \
+SRCS = main/main.c \
+      main/main_utils.c \
+      token/token_main.c \
+      token/token_checks.c \
+      token/token_utils.c \
+      token/token_creation.c \
+      token/token_operator.c \
+	  parsing/parse_main.c \
+	  execution/execution_main.c \
+	  execution/execution_env_path.c \
+	  builtin/cd/main_cd.c \
 # Add path prefix to SRCS files
 SRC = $(addprefix srcs/, $(SRCS))
 

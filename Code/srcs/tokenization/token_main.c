@@ -3,15 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   token_main.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cmegret <cmegret@student.42lausanne.ch>    +#+  +:+       +#+        */
+/*   By: francis <francis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/06 17:19:58 by cmegret           #+#    #+#             */
-/*   Updated: 2024/09/07 19:20:00 by cmegret          ###   ########.fr       */
+/*   Updated: 2024/09/13 18:51:54 by francis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../header/Minishell.h"
 
+// Initializes a new token
 static struct s_token	*ft_init_token(void)
 {
 	struct s_token	*tok;
@@ -27,6 +28,7 @@ static struct s_token	*ft_init_token(void)
 	return (tok);
 }
 
+// Processes the prompt, applying tokenization rules in order
 static int	ft_process_prompt(char *prompt, int i, struct s_token **tok)
 {
 	if (ft_previous_char_is_undelimited_operator(*tok))
@@ -41,6 +43,9 @@ static int	ft_process_prompt(char *prompt, int i, struct s_token **tok)
 		return (ft_new_word(tok, prompt[i]));
 }
 
+// Breaks the input (prompt) into tokens by calling each tokenization function
+// Calls ft_process_prompt in a loop to tokenize the prompt
+// Returns a linked list of tokens
 struct s_token	*ft_tokenize(char *prompt)
 {
 	struct s_token	*tok;
