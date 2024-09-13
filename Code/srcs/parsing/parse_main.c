@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_main.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cmegret <cmegret@student.42lausanne.ch>    +#+  +:+       +#+        */
+/*   By: francis <francis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/06 17:35:29 by cmegret           #+#    #+#             */
-/*   Updated: 2024/09/07 19:21:28 by cmegret          ###   ########.fr       */
+/*   Updated: 2024/09/11 22:23:35 by francis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ static int	ft_allocate_single_arg(struct s_token *tkn,
 {
 	cmd_sequence->args = malloc(2 * sizeof(char *));
 	if (!cmd_sequence->args)
-		return (-1);
+		return (-1); // call error function ?
 	cmd_sequence->args[0] = ft_strdup(tkn->str);
 	cmd_sequence->args[1] = NULL;
 	return (0);
@@ -55,7 +55,7 @@ static int	ft_allocate_multiple_args(struct s_token *tkn,
 
 	cmd_sequence->args = malloc((arg_count + 1) * sizeof(char *));
 	if (!cmd_sequence->args)
-		return (-1);
+		return (-1); // call error function ?
 	i = 0;
 	while (tkn)
 	{
