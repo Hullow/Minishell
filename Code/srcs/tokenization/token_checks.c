@@ -1,38 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   tokenization_checkers.c                            :+:      :+:    :+:   */
+/*   token_checks.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: francis <francis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/22 16:35:11 by francis           #+#    #+#             */
-/*   Updated: 2024/09/04 11:14:40 by francis          ###   ########.fr       */
+/*   Updated: 2024/09/14 17:20:50 by francis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../header/Minishell.h"
+#include "../../header/Minishell.h"
 
 // checks if previous character was part of an undelimited operator token
-int	ft_previous_char_is_undelimited_operator(struct token *tok)
+int	ft_previous_char_is_undelimited_operator(struct s_token *tok)
 {
-	if (tok->str && tok->is_operator == true && tok->is_delimited == false)
-	{
+	if (tok && tok->is_operator && !tok->is_delimited)
 		return (1);
-	}
-	else
-	{
-		return (0);
-	}
+	return (0);
 }
 
-// checks if character is a redirection operator character:
-// either '>', '<', or '|'
+// checks if character is a redirection operator character
 int	ft_is_operator_character(char c)
 {
 	if (c == '>' || c == '<' || c == '|')
 		return (1);
-	else
-		return (0);
+	return (0);
 }
 
 // checks if character is a blank (space or tab)
@@ -43,17 +36,11 @@ int	ft_is_blank(char c)
 	return (0);
 }
 
-// checks if previous character 
-// 		was part of a word and that that word was not delimited
-// rule #### 2.2.2.8. Previous character part of a word
-// IF
-// - previous character was part of a word
-// added:
-// - previous token is delimited
-int	ft_previous_char_part_of_word(struct token *tok)
+// checks if previous character was part of a word
+// and that that word was not delimited
+int	ft_previous_char_part_of_word(struct s_token *tok)
 {
-	if (tok->type == WORD && tok->is_delimited == false)
+	if (tok && tok->type == WORD && !tok->is_delimited)
 		return (1);
-	else
-		return (0);
+	return (0);
 }

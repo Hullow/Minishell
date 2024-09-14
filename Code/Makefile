@@ -6,11 +6,10 @@
 #    By: francis <francis@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/07/19 14:53:36 by cmegret           #+#    #+#              #
-#    Updated: 2024/09/05 15:45:16 by francis          ###   ########.fr        #
+#    Updated: 2024/09/13 19:22:04 by francis          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-# Header ASCII
 HEADER1 =                                                                    
 HEADER2 =                                                                    
 HEADER3 = "███╗   ███╗██╗███╗   ██╗██╗███████╗██╗  ██╗███████╗██╗     ██╗     "
@@ -53,13 +52,17 @@ CFLAGS = -Wall -Wextra -Werror
 LIBFLAGS = -L./lib -lft -lftprintf -lreadline
 
 # Fichiers sources et objets
-SRCS = main.c \
-	  execution.c \
-	  parsing.c \
-	  parsing_utils.c \
-	  tokenization_checkers.c \
-	  tokenization.c
-
+SRCS = main/main.c \
+      main/main_utils.c \
+      token/token_main.c \
+      token/token_checks.c \
+      token/token_utils.c \
+      token/token_creation.c \
+      token/token_operator.c \
+	  parsing/parse_main.c \
+	  execution/execution_main.c \
+	  execution/execution_env_path.c \
+	  builtin/cd/main_cd.c \
 # Add path prefix to SRCS files
 SRC = $(addprefix srcs/, $(SRCS))
 

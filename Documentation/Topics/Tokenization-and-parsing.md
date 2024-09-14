@@ -275,3 +275,74 @@ From *Parsing Techniques – Grune & Jacobs (2008)*
 > **It is often important to be sure that a grammar is not ambiguous, but unfortunately that property is undecidable**: it can be proved that there cannot be an algorithm that can, for every CF grammar, decide whether it is ambiguous or unambiguous.<br>(..)<br>
 > **The most effective ambiguity test for a CF grammar we have at present is the construction of the corresponding LR(k) automaton, but it is not a perfect test**: if the construction succeeds, the grammar is guaranteed to be unambiguous; if it fails, in principle nothing is known. In practice, however, the reported conflicts will often point to genuine ambiguities. The construction of an LR-regular parser (Section 9.13.2) is an even stronger, but more complicated test<br>
 From *Parsing Techniques – Grune & Jacobs (2008)*
+
+
+///// Recursive Decent Parsing
+///// ATTEMPT TO IMPLEMENT 
+/////
+// typedef enum {command, cmd_name, cmd_word, cmd_prefix, cmd_suffix} Symbol;
+// To parse our string using the grammar (see Tokenization-and-parsing####Minishell_grammar)
+// if we are attempting to match e.g. a "command" symbol (left-hand side),
+// e.g. for the string: grep hello
+// => tokenization: 'grep', 'hello' 
+// for *cmd_prefix cmd_word cmd_suffix*:
+	// what do we check for "cmd_prefix" ? "grep" or "grep hello"
+	// it's minimum 3 tokens, so it cannot be can only be a subset by definition, so we remove two
+
+	// e.g. for the string: find . -name "hello"
+	// cmd_prefix => find .
+/* struct token	*ft_parse_using_grammar(struct token *head)
+{
+
+	// Example:
+	// 
+	ft_parse_pipe_sequence
+	{
+		if (ft_parse_command != NULL)
+		{
+			// To implement later:
+				// string satisfies definition of "cmd_prefix cmd_word cmd_suffix"
+				// string satisfies definition of "cmd_prefix cmd_word"
+				// string satisfies definition of "cmd_prefix"
+
+			// string satisfies definition of "cmd_name cmd_suffix"
+			if (ft_parse_command_name != NULL)
+			// string satisfies definition of "cmd_name"
+			else if (ft_parse_command_name != NULL)
+
+			else
+				return NULL;
+		}
+		// else if (ft_parse_pipe_sequence != NULL)
+		// {
+
+		// }
+		else
+			return NULL;
+	}
+} */
+
+/* ft_parse_command_suffix(struct token *tok)
+{
+// io_redirect
+// 		=> TO IMPLEMENT
+
+// | cmd_suffix io_redirect
+// 		=> TO IMPLEMENT
+
+// |            WORD
+	if (tok)
+		tok->type = WORD;
+	
+// | cmd_suffix WORD
+// 		=> TO IMPLEMENT
+}
+
+ft_parse_command_name(struct token *tok)
+{
+	if (ft_strchr(tok->str, '=') == NULL)
+		tok->type = WORD;
+	else	
+		return (NULL); // should be 7b : ft_parse_command_word(tok);
+	return (tok);
+} */
