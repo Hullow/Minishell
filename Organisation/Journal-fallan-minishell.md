@@ -160,11 +160,6 @@ POSIX.1-2017's special grammar notation is based on the syntax used by the `yacc
 - Read about parsing principles and methods
 - Call with cmegret, discussed exeuction
 
-# 6/9/24
-- Reading about grammars (for choice of parsing methods): Chomsky hierarchy, ambiguity, types of parsing techniques
-- Attempt to implement a Recursive Decent Parsing algorithm (top-down). No test yet, still writing code/pseudocode
-- Need to add references
-
 # 12/9/24
 - Reading cmegret's code
 - Git merges and some order

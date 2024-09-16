@@ -3,25 +3,30 @@
 /*                                                        :::      ::::::::   */
 /*   main_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: francis <francis@student.42.fr>            +#+  +:+       +#+        */
+/*   By: cmegret <cmegret@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/08/15 14:28:47 by cmegret           #+#    #+#             */
-/*   Updated: 2024/09/14 17:19:56 by francis          ###   ########.fr       */
+/*   Created: 2024/09/02 14:36:39 by cmegret           #+#    #+#             */
+/*   Updated: 2024/09/11 15:34:00 by cmegret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../header/Minishell.h"
+#include "../../header/Minishell.h"
 
-// Counts the number of arguments in our token 
-int	ft_count_token_list_args(struct token *tok)
+void	ft_initialize(int argc, char **argv, struct s_shell_state *shell_state)
 {
-	int i;
-
-	i = 0;
-	while (tok) // count # of tokens
+	if (argc > 1)
 	{
-		i++;
-		tok = tok->next;
+		fprintf(stderr, "Usage: %s\n", argv[0]);
+		fprintf(stderr, "No arguments are allowed\n");
+		exit(EXIT_FAILURE);
 	}
-	return (i);
+	shell_state->current_directory = getcwd(NULL, 0);
+	if (!shell_state->current_directory)
+		error_and_exit("getcwd failed");
+}
+
+void	error_and_exit(const char *message)
+{
+	perror(message);
+	exit(EXIT_FAILURE);
 }

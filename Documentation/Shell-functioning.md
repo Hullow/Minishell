@@ -314,7 +314,6 @@ Tokens are classified in a context-dependent way, according to the following rul
 </details>
 
 #### 3.2.1. Reserved word
-(Rule 1)
 N.b.: "Rule 1 is not directly referenced in the grammar, but is referred to by other rules, or applies globally."<br>
 IF
 - token is not exactly a reserved word
@@ -322,10 +321,8 @@ IF
 => the token WORD shall be returned<br>
 => note: at this point quotes are retained in the token, so they must be included in the comparison with reserved words
 #### 3.2.2. Redirection to or from filename
-(Rule 2)
 > the expansions specified in [Redirection](https://pubs.opengroup.org/onlinepubs/9699919799/utilities/V3_chap02.html#tag_18_10) shall occur. As specified there, exactly one field can result (or the result is unspecified), and there are additional requirements on pathname expansion.
 #### 3.2.3. Redirection from here-document
-(Rule 3)
 IF
 - any part of the delimiting word is quoted
 
@@ -337,20 +334,13 @@ ELSE IF
 
 => all lines of the here-document are subjected to parameter expansion
 #### 3.2.7 Assignment preceding command name
-(rule 7a)<br>
 a) IF
 - the first word `=> of what ?` does not contain the character `=`
 
 => apply rule 3.2.1. (return token identifier WORD)
 
-literally:
-> [When the first word]
-
-    If the TOKEN does not contain the character '=', rule 1 is applied. Otherwise, 7b shall be applied.
-
 ELSE<br>
 => apply rule b:<br>
-(rule 7b)<br>
 b) IF
 - the token contains an unquoted `=` that is not part of an embedded parameter expansion construct (see [rule 5 in Token recognition](#2225-parameter-expansion)):
 	- if it begins with `=`
@@ -365,11 +355,7 @@ c. ELSE
 > Assignment to the name within a returned ASSIGNMENT_WORD token shall occur as specified in [Simple Commands](https://pubs.opengroup.org/onlinepubs/9699919799/utilities/V3_chap02.html#tag_18_09_01).
 <br>&emsp;`=> ?`
 
-literally:
-> [Not the first word]
-
 #### 3.2.9. Body of function
-(rule 9)
 => Word expansion and assignment don't occur
 => Each TOKEN is returned as a single WORD consisting of characters that are exactly the token described in Token Recognition
 
