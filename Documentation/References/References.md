@@ -50,8 +50,29 @@
 - [CTRL + D in a terminal - Quora](https://www.quora.com/What-is-Ctrl-D-in-a-terminal)
 - [Signals - Learning the Korn Shell](https://docstore.mik.ua/orelly/unix2.1/ksh/ch08_03.htm)
 
-## Redirections
+## Redirections and pipes
 - [Unix for the Bootcamp Grad: Part 1. Redirection and Pipelines - Kerry Sheldon](https://medium.com/@KerrySheldon/unix-for-the-bootcamp-grad-part-1-redirection-and-pipelines-470a7f6609c8)
+
+- [Bash reference manual - Redirections](https://www.gnu.org/savannah-checkouts/gnu/bash/manual/bash.html#Redirections)
+
+- [exercises to understand redirections in bash - Google Search](https://www.google.com/search?client=firefox-b-d&q=exercises+to+understand+redirections+in+bash)
+
+- [Pipes and Redirects - Master the Bash Shell](https://www.educative.io/courses/master-the-bash-shell/pipes-and-redirects)
+
+- [zsh: understanding sequence of redirections and pipe with pointers - Unix & Linux Stack Exchange](https://unix.stackexchange.com/questions/673145/zsh-understanding-sequence-of-redirections-and-pipe-with-pointers)
+
+- [Bash 101 Reference & Exercises](https://codingnomads.com/bash-101-reference-and-exercises)
+
+- [How can you redirect the output of a command to a file in Bash scripting? - EITCA Academy](https://eitca.org/cybersecurity/eitc-is-lsa-linux-system-administration/bash-scripting/bash-basics/examination-review-bash-basics/how-can-you-redirect-the-output-of-a-command-to-a-file-in-bash-scripting/)
+
+- [Shell, I/O redirections, and filters](https://musaoyiza.hashnode.dev/shell-io-redirections-and-filters)
+
+- [Five ways to use redirect operators in Bash | Enable Sysadmin](https://www.redhat.com/sysadmin/redirect-operators-bash)
+
+- [Learn Piping and Redirection - Linux Tutorial](https://ryanstutorials.net/linuxtutorial/piping.php)
+
+- [Working with pipes on the Linux command line | Enable Sysadmin](https://www.redhat.com/sysadmin/pipes-command-line-linux)
+
 
 ### Here documents
 - [Bash reference manual - Here Documents](https://www.gnu.org/savannah-checkouts/gnu/bash/manual/bash.html#Here-Documents)
@@ -68,10 +89,6 @@
 
 ## Execution
 - [Bash reference manual - Executing commands](https://www.gnu.org/savannah-checkouts/gnu/bash/manual/bash.html#Executing-Commands)
-
-## Redirections
-- [Bash reference manual - Redirections](https://www.gnu.org/savannah-checkouts/gnu/bash/manual/bash.html#Redirections)
-- [Pipes and redirects - Master the bash shell - Educative.io](https://www.educative.io/courses/master-the-bash-shell/pipes-and-redirects)
 
 ## Tools
 ### Git & Github

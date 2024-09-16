@@ -805,5 +805,27 @@ ls -l /etc
 ls -l /private/etc |
 
 
+/bin/sh/ls
+/bin/sh/exit
+clear
+
 touch file
 rm FILE
+
+touch greptest
+"one" >> greptest
+one >> greptest
+>> greptest one
+echo "one" >> greptest
+cat greptest
+echo "two" >> greptest
+echo "three" >> greptest
+echo "four" >> greptest
+echo "five" >> greptest
+cat greptest
+cat greptest | grep one two three
+find . -name "hello"
+
+touch
+stat
+file /usr/bin/ls
