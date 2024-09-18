@@ -84,8 +84,15 @@
 - [EOF – Baeldung](https://www.baeldung.com/linux/eof)
 
 ## Parsing
+### Parsing concepts
 - https://en.wikipedia.org/wiki/Abstract_syntax_tree / https://fr.wikipedia.org/wiki/Arbre_de_la_syntaxe_abstraite
 - https://en.wikipedia.org/wiki/Parse_tree / https://fr.wikipedia.org/wiki/Arbre_syntaxique
+- https://cs.stackexchange.com/questions/54814/different-between-left-most-and-right-most-derivation
+- Parsing Techniques – Grune & Jacobs (2008)
+### Types of parsers
+- https://www.geeksforgeeks.org/types-of-parsers-in-compiler-design/
+- [LL parser](https://en.wikipedia.org/wiki/LL_parser)
+- [LR parser](https://www.geeksforgeeks.org/lr-parser)
 
 ## Execution
 - [Bash reference manual - Executing commands](https://www.gnu.org/savannah-checkouts/gnu/bash/manual/bash.html#Executing-Commands)

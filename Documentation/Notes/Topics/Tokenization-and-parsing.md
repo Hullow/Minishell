@@ -134,7 +134,42 @@ public static A parse (String s)
 - `<ident> := w | x | y | z` : the value of `<ident>` is the value of the variable named by the identifier. If the variable has not been assigned a value, it is a runtime error
 - `<const> := 0 | 1 | 2 | 3 | 4` : the value of `<const>` is the value of the matching literal constant
 
+### Concepts in parsing
+#### [Backtracking](https://en.wikipedia.org/wiki/Backtracking)
+> a class of algorithms for finding solutions to some computational problems, notably constraint satisfaction problems, that incrementally builds candidates to the solutions, and abandons a candidate ("backtracks") as soon as it determines that the candidate cannot possibly be completed to a valid solution.
+
+#### [Leftmost vs rightmost derivation](https://cs.stackexchange.com/questions/54814/different-between-left-most-and-right-most-derivation)
+> Given a derivation tree for a word, you can "implement" it as a sequence of productions in many different ways. The leftmost derivation is the one in which you always expand the leftmost non-terminal. The rightmost derivation is the one in which you always expand the rightmost non-terminal.
+
+Example:
+- Grammar: `A : A - A | A + A | a`
+
+- Rightmost derivation:
+`A => A - A => A - a => A + A - a => A + a - a => a + a - a`
+
+- Leftmost derivation:
+`A => A - A => A + A - A => a + A - A => a + a - A => a + a - a`
+
+(Note: the grammar is [ambiguous](#ambiguity))
+
+#### Ambiguity
+More than one way (more than one [parse tree](#parse-trees)) to produce the sentence from a grammar => semantic issues
+
+##### Essential and spurious ambiguity
+A sentence from a grammar can easily have more than one production tree, i.e., there can easily be more than one way to produce the sentence. From a formal point of view this is a non-issue (a set does not count how many times it contains an element), but as soon as we are interested in the semantics, the difference becomes significant. Not surprisingly, a sentence with more than one production tree is called ambiguous, but we must immediately distinguish between **essential ambiguity** and **spurious ambiguity**. <br>
+
+The difference comes from the fact that we are not interested in the production trees per se, but rather in the semantics they describe. An ambiguous sentence is **spuriously ambiguous if all its production trees describe the same semantics**; **if some of them differ in their semantics, the ambiguity is essential**. <br>
+
+The notion of “ambiguity” can also be defined for grammars: a grammar is essentially ambiguous if it can produce an essentially ambiguous sentence, spuriously ambiguous if it can produce a spuriously ambiguous sentence (but not an essentially ambiguous one) and unambiguous if it cannot do either.<br>
+ <br> From: *Parsing Techniques – Grune & Jacobs (2008)*
+
+##### Evaluating ambiguity
+> **It is often important to be sure that a grammar is not ambiguous, but unfortunately that property is undecidable**: it can be proved that there cannot be an algorithm that can, for every CF grammar, decide whether it is ambiguous or unambiguous.<br>(..)<br>
+> **The most effective ambiguity test for a CF grammar we have at present is the construction of the corresponding LR(k) automaton, but it is not a perfect test**: if the construction succeeds, the grammar is guaranteed to be unambiguous; if it fails, in principle nothing is known. In practice, however, the reported conflicts will often point to genuine ambiguities. The construction of an LR-regular parser (Section 9.13.2) is an even stronger, but more complicated test<br>
+From *Parsing Techniques – Grune & Jacobs (2008)*
+
 #### Minishell grammar
+Adapted from [Shell Grammar - Shell Command Language](https://pubs.opengroup.org/onlinepubs/9699919799/utilities/V3_chap02.html#tag_18_10_02) for the Minishell Subject.
 
 ```BNF
 /* -------------------------------------------------------
@@ -234,25 +269,16 @@ cmd1 | cmd2 | cmd3
 => cmd1 | cmd2 | cmd3 => command
 
 
+Example prompts to parse:
 export VAR = 14
 
 echo "VAR=14"
 
-
 echo "hello, world" > file1
 ls > ls.txt | grep file1
 
-
 find . -name "file*" 2>error.txt
 find . -name "file*" 1>find.txt | 
-
-
-
-
-
-
-
-
 
 ##### Parsing examples
 `echo hello > 2 > 4` :
@@ -265,18 +291,7 @@ program -> pipe_sequence -> command -> cmd_name + cmd_suffix -> WORD ('echo') + 
 > The second method tries to roll back the production process and to reduce the sentence back to the start symbol. Quite naturally this technique is called *bottom-up*.<br>
 From *Parsing Techniques – Grune & Jacobs (2008)*
 
-## Ambiguity
-
-### Essential and spurious ambiguity
-A sentence from a grammar can easily have more than one production tree, i.e., there can easily be more than one way to produce the sentence. From a formal point of view this is a non-issue (a set does not count how many times it contains an el- ement), but as soon as we are interested in the semantics, the difference becomes significant. Not surprisingly, a sentence with more than one production tree is called ambiguous, but we must immediately distinguish between essential ambiguity and spurious ambiguity. The difference comes from the fact that we are not interested in the production trees per se, but rather in the semantics they describe. An ambiguous sentence is spuriously ambiguous if all its production trees describe the same seman- tics; if some of them differ in their semantics, the ambiguity is essential. The notion of “ambiguity” can also be defined for grammars: a grammar is essentially ambigu- ous if it can produce an essentially ambiguous sentence, spuriously ambiguous if it can produce a spuriously ambiguous sentence (but not an essentially ambiguous one) and unambiguous if it cannot do either.<br>
-From *Parsing Techniques – Grune & Jacobs (2008)*
-
-### Evaluating ambiguity
-> **It is often important to be sure that a grammar is not ambiguous, but unfortunately that property is undecidable**: it can be proved that there cannot be an algorithm that can, for every CF grammar, decide whether it is ambiguous or unambiguous.<br>(..)<br>
-> **The most effective ambiguity test for a CF grammar we have at present is the construction of the corresponding LR(k) automaton, but it is not a perfect test**: if the construction succeeds, the grammar is guaranteed to be unambiguous; if it fails, in principle nothing is known. In practice, however, the reported conflicts will often point to genuine ambiguities. The construction of an LR-regular parser (Section 9.13.2) is an even stronger, but more complicated test<br>
-From *Parsing Techniques – Grune & Jacobs (2008)*
-
-
+## Attempt implementation
 ///// Recursive Decent Parsing
 ///// ATTEMPT TO IMPLEMENT 
 /////

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: francis <francis@student.42.fr>            +#+  +:+       +#+        */
+/*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/19 13:48:14 by francis           #+#    #+#             */
-/*   Updated: 2024/09/13 19:23:49 by francis          ###   ########.fr       */
+/*   Updated: 2024/09/18 18:44:44 by fallan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@
 #define REDIR_HEREDOC 6
 #define PIPE 7
 #define END_OF_INPUT 8
+#define SUFFIX 9 // TEMPORARY, FOR TESTING PURPOSES, REMOVE AFTERWARDS
 
 struct s_token
 {

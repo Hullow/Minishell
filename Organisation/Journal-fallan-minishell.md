@@ -173,3 +173,8 @@ POSIX.1-2017's special grammar notation is based on the syntax used by the `yacc
 - Reading cmegret's code, refactoring
 - Fixed pipe tokenization issue (when '|' at the end of prompt)
 - Git learning (learngitbranching.org), git merging, and some file reordering
+
+# 18/9/24
+- Reading more about parsing concepts (leftmost/rightmost derivation, and approaches (types of parsing: top-down, bottom-up, LL, Recursive descent, LR, ...))
+- Implementing a parser for a very simple grammar => doesn't seem to relevant to our parser; too different, but helps make issues concrete. Will try directly a recursive descent parser with our data structures and grammar instead.
+- Trying to implement Recursive descent parsing with an iterative component to avoid infinite loop (see parse_main.c). New branch created that corresponds to the task: `parse_cmd_prefixes_suffixes`
