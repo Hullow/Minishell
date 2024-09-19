@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution_main.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cmegret <cmegret@student.42lausanne.ch>    +#+  +:+       +#+        */
+/*   By: francis <francis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/07 12:23:09 by cmegret           #+#    #+#             */
-/*   Updated: 2024/09/11 15:37:24 by cmegret          ###   ########.fr       */
+/*   Updated: 2024/09/19 14:26:04 by francis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ int	ft_is_builtin(struct s_command *cmd, struct s_shell_state *shell_state)
 		return (1);
 }
 
+// executes the command in the child process
 static void	handle_child_process(struct s_command *cmd, char **envp)
 {
 	char	*cmd_path;
@@ -51,6 +52,7 @@ static void	handle_child_process(struct s_command *cmd, char **envp)
 	}
 }
 
+// ?
 static int	handle_parent_process(pid_t pid)
 {
 	int	status;
@@ -60,6 +62,9 @@ static int	handle_parent_process(pid_t pid)
 	return (status);
 }
 
+// executes commands:
+// ft_is_builtin : checks if command is builtin and executes the relevant builtin
+// otherwise, forks the calling process
 int	execute_cmd(struct s_command *cmd, char **envp, struct s_shell_state *shell_state)
 {
 	pid_t	pid;

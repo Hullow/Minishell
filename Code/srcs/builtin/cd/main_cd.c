@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main_cd.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cmegret <cmegret@student.42lausanne.ch>    +#+  +:+       +#+        */
+/*   By: francis <francis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/11 15:00:25 by cmegret           #+#    #+#             */
-/*   Updated: 2024/09/11 15:45:59 by cmegret          ###   ########.fr       */
+/*   Updated: 2024/09/19 14:25:04 by francis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,10 @@
 
 void	ft_cd(struct s_command *cmd, struct s_shell_state *shell_state)
 {
-	const char	*path;
+	char	*path;
 
-	path = cmd->args[0];
-	if (!path || strcmp(path, "~") == 0)
+	path = cmd->args[1];
+	if (ft_strncmp(path, "cd", 3) == 0 || strcmp(path, "~") == 0)
 		path = getenv("HOME");
 	else if (strcmp(path, "-") == 0)
 		path = getenv("OLDPWD");

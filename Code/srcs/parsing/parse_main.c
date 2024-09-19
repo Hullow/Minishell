@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_main.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
+/*   By: francis <francis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/06 17:35:29 by cmegret           #+#    #+#             */
-/*   Updated: 2024/09/18 18:45:37 by fallan           ###   ########.fr       */
+/*   Updated: 2024/09/19 14:26:36 by francis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,9 @@ static int	ft_allocate_multiple_args(struct s_token *tkn,
 	cmd_sequence->args = malloc((arg_count + 1) * sizeof(char *));
 	if (!cmd_sequence->args)
 		return (-1); // call error function ?
-	i = 0;
+	cmd_sequence->args[0] = ft_strdup(tkn->str);
+	tkn = tkn->next;
+	i = 1;
 	while (tkn)
 	{
 		if (tkn->type == WORD)
@@ -90,7 +92,7 @@ static int	ft_process_args(struct s_token *tkn, struct s_command *cmd_sequence)
 	}
 	else
 	{
-		if (ft_allocate_multiple_args(tkn->next, cmd_sequence, arg_count) == -1)
+		if (ft_allocate_multiple_args(tkn, cmd_sequence, arg_count) == -1)
 			return (-1);
 	}
 	return (0);
