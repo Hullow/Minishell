@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   token_creation.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cmegret <cmegret@student.42lausanne.ch>    +#+  +:+       +#+        */
+/*   By: francis <francis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/06 17:21:26 by cmegret           #+#    #+#             */
-/*   Updated: 2024/09/06 17:31:36 by cmegret          ###   ########.fr       */
+/*   Updated: 2024/09/13 19:14:49 by francis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,14 +53,14 @@ struct s_token	*ft_tokenize_end_of_input(struct s_token *tok)
 	return (tok);
 }
 
-// Rule for blanks (spaces or tabs)
+// Rule for tokenizing blanks (spaces or tabs)
 int	ft_tokenize_blank(struct s_token **tok)
 {
 	(*tok)->is_delimited = true;
 	return (1);
 }
 
-// Rule for new word
+// Rule for tokenizing a new word
 int	ft_new_word(struct s_token **tok, char c)
 {
 	char	character[2];

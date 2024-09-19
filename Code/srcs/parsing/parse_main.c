@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_main.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cmegret <cmegret@student.42lausanne.ch>    +#+  +:+       +#+        */
+/*   By: francis <francis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/06 17:35:29 by cmegret           #+#    #+#             */
-/*   Updated: 2024/09/07 19:21:28 by cmegret          ###   ########.fr       */
+/*   Updated: 2024/09/13 18:39:14 by francis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ static int	ft_allocate_single_arg(struct s_token *tkn,
 {
 	cmd_sequence->args = malloc(2 * sizeof(char *));
 	if (!cmd_sequence->args)
-		return (-1);
+		return (-1); // call error function ?
 	cmd_sequence->args[0] = ft_strdup(tkn->str);
 	cmd_sequence->args[1] = NULL;
 	return (0);
@@ -55,7 +55,7 @@ static int	ft_allocate_multiple_args(struct s_token *tkn,
 
 	cmd_sequence->args = malloc((arg_count + 1) * sizeof(char *));
 	if (!cmd_sequence->args)
-		return (-1);
+		return (-1); // call error function ?
 	i = 0;
 	while (tkn)
 	{
@@ -90,6 +90,9 @@ static int	ft_process_args(struct s_token *tkn, struct s_command *cmd_sequence)
 	return (0);
 }
 
+// Parses our linked list of tokens, starting from left (head)
+// Extracts the command and the arguments 
+// Outputs a struct command with the command name and the arguments
 struct s_command	*ft_parse(struct s_token *head)
 {
 	struct s_command	*cmd_sequence;
@@ -103,7 +106,7 @@ struct s_command	*ft_parse(struct s_token *head)
 	{
 		cmd_sequence->cmd_name = ft_strdup(tkn->str);
 		if (ft_process_args(tkn, cmd_sequence) == -1)
-			return (NULL);
+			return (NULL); // call error function ?
 	}
 	return (cmd_sequence);
 }

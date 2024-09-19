@@ -1,25 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   execution_env_path.c                               :+:      :+:    :+:   */
+/*   command.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: francis <francis@student.42.fr>            +#+  +:+       +#+        */
+/*   By: cmegret <cmegret@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/09/07 19:02:56 by cmegret           #+#    #+#             */
-/*   Updated: 2024/09/13 19:19:38 by francis          ###   ########.fr       */
+/*   Created: 2024/04/18 14:22:54 by cmegret           #+#    #+#             */
+/*   Updated: 2024/04/18 14:23:42 by cmegret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../header/Minishell.h"
-/*
-### 4.0.1. Shell Execution environment
-A shell execution environment consists of the following:
-	- Open files inherited upon invocation of the shell, plus open files controlled by exec
-	- Working directory as set by `cd`
-	- Shell parameters from the environment inherited by the shell when it begins (see the `export` built-in)
-
-Reference: See [Shell Execution Environment](https://pubs.opengroup.org/onlinepubs/9699919799/utilities/V3_chap02.html#tag_18_12)
-*/
+#include "../includes/pipex.h"
 
 char	**get_env_paths(char **envp)
 {
@@ -45,25 +36,42 @@ char	*get_cmd_path(char *cmd, char **envp)
 	char	*full_path;
 	int		i;
 
-	if (cmd == NULL || envp == NULL)
-		error_and_exit("cmd or envp is NULL");
 	paths = get_env_paths(envp);
 	if (!paths)
-		error_and_exit("get_env_paths failed");
+		return (NULL);
 	i = 0;
 	while (paths[i])
 	{
 		full_path = ft_strjoin(ft_strjoin(paths[i], "/"), cmd);
 		if (!full_path)
-			error_and_exit("ft_strjoin failed");
+			return (NULL);
 		if (access(full_path, X_OK) == 0)
-		{
-			free(paths);
 			return (full_path);
-		}
 		free(full_path);
 		i++;
 	}
-	free(paths);
 	return (NULL);
+}
+
+void	execute_cmd(char *cmd, char **envp)
+{
+	char	**args;
+	char	*cmd_path;
+	int		i;
+
+	args = ft_split(cmd, ' ');
+	if (args == NULL)
+		error_and_exit("ft_split");
+	i = 0;
+	while (args[i])
+	{
+		args[i] = ft_strtrim(args[i], " ");
+		i++;
+	}
+	cmd_path = get_cmd_path(args[0], envp);
+	if (cmd_path == NULL)
+		error_and_exit("Command not found");
+	if (execve(cmd_path, args, envp) == -1)
+		error_and_exit("execve");
+	free(cmd_path);
 }

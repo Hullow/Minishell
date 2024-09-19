@@ -1,6 +1,7 @@
-*/a.out
-*.o
-*.a
-*/Norm*.pdf
+**/a.out
+**/.o
+**/.a
+**/Norm*.pdf
 .vscode
 .DS_Store
+Resources-and-notes
