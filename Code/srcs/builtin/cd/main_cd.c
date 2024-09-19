@@ -6,7 +6,7 @@
 /*   By: cmegret <cmegret@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/11 15:00:25 by cmegret           #+#    #+#             */
-/*   Updated: 2024/09/19 14:51:41 by cmegret          ###   ########.fr       */
+/*   Updated: 2024/09/19 14:54:12 by cmegret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ void	ft_cd(struct s_command *cmd, struct s_shell_state *shell_state)
 {
 	char	*path;
 
-	path = cmd->args[0];
+	path = cmd->args[1];
 	if (ft_strncmp(path, "cd", 3) == 0 || ft_strncmp(path, "~", 2) == 0)
 		path = getenv("HOME");
 	else if (ft_strncmp(path, "..", 2) == 0)
