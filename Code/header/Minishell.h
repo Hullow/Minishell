@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: francis <francis@student.42.fr>            +#+  +:+       +#+        */
+/*   By: cmegret <cmegret@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/19 13:48:14 by francis           #+#    #+#             */
-/*   Updated: 2024/09/13 19:23:49 by francis          ###   ########.fr       */
+/*   Updated: 2024/09/19 13:49:39 by cmegret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,12 +61,15 @@ struct s_shell_state
 int					main(int argc, char **argv, char **envp);
 void				ft_initialize(int argc, char **argv, struct s_shell_state *shell_state);
 void				error_and_exit(const char *message);
+char				*ft_prompt(void);
 
 // Tokenization
 struct s_token		*ft_create_new_token(struct s_token *tok);
 struct s_token		*ft_tokenize_end_of_input(struct s_token *tok);
-int					ft_continue_operator_token(char *prompt, int i, struct s_token **tok);
-int					ft_new_operator_token(char *prompt, int i, struct s_token **tok);
+int					ft_continue_operator_token(char *prompt, int i,
+						struct s_token **tok);
+int					ft_new_operator_token(char *prompt, int i,
+						struct s_token **tok);
 int					ft_tokenize_blank(struct s_token **tok);
 int					ft_append_char_to_word(struct s_token **tok, char c);
 int					ft_new_word(struct s_token **tok, char c);
@@ -83,10 +86,13 @@ struct s_command	*ft_parse(struct s_token *head);
 int					ft_count_token_list_args(struct s_token *tok);
 
 // Execution
-int					ft_is_builtin(struct s_command *cmd, struct s_shell_state *shell_state);
+int					ft_is_and_execute_builtin(struct s_command *cmd,
+						struct s_shell_state *shell_state);
 char				**get_env_paths(char **envp);
 char				*get_cmd_path(char *cmd, char **envp);
-int					execute_cmd(struct s_command *cmd, char **envp, struct s_shell_state *shell_state);
+int					execute_cmd(struct s_command *cmd, char **envp,
+						struct s_shell_state *shell_state);
 
 // Builtins
-void				ft_cd(struct s_command *cmd, struct s_shell_state *shell_state);
+void				ft_cd(struct s_command *cmd,
+						struct s_shell_state *shell_state);

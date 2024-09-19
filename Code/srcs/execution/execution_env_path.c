@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution_env_path.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: francis <francis@student.42.fr>            +#+  +:+       +#+        */
+/*   By: cmegret <cmegret@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/07 19:02:56 by cmegret           #+#    #+#             */
-/*   Updated: 2024/09/13 19:19:38 by francis          ###   ########.fr       */
+/*   Updated: 2024/09/19 13:53:55 by cmegret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,32 @@
 /*
 ### 4.0.1. Shell Execution environment
 A shell execution environment consists of the following:
-	- Open files inherited upon invocation of the shell, plus open files controlled by exec
+	- Open files inherited upon invocation of the shell,
+		plus open files controlled by exec
 	- Working directory as set by `cd`
-	- Shell parameters from the environment inherited by the shell when it begins (see the `export` built-in)
+	- Shell parameters from the environment inherited by the shell when it begins
+		(see the `export` built-in)
 
 Reference: See [Shell Execution Environment](https://pubs.opengroup.org/onlinepubs/9699919799/utilities/V3_chap02.html#tag_18_12)
 */
 
+/**
+ * get_env_paths - Retrieves the PATH environment variable and
+ * splits it into an array of paths.
+ *
+ * This function searches through the provided environment variables
+ * to find the PATH variable.
+ * Once found, it splits the PATH variable into an array of individual
+ * paths using ':' as the delimiter.
+ *
+ * Parameters:
+ *   envp - An array of environment variables.
+ *
+ * Returns:
+ *   An array of strings, each representing a path from the PATH
+ *   environment variable.
+ *   Returns NULL if the PATH variable is not found.
+ */
 char	**get_env_paths(char **envp)
 {
 	int		i;
@@ -39,6 +58,30 @@ char	**get_env_paths(char **envp)
 	return (NULL);
 }
 
+/**
+ * get_cmd_path - Constructs the full path of a command by searching
+ * through the PATH environment variable.
+ *
+ * This function retrieves the PATH environment variable and constructs
+ * the full path for the given command.
+ * It checks each path in the PATH variable to see if the command exists
+ * and is executable.
+ *
+ * Parameters:
+ *   cmd - The command to find the full path for.
+ *   envp - An array of environment variables.
+ *
+ * Returns:
+ *   A string containing the full path of the command if found and executable.
+ *   Returns NULL if the command is not found in any of the paths.
+ *
+ * Notes:
+ *   - The returned string must be freed by the caller to avoid memory leaks.
+ *   - If cmd or envp is NULL, the function calls error_and_exit with an
+ *     appropriate error message.
+ *   - If any memory allocation fails, the function calls error_and_exit
+ *     with an appropriate error message.
+ */
 char	*get_cmd_path(char *cmd, char **envp)
 {
 	char	**paths;
