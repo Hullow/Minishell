@@ -204,11 +204,12 @@ command   		 : cmd_prefix cmd_word cmd_suffix
                  | cmd_name
                  ;
 
-cmd_name         : WORD                   /* Apply rule 7a (see Shell-functioning.md)*/
+cmd_name         : WORD                   /* Apply rule 7a (see Shell-functioning.md): */
                  ;
 
-cmd_word         : WORD                   /* Apply rule 7b (see Shell-functioning.md)*/
-                 ;
+cmd_word         : WORD                   `=` : Apply rule 7b (see Shell-functioning.md): 
+				 ;							": if the token contains an unquoted `=` that is not part of 
+											an embedded parameter expansion construct, then ..."
 
 cmd_prefix       :            io_redirect
                  | cmd_prefix io_redirect
