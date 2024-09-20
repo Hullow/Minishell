@@ -6,31 +6,28 @@
 /*   By: cmegret <cmegret@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 14:36:39 by cmegret           #+#    #+#             */
-/*   Updated: 2024/09/19 13:46:33 by cmegret          ###   ########.fr       */
+/*   Updated: 2024/09/20 12:21:06 by cmegret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../header/Minishell.h"
 
-// memory allocation (getcwd)
 /**
- * ft_initialize - Initializes the shell state.
+ * @brief Initializes the shell state.
  *
  * This function initializes the shell state by checking the command-line
  * arguments and setting the current working directory. If more than one
  * argument is provided, it prints usage information and exits the program.
  * It also sets the current working directory in the shell state.
  *
- * Parameters:
- *   argc - The number of command-line arguments.
- *   argv - The array of command-line arguments.
- *   shell_state - A pointer to the shell state structure to be initialized.
+ * @param argc The number of command-line arguments.
+ * @param argv The array of command-line arguments.
+ * @param shell_state A pointer to the shell state structure to be initialized.
  *
- * Notes:
- *   - If more than one argument is provided, the function prints usage
- *     information and exits the program.
- *   - If the current working directory cannot be obtained, the function
- *     calls error_and_exit with an appropriate error message.
+ * @note If more than one argument is provided, the function prints usage
+ *       information and exits the program.
+ * @note If the current working directory cannot be obtained, the function
+ *       calls error_and_exit with an appropriate error message.
  */
 void	ft_initialize(int argc, char **argv, struct s_shell_state *shell_state)
 {
@@ -46,21 +43,66 @@ void	ft_initialize(int argc, char **argv, struct s_shell_state *shell_state)
 }
 
 /**
- * ft_prompt - Generates a custom command prompt for the shell.
+ * @brief Colors a given message with the specified ANSI color code.
+ *
+ * This function takes a message and a color code as input,
+ * and returns the message wrapped with the ANSI color code.
+ *
+ * @param message The message to be colored.
+ * @param color The ANSI color code to apply to the message.
+ * @return A new string with the colored message.
+ */
+static char	*ft_colorize_message(char *message, char *color)
+{
+	char	*colored_message;
+	char	*temp;
+
+	temp = ft_strjoin(color, message);
+	colored_message = ft_strjoin(temp, "\033[0m");
+	free(temp);
+	return (colored_message);
+}
+
+/**
+ * @brief Creates a colored prompt message for the shell.
+ *
+ * This function constructs a prompt message by combining
+ * various parts of the prompt, each colored differently using ANSI color codes.
+ * The prompt includes an arrow, the current directory, and the shell name
+ * "Minishell".
+ *
+ * @param last_folder The name of the last folder in the current
+ * working directory.
+ * @return A new string with the complete colored prompt message.
+ */
+static char	*ft_create_message_prompt(char *last_folder)
+{
+	char	*message;
+
+	message = ft_strjoin(ft_colorize_message("➜  ", "\033[32m"),
+			ft_colorize_message(last_folder, "\033[1;36m"));
+	message = ft_strjoin(message, ft_colorize_message(" (", "\033[1;34m"));
+	message = ft_strjoin(message,
+			ft_colorize_message("Minishell", "\033[1;31m"));
+	message = ft_strjoin(message, ft_colorize_message(")", "\033[1;34m"));
+	message = ft_strjoin(message, ft_colorize_message(" : ", "\033[1;34m"));
+	return (message);
+}
+
+/**
+ * @brief Generates a custom command prompt for the shell.
  *
  * This function creates a command prompt using the last folder
  * of the current working directory (CWD). If the CWD cannot be obtained,
  * it uses a default prompt "Minishell : ".
  *
- * Returns:
- *   A pointer to a string containing the command prompt.
- *   The string must be freed by the caller to avoid memory leaks.
+ * @return A pointer to a string containing the command prompt.
+ *         The string must be freed by the caller to avoid memory leaks.
  *
- * Notes:
- *   - Uses the getcwd function to obtain the CWD.
- *   - Uses the readline function to read user input.
- *   - On memory allocation error, the function prints an error message and
- *     terminates the program.
+ * @note Uses the getcwd function to obtain the CWD.
+ * @note Uses the readline function to read user input.
+ * @note On memory allocation error, the function prints an error message and
+ *       terminates the program.
  */
 char	*ft_prompt(void)
 {
@@ -74,7 +116,7 @@ char	*ft_prompt(void)
 		last_folder = ft_strrchr(cwd, '/');
 		if (last_folder != NULL)
 			last_folder++;
-		message = ft_strjoin(last_folder, " - Minishell : ");
+		message = ft_create_message_prompt(last_folder);
 		if (message == NULL)
 		{
 			perror("malloc");
@@ -92,19 +134,18 @@ char	*ft_prompt(void)
 }
 
 /**
- * error_and_exit - Prints an error message and exits the program.
+ * @brief Prints an error message and exits the program.
  *
  * This function prints the provided error message using perror and then
  * exits the program with a failure status.
  *
- * Parameters:
- *   message - A pointer to a string containing the error message to be printed.
+ * @param message A pointer to a string containing the
+ * error message to be printed.
  *
- * Notes:
- *   - The function uses perror to print the error message, which includes
- *     the string pointed to by message followed by a description of the
- *     current error condition.
- *   - The function then calls exit with EXIT_FAILURE to terminate the program.
+ * @note The function uses perror to print the error message, which includes
+ *       the string pointed to by message followed by a description of the
+ *       current error condition.
+ * @note The function then calls exit with EXIT_FAILURE to terminate the program.
  */
 void	error_and_exit(const char *message)
 {
