@@ -6,41 +6,11 @@
 /*   By: cmegret <cmegret@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 14:36:39 by cmegret           #+#    #+#             */
-/*   Updated: 2024/09/20 12:21:06 by cmegret          ###   ########.fr       */
+/*   Updated: 2024/09/22 17:31:47 by cmegret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../header/Minishell.h"
-
-/**
- * @brief Initializes the shell state.
- *
- * This function initializes the shell state by checking the command-line
- * arguments and setting the current working directory. If more than one
- * argument is provided, it prints usage information and exits the program.
- * It also sets the current working directory in the shell state.
- *
- * @param argc The number of command-line arguments.
- * @param argv The array of command-line arguments.
- * @param shell_state A pointer to the shell state structure to be initialized.
- *
- * @note If more than one argument is provided, the function prints usage
- *       information and exits the program.
- * @note If the current working directory cannot be obtained, the function
- *       calls error_and_exit with an appropriate error message.
- */
-void	ft_initialize(int argc, char **argv, struct s_shell_state *shell_state)
-{
-	if (argc > 1)
-	{
-		printf("Usage: %s\n", argv[0]);
-		printf("No arguments are allowed\n");
-		exit(EXIT_FAILURE);
-	}
-	shell_state->current_directory = getcwd(NULL, 0);
-	if (!shell_state->current_directory)
-		error_and_exit("getcwd failed");
-}
 
 /**
  * @brief Colors a given message with the specified ANSI color code.

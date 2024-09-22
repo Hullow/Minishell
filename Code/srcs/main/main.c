@@ -6,7 +6,7 @@
 /*   By: cmegret <cmegret@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 14:30:52 by cmegret           #+#    #+#             */
-/*   Updated: 2024/09/19 14:56:32 by cmegret          ###   ########.fr       */
+/*   Updated: 2024/09/22 16:38:20 by cmegret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ int	main(int argc, char **argv, char **envp)
 	char					*prompt;
 	struct s_shell_state	shell_state;
 
-	ft_initialize(argc, argv, &shell_state);
+	ft_initialize(argc, argv, &shell_state, envp);
 	prompt = ft_prompt();
 	while (prompt != NULL)
 	{

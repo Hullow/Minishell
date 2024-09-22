@@ -6,7 +6,7 @@
 /*   By: cmegret <cmegret@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/19 13:48:14 by francis           #+#    #+#             */
-/*   Updated: 2024/09/19 14:50:53 by cmegret          ###   ########.fr       */
+/*   Updated: 2024/09/22 18:44:52 by cmegret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,11 +56,13 @@ struct s_command
 struct s_shell_state
 {
 	char	*current_directory;
+	char	**envp;
 };
 
 // Main
 int					main(int argc, char **argv, char **envp);
-void				ft_initialize(int argc, char **argv, struct s_shell_state *shell_state);
+void				ft_initialize(int argc, char **argv,
+						struct s_shell_state *shell_state, char **envp);
 void				error_and_exit(const char *message);
 char				*ft_prompt(void);
 
@@ -94,6 +96,18 @@ char				*get_cmd_path(char *cmd, char **envp);
 int					execute_cmd(struct s_command *cmd, char **envp,
 						struct s_shell_state *shell_state);
 
-// Builtins
+// Builtin cd
 void				ft_cd(struct s_command *cmd,
 						struct s_shell_state *shell_state);
+
+// Builtin env
+void				ft_env(char **envp);
+
+// Builtin export
+void				ft_export(char ***envp, const char *var);
+const char			*extract_value(const char *new_value);
+char				*build_new_var(const char *name, const char *value);
+int					find_var_index(char **envp, char *name, size_t name_len);
+int					update_existing_var(char ***envp, char *name,
+						const char *new_value);
+void				add_new_var(char ***envp, const char *var);

@@ -6,7 +6,7 @@
 /*   By: cmegret <cmegret@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/07 12:23:09 by cmegret           #+#    #+#             */
-/*   Updated: 2024/09/20 12:18:57 by cmegret          ###   ########.fr       */
+/*   Updated: 2024/09/22 17:22:43 by cmegret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,11 +37,17 @@ int	ft_is_and_execute_builtin(struct s_command *cmd,
 	else if (ft_strncmp(cmd->cmd_name, "pwd", 3) == 0)
 		return (0);
 	else if (ft_strncmp(cmd->cmd_name, "export", 6) == 0)
+	{
+		ft_export(&shell_state->envp, cmd->args[1]);
 		return (0);
+	}
 	else if (ft_strncmp(cmd->cmd_name, "unset", 5) == 0)
 		return (0);
 	else if (ft_strncmp(cmd->cmd_name, "env", 3) == 0)
+	{
+		ft_env(shell_state->envp);
 		return (0);
+	}
 	else if (ft_strncmp(cmd->cmd_name, "exit", 4) == 0)
 		return (0);
 	else
