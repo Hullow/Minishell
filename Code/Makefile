@@ -6,7 +6,7 @@
 #    By: cmegret <cmegret@student.42lausanne.ch>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/07/19 14:53:36 by cmegret           #+#    #+#              #
-#    Updated: 2024/09/22 18:43:22 by cmegret          ###   ########.fr        #
+#    Updated: 2024/09/23 14:59:18 by cmegret          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -67,6 +67,7 @@ SRCS = main/main.c \
       builtin/env/main_env.c \
       builtin/export/main_export.c \
       builtin/export/export_utils.c \
+      builtin/unset/main_unset.c \
 
 # Add path prefix to SRCS files
 SRC = $(addprefix srcs/, $(SRCS))

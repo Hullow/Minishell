@@ -6,13 +6,13 @@
 /*   By: cmegret <cmegret@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/22 17:18:01 by cmegret           #+#    #+#             */
-/*   Updated: 2024/09/22 18:44:23 by cmegret          ###   ########.fr       */
+/*   Updated: 2024/09/23 14:56:26 by cmegret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../header/Minishell.h"
 
-static char	*get_var_name(const char *var)
+char	*get_var_name(const char *var)
 {
 	size_t	name_len;
 	char	*name;
