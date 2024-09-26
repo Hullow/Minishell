@@ -180,4 +180,8 @@ POSIX.1-2017's special grammar notation is based on the syntax used by the `yacc
 - Trying to implement Recursive descent parsing with an iterative component to avoid infinite loop (see parse_main.c). New branch created that corresponds to the task: `parse_cmd_prefixes_suffixes`
 
 # 19/9/24
-- Still implementing parsing of command suffixes; need to refactor things
+- With Cmegret @42 Lausanne
+- Still implementing parsing of command suffixes; need to refactor parsing_main.c
+
+# 20/9/24
+- Call with Cmegret: discussed his work on new prompt, refactoring, and parsing issues. Ideas: make diagram(s), ask Copilot, go ahead and refactor when things work
