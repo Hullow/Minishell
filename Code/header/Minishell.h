@@ -6,7 +6,7 @@
 /*   By: cmegret <cmegret@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/19 13:48:14 by francis           #+#    #+#             */
-/*   Updated: 2024/09/23 14:58:56 by cmegret          ###   ########.fr       */
+/*   Updated: 2024/09/27 14:55:59 by cmegret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,6 +112,7 @@ int					update_existing_var(char ***envp, char *name,
 						const char *new_value);
 void				add_new_var(char ***envp, const char *var);
 char				*get_var_name(const char *var);
+int					is_valid_name(const char *name);
 
 // Builtin unset
 void				ft_unset(char ***envp, const char *var);
