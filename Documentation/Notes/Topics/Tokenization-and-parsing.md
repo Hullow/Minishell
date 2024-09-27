@@ -97,7 +97,43 @@ Solution:
 	- **if the method successfully parse the string, it should return a pointer to an AST node of the appropriate subtype, with its children initialized in the appropriate way**
 	- **if the method cannot successfully parse the string it should return a null pointer to indicate that fact**
 
-###### Example implementation
+##### Building an AST in C
+Following [Keleshev's Abstract Syntax Tree – An Example in C](https://keleshev.com/abstract-syntax-tree-an-example-in-c/)
+
+This method uses a manually implemented **tagged union**.
+
+The AST is defined as a *struct* of:
+- an *enum* called *tag*, enumerating each node type
+- a *union* called *data*, consisting of data members for each tag type
+
+```c
+typedef struct AST AST; /* forward reference to enable data members to reference other AST nodes;
+						required because C does not allow recursive type definitions */
+
+struct AST {
+	enum {
+		AST_NUMBER,
+		AST_ADD,
+		AST_MUL,
+	}	tag;
+	union {
+		struct AST_NUMBER { int number; } AST_NUMBER;
+		struct AST_ADD { AST *left; AST *right; } AST_ADD;
+		struct AST_MUL { AST *left; AST *right; } AST_MUL;
+	}
+}
+
+
+
+
+
+
+
+
+
+
+### Parsing implementation example
+#### [CSE12 UCSD - Abstract Syntax Trees](https://cseweb.ucsd.edu/~kube/cls/12.s13/Lectures/lec16/lec16.pdf)
 - Non-terminal symbol `<A>` defined as `<A> := <B> | <C>`:
 ```code
 public static A parse (String s)
@@ -118,6 +154,40 @@ public static A parse (String s)
 		return null;
 }
 ```
+
+#### [CSE 5317/4305: Design and Construction of Compilers Leonidas Fegaras University of Texas at Arlington, CSE](https://lambda.uta.edu/cse5317/notes/node23.html)
+> Let's consider now how actions are evaluated by different parsers. In recursive descent parsers, actions are pieces of code embedded in the recursive procedures. For the following grammar:
+
+```
+E ::= T E'
+E' ::= + T E'
+     | - T E'
+     |
+T ::= num
+```
+> we have the following recursive descent parser:
+```
+int E () { return Eprime(T()); };
+int Eprime ( int left ) {
+  if (current_token=='+') {
+     read_next_token();
+     return Eprime(left + T());
+  } else if (current_token=='-') {
+     read_next_token();
+     return Eprime(left - T());
+  } else return left;
+};
+int T () {
+  if (current_token=='num') {
+     read_next_token();
+     return num_value;
+  } else error();
+};
+```
+> By passing T() as input to Eprime, we pass the left operand to Eprime.
+
+> In general, for each nonterminal we write one procedure; For each nonterminal in the rhs of a rule, we call the nonterminal's procedure; For each terminal, we compare the current token with the expected terminal. If there are multiple productions for a nonterminal, we use an if-then-else statement to choose which rule to apply. If there was a left recursion in a production, we would have had an infinite recursion.
+From: [Section 3.2.1 Recursive Descent Parsing](https://lambda.uta.edu/cse5317/notes/node14.html)
 
 #### Semantic rules
 - An interpreter does:
@@ -223,34 +293,81 @@ cmd_suffix       :            io_redirect
                  | cmd_suffix WORD
                  ;
 
-redirect_list    :               io_redirect
-                 | redirect_list io_redirect
-                 ;
-
 io_redirect      :           io_file
                  | IO_NUMBER io_file
-                 |           io_here
-                 | IO_NUMBER io_here
+                 |           io_here_doc
+                 | IO_NUMBER io_here_doc
                  ;
 
-io_file          : '<'			filename
-                 | '>'			filename
-                 | REDIR_APPEND	filename
+/* io_file – Apply rule 2: redirection to or from filename (see Shell-functioning.md)*/
+io_file          : '<'			filename(->WORD)
+                 | '>'			filename(->WORD)
+                 | REDIR_APPEND	filename(->WORD)
                  ;
 
-filename         : WORD                      /* Apply rule 2 (see Shell-functioning.md)*/
+/* Apply rule 3: redirection from here-document (see Shell-functioning.md)*/
+io_here_doc          : REDIR_HEREDOC     here_end(->WORD)
                  ;
-
-io_here          : REDIR_HEREDOC     here_end
-                 ;
-
-here_end         : WORD                      /* Apply rule 3 (see Shell-functioning.md)*/
-                 ;
-
 ```
 
-##### Notes on the grammar
-- It is [left-recursive](https://en.wikipedia.org/wiki/Left_recursion), for instance with `pipe_sequence : pipe_sequence '|' command`
+##### Left recursion
+- The grammar is [directly left-recursive](https://en.wikipedia.org/wiki/Left_recursion), for instance with `cmd_suffix : cmd_suffix io_redirect`
+
+- Without direct left-recursion:
+
+BEFORE preprocessing:								Form:
+----------------------------------------------------------------
+cmd_prefix       :            io_redirect		|		Beta_1
+                 | cmd_prefix io_redirect		|	A	alpha_1
+                 |            ASSIGNMENT_WORD	|		Beta_2
+                 | cmd_prefix ASSIGNMENT_WORD	|	A	alpha_2
+
+alpha_1: 
+
+AFTER preprocessing:										Form:
+---------------------------------------------------------------------
+
+cmd_prefix       : io_redirect		cmd_prefix_prime	Beta_1	A_prime
+                 | ASSIGNMENT_WORD 	cmd_prefix_prime	Beta_2	A_prime
+
+cmd_prefix_prime : io_redirect		cmd_prefix_prime	alpha_1	A_prime
+				 | ASSIGNMENT_WORD 	cmd_prefix_prime	alpha_2	A_prime
+				 | epsilon (empty set)
+
+=> no direct left recursion left
+
+Problem: possible issues with semantics; fixable by ...
+
+
+- Checking for indirect left recursion:
+Looking at the whole grammar, there is no rule that refers to previous symbols, hence no indirect left recursion ?
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 #### Illustrations

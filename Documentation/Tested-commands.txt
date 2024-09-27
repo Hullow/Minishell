@@ -829,3 +829,8 @@ find . -name "hello"
 touch
 stat
 file /usr/bin/ls
+
+find . -name "parse_main.c"
+find . -name parse_main.c
+
+/bin/ls

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cmegret <cmegret@student.42lausanne.ch>    +#+  +:+       +#+        */
+/*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/19 13:48:14 by francis           #+#    #+#             */
-/*   Updated: 2024/09/19 14:50:53 by cmegret          ###   ########.fr       */
+/*   Updated: 2024/09/26 18:08:43 by fallan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@
 #define REDIR_HEREDOC 6
 #define PIPE 7
 #define END_OF_INPUT 8
-#define SUFFIX 9 // TEMPORARY, FOR TESTING PURPOSES, REMOVE AFTERWARDS
+#define IO_NUMBER 9
 
 struct s_token
 {
@@ -81,10 +81,16 @@ int					ft_is_blank(char c);
 int					ft_previous_char_part_of_word(struct s_token *tok);
 
 // Parsing
-struct s_token		*ft_parse_operators(struct s_token *head);
-void				ft_tokenization_checker(struct s_token *head);
 struct s_command	*ft_parse(struct s_token *head);
-int					ft_count_token_list_args(struct s_token *tok);
+struct s_token		*ft_parse_operators(struct s_token *head);
+struct s_token 		*ft_parse_command(struct s_token *token_seq);
+struct s_token 		*ft_parse_cmd_name(struct s_token *token_seq);
+struct s_token 		*ft_parse_cmd_name_and_suffix(struct s_token *token_seq);
+struct s_token 		*ft_parse_cmd_suffix(struct s_token *token_seq, \
+int tokens_to_evaluate);
+	// Parsing utils
+void				ft_tokenization_checker(struct s_token *head);
+int					ft_count_tokens(struct s_token *tok);
 
 // Execution
 int					ft_is_and_execute_builtin(struct s_command *cmd,

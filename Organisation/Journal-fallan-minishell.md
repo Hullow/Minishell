@@ -185,3 +185,26 @@ POSIX.1-2017's special grammar notation is based on the syntax used by the `yacc
 
 # 20/9/24
 - Call with Cmegret: discussed his work on new prompt, refactoring, and parsing issues. Ideas: make diagram(s), ask Copilot, go ahead and refactor when things work
+
+# 26/9/24
+- Parsing prefixes/suffixes: worked on implementing more rules, but figured in the end the implementation is wrong
+
+# 27/9/24
+- Call with Cmegret: discussed and fixed issues with builtins (export, unset, cd) and pathname expansion
+- Re-dove into parsing theory:
+	- left recursion: an issue, need to fix grammar or use something different than recursive descent parsing. Learned how to fix direct left recursion, tried on a small subset of the grammar, and found no indirect left recursion (still need to check, maybe asking Copilot)
+	- parser generators: looked at lex, yacc, bison, but too any steps and likely not allowed in the project. [for personal interest maybe](https://www.geeksforgeeks.org/introduction-to-yacc/)
+	- figured parsing info must actually be stored, if correctly understood, in an AST
+	- started looking at an AST implementation in C
+
+Next time:
+- finish reading about AST implementation (and see chat https://chatgpt.com/c/66eaa0fb-b8fc-8007-a3e4-2c31a481fe64 for explanations)
+- maybe try compiling or even coding an AST implementation for arithmetic expressions, with grammar etc.
+- try to make sense of the way ASTs are built/filled out, out of the grammar
+=> maybe relevant to read either of:
+	- [3. Parsing - CSE 5317/4305: Design and Construction of Compilers Leonidas Fegaras University of Texas at Arlington, CSE](https://lambda.uta.edu/cse5317/notes/node11.html)
+	- [Compiler Design - Spring 2018 - 3.0 Frontend - Thomas R. Gross](https://ethz.ch/content/dam/ethz/special-interest/infk/inst-cs/lst-dam/documents/Education/Classes/Spring2018/210_Compiler_Design/Slides/w03_01-front-end-overview_18.pdf)
+	- [Parse Tree and Syntax Tree](https://www.geeksforgeeks.org/parse-tree-and-syntax-tree/)
+- after that, take another look at either of:
+	- [COMP 530: Lab 1: Parser for a Shell](https://www.cs.unc.edu/~porter/courses/comp530/f23/lab1.html) which contains some implementation details
+	- [Building Recursive Descent Parsers: The Definitive Guide - Boolean World](https://www.booleanworld.com/building-recursive-descent-parsers-definitive-guide/)

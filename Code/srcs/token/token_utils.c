@@ -3,21 +3,23 @@
 /*                                                        :::      ::::::::   */
 /*   token_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: francis <francis@student.42.fr>            +#+  +:+       +#+        */
+/*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/07 19:00:54 by cmegret           #+#    #+#             */
-/*   Updated: 2024/09/19 15:01:08 by francis          ###   ########.fr       */
+/*   Updated: 2024/09/26 17:36:54 by fallan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../header/Minishell.h"
 
 // returns the number of tokens in our linked list
-int	ft_count_token_list_args(struct s_token *tok)
+int	ft_count_tokens(struct s_token *tok)
 {
 	int	i;
 
 	i = 0;
+	if (!tok)
+		return (0);
 	while (tok)
 	{
 		i++;
