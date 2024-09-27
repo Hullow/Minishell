@@ -6,7 +6,7 @@
 /*   By: cmegret <cmegret@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/07 12:23:09 by cmegret           #+#    #+#             */
-/*   Updated: 2024/09/23 15:00:50 by cmegret          ###   ########.fr       */
+/*   Updated: 2024/09/27 15:55:48 by cmegret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,12 +38,12 @@ int	ft_is_and_execute_builtin(struct s_command *cmd,
 		return (0);
 	else if (ft_strncmp(cmd->cmd_name, "export", 6) == 0)
 	{
-		ft_export(&shell_state->envp, cmd->args[1]);
+		ft_export(&shell_state->envp, cmd->args);
 		return (0);
 	}
 	else if (ft_strncmp(cmd->cmd_name, "unset", 5) == 0)
 	{
-		ft_unset(&shell_state->envp, cmd->args[1]);
+		ft_unset(&shell_state->envp, cmd->args);
 		return (0);
 	}
 	else if (ft_strncmp(cmd->cmd_name, "env", 3) == 0)

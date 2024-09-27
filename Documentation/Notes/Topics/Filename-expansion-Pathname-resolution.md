@@ -11,32 +11,32 @@ Reference:
 IF<br>
 - the pathname begins with a `/`
 
-=> the predecessor of the first filename in the pathname shall be taken to be the root directory of the process
+=> predecessor of the first filename in the pathname is the root directory of the process
 
 ### Relative pathnames
+#### Slashes (`/`)
 IF<br>
-- the pathname begins with a `/`
+- the pathname does not begin with a `/`
 
-=> the predecessor of the first filename in the pathname shall be taken to be:
+=> the predecessor of the first filename in the pathname shall be taken to be either:
 - the current working directory of the process
-- for certain interfaces, the directory identifed by a file descriptor passed to the interface `=> ?`
-
-Limits:
-> The interpretation of a pathname component is dependent on the value of {NAME_MAX} and _POSIX_NO_TRUNC associated with the path prefix of that component. If any pathname component is longer than {NAME_MAX}, the implementation shall consider this an error.
+or
+- for certain interfaces, the directory identified by a file descriptor passed to the interface
 
 IF<br>
-- A pathname contains:
-	- at least one non- `/` character
-	<br>&emsp;AND
-	- ends with one or more trailing `/` characters
+- The pathname consisting of a single <slash>
 
-=> that pathname shall not be resolved successfully<br>
-=> unless the last pathname component before the trailing `/` characters:
-- names an existing directory
-<br>&emsp;OR
-- a directory entry that is to be created for a directory immediately after the pathname is resolved
+=> the pathname shall resolve to the root directory of the process. 
 
-`=> ?`
+IF<br>
+- A pathname is null
+
+=> it shall not be successfully resolved
+
+#### Dots (`.`, `..`)
+- The special filename dot `.` refers to the directory specified by its predecessor.
+- The special filename dot-dot `..` refers to the parent directory of its predecessor directory. 
+- In the root directory, dot-dot `..` may refer to the root directory itself.
 
 ## File name restrictions
 (Copilot)

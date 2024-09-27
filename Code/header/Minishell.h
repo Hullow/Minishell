@@ -6,7 +6,7 @@
 /*   By: cmegret <cmegret@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/19 13:48:14 by francis           #+#    #+#             */
-/*   Updated: 2024/09/27 14:55:59 by cmegret          ###   ########.fr       */
+/*   Updated: 2024/09/27 15:26:38 by cmegret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,7 +104,7 @@ void				ft_cd(struct s_command *cmd,
 void				ft_env(char **envp);
 
 // Builtin export
-void				ft_export(char ***envp, const char *var);
+void				ft_export(char ***envp, char **args);
 const char			*extract_value(const char *new_value);
 char				*build_new_var(const char *name, const char *value);
 int					find_var_index(char **envp, char *name, size_t name_len);
@@ -115,4 +115,4 @@ char				*get_var_name(const char *var);
 int					is_valid_name(const char *name);
 
 // Builtin unset
-void				ft_unset(char ***envp, const char *var);
+void				ft_unset(char ***envp, char **args);

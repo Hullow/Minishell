@@ -6,7 +6,7 @@
 /*   By: cmegret <cmegret@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/22 17:18:01 by cmegret           #+#    #+#             */
-/*   Updated: 2024/09/27 14:58:02 by cmegret          ###   ########.fr       */
+/*   Updated: 2024/09/27 15:28:06 by cmegret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,18 +42,20 @@ char	*get_var_name(const char *var)
 	return (name);
 }
 
-void	ft_export(char ***envp, const char *var)
+void	ft_export(char ***envp, char **args)
 {
 	char	*name;
+	int		i;
 
-	name = get_var_name(var);
-	if (!is_valid_name(name))
+	i = 1;
+	while (args[i])
 	{
-		ft_printf("export: '%s': not a valid identifier\n", var);
+		name = get_var_name(args[i]);
+		if (!is_valid_name(name))
+			ft_printf("export: '%s': not a valid identifier\n", args[i]);
+		else if (!update_existing_var(envp, name, args[i]))
+			add_new_var(envp, args[i]);
 		free(name);
-		return ;
+		i++;
 	}
-	if (!update_existing_var(envp, name, var))
-		add_new_var(envp, var);
-	free(name);
 }
