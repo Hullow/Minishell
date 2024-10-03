@@ -208,3 +208,7 @@ Next time:
 - after that, take another look at either of:
 	- [COMP 530: Lab 1: Parser for a Shell](https://www.cs.unc.edu/~porter/courses/comp530/f23/lab1.html) which contains some implementation details
 	- [Building Recursive Descent Parsers: The Definitive Guide - Boolean World](https://www.booleanworld.com/building-recursive-descent-parsers-definitive-guide/)
+
+
+# 3/10/2024
+- Looked at Keleshev's AST in C, copied the code, now thinking about how to write code to 'fill' an AST from a linked list of tokens
