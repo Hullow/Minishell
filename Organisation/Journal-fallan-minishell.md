@@ -212,3 +212,6 @@ Next time:
 
 # 3/10/2024
 - Looked at Keleshev's AST in C, copied the code, now thinking about how to write code to 'fill' an AST from a linked list of tokens
+
+# 4/10/2024
+- 
