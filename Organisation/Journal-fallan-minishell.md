@@ -193,7 +193,7 @@ POSIX.1-2017's special grammar notation is based on the syntax used by the `yacc
 - Call with Cmegret: discussed and fixed issues with builtins (export, unset, cd) and pathname expansion
 - Re-dove into parsing theory:
 	- left recursion: an issue, need to fix grammar or use something different than recursive descent parsing. Learned how to fix direct left recursion, tried on a small subset of the grammar, and found no indirect left recursion (still need to check, maybe asking Copilot)
-	- parser generators: looked at lex, yacc, bison, but too any steps and likely not allowed in the project. [for personal interest maybe](https://www.geeksforgeeks.org/introduction-to-yacc/)
+	- parser generators: looked at lex, yacc, bison, but too many steps and likely not allowed in the project. [for personal interest maybe](https://www.geeksforgeeks.org/introduction-to-yacc/)
 	- figured parsing info must actually be stored, if correctly understood, in an AST
 	- started looking at an AST implementation in C
 
@@ -210,7 +210,8 @@ Next time:
 	- [Building Recursive Descent Parsers: The Definitive Guide - Boolean World](https://www.booleanworld.com/building-recursive-descent-parsers-definitive-guide/)
 
 
-# 3/10/2024
+# 3/10/24
+- Call with cmegret: discussed his tests for pipes and command execution structure. We looked at the execution code briefly. Also discussed fixing grammar to parse recursively without infinite loops.
 - Looked at Keleshev's AST in C, copied the code, now thinking about how to write code to 'fill' an AST from a linked list of tokens
 
 # 4/10/2024
