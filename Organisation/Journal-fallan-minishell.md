@@ -208,7 +208,3 @@ Next time:
 - after that, take another look at either of:
 	- [COMP 530: Lab 1: Parser for a Shell](https://www.cs.unc.edu/~porter/courses/comp530/f23/lab1.html) which contains some implementation details
 	- [Building Recursive Descent Parsers: The Definitive Guide - Boolean World](https://www.booleanworld.com/building-recursive-descent-parsers-definitive-guide/)
-
-
-# 3/10/24
-- Call with cmegret: discussed his tests for pipes and command execution structure. We looked at the execution code briefly. Also discussed fixing grammar to parse recursively without infinite loops.
