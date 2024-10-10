@@ -219,3 +219,7 @@ Next time:
 => this shouldn't create semantic issues because the only semantic rules found in the grammar are in rules without direct left recursion, not concerned by the preprocessing
 - Some uncommitted changes to recover from 42's Linux session; including a merge of the duplicate Tokenization-and-parsing.md files (in Documentation/Notes/Topics/Parsing)
 - Discussed parsing, and general order of functioning of the shell with ahanzi (quote removal, expansions, redirections), and added summary from Bash reference manual at the beginning of Shell-functioning.md
+
+# 10/10/2024
+- AST: using Copilot for help, advanced on writing the structures and some idea of how to initialize. Issue:
+how to traverse and use the AST ? Maybe some things should be done when the AST node is created ? Or only at the end after having initialized the whole thing ? We'll see next time

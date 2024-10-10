@@ -855,3 +855,6 @@ env | grep VAR_NEW
 history -n > temp.txt
 cat temp.txt
 rm temp.txt
+
+echo """""" hello
+echo "" "" "" hello

@@ -12,8 +12,7 @@
 // and another set for the fresh nonterminal A' (often called the "tail" or the "rest"):
 // 		A' -> alpha_1 A' | ... | alpha_n A' | epsilon (empty)
 //
-// repeat this process until no direct left recursion remains.
-
+// repeat this process until no direct left recursion remains
 MINISHELL GRAMMAR WITH DIRECT LEFT RECURSION
 <br>(BEFORE preprocessing)
 --------------------------------------------------------------------
@@ -126,12 +125,12 @@ io_redirect      :           io_file
                  | IO_NUMBER io_here_doc
                  ;
 
-/* io_file – Apply rule 2: redirection to or from filename (see Shell-functioning.md)*/
-io_file          : '<'			filename(->WORD)
-                 | '>'			filename(->WORD)
-                 | REDIR_APPEND	filename(->WORD)
+/* io_file – Apply rule 2: redirection to or from filename (see Shell-functioning.md) */
+io_file          : REDIR_INPUT  ('<')	filename(->WORD)
+                 | REDIR_OUTPUT ('>')	filename(->WORD)
+                 | REDIR_APPEND ('>>')  filename(->WORD)
                  ;
 
-/* Apply rule 3: redirection from here-document (see Shell-functioning.md)*/
-io_here_doc      : REDIR_HEREDOC     here_end(->WORD)
+/* Apply rule 3: redirection from here-document (see Shell-functioning.md) */
+io_here_doc      : REDIR_HEREDOC ('<<') here_end(->WORD)
                  ;

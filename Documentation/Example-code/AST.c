@@ -1,69 +1,8 @@
 #include "../../Code/header/Minishell.h"
 
-typedef enum {
-// Non-terminal symbols
-	AST_PROGRAM,
-	AST_PROGRAM_PRIME,
-	AST_COMMAND,
-	AST_CMD_NAME,
-	AST_CMD_WORD,
-	AST_CMD_PREFIX,
-	AST_CMD_PREFIX_PRIME,
-	AST_CMD_SUFFIX,
-	AST_CMD_SUFFIX_PRIME,
-	AST_IO_REDIRECT,
-	AST_IO_FILE,
-	AST_IO_HERE_DOC,
-// Terminal symbols
-	AST_WORD,
-	AST_ASSIGNMENT_WORD,
-	AST_IO_NUMBER,
-	AST_PIPE,
-	AST_REDIR_INPUT,
-	AST_REDIR_OUTPUT,
-	AST_REDIR_APPEND,
-	AST_REDIR_HEREDOC
-}	AST_Node_Type;
-
-typedef struct AST AST;
-
-// Define structures for AST nodes
-typedef struct AST {
-    AST_Node_Type	type;
-    union
-	{
-		// terminal nodes
-        struct {
-            char *string;
-        } word;
-        struct {
-            char *string;
-        } assignment_word;
-        struct {
-            int io_number;
-        } io_number;
-        struct {
-            int pipe; // always 1
-        } pipe;
-        struct {
-            int redir_output; // always 1
-        } redir_output;
-		// ...
-		// non-terminal nodes
-		struct AST_ADD
-		{
-			AST *left;
-			AST *right;
-		}	AST_ADD;
-        struct {
-            struct AST *io_redirect;
-        } io_file;
-        struct {
-            char *name;
-        } filename;
-    } data;
-} AST;
-
+/////////////////////////////////////
+/// AST for arithmetic expression ///
+/////////////////////////////////////
 struct AST_for_numbers
 {
 	enum
@@ -91,6 +30,7 @@ struct AST_for_numbers
 	}	data;
 };
 
+// creates a new AST node
 AST *ast_new(AST ast)
 {
   AST *ptr = malloc(sizeof(AST));
@@ -123,18 +63,17 @@ AST *term_ = ast_new((AST){
 	}
 });
 
-
+// define to make the creation of new nodes lighter in code
 #define AST_NEW(tag, ...) \
   ast_new((AST){tag, {.tag=(struct tag){__VA_ARGS__}}})
 
-
-// example: 4 + 2 * 10 + 3 * (5 + 1)
+// example initialization of an AST for the expression: 4 + 2 * 10 + 3 * (5 + 1)
 AST *term = 
 AST_NEW(AST_ADD,
 	AST_NEW(AST_NUMBER, 4),
 	AST_NEW(AST_ADD,
 	AST_NEW(AST_MUL, 
-		AST_NEW(AST_NUMBER, 2),
+		AST_NEW(AST_NUMBER, 2), 
 		AST_NEW(AST_NUMBER, 10),
 	),
 	AST_NEW(AST_MUL,
@@ -147,6 +86,7 @@ AST_NEW(AST_ADD,
 	),
 );
 
+// prints an AST element
 void	ast_print(AST *ptr)
 {
 	AST ast = *ptr;
@@ -178,6 +118,63 @@ void	ast_print(AST *ptr)
 	}
 }
 
+
+///////////////////////////////////
+////////   Minishell AST   ////////
+///////////////////////////////////
+typedef enum {
+// Non-terminal symbols
+	AST_PROGRAM,
+	AST_PROGRAM_PRIME,
+	AST_COMMAND,
+	AST_CMD_NAME,
+	AST_CMD_WORD,
+	AST_CMD_PREFIX,
+	AST_CMD_PREFIX_PRIME,
+	AST_CMD_SUFFIX,
+	AST_CMD_SUFFIX_PRIME,
+	AST_IO_REDIRECT,
+	AST_IO_FILE,
+	AST_IO_HERE_DOC,
+// Terminal symbols
+	AST_WORD,
+	AST_ASSIGNMENT_WORD,
+	AST_IO_NUMBER,
+	AST_PIPE,
+}	AST_Node_Type;
+
+// pre-declared typedef to enable recursive declaration 
+typedef struct AST AST;
+
+// Define structures for AST nodes
+typedef struct AST {
+    AST_Node_Type	type;
+    union
+	{
+		// terminal nodes
+        typedef struct AST_WORD {
+            char *string;
+        } AST_WORD;
+        typedef struct AST_ASSIGNMENT_WORD {
+            char *string;
+        } AST_ASSIGNMENT_WORD;
+        typedef struct AST_IO_NUMBER {
+            int io_number;
+        } AST_IO_NUMBER;
+        typedef struct AST_PIPE {
+            int pipe;
+        } AST_PIPE;
+		// non-terminal nodes
+		typedef struct AST_IO_FILE {
+			int redir_type; // REDIR_INPUT, REDIR_OUTPUT, REDIR_APPEND (from define)
+			struct AST_WORD filename;
+        } AST_IO_FILE;
+		typedef struct AST_HEREDOC {
+            AST_WORD;
+        } AST_HEREDOC;
+    } data;
+} AST;
+
 struct s_AST	*ft_parse_io_file(struct *s_token token)
 {
 	if (!token || !token->str)
@@ -192,6 +189,7 @@ struct s_AST	*ft_parse_io_file(struct *s_token token)
 
 }
 
+// 
 ft_parse_filename(token)
 {
 	if (!token)
@@ -201,9 +199,6 @@ ft_parse_filename(token)
 }
 
 
-```c
-#include <stdlib.h>
-#include <string.h>
 
 // Define AST node types
 typedef enum {
