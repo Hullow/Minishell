@@ -44,20 +44,28 @@ AST *ast_new(AST ast)
 
 // Now, we can represent an expression 5 + 1 using the following code:
 AST *term_ = ast_new((AST){
-AST_ADD, 
-{
-	.AST_ADD=(struct AST_ADD){
-	ast_new((AST){
-		AST_NUMBER, 
-		{.AST_NUMBER=(struct AST_NUMBER){5}}
-	}),
-	ast_new((AST){
-		AST_NUMBER, 
-		{.AST_NUMBER=(struct AST_NUMBER){1}}}
-	),
+	AST_ADD, // enum part
+	{
+		.AST_ADD =(struct AST_ADD) // union part (.AST_ADD is the **designated initializer** to say which element of the union we're initializing)
+		{
+			ast_new((AST)
+			{
+				AST_NUMBER, // enum part
+				{
+					.AST_NUMBER=(struct AST_NUMBER){5}
+				}
+			}),
+			ast_new((AST)
+			{
+				AST_NUMBER,
+				{
+					.AST_NUMBER=(struct AST_NUMBER){1}
+				}
+			}),
+		}
 	}
-}
 });
+
 
 #define AST_NEW(tag, ...) \
   ast_new((AST){tag, {.tag=(struct tag){__VA_ARGS__}}})
@@ -69,7 +77,7 @@ AST_NEW(AST_ADD,
 	AST_NEW(AST_NUMBER, 4),
 	AST_NEW(AST_ADD,
 	AST_NEW(AST_MUL, 
-		AST_NEW(AST_NUMBER, 2), 
+		AST_NEW(AST_NUMBER, 2),
 		AST_NEW(AST_NUMBER, 10),
 	),
 	AST_NEW(AST_MUL,
