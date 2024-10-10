@@ -834,3 +834,24 @@ find . -name "parse_main.c"
 find . -name parse_main.c
 
 /bin/ls
+
+
+echo "hello" | echo "goodbye"
+"echo" "hello"
+> file.txt "echo" "hello"
+cat file.txt 
+export VAR_NEW=$PWD
+env | grep VAR_NEW
+export VAR_NEW="$PWD"
+unset VAR_NEW
+env | grep VAR_NEW
+export VAR_NEW="$PWD"
+env | grep VAR_NEW
+export VAR_NEW='$PWD'
+unset VAR_NEW
+env | grep VAR_NEW
+export VAR_NEW='$PWD'
+env | grep VAR_NEW
+history -n > temp.txt
+cat temp.txt
+rm temp.txt

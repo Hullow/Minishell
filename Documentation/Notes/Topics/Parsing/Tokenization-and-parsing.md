@@ -123,15 +123,6 @@ struct AST {
 	}
 }
 
-
-
-
-
-
-
-
-
-
 ### Parsing implementation example
 #### [CSE12 UCSD - Abstract Syntax Trees](https://cseweb.ucsd.edu/~kube/cls/12.s13/Lectures/lec16/lec16.pdf)
 - Non-terminal symbol `<A>` defined as `<A> := <B> | <C>`:
@@ -260,11 +251,8 @@ Adapted from [Shell Grammar - Shell Command Language](https://pubs.opengroup.org
    ------------------------------------------------------- */
 %start program
 %%
-program          : pipe_sequence
-                 ;
-
-pipe_sequence	 : command
-                 | pipe_sequence '|' command
+program		 	 : command
+                 | program '|' command
                  ;
 
 command   		 : cmd_prefix cmd_word cmd_suffix
@@ -313,8 +301,10 @@ io_here_doc          : REDIR_HEREDOC     here_end(->WORD)
 ##### Left recursion
 - The grammar is [directly left-recursive](https://en.wikipedia.org/wiki/Left_recursion), for instance with `cmd_suffix : cmd_suffix io_redirect`
 
-- Without direct left-recursion:
+###### Algorithm to remove left recursion
+See *Removing-direct-left-recursion-Wikipedia.png*
 
+###### Example implementation
 BEFORE preprocessing:								Form:
 ----------------------------------------------------------------
 cmd_prefix       :            io_redirect		|		Beta_1
