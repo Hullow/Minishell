@@ -1,13 +1,70 @@
 #include "../../Code/header/Minishell.h"
 
-
 typedef enum {
-	AST_COMMAND
-}
+// Non-terminal symbols
+	AST_PROGRAM,
+	AST_PROGRAM_PRIME,
+	AST_COMMAND,
+	AST_CMD_NAME,
+	AST_CMD_WORD,
+	AST_CMD_PREFIX,
+	AST_CMD_PREFIX_PRIME,
+	AST_CMD_SUFFIX,
+	AST_CMD_SUFFIX_PRIME,
+	AST_IO_REDIRECT,
+	AST_IO_FILE,
+	AST_IO_HERE_DOC,
+// Terminal symbols
+	AST_WORD,
+	AST_ASSIGNMENT_WORD,
+	AST_IO_NUMBER,
+	AST_PIPE,
+	AST_REDIR_INPUT,
+	AST_REDIR_OUTPUT,
+	AST_REDIR_APPEND,
+	AST_REDIR_HEREDOC
+}	AST_Node_Type;
 
 typedef struct AST AST;
 
-struct AST
+// Define structures for AST nodes
+typedef struct AST {
+    AST_Node_Type	type;
+    union
+	{
+		// terminal nodes
+        struct {
+            char *string;
+        } word;
+        struct {
+            char *string;
+        } assignment_word;
+        struct {
+            int io_number;
+        } io_number;
+        struct {
+            int pipe; // always 1
+        } pipe;
+        struct {
+            int redir_output; // always 1
+        } redir_output;
+		// ...
+		// non-terminal nodes
+		struct AST_ADD
+		{
+			AST *left;
+			AST *right;
+		}	AST_ADD;
+        struct {
+            struct AST *io_redirect;
+        } io_file;
+        struct {
+            char *name;
+        } filename;
+    } data;
+} AST;
+
+struct AST_for_numbers
 {
 	enum
 	{
@@ -15,7 +72,7 @@ struct AST
 		AST_ADD,
 		AST_MUL,
 	}	tag;
-	union AST
+	union
 	{
 		struct AST_NUMBER
 		{
@@ -52,14 +109,14 @@ AST *term_ = ast_new((AST){
 			{
 				AST_NUMBER, // enum part
 				{
-					.AST_NUMBER=(struct AST_NUMBER){5}
+					.AST_NUMBER=(struct AST_NUMBER){5} // union part
 				}
 			}),
 			ast_new((AST)
 			{
-				AST_NUMBER,
+				AST_NUMBER,  // enum part
 				{
-					.AST_NUMBER=(struct AST_NUMBER){1}
+					.AST_NUMBER=(struct AST_NUMBER){1} // union part
 				}
 			}),
 		}
@@ -197,11 +254,14 @@ AST *ft_parse_io_file(char *token) {
         if (filename_node) {
             return ast_new((AST){
                 AST_IO_FILE,
-                {.io_file = {.filename = filename_node}}
+                {.io_file = {AST_FILENAME, 
+				.filename = filename_node}}
             });
         }
     }
     // Add similar checks for '<' and 'REDIR_APPEND' if needed
+
+
 
     return NULL;
 }

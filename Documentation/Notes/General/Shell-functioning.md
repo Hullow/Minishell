@@ -15,6 +15,17 @@ This document describes how the minishell should work, based on the [Shell Comma
 
 - Note 2: "(..)" means part of the original document is ignored.
 
+## 0. [Summary](https://www.gnu.org/software/bash/manual/bash.html#Shell-Operation)
+> Basically, the shell does the following when it reads and executes a command:
+
+> 1. Reads its input from the user’s terminal.
+> 2. Breaks the input into words and operators, obeying the quoting rules. These tokens are separated by metacharacters.
+> 3. Parses the tokens into simple and compound commands (see Shell Commands).
+> 4. Performs the various shell expansions (see Shell Expansions), breaking the expanded tokens into lists of filenames (see Filename Expansion) and commands and arguments.
+> 5. Performs any necessary redirections (see Redirections) and removes the redirection operators and their operands from the argument list.
+> 6. Executes the command (see Executing Commands).
+> 7. Optionally waits for the command to complete and collects its exit status (see Exit Status). 
+
 ## 1. Reads input
 ### Input sources
 (see `Requirements.md` -> `To clarify`)

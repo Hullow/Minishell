@@ -209,10 +209,13 @@ Next time:
 	- [COMP 530: Lab 1: Parser for a Shell](https://www.cs.unc.edu/~porter/courses/comp530/f23/lab1.html) which contains some implementation details
 	- [Building Recursive Descent Parsers: The Definitive Guide - Boolean World](https://www.booleanworld.com/building-recursive-descent-parsers-definitive-guide/)
 
-
 # 3/10/24
 - Call with cmegret: discussed his tests for pipes and command execution structure. We looked at the execution code briefly. Also discussed fixing grammar to parse recursively without infinite loops.
 - Looked at Keleshev's AST in C, copied the code, now thinking about how to write code to 'fill' an AST from a linked list of tokens
 
 # 4/10/2024
-- 
+- Started trying to implement an AST for our shell, with some help from Copilot by the way of implementation suggestions (see `/Example-code/AST.c`).
+- Preprocessed grammar to remove direct left recursion following Wikipedia's algorithm
+=> this shouldn't create semantic issues because the only semantic rules found in the grammar are in rules without direct left recursion, not concerned by the preprocessing
+- Some uncommitted changes to recover from 42's Linux session; including a merge of the duplicate Tokenization-and-parsing.md files (in Documentation/Notes/Topics/Parsing)
+- Discussed parsing, and general order of functioning of the shell with ahanzi (quote removal, expansions, redirections), and added summary from Bash reference manual at the beginning of Shell-functioning.md
