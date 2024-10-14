@@ -6,7 +6,7 @@
 /*   By: cmegret <cmegret@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/19 13:48:14 by francis           #+#    #+#             */
-/*   Updated: 2024/09/27 15:26:38 by cmegret          ###   ########.fr       */
+/*   Updated: 2024/10/14 14:44:15 by cmegret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@
 
 // Token types
 #define WORD 1
-#define NEWLINE 2
+// #define NEWLINE 2
 #define REDIR_INPUT 3
 #define REDIR_OUTPUT 4
 #define REDIR_APPEND 5
@@ -55,7 +55,6 @@ struct s_command
 
 struct s_shell_state
 {
-	char	*current_directory;
 	char	**envp;
 };
 
@@ -97,8 +96,7 @@ int					execute_cmd(struct s_command *cmd, char **envp,
 						struct s_shell_state *shell_state);
 
 // Builtin cd
-void				ft_cd(struct s_command *cmd,
-						struct s_shell_state *shell_state);
+void				ft_cd(struct s_command *cmd);
 
 // Builtin env
 void				ft_env(char **envp);
@@ -116,3 +114,9 @@ int					is_valid_name(const char *name);
 
 // Builtin unset
 void				ft_unset(char ***envp, char **args);
+
+// Builtin pwd
+void				ft_pwd(void);
+
+// Builtin echo
+void				ft_echo(char **args);

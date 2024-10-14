@@ -6,7 +6,7 @@
 /*   By: cmegret <cmegret@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/22 17:31:30 by cmegret           #+#    #+#             */
-/*   Updated: 2024/09/22 17:33:06 by cmegret          ###   ########.fr       */
+/*   Updated: 2024/10/14 14:57:29 by cmegret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,13 +20,6 @@ static void	check_arguments(int argc, char **argv)
 		printf("No arguments are allowed\n");
 		exit(EXIT_FAILURE);
 	}
-}
-
-static void	init_current_directory(struct s_shell_state *shell_state)
-{
-	shell_state->current_directory = getcwd(NULL, 0);
-	if (!shell_state->current_directory)
-		error_and_exit("getcwd failed");
 }
 
 static int	count_env_variables(char **envp)
@@ -69,7 +62,6 @@ void	ft_initialize(int argc, char **argv,
 	int	count;
 
 	check_arguments(argc, argv);
-	init_current_directory(shell_state);
 	count = count_env_variables(envp);
 	duplicate_env(shell_state, envp, count);
 }

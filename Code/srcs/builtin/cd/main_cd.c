@@ -6,7 +6,7 @@
 /*   By: cmegret <cmegret@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/11 15:00:25 by cmegret           #+#    #+#             */
-/*   Updated: 2024/09/20 12:13:17 by cmegret          ###   ########.fr       */
+/*   Updated: 2024/10/14 14:27:23 by cmegret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,24 +30,18 @@
  * @note It updates the current working directory in the shell state.
  * @note It updates the OLDPWD and PWD environment variables.
  */
-void	ft_cd(struct s_command *cmd, struct s_shell_state *shell_state)
+void	ft_cd(struct s_command *cmd)
 {
-	char	*path;
+    char	*path;
 
-	path = cmd->args[1];
-	if (ft_strncmp(path, "cd", 3) == 0 || ft_strncmp(path, "~", 2) == 0)
-		path = getenv("HOME");
-	else if (ft_strncmp(path, "..", 2) == 0)
-		path = getenv("OLDPWD");
-	if (chdir(path) == -1)
-	{
-		perror("Error with the cd command");
-		return ;
-	}
-	free(shell_state->current_directory);
-	shell_state->current_directory = getcwd(NULL, 0);
-	if (!shell_state->current_directory)
-		error_and_exit("getcwd failed");
-	setenv("OLDPWD", getenv("PWD"), 1); // Change later
-	setenv("PWD", shell_state->current_directory, 1); // Change later
+    path = cmd->args[1];
+    if (ft_strncmp(path, "cd", 3) == 0 || ft_strncmp(path, "~", 2) == 0)
+        path = getenv("HOME");
+    else if (ft_strncmp(path, "..", 3) == 0)
+        path = "..";
+    if (chdir(path) == -1)
+    {
+        perror("Error with the cd command");
+        return ;
+    }
 }
