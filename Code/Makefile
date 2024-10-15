@@ -6,7 +6,7 @@
 #    By: cmegret <cmegret@student.42lausanne.ch>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/07/19 14:53:36 by cmegret           #+#    #+#              #
-#    Updated: 2024/10/14 14:44:33 by cmegret          ###   ########.fr        #
+#    Updated: 2024/10/15 14:52:22 by cmegret          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -63,13 +63,14 @@ SRCS = main/main.c \
 	  parsing/parse_main.c \
 	  execution/execution_main.c \
 	  execution/execution_env_path.c \
-	  builtin/cd/main_cd.c \
-      builtin/env/main_env.c \
-      builtin/export/main_export.c \
+	  builtin/cd/cd.c \
+      builtin/env/env.c \
+      builtin/export/export.c \
       builtin/export/export_utils.c \
-      builtin/unset/main_unset.c \
-      builtin/pwd/main_pwd.c \
-      builtin/echo/main_echo.c \
+      builtin/unset/unset.c \
+      builtin/pwd/pwd.c \
+      builtin/echo/echo.c \
+      signal/signal.c \
 
 # Add path prefix to SRCS files
 SRC = $(addprefix srcs/, $(SRCS))

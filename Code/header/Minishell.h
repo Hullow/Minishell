@@ -6,7 +6,7 @@
 /*   By: cmegret <cmegret@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/19 13:48:14 by francis           #+#    #+#             */
-/*   Updated: 2024/10/14 14:44:15 by cmegret          ###   ########.fr       */
+/*   Updated: 2024/10/15 14:43:35 by cmegret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 #include <sys/wait.h>
 #include <sys/types.h>
 #include <stdbool.h>
+#include <unistd.h>
 
 #include "../lib/libft/libft.h"
 #include "../lib/ft_printf/ft_printf.h"
@@ -120,3 +121,7 @@ void				ft_pwd(void);
 
 // Builtin echo
 void				ft_echo(char **args);
+
+// Signal
+void				handle_sigint(int sig);
+void				handle_sigquit(int sig);
