@@ -1,32 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main_env.c                                         :+:      :+:    :+:   */
+/*   main_echo.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cmegret <cmegret@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/09/22 16:31:14 by cmegret           #+#    #+#             */
-/*   Updated: 2024/09/22 16:39:45 by cmegret          ###   ########.fr       */
+/*   Created: 2024/10/14 14:43:16 by cmegret           #+#    #+#             */
+/*   Updated: 2024/10/14 15:46:21 by cmegret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../header/Minishell.h"
 
-/**
- * @brief Prints the environment variables.
- *
- * This function iterates through the environment variables and prints each one.
- *
- * @param envp An array of environment variables.
- */
-void	ft_env(char **envp)
+void ft_echo(char **args)
 {
-	int	i;
+    int i = 0;
 
-	i = 0;
-	while (envp[i])
-	{
-		ft_printf("%s\n", envp[i]);
-		i++;
-	}
+    while (args[i])
+    {
+        ft_printf("%s", args[i]);
+        if (args[i + 1])
+            ft_printf(" ");
+        i++;
+    }
+    ft_printf("\n");
 }
