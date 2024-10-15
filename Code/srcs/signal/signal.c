@@ -1,27 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main_echo.c                                        :+:      :+:    :+:   */
+/*   signal.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cmegret <cmegret@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/14 14:43:16 by cmegret           #+#    #+#             */
-/*   Updated: 2024/10/14 15:46:21 by cmegret          ###   ########.fr       */
+/*   Created: 2024/10/15 14:40:07 by cmegret           #+#    #+#             */
+/*   Updated: 2024/10/15 14:48:39 by cmegret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../../header/Minishell.h"
+#include "../../header/Minishell.h"
 
-void ft_echo(char **args)
+void handle_sigint(int sig)
 {
-    int i = 0;
+	(void)sig;
+	write(STDOUT_FILENO, "\n", 1);
+	rl_on_new_line();
+	rl_replace_line("", 0);
+	rl_redisplay();
+}
 
-    while (args[i])
-    {
-        ft_printf("%s", args[i]);
-        if (args[i + 1])
-            ft_printf(" ");
-        i++;
-    }
-    ft_printf("\n");
+void handle_sigquit(int sig)
+{
+	(void)sig;
+	// Ne rien faire pour 'ctrl-\'
 }

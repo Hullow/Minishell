@@ -6,7 +6,7 @@
 /*   By: cmegret <cmegret@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/22 17:31:30 by cmegret           #+#    #+#             */
-/*   Updated: 2024/10/14 14:57:29 by cmegret          ###   ########.fr       */
+/*   Updated: 2024/10/15 14:44:53 by cmegret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,8 @@ void	ft_initialize(int argc, char **argv,
 {
 	int	count;
 
+	signal(SIGINT, handle_sigint);  // ctrl-C
+    signal(SIGQUIT, handle_sigquit); // 'ctrl-\'
 	check_arguments(argc, argv);
 	count = count_env_variables(envp);
 	duplicate_env(shell_state, envp, count);
