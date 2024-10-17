@@ -223,3 +223,10 @@ Next time:
 # 10/10/2024
 - AST: using Copilot for help, advanced on writing the structures and some idea of how to initialize. Issue:
 how to traverse and use the AST ? Maybe some things should be done when the AST node is created ? Or only at the end after having initialized the whole thing ? We'll see next time
+
+# 11/10/2024
+- Continued working on AST data structures. Unclear how they will be used exactly.
+
+# 17/10/24
+- AST: talk with nbelouar, his binary tree (see his [repo](https://github.com/Lbatisseur/mini_shell/blob/dylan/parser.c)). ! : he says that AST parsing means AST (recursive!) execution !!! Need to think this through.
+- Wrote parsing functions for nonterminal symbols starting from the bottom (here_end, redir_heredoc, io_here)

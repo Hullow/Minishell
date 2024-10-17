@@ -305,7 +305,9 @@ IF
 
 #### 3.1.2. IO_number
 ELSE IF
-- the string consists solely of digits and the delimiter character is `<` or `>`
+- the string consists solely of digits
+<br>AND
+- the delimiter character is `<` or `>`
 
 => return the token identifier IO_NUMBER
 
@@ -364,14 +366,17 @@ ELSE<br>
 (rule 7b)<br>
 b) IF
 - the token contains an unquoted `=` that is not part of an embedded parameter expansion construct (see [rule 5 in Token recognition](#2225-parameter-expansion)):
-	- if it begins with `=`
-		=> the token identifier is WORD
-	- if all characters preceding `=` are underscores, digits, or alphabetics from the [portable character set](https://pubs.opengroup.org/onlinepubs/009695399/basedefs/xbd_chap06.html#tag_06_01) (see [definition of a name](https://pubs.opengroup.org/onlinepubs/009695399/basedefs/xbd_chap03.html#tag_03_230))
-		=> the token identifier is ASSIGNMENT_WORD
-	- else
-		=> the token identifier is either ASSIGNMENT_WORD or WORD (unspecified)
-c. ELSE
-		=> the token identifier is WORD
+	- IF<br>
+		- it begins with `=`
+		<br>&emsp;=> the token identifier is WORD
+	- ELSE IF<br>
+		- all characters preceding `=` are underscores, digits, or alphabetics from the [portable character set](https://pubs.opengroup.org/onlinepubs/009695399/basedefs/xbd_chap06.html#tag_06_01) (see [definition of a name](https://pubs.opengroup.org/onlinepubs/009695399/basedefs/xbd_chap03.html#tag_03_230))
+		<br>&emsp;=> the token identifier is ASSIGNMENT_WORD
+	- ELSE
+		<br>&emsp;=> the token identifier is either ASSIGNMENT_WORD or WORD (unspecified by POSIX; see what Bash does)
+
+c) ELSE
+		<br>&emsp;=> the token identifier is WORD
 
 > Assignment to the name within a returned ASSIGNMENT_WORD token shall occur as specified in [Simple Commands](https://pubs.opengroup.org/onlinepubs/9699919799/utilities/V3_chap02.html#tag_18_09_01).
 <br>&emsp;`=> ?`

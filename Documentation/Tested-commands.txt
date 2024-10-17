@@ -858,3 +858,5 @@ rm temp.txt
 
 echo """""" hello
 echo "" "" "" hello
+echo -n bonjour hello
+echo -nnnAn bonjour hello

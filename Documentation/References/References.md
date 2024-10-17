@@ -27,6 +27,7 @@
 - [Compiler Design - Spring 2018 - 3.0 Frontend - Thomas R. Gross](https://ethz.ch/content/dam/ethz/special-interest/infk/inst-cs/lst-dam/documents/Education/Classes/Spring2018/210_Compiler_Design/Slides/w03_01-front-end-overview_18.pdf)
 - [Parse Tree and Syntax Tree](https://www.geeksforgeeks.org/parse-tree-and-syntax-tree/)
 - [Building Recursive Descent Parsers: The Definitive Guide - Boolean World](https://www.booleanworld.com/building-recursive-descent-parsers-definitive-guide/)
+- [Right Recursion versus Left Recursion -  IBM](https://www.ibm.com/docs/en/zvm/7.4?topic=topics-right-recursion-versus-left-recursion)
 
 ## Testing
 - [Conférences 42sh 2019 - Python & Testsuite fonctionnelle](https://www.youtube.com/watch?v=1CoFy6eM7_I&list=PLo31Bhg3nNkZHhqAjlwo5tNOa-FEXKnEe&index=6)

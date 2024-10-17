@@ -1,4 +1,5 @@
 #include "../../Code/header/Minishell.h"
+#include <stdbool.h>
 
 /////////////////////////////////////
 /// AST for arithmetic expression ///
@@ -39,6 +40,13 @@ AST *ast_new(AST ast)
   return ptr;
 }
 
+
+
+ast_new((AST) {		AST_NUMBER,
+				{
+					.AST_NUMBER=(struct AST_NUMBER){1} // union part
+				}
+}
 // Now, we can represent an expression 5 + 1 using the following code:
 AST *term_ = ast_new((AST){
 	AST_ADD, // enum part
@@ -141,6 +149,10 @@ typedef enum {
 	AST_ASSIGNMENT_WORD,
 	AST_IO_NUMBER,
 	AST_PIPE,
+	AST_REDIR_INPUT; // '<' symbol
+	AST_REDIR_OUTPUT; // '>' symbol
+	AST_REDIR_APPEND; // '>>' symbol
+	AST_REDIR_HERE_DOC; // <<' symbol
 }	AST_Node_Type;
 
 // pre-declared typedef to enable recursive declaration 
@@ -149,6 +161,7 @@ typedef struct AST AST;
 // Define structures for AST nodes
 typedef struct AST {
     AST_Node_Type	type;
+	struct AST		*children[3]; // up to three possible children
     union
 	{
 		// terminal nodes
@@ -162,64 +175,177 @@ typedef struct AST {
             int io_number;
         } AST_IO_NUMBER;
         typedef struct AST_PIPE {
-            int pipe;
-        } AST_PIPE;
+		} AST_PIPE;
+		typedef struct AST_REDIR_INPUT {
+		} AST_REDIR_INPUT;
+		typedef struct AST_REDIR_OUTPUT {
+		} AST_REDIR_OUTPUT;
+		typedef struct AST_REDIR_APPEND {
+		} AST_REDIR_APPEND;
+		typedef struct AST_REDIR_HEREDOC {
+		} AST_REDIR_HEREDOC;
 		// non-terminal nodes
+		typedef struct AST_IO_HEREDOC {
+			AST_REDIR_HEREDOC; // the '<<' redirection heredoc symbol
+            AST_WORD *here_end;
+        } AST_IO_HEREDOC;
 		typedef struct AST_IO_FILE {
-			int redir_type; // REDIR_INPUT, REDIR_OUTPUT, REDIR_APPEND (from define)
-			struct AST_WORD filename;
+			union {
+			AST_REDIR_INPUT redir_input;
+			AST_REDIR_OUTPUT redir_output;
+			AST_REDIR_APPEND redir_append;
+			}
+			AST_WORD *filename;
         } AST_IO_FILE;
-		typedef struct AST_HEREDOC {
-            AST_WORD;
-        } AST_HEREDOC;
+		typedef struct AST_IO_REDIRECT {
+				AST_IO_NUMBER *io_number;
+				union {
+					AST_IO_FILE *io_file;
+					AST_IO_HEREDOC *here_document;
+				};
+			} AST_IO_REDIRECT;
+		typedef struct AST_CMD_SUFFIX_PRIME {
+			AST_IO_REDIRECT *io_redirect;
+			AST_CMD_SUFFIX_PRIME *cmd_suffix_prime;
+			AST_WORD *word;
+			bool empty; // 0 if empty => need to initialize at 0!
+		} AST_CMD_SUFFIX;
+		typedef struct AST_CMD_SUFFIX {
+			union {
+				AST_IO_REDIRECT *io_redirect;
+				AST_WORD *word;
+			}
+			AST_CMD_SUFFIX_PRIME *cmd_suffix_prime;
+		} AST_CMD_SUFFIX;
+		typedef struct AST_CMD_PREFIX_PRIME {
+			union {
+				AST_IO_REDIRECT *io_redirect;
+				AST_ASSIGNMENT_WORD *assignment_word;
+			}
+			AST_CMD_PREFIX_PRIME *cmd_prefix_prime;
+			bool empty; // 0 if empty => need to initialize at 0!
+		} AST_CMD_PREFIX_PRIME;
+		typedef struct AST_CMD_PREFIX {
+			union {
+				AST_IO_REDIRECT *io_redirect;
+				AST_ASSIGNMENT_WORD *assignment_word;
+			}
+			AST_CMD_PREFIX_PRIME *cmd_prefix_prime;
+		} AST_CMD_PREFIX;
+        typedef struct AST_CMD_WORD {
+            AST_WORD *word;
+            AST_ASSIGNMENT_WORD *assignment_word;
+        } AST_CMD_WORD;
+        typedef struct AST_CMD_NAME {
+            AST_WORD *word;
+        } AST_CMD_NAME;
+        typedef struct AST_COMMAND {
+            AST_CMD_PREFIX;
+			AST_CMD_WORD;
+            AST_CMD_SUFFIX;
+			AST_CMD_NAME;
+        } AST_COMMAND;
+        typedef struct AST_PROGRAM_PRIME {
+            AST_PIPE *pipe;
+			AST_COMMAND *command;
+			AST_PROGRAM_PRIME *program_prime;
+			bool empty; // 0 if empty => need to initialize at 0!
+        } AST_PROGRAM_PRIME;
+        typedef struct AST_PROGRAM {
+			AST_COMMAND *command;
+			AST_PROGRAM_PRIME *program_prime;
+		} AST_PROGRAM;
     } data;
 } AST;
 
-struct s_AST	*ft_parse_io_file(struct *s_token token)
+/// data structures
+	typedef struct AST_WORD {
+		char *string;
+	} AST_WORD;
+	typedef struct AST_REDIR_HEREDOC {
+	} AST_REDIR_HEREDOC;
+	// non-terminal nodes
+	typedef struct AST_IO_HEREDOC {
+		AST_REDIR_HEREDOC; // the '<<' redirection heredoc symbol
+		AST_WORD *here_end;
+	} AST_IO_HEREDOC;
+
+// initializes an AST node using ast_new and a compound literal
+// returns a here_end AST node (which is of type AST_WORD)
+s_AST *ft_parse_here_end(struct s_token *token)
 {
 	if (!token || !token->str)
 		return (NULL);
-	if (token->type == REDIR_OUTPUT && \
-	ft_parse_filename(token->next))
+	s_AST *here_end = NULL;
+	here_end = ast_new ((AST) { 	// malloc fail check ?
+		AST_WORD,
+		{ .AST_WORD = (struct AST_WORD) {token->str} }
+	});
+	return (here_end);
+}
+
+// initializes an AST node using ast_new and a compound literal
+// returns a redir_heredoc AST node
+// no data, only a node type (AST_REDIR_HEREDOC)
+s_AST *ft_parse_redir_heredoc(struct s_token *token)
+{
+	if (!token || !token->str)
+		return (NULL);
+	if (token->type != REDIR_HEREDOC)
+		return (NULL);
+	s_AST *redir_heredoc = ast_new ((AST) {
+		AST_REDIR_HEREDOC });
+	return (redir_heredoc);
+}
+
+struct s_AST	*ft_parse_io_here_doc(struct s_token *token)
+{
+	if (!token || !token->str)
+		return (NULL);
+	s_AST *io_here_doc = NULL;
+	s_AST *redir_heredoc = NULL;
+	s_AST *here_end = NULL;
+	if (token->type == REDIR_HEREDOC && token->next)
+	{
+		redir_heredoc = ft_parse_redir_heredoc(token); // parse redirection symbol, return a REDIR_HEREDOC AST node
+		here_end = ft_parse_here_end(token->next); // parse here-document word, return a here_end (WORD) AST node
+		if (redir_heredoc && here_end) // if both AST nodes initialized, we initialize a new AST node with the right components
+		{
+			io_here_doc = ast_new((AST) {
+				AST_IO_HEREDOC,
+				{
+					.AST_IO_HEREDOC = (struct AST_IO_HEREDOC) {
+							.AST_REDIR_HEREDOC = redir_heredoc,
+							.here_end = here_end
+						}
+				},
+				{
+
+				}
+			});
+		}
+	}
+	return (io_here_doc);
+}
+
+
+struct s_AST	*ft_parse_io_file(struct s_token *token)
+{
+	if (!token || !token->str)
+		return (NULL);
+	if (token->type == REDIR_OUTPUT && token->next)
+	filename = ft_parse_filename(token->next);
+	if (filename)
 	{
 		// make a new io_file node, 
 		// with the result of '> filename' as its child
 		// and return it
 	}
-
 }
 
-// 
-ft_parse_filename(token)
-{
-	if (!token)
-		return (NULL);
-	ast_new((AST) {WORD,  = (struct tag) )
-
-}
-
-
-
-// Define AST node types
-typedef enum {
-    AST_IO_FILE,
-    AST_FILENAME,
-    AST_WORD
-} ASTType;
-
-// Define structures for AST nodes
-typedef struct AST {
-    ASTType type;
-    union {
-        struct {
-            struct AST *filename;
-        } io_file;
-        struct {
-            char *name;
-        } filename;
-    } data;
-} AST;
-
+/////////////////////////
+// Copilot suggestions //
+/////////////////////////
 // Function to create a new AST node
 AST *ast_new(AST ast) {
     AST *ptr = malloc(sizeof(AST));
@@ -255,9 +381,6 @@ AST *ft_parse_io_file(char *token) {
         }
     }
     // Add similar checks for '<' and 'REDIR_APPEND' if needed
-
-
-
     return NULL;
 }
 
