@@ -1,6 +1,6 @@
 **/a.out
-**/.o
-**/.a
+**/*.o
+**/*.a
 **/Norm*.pdf
 .vscode
 .DS_Store
