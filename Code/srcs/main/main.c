@@ -6,11 +6,11 @@
 /*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 14:30:52 by cmegret           #+#    #+#             */
-/*   Updated: 2024/10/18 20:02:34 by fallan           ###   ########.fr       */
+/*   Updated: 2024/10/18 20:14:48 by fallan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../headers/Minishell.h"
+#include "../../header/Minishell.h"
 
 int	main(int argc, char **argv, char **envp)
 {

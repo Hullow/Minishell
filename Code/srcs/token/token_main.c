@@ -6,11 +6,11 @@
 /*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/06 17:19:58 by cmegret           #+#    #+#             */
-/*   Updated: 2024/10/18 20:04:45 by fallan           ###   ########.fr       */
+/*   Updated: 2024/10/18 20:14:48 by fallan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../headers/Minishell.h"
+#include "../../header/Minishell.h"
 
 // Initializes a new token
 static struct s_token	*ft_init_token(void)

@@ -6,11 +6,11 @@
 /*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/16 12:08:31 by fallan            #+#    #+#             */
-/*   Updated: 2024/10/18 20:05:22 by fallan           ###   ########.fr       */
+/*   Updated: 2024/10/18 20:14:48 by fallan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../headers/Minishell.h"
+#include "../../header/Minishell.h"
 
 char ft_find_env(char *input, int i, int j)
 {

@@ -339,27 +339,6 @@ Looking at the whole grammar, there is no rule that refers to previous symbols, 
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 #### Illustrations
 if (ft_parse_pipe)
 {

@@ -6,11 +6,11 @@
 /*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/06 17:27:19 by cmegret           #+#    #+#             */
-/*   Updated: 2024/10/18 20:05:17 by fallan           ###   ########.fr       */
+/*   Updated: 2024/10/18 20:14:48 by fallan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../headers/Minishell.h"
+#include "../../header/Minishell.h"
 
 // creates a redirection append ('>>') operator token
 static int	ft_tokenize_redir_append(char *prompt, int i, struct s_token **tok)

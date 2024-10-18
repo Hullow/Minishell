@@ -6,11 +6,11 @@
 /*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/07 19:00:54 by cmegret           #+#    #+#             */
-/*   Updated: 2024/10/18 20:05:00 by fallan           ###   ########.fr       */
+/*   Updated: 2024/10/18 20:14:48 by fallan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../headers/Minishell.h"
+#include "../../header/Minishell.h"
 
 // returns the number of tokens in our linked list
 int	ft_count_tokens(struct s_token *tok)

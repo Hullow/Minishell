@@ -6,11 +6,11 @@
 /*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/06 17:35:29 by cmegret           #+#    #+#             */
-/*   Updated: 2024/10/18 20:06:48 by fallan           ###   ########.fr       */
+/*   Updated: 2024/10/18 20:14:48 by fallan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../headers/Minishell.h"
+#include "../../header/Minishell.h"
 
 // probably not necessary, likely done before 
 struct s_token	*ft_parse_operators(struct s_token *head)
@@ -84,7 +84,7 @@ static int	ft_allocate_args(struct s_token *tkn, struct s_command *cmd_sequence)
 {
 	int	arg_count;
 
-	arg_count = ft_count_token_list_args(tkn);
+	arg_count = ft_count_tokens(tkn);
 	if (arg_count == 1)
 	{
 		if (ft_allocate_single_arg(tkn, cmd_sequence) == -1)
