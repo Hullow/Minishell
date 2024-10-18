@@ -6,12 +6,13 @@
 /*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/06 17:35:29 by cmegret           #+#    #+#             */
-/*   Updated: 2024/09/26 15:11:20 by fallan           ###   ########.fr       */
+/*   Updated: 2024/10/18 20:06:48 by fallan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../header/Minishell.h"
+#include "../../headers/Minishell.h"
 
+// probably not necessary, likely done before 
 struct s_token	*ft_parse_operators(struct s_token *head)
 {
 	struct s_token	*iterator;
@@ -37,6 +38,8 @@ struct s_token	*ft_parse_operators(struct s_token *head)
 	return (head);
 }
 
+// allocate a single argument to our command sequence :
+// command without any arguments
 static int	ft_allocate_single_arg(struct s_token *tkn,
 	struct s_command *cmd_sequence)
 {
@@ -48,6 +51,8 @@ static int	ft_allocate_single_arg(struct s_token *tkn,
 	return (0);
 }
 
+// allocate arguments to our command sequence :
+// command with arguments
 static int	ft_allocate_multiple_args(struct s_token *tkn,
 	struct s_command *cmd_sequence, int arg_count)
 {
@@ -61,7 +66,7 @@ static int	ft_allocate_multiple_args(struct s_token *tkn,
 	i = 1;
 	while (tkn)
 	{
-		if (tkn->type == WORD || tkn->type == SUFFIX)
+		if (tkn->type == WORD)
 		{
 			cmd_sequence->args[i] = ft_strdup(tkn->str);
 			if (cmd_sequence->args[i] == NULL)
@@ -74,7 +79,8 @@ static int	ft_allocate_multiple_args(struct s_token *tkn,
 	return (0);
 }
 
-static int	ft_process_args(struct s_token *tkn, struct s_command *cmd_sequence)
+// calls the appropriate function to allocate arguments to our command sequence
+static int	ft_allocate_args(struct s_token *tkn, struct s_command *cmd_sequence)
 {
 	int	arg_count;
 
@@ -92,12 +98,10 @@ static int	ft_process_args(struct s_token *tkn, struct s_command *cmd_sequence)
 	return (0);
 }
 
-// OLD VERSION (before ft_parse_command, etc. use)
-//
 // Parses our linked list of tokens, starting from left (head)
 // Extracts the command and the arguments 
 // Outputs a struct command with the command name and the arguments
-struct s_command	*ft_parse_old(struct s_token *head)
+struct s_command	*ft_parse(struct s_token *head)
 {
 	struct s_command	*cmd_sequence;
 	struct s_token		*tkn;
@@ -109,26 +113,8 @@ struct s_command	*ft_parse_old(struct s_token *head)
 	if (tkn->type == WORD)
 	{
 		cmd_sequence->cmd_name = ft_strdup(tkn->str);
-		if (ft_process_args(tkn, cmd_sequence) == -1)
+		if (ft_allocate_args(tkn, cmd_sequence) == -1)
 			return (NULL); // call error function ?
 	}
-	return (cmd_sequence);
-}
-
-struct s_command	*ft_parse(struct s_token *head)
-{
-	struct s_command	*cmd_sequence;
-	struct s_token		*tkn;
-
-	cmd_sequence = malloc(sizeof(struct s_command));
-	if (!cmd_sequence)
-		return (NULL);
-	tkn = head;
-	ft_parse_command(tkn);
-	ft_tokenization_checker(tkn);
-	if (tkn->type == WORD)
-		cmd_sequence->cmd_name = ft_strdup(tkn->str);
-	if (ft_process_args(tkn, cmd_sequence) == -1)
-			return (NULL); // call error function ?
 	return (cmd_sequence);
 }

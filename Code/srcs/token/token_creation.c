@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   token_creation.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: francis <francis@student.42.fr>            +#+  +:+       +#+        */
+/*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/06 17:21:26 by cmegret           #+#    #+#             */
-/*   Updated: 2024/09/13 19:14:49 by francis          ###   ########.fr       */
+/*   Updated: 2024/10/18 20:05:10 by fallan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../header/Minishell.h"
+#include "../../headers/Minishell.h"
 
 // function to create (malloc) a new token and add it to the linked list
 struct s_token	*ft_create_new_token(struct s_token *tok)

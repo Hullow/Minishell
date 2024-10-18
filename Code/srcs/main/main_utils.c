@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   main_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cmegret <cmegret@student.42lausanne.ch>    +#+  +:+       +#+        */
+/*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 14:36:39 by cmegret           #+#    #+#             */
-/*   Updated: 2024/09/19 13:46:33 by cmegret          ###   ########.fr       */
+/*   Updated: 2024/10/18 20:04:38 by fallan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../header/Minishell.h"
+#include "../../headers/Minishell.h"
 
 // memory allocation (getcwd)
 /**

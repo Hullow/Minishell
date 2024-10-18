@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: francis <francis@student.42.fr>            +#+  +:+       +#+        */
+/*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 14:30:52 by cmegret           #+#    #+#             */
-/*   Updated: 2024/09/19 15:03:47 by francis          ###   ########.fr       */
+/*   Updated: 2024/10/18 20:02:34 by fallan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../header/Minishell.h"
+#include "../../headers/Minishell.h"
 
 int	main(int argc, char **argv, char **envp)
 {

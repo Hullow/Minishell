@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   token_main.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: francis <francis@student.42.fr>            +#+  +:+       +#+        */
+/*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/06 17:19:58 by cmegret           #+#    #+#             */
-/*   Updated: 2024/09/13 18:51:54 by francis          ###   ########.fr       */
+/*   Updated: 2024/10/18 20:04:45 by fallan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../header/Minishell.h"
+#include "../../headers/Minishell.h"
 
 // Initializes a new token
 static struct s_token	*ft_init_token(void)
