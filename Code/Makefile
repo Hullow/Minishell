@@ -6,7 +6,7 @@
 #    By: cmegret <cmegret@student.42lausanne.ch>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/07/19 14:53:36 by cmegret           #+#    #+#              #
-#    Updated: 2024/10/23 07:53:27 by cmegret          ###   ########.fr        #
+#    Updated: 2024/10/23 15:50:05 by cmegret          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -110,7 +110,7 @@ start:
 $(NAME): $(LIBFT) $(FT_PRINTF) $(OBJ)
 	@echo "$(BLUE)Linking: $@$(RESET)"
 	@$(CC) $(CFLAGS) -o $@ $(OBJ) $(LIBFLAGS)
-	@echo "$(GREEN)Compilation successful!$(RESET)"
+	@echo "$(GREEN)\nCompilation successful!\n$(RESET)"
 
 # Règle pour les fichiers objets
 %.o: %.c
