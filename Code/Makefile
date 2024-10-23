@@ -6,7 +6,7 @@
 #    By: cmegret <cmegret@student.42lausanne.ch>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/07/19 14:53:36 by cmegret           #+#    #+#              #
-#    Updated: 2024/10/15 14:52:22 by cmegret          ###   ########.fr        #
+#    Updated: 2024/10/23 07:53:27 by cmegret          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -70,6 +70,7 @@ SRCS = main/main.c \
       builtin/unset/unset.c \
       builtin/pwd/pwd.c \
       builtin/echo/echo.c \
+      builtin/exit/exit.c \
       signal/signal.c \
 
 # Add path prefix to SRCS files

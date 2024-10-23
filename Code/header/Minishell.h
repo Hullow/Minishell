@@ -6,7 +6,7 @@
 /*   By: cmegret <cmegret@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/19 13:48:14 by francis           #+#    #+#             */
-/*   Updated: 2024/10/15 15:26:37 by cmegret          ###   ########.fr       */
+/*   Updated: 2024/10/23 07:51:55 by cmegret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,7 @@ struct s_command
 struct s_shell_state
 {
 	char	**envp;
+	int		last_exit_status;
 };
 
 // Main
@@ -121,6 +122,9 @@ void				ft_pwd(void);
 
 // Builtin echo
 void				ft_echo(char **args);
+
+// Builtin exit
+void				ft_exit(char ***envp, struct s_shell_state *shell_state);
 
 // Signal
 void				handle_sigint(int sig);
