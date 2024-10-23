@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main_cd.c                                          :+:      :+:    :+:   */
+/*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cmegret <cmegret@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/11 15:00:25 by cmegret           #+#    #+#             */
-/*   Updated: 2024/10/14 14:27:23 by cmegret          ###   ########.fr       */
+/*   Updated: 2024/10/23 08:16:30 by cmegret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,9 +35,9 @@ void	ft_cd(struct s_command *cmd)
     char	*path;
 
     path = cmd->args[1];
-    if (ft_strncmp(path, "cd", 3) == 0 || ft_strncmp(path, "~", 2) == 0)
+    if ((ft_strncmp(cmd->args[0], "cd", 2) == 0 && path == NULL) || ft_strncmp(path, "~", 1) == 0)
         path = getenv("HOME");
-    else if (ft_strncmp(path, "..", 3) == 0)
+    else if (ft_strncmp(path, "..", 2) == 0)
         path = "..";
     if (chdir(path) == -1)
     {
