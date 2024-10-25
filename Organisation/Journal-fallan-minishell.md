@@ -230,3 +230,8 @@ how to traverse and use the AST ? Maybe some things should be done when the AST 
 # 17/10/24
 - AST: talk with nbelouar, his binary tree (see his [repo](https://github.com/Lbatisseur/mini_shell/blob/dylan/parser.c)). ! : he says that AST parsing means AST (recursive!) execution !!! Need to think this through.
 - Wrote parsing functions for nonterminal symbols starting from the bottom (here_end, redir_heredoc, io_here)
+
+
+# 22/10/24
+- Call with cmegret, discussed bug with rl_replace_line on OS X
+- Wrote code to parse redirections and files/delimiters, and place them together in a linked list s_redir. No code to integrate the list in the broader code. Code untested for now.

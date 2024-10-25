@@ -87,3 +87,7 @@
 - To do next: 
 	- cmegret => refactoring execution, builtins
 	- fallan => read more about parsing methods, refactor tokenization/parsing a bit
+
+# 22/10/24
+- Discussed bug with rl_replace_line/readline library on OS X (not fixed)
+- Discussed next steps (cmegret execution of pipes, fallan parsing of redirs)
