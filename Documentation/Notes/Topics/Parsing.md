@@ -11,5 +11,17 @@ in struct s_command:
 	s_redir				*redirections; // linked list of all redirections
 	int					input;
 	int					output;
-```
 
+
+typedef struct s_redir {
+	union {
+		REDIR_INPUT;
+		REDIR_OUTPUT;
+		REDIR_APPEND;
+		REDIR_HEREDOC;
+	} tag;
+	char	*file; // for input, output, append
+	char	*delimiter; // for HEREDOC
+	s_redir *next;
+}
+```

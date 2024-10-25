@@ -6,7 +6,7 @@
 /*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/19 13:48:14 by francis           #+#    #+#             */
-/*   Updated: 2024/10/18 20:38:12 by fallan           ###   ########.fr       */
+/*   Updated: 2024/10/25 20:14:06 by fallan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,17 @@
 #define END_OF_INPUT 7
 #define IO_NUMBER 8
 
+typedef struct s_redir {
+	union {
+		REDIR_INPUT;
+		REDIR_OUTPUT;
+		REDIR_APPEND;
+		REDIR_HEREDOC;
+	} type;
+	char	*str; // either file (for input, output, append) or delimiter (for Heredoc)
+	s_redir *next;
+} s_redir;
+
 struct s_token
 {
 	char			*str;
@@ -51,9 +62,12 @@ struct s_command
 {
 	char				*cmd_name;
 	char				**args;
-	int					fd; // redirection
+	int					input; // redirection
+	int					output; // redirection
 	struct s_command	*next;
 };
+
+
 
 struct s_shell_state
 {

@@ -6,7 +6,7 @@
 /*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 19:48:46 by fallan            #+#    #+#             */
-/*   Updated: 2024/10/18 20:03:10 by fallan           ###   ########.fr       */
+/*   Updated: 2024/10/25 20:00:13 by fallan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,5 +29,7 @@ int					ft_is_blank(char c);
 int					ft_previous_char_part_of_word(struct s_token *tok);
 
 // Tokenization utils
-void				ft_tokenization_checker(struct s_token *head);
+struct s_token 		*ft_last_token(struct s_token *tok);
 int					ft_count_tokens(struct s_token *tok);
+void				ft_print_all_token_strings(struct s_token **head)
+void				ft_tokenization_checker(struct s_token *head);

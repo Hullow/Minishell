@@ -860,3 +860,21 @@ echo """""" hello
 echo "" "" "" hello
 echo -n bonjour hello
 echo -nnnAn bonjour hello
+
+echo "hello" > file
+echo > >
+echo hello > 2
+echo hello > 2 > 3 > 4
+cat 3 
+cat 4
+cat < 2 > 1 < file
+cat 2 file
+cat 2 file > 1
+cat 2 file >> 1
+cat 1
+echo "hello" > 3 > 4
+rm 1 2 3 4 
+echo hello" > 3 > 4 "hello"
+echo > 3 > 4 "hello"
+cat 4
+cat 3

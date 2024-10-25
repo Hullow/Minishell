@@ -191,3 +191,12 @@ NB: the following functions are useful for handling signals and subshells
     - Outputs a terminal control string with delays.
 
 These functions cover a wide range of system operations commonly used in C programming under Unix/Linux.
+
+
+### Detailed descriptions
+
+#### Close
+> Closes a file descriptor, so that it no longer refers to any file and may be reused. Any record locks (see fcntl(2)) held on the file it was associated with, and owned by the  process, are removed (regardless of the file descriptor that was used to obtain the lock). If fd is the last file descriptor referring to the underlying open file description (see open(2)), the resources associated with the open file description are freed; if the file descriptor was the last reference to a file which has been removed using unlink(2), the file is deleted.
+
+#### Open
+> The open() system call opens the file specified by pathname. If the specified file does not exist, it may optionally (if O_CREAT is specified in flags) be created by open(). The return value of open() is a file descriptor, a small, nonnegative integer that is used in subsequent system calls (read(2), write(2), lseek(2), fcntl(2), etc.) to refer to the open file. The file descriptor returned by a successful call will be the lowest-numbered file descriptor not currently open for the process
