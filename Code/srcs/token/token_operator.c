@@ -6,7 +6,7 @@
 /*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/06 17:27:19 by cmegret           #+#    #+#             */
-/*   Updated: 2024/10/18 20:14:48 by fallan           ###   ########.fr       */
+/*   Updated: 2024/10/26 13:18:02 by fallan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,10 @@ static void	ft_set_operator_token(char c, struct s_token **tok)
 		return ;
 	}
 	else if (c == '>')
+	{
 		(*tok)->str = ft_strdup(">");
+
+	}
 	else if (c == '<')
 		(*tok)->str = ft_strdup("<");
 	(*tok)->is_operator = true;

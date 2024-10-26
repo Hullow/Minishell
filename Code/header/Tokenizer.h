@@ -6,9 +6,14 @@
 /*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 19:48:46 by fallan            #+#    #+#             */
-/*   Updated: 2024/10/25 20:00:13 by fallan           ###   ########.fr       */
+/*   Updated: 2024/10/26 17:32:56 by fallan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+#ifndef TOKENIZER_H
+# define TOKENIZER_H
+
+#include "Minishell.h"
 
 // Tokenization
 struct s_token		*ft_create_new_token(struct s_token *tok);
@@ -31,5 +36,8 @@ int					ft_previous_char_part_of_word(struct s_token *tok);
 // Tokenization utils
 struct s_token 		*ft_last_token(struct s_token *tok);
 int					ft_count_tokens(struct s_token *tok);
-void				ft_print_all_token_strings(struct s_token **head)
-void				ft_tokenization_checker(struct s_token *head);
+void				ft_print_all_token_strings(struct s_token **head);
+void				ft_print_token_types(struct s_token *head);
+void				ft_free_token(struct s_token *tok);
+
+#endif

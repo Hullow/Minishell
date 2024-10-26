@@ -6,7 +6,7 @@
 /*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/06 17:19:58 by cmegret           #+#    #+#             */
-/*   Updated: 2024/10/18 20:14:48 by fallan           ###   ########.fr       */
+/*   Updated: 2024/10/26 13:18:16 by fallan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,8 @@ static struct s_token	*ft_init_token(void)
 // Processes the prompt, applying tokenization rules in order
 static int	ft_process_prompt(char *prompt, int i, struct s_token **tok)
 {
+	// if (*tok && (*tok)->str)
+	// 	printf("tok->str: %s; tok->is_delimited: %d\n", (*tok)->str, (*tok)->is_delimited);
 	if (ft_previous_char_is_undelimited_operator(*tok))
 		return (ft_continue_operator_token(prompt, i, tok));
 	else if (ft_is_operator_character(prompt[i]))

@@ -6,9 +6,12 @@
 /*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/19 13:48:14 by francis           #+#    #+#             */
-/*   Updated: 2024/10/25 20:14:06 by fallan           ###   ########.fr       */
+/*   Updated: 2024/10/26 17:24:39 by fallan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+#ifndef MINISHELL_H
+# define MINISHELL_H
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -36,14 +39,9 @@
 #define IO_NUMBER 8
 
 typedef struct s_redir {
-	union {
-		REDIR_INPUT;
-		REDIR_OUTPUT;
-		REDIR_APPEND;
-		REDIR_HEREDOC;
-	} type;
-	char	*str; // either file (for input, output, append) or delimiter (for Heredoc)
-	s_redir *next;
+	int				type; // REDIR_INPUT, REDIR_OUTPUT, REDIR_APPEND, REDIR_HEREDOC
+	char			*str; // either file (for input, output, append) or delimiter (for Heredoc)
+	struct s_redir	*next;
 } s_redir;
 
 struct s_token
@@ -64,10 +62,9 @@ struct s_command
 	char				**args;
 	int					input; // redirection
 	int					output; // redirection
+	s_redir				*redir_list;
 	struct s_command	*next;
 };
-
-
 
 struct s_shell_state
 {
@@ -91,3 +88,5 @@ int					execute_cmd(struct s_command *cmd, char **envp,
 // Builtins
 void				ft_cd(struct s_command *cmd,
 						struct s_shell_state *shell_state);
+
+#endif

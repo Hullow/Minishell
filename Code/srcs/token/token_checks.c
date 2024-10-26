@@ -6,7 +6,7 @@
 /*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/22 16:35:11 by francis           #+#    #+#             */
-/*   Updated: 2024/10/18 20:14:48 by fallan           ###   ########.fr       */
+/*   Updated: 2024/10/26 13:15:12 by fallan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ int	ft_is_blank(char c)
 // and that that word was not delimited
 int	ft_previous_char_part_of_word(struct s_token *tok)
 {
-	if (tok && tok->type == WORD && !tok->is_delimited)
+	if (tok && tok->type == WORD && !(tok->is_delimited))
 		return (1);
 	return (0);
 }

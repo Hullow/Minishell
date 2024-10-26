@@ -6,7 +6,7 @@
 /*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/06 17:21:26 by cmegret           #+#    #+#             */
-/*   Updated: 2024/10/18 20:14:48 by fallan           ###   ########.fr       */
+/*   Updated: 2024/10/26 13:18:16 by fallan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,7 @@ int	ft_new_word(struct s_token **tok, char c)
 	(*tok)->type = WORD;
 	(*tok)->is_operator = false;
 	(*tok)->str = ft_strdup(character);
+	(*tok)->is_delimited = false;
 	return (1);
 }
 

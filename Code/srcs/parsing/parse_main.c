@@ -6,7 +6,7 @@
 /*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/06 17:35:29 by cmegret           #+#    #+#             */
-/*   Updated: 2024/10/18 20:14:48 by fallan           ###   ########.fr       */
+/*   Updated: 2024/10/26 19:34:43 by fallan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,6 +110,8 @@ struct s_command	*ft_parse(struct s_token *head)
 	if (!cmd_sequence)
 		return (NULL);
 	tkn = head;
+	ft_parse_operators(tkn);
+	cmd_sequence->redir_list = ft_parse_redirections(&tkn);
 	if (tkn->type == WORD)
 	{
 		cmd_sequence->cmd_name = ft_strdup(tkn->str);
