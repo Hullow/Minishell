@@ -6,7 +6,7 @@
 /*   By: cmegret <cmegret@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/11 15:00:25 by cmegret           #+#    #+#             */
-/*   Updated: 2024/10/23 08:16:30 by cmegret          ###   ########.fr       */
+/*   Updated: 2024/10/25 11:02:51 by cmegret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,16 +32,17 @@
  */
 void	ft_cd(struct s_command *cmd)
 {
-    char	*path;
+	char	*path;
 
-    path = cmd->args[1];
-    if ((ft_strncmp(cmd->args[0], "cd", 2) == 0 && path == NULL) || ft_strncmp(path, "~", 1) == 0)
-        path = getenv("HOME");
-    else if (ft_strncmp(path, "..", 2) == 0)
-        path = "..";
-    if (chdir(path) == -1)
-    {
-        perror("Error with the cd command");
-        return ;
-    }
+	path = cmd->args[1];
+	if ((ft_strncmp(cmd->args[0], "cd", 2) == 0 && path == NULL)
+		|| ft_strncmp(path, "~", 1) == 0)
+		path = getenv("HOME");
+	else if (ft_strncmp(path, "..", 2) == 0)
+		path = "..";
+	if (chdir(path) == -1)
+	{
+		perror("Error with the cd command");
+		return ;
+	}
 }

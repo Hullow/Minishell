@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main_pwd.c                                         :+:      :+:    :+:   */
+/*   pwd.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cmegret <cmegret@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/14 14:22:59 by cmegret           #+#    #+#             */
-/*   Updated: 2024/10/14 14:25:17 by cmegret          ###   ########.fr       */
+/*   Updated: 2024/10/25 11:03:12 by cmegret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,14 +14,14 @@
 
 void	ft_pwd(void)
 {
-    char	*cwd;
+	char	*cwd;
 
-    cwd = getcwd(NULL, 0);
-    if (cwd == NULL)
-    {
-        perror("getcwd");
-        return;
-    }
-    printf("%s\n", cwd);
-    free(cwd);
+	cwd = getcwd(NULL, 0);
+	if (cwd == NULL)
+	{
+		perror("getcwd");
+		return ;
+	}
+	printf("%s\n", cwd);
+	free(cwd);
 }
