@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_main.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: francis <francis@student.42.fr>            +#+  +:+       +#+        */
+/*   By: cmegret <cmegret@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/06 17:35:29 by cmegret           #+#    #+#             */
-/*   Updated: 2024/09/19 14:26:36 by francis          ###   ########.fr       */
+/*   Updated: 2024/10/30 16:27:20 by cmegret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,7 @@ static int	ft_allocate_single_arg(struct s_token *tkn,
 		return (-1); // call error function ?
 	cmd_sequence->args[0] = ft_strdup(tkn->str);
 	cmd_sequence->args[1] = NULL;
+	cmd_sequence->next = NULL; // A CHANGER
 	return (0);
 }
 
@@ -77,6 +78,7 @@ static int	ft_allocate_multiple_args(struct s_token *tkn,
 		tkn = tkn->next;
 	}
 	cmd_sequence->args[i] = NULL;
+	cmd_sequence->next = NULL; // A CHANGER
 	return (0);
 }
 
