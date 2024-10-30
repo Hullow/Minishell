@@ -6,7 +6,7 @@
 /*   By: cmegret <cmegret@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/19 13:48:14 by francis           #+#    #+#             */
-/*   Updated: 2024/10/25 11:06:12 by cmegret          ###   ########.fr       */
+/*   Updated: 2024/10/30 07:11:20 by cmegret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@
 
 // Token types
 #define WORD 1
-#define NEWLINE 2
+/* #define NEWLINE 2 */
 #define REDIR_INPUT 3
 #define REDIR_OUTPUT 4
 #define REDIR_APPEND 5
@@ -99,11 +99,16 @@ int					execute_cmd(struct s_command *cmd, char **envp,
 
 // Builtin cd
 void				ft_cd(struct s_command *cmd);
+int					ft_execute_cd(struct s_command *cmd);
 
 // Builtin env
 void				ft_env(char **envp);
+int					ft_execute_env(struct s_command *cmd,
+						struct s_shell_state *shell_state);
 
 // Builtin export
+int					ft_execute_export(struct s_command *cmd,
+						struct s_shell_state *shell_state);
 void				ft_export(char ***envp, char **args);
 const char			*extract_value(const char *new_value);
 char				*build_new_var(const char *name, const char *value);
@@ -116,15 +121,21 @@ int					is_valid_name(const char *name);
 
 // Builtin unset
 void				ft_unset(char ***envp, char **args);
+int					ft_execute_unset(struct s_command *cmd,
+						struct s_shell_state *shell_state);
 
 // Builtin pwd
 void				ft_pwd(void);
+int					ft_execute_pwd(struct s_command *cmd);
 
 // Builtin echo
+int					ft_execute_echo(struct s_command *cmd);
 void				ft_echo(char **args);
 
 // Builtin exit
 void				ft_exit(char ***envp, struct s_shell_state *shell_state);
+int					ft_execute_exit(struct s_command *cmd,
+						struct s_shell_state *shell_state);
 
 // Signal
 void				handle_sigint(int sig);
