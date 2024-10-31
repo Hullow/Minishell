@@ -6,7 +6,7 @@
 /*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/25 19:23:55 by fallan            #+#    #+#             */
-/*   Updated: 2024/10/26 19:45:48 by fallan           ###   ########.fr       */
+/*   Updated: 2024/10/31 17:59:24 by fallan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,8 @@ s_redir *ft_last_redir(s_redir *redir_list)
 	return (redir_list);
 }
 
+// checks if a token is of a redirection type
+// (REDIR_INPUT, REDIR_OUTPUT, REDIR_APPEND, REDIR_HEREDOC)
 bool	ft_is_redir(int token_type)
 {
 	if (token_type == REDIR_INPUT || \

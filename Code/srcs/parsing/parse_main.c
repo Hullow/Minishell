@@ -6,7 +6,7 @@
 /*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/06 17:35:29 by cmegret           #+#    #+#             */
-/*   Updated: 2024/10/26 19:34:43 by fallan           ###   ########.fr       */
+/*   Updated: 2024/10/31 18:06:26 by fallan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,9 @@ static int	ft_allocate_args(struct s_token *tkn, struct s_command *cmd_sequence)
 	int	arg_count;
 
 	arg_count = ft_count_tokens(tkn);
-	if (arg_count == 1)
+	if (arg_count == 0)
+		return (0);
+	else if (arg_count == 1)
 	{
 		if (ft_allocate_single_arg(tkn, cmd_sequence) == -1)
 			return (-1);
@@ -103,20 +105,24 @@ static int	ft_allocate_args(struct s_token *tkn, struct s_command *cmd_sequence)
 // Outputs a struct command with the command name and the arguments
 struct s_command	*ft_parse(struct s_token *head)
 {
-	struct s_command	*cmd_sequence;
-	struct s_token		*tkn;
+        struct s_command        *cmd_sequence;
+        struct s_token          *tok;
 
-	cmd_sequence = malloc(sizeof(struct s_command));
-	if (!cmd_sequence)
-		return (NULL);
-	tkn = head;
-	ft_parse_operators(tkn);
-	cmd_sequence->redir_list = ft_parse_redirections(&tkn);
-	if (tkn->type == WORD)
-	{
-		cmd_sequence->cmd_name = ft_strdup(tkn->str);
-		if (ft_allocate_args(tkn, cmd_sequence) == -1)
-			return (NULL); // call error function ?
-	}
-	return (cmd_sequence);
+        cmd_sequence = malloc(sizeof(struct s_command)); // malloc a node to our list of commands (cmd_sequence)
+        if (!cmd_sequence)
+                return (NULL);
+        tok = head;
+        while (tok)
+        {
+                if (ft_is_redir(tok->type))
+					ft_new_redir_node(tok->type, cmd_sequence->redir_list) // to code! allocate to redir
+				else if (tok->type == WORD)
+               		cmd_sequence->cmd_name = ft_strdup(tok->str);
+				// need to rewrite all this:
+                if (ft_allocate_args(tok, cmd_sequence) == -1)
+                        return (NULL); // call error function ?
+                tok = tok->next;
+        }
+        return (cmd_sequence);
 }
+

@@ -238,3 +238,6 @@ how to traverse and use the AST ? Maybe some things should be done when the AST 
 # 26/10/24
 - Finished coding parsing of redirections. Now debugging. Need to rewrite initializations of redir_list and redir_node first to compile and 
 stop segfaults.
+
+# 30/10/24
+- Started working on orchestration of redirections parsing in ft_parse (parse_main.c). 

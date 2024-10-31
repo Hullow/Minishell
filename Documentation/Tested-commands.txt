@@ -878,3 +878,18 @@ echo hello" > 3 > 4 "hello"
 echo > 3 > 4 "hello"
 cat 4
 cat 3
+
+
+export VAR="> file"
+echo hello$VAR
+echo "hello" $VAR
+$(echo "hello" $VAR)
+export VAR="echo "hello" > file"
+echo hello > file
+export VAR="echo hello > file"
+rm file
+export VAR="echo hello"
+echo hello
+sh
+echo $VAR
+$VAR
