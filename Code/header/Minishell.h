@@ -6,7 +6,7 @@
 /*   By: cmegret <cmegret@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/19 13:48:14 by francis           #+#    #+#             */
-/*   Updated: 2024/10/30 07:11:20 by cmegret          ###   ########.fr       */
+/*   Updated: 2024/11/01 17:55:09 by cmegret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@
 
 // Token types
 #define WORD 1
-/* #define NEWLINE 2 */
+#define NEWLINE 2
 #define REDIR_INPUT 3
 #define REDIR_OUTPUT 4
 #define REDIR_APPEND 5
