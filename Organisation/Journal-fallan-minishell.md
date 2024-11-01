@@ -248,3 +248,4 @@ stop segfaults.
 via a linked list, then we copy from this linked list into cmd_sequence **args, so execve can use it directly)
 - Old redirection parsing code still in parse_redir_OLD.c, to delete at some point, maybe useful so not deleted yet
 - Test: compiles ok, no more segfault, arguments don't seem to work anymore (`make` works, but not `make clean`)
+- need to test if things stored correctly, (then write code to execute redirections)
