@@ -6,7 +6,7 @@
 #    By: fallan <fallan@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/07/19 14:53:36 by cmegret           #+#    #+#              #
-#    Updated: 2024/10/26 17:27:00 by fallan           ###   ########.fr        #
+#    Updated: 2024/11/01 17:27:35 by fallan           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -61,6 +61,8 @@ SRCS = main/main.c \
       token/token_operator.c \
 	  parsing/parse_main.c \
 	  parsing/parse_redir.c \
+	  parsing/parse_utils.c \
+	  parsing/parse_command_args.c \
 	  execution/execution_main.c \
 	  execution/execution_env_path.c \
 	  builtin/cd/main_cd.c \

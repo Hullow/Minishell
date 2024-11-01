@@ -1,12 +1,12 @@
 /* ************************************************************************** */
-/*                                                                            */
+/*	                                                                    */
 /*                                                        :::      ::::::::   */
 /*   parse_main.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/06 17:35:29 by cmegret           #+#    #+#             */
-/*   Updated: 2024/10/31 18:06:26 by fallan           ###   ########.fr       */
+/*   Updated: 2024/11/01 13:18:40 by fallan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,91 +38,39 @@ struct s_token	*ft_parse_operators(struct s_token *head)
 	return (head);
 }
 
-// allocate a single argument to our command sequence :
-// command without any arguments
-static int	ft_allocate_single_arg(struct s_token *tkn,
-	struct s_command *cmd_sequence)
+void	ft_initialize_cmd_sequence(struct s_command *cmd_sequence)
 {
-	cmd_sequence->args = malloc(2 * sizeof(char *));
-	if (!cmd_sequence->args)
-		return (-1); // call error function ?
-	cmd_sequence->args[0] = ft_strdup(tkn->str);
-	cmd_sequence->args[1] = NULL;
-	return (0);
-}
-
-// allocate arguments to our command sequence :
-// command with arguments
-static int	ft_allocate_multiple_args(struct s_token *tkn,
-	struct s_command *cmd_sequence, int arg_count)
-{
-	int	i;
-
-	cmd_sequence->args = malloc((arg_count + 1) * sizeof(char *));
-	if (!cmd_sequence->args)
-		return (-1); // call error function ?
-	cmd_sequence->args[0] = ft_strdup(tkn->str);
-	tkn = tkn->next;
-	i = 1;
-	while (tkn)
-	{
-		if (tkn->type == WORD)
-		{
-			cmd_sequence->args[i] = ft_strdup(tkn->str);
-			if (cmd_sequence->args[i] == NULL)
-				return (-1);
-			i++;
-		}
-		tkn = tkn->next;
-	}
-	cmd_sequence->args[i] = NULL;
-	return (0);
-}
-
-// calls the appropriate function to allocate arguments to our command sequence
-static int	ft_allocate_args(struct s_token *tkn, struct s_command *cmd_sequence)
-{
-	int	arg_count;
-
-	arg_count = ft_count_tokens(tkn);
-	if (arg_count == 0)
-		return (0);
-	else if (arg_count == 1)
-	{
-		if (ft_allocate_single_arg(tkn, cmd_sequence) == -1)
-			return (-1);
-	}
-	else
-	{
-		if (ft_allocate_multiple_args(tkn, cmd_sequence, arg_count) == -1)
-			return (-1);
-	}
-	return (0);
+	cmd_sequence->cmd_name = NULL;
+	cmd_sequence->args = NULL;
+	cmd_sequence->input = 0;
+	cmd_sequence->output = 1;
+	cmd_sequence->redir_list = NULL;
+	cmd_sequence->next = NULL;
 }
 
 // Parses our linked list of tokens, starting from left (head)
 // Extracts the command and the arguments 
 // Outputs a struct command with the command name and the arguments
-struct s_command	*ft_parse(struct s_token *head)
+struct s_command	*ft_parse(struct s_token *tok)
 {
-        struct s_command        *cmd_sequence;
-        struct s_token          *tok;
+	struct s_command	*cmd_sequence;
+	s_cmd_args			*arg_list = NULL;
+	s_redir				*redir_list = NULL;
 
-        cmd_sequence = malloc(sizeof(struct s_command)); // malloc a node to our list of commands (cmd_sequence)
-        if (!cmd_sequence)
-                return (NULL);
-        tok = head;
-        while (tok)
-        {
-                if (ft_is_redir(tok->type))
-					ft_new_redir_node(tok->type, cmd_sequence->redir_list) // to code! allocate to redir
-				else if (tok->type == WORD)
-               		cmd_sequence->cmd_name = ft_strdup(tok->str);
-				// need to rewrite all this:
-                if (ft_allocate_args(tok, cmd_sequence) == -1)
-                        return (NULL); // call error function ?
-                tok = tok->next;
-        }
-        return (cmd_sequence);
+	cmd_sequence = malloc(sizeof(struct s_command)); // malloc a node to our list of commands (cmd_sequence)
+	if (!cmd_sequence)
+		return (NULL);
+	ft_initialize_cmd_sequence(cmd_sequence);
+	ft_parse_operators(tok);
+	while (tok)
+	{
+		if (ft_token_is_redir(tok->type))
+			ft_add_redir(&tok, redir_list); // add redirections to our redirections list
+		else if (ft_token_is_word(tok->type)) // add WORD tokens to argument list
+			ft_add_cmd_arg(tok->str, cmd_sequence, arg_list); // before: cmd_sequence->cmd_name = strdup(tok->str);
+		tok = tok->next;
+	}
+	if (ft_allocate_args(cmd_sequence, arg_list) == -1)
+		return (NULL);
+	return (cmd_sequence);
 }
-

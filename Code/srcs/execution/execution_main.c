@@ -6,7 +6,7 @@
 /*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/07 12:23:09 by cmegret           #+#    #+#             */
-/*   Updated: 2024/10/18 20:14:48 by fallan           ###   ########.fr       */
+/*   Updated: 2024/11/01 17:50:30 by fallan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,7 @@ static void	handle_child_process(struct s_command *cmd, char **envp)
 {
 	char	*cmd_path;
 
+	printf("handle_child_process:\n");
 	cmd_path = NULL;
 	cmd_path = get_cmd_path(cmd->cmd_name, envp);
 	if (cmd_path == NULL)

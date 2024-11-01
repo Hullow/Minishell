@@ -678,7 +678,7 @@ ELSE
 
 #### 4.1.2. Pipelines
 - Pipeline: a sequence of one or more commands separated by the control operator `'|'`
-- For each command, except the last, the shell shall:
+- For each command, except the last, the shell will:
 	- connect the standard output of the command to the standard input of the next command
 	- as if by creating a pipe, and passing the *write end of the pipe* as **the standard output of the command** and the *read end of the pipe* as the **standard input of the next command**
 
@@ -695,9 +695,13 @@ ELSE
 - The shell shall wait for the last command specified in the pipeline to complete, and may also wait for all commands to complete
 
 - Execution environment:
-	- A subshell environment shall be created as a duplicate of the shell environment, except that signal traps that are not being ignored shall be set to the default action.
-	- Each command of a multi-command pipeline is in a subshell environment; as an extension, however, any or all commands in a pipeline may be executed in the current environment.
-	- All other commands shall be executed in the current shell environment.
+	- A Subshell environment: is a duplicate of the shell environment, except:<br>
+		IF<br>
+		- some signal traps are not being ignored
+
+		=> set those signal traps to the default action
+	- Each command of a multi-command pipeline is in a subshell environment
+	- All other commands are executed in the current shell environment
 
 - Exit Status: the exit status of the last command specified in the pipeline
 

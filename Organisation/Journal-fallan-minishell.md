@@ -239,5 +239,12 @@ how to traverse and use the AST ? Maybe some things should be done when the AST 
 - Finished coding parsing of redirections. Now debugging. Need to rewrite initializations of redir_list and redir_node first to compile and 
 stop segfaults.
 
-# 30/10/24
+# 31/10/24
 - Started working on orchestration of redirections parsing in ft_parse (parse_main.c). 
+
+# 1/11/24
+- Things to merge in main besides our code : see to-do list
+- re-wrote redirection parsing, and adding arguments to cmd_sequence (first
+via a linked list, then we copy from this linked list into cmd_sequence **args, so execve can use it directly)
+- Old redirection parsing code still in parse_redir_OLD.c, to delete at some point, maybe useful so not deleted yet
+- Test: compiles ok, no more segfault, arguments don't seem to work anymore (`make` works, but not `make clean`)

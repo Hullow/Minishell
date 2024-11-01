@@ -6,7 +6,7 @@
 /*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/19 13:48:14 by francis           #+#    #+#             */
-/*   Updated: 2024/10/26 17:24:39 by fallan           ###   ########.fr       */
+/*   Updated: 2024/11/01 17:29:08 by fallan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,13 @@ typedef struct s_redir {
 	char			*str; // either file (for input, output, append) or delimiter (for Heredoc)
 	struct s_redir	*next;
 } s_redir;
+
+// linked list of our command arguments
+typedef struct s_cmd_args
+{
+	char		*arg_string;
+	s_cmd_args	*next;
+} s_cmd_args;
 
 struct s_token
 {
