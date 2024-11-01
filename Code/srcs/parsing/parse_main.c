@@ -13,9 +13,9 @@
 #include "../../header/Minishell.h"
 
 // probably not necessary, likely done before 
-struct s_token	*ft_parse_operators(struct s_token *head)
+t_token	*ft_parse_operators(t_token *head)
 {
-	struct s_token	*iterator;
+	t_token	*iterator;
 
 	iterator = head;
 	while (iterator)
@@ -38,12 +38,13 @@ struct s_token	*ft_parse_operators(struct s_token *head)
 	return (head);
 }
 
-void	ft_initialize_cmd_sequence(struct s_command *cmd_sequence)
+// Initializes our cmd_sequence (everything to NULL except input, output)
+void	ft_initialize_cmd_sequence(t_command *cmd_sequence)
 {
 	cmd_sequence->cmd_name = NULL;
 	cmd_sequence->args = NULL;
-	cmd_sequence->input = 0;
-	cmd_sequence->output = 1;
+	cmd_sequence->input = STDIN;
+	cmd_sequence->output = STDOUT;
 	cmd_sequence->redir_list = NULL;
 	cmd_sequence->next = NULL;
 }
@@ -51,13 +52,13 @@ void	ft_initialize_cmd_sequence(struct s_command *cmd_sequence)
 // Parses our linked list of tokens, starting from left (head)
 // Extracts the command and the arguments 
 // Outputs a struct command with the command name and the arguments
-struct s_command	*ft_parse(struct s_token *tok)
+t_command	*ft_parse(t_token *tok)
 {
-	struct s_command	*cmd_sequence;
-	s_cmd_args			*arg_list = NULL;
-	s_redir				*redir_list = NULL;
+	t_command	*cmd_sequence;
+	t_cmd_args			*arg_list = NULL;
+	t_redir				*redir_list = NULL;
 
-	cmd_sequence = malloc(sizeof(struct s_command)); // malloc a node to our list of commands (cmd_sequence)
+	cmd_sequence = malloc(sizeof(t_command)); // malloc a node to our list of commands (cmd_sequence)
 	if (!cmd_sequence)
 		return (NULL);
 	ft_initialize_cmd_sequence(cmd_sequence);

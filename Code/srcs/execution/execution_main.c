@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution_main.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
+/*   By: francis <francis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/07 12:23:09 by cmegret           #+#    #+#             */
-/*   Updated: 2024/11/01 17:50:30 by fallan           ###   ########.fr       */
+/*   Updated: 2024/11/01 18:54:10 by francis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,8 @@
  * Returns:
  *   0 if the command is a builtin and was executed, 1 otherwise.
  */
-int	ft_is_and_execute_builtin(struct s_command *cmd,
-	struct s_shell_state *shell_state)
+int	ft_is_and_execute_builtin(t_command *cmd,
+	t_shell_state *shell_state)
 {
 	if (ft_strncmp(cmd->cmd_name, "echo", 4) == 0)
 		return (0);
@@ -63,7 +63,7 @@ int	ft_is_and_execute_builtin(struct s_command *cmd,
  *   command to be executed.
  *   envp - An array of environment variables.
  */
-static void	handle_child_process(struct s_command *cmd, char **envp)
+static void	handle_child_process(t_command *cmd, char **envp)
 {
 	char	*cmd_path;
 
@@ -117,8 +117,8 @@ static int	handle_parent_process(pid_t pid)
  * Returns:
  *   0 if the command was executed successfully, -1 if there was an error.
  */
-int	execute_cmd(struct s_command *cmd, char **envp,
-	struct s_shell_state *shell_state)
+int	execute_cmd(t_command *cmd, char **envp,
+	t_shell_state *shell_state)
 {
 	pid_t	pid;
 

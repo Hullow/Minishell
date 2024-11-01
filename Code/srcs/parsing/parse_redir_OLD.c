@@ -3,21 +3,21 @@
 /*                                                        :::      ::::::::   */
 /*   parse_redir_OLD.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
+/*   By: francis <francis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/25 19:23:55 by fallan            #+#    #+#             */
-/*   Updated: 2024/11/01 17:32:27 by fallan           ###   ########.fr       */
+/*   Updated: 2024/11/01 18:46:26 by francis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../header/Minishell.h"
 
 // OLD
-s_redir				*ft_parse_redirections(struct s_token **tok);
-s_redir				*ft_create_redir_node(struct s_token *tok, s_redir *redir_list);
-s_redir				*ft_create_redir_list(struct s_token *tok);
+s_redir				*ft_parse_redirections(t_token **tok);
+s_redir				*ft_create_redir_node(t_token *tok, t_redir *redir_list);
+s_redir				*ft_create_redir_list(t_token *tok);
 
-int	ft_initialize_redir_node(s_redir **redir_node, s_redir **redir_list)
+int	ft_initialize_redir_node(t_redir **redir_node, t_redir **redir_list)
 {
 	if (!((*redir_list)->type)) // if we are starting the list
 	{
@@ -30,7 +30,7 @@ int	ft_initialize_redir_node(s_redir **redir_node, s_redir **redir_list)
 	else // if redir_list already contains some data, malloc a new node
 	{
 		printf("ft_initialize_redir_node 2\n");
-		*redir_node = malloc (sizeof(s_redir)); // or pointer-sized ?
+		*redir_node = malloc (sizeof(t_redir)); // or pointer-sized ?
 		if (redir_node == NULL)
 			return (-1); // malloc fail
 		ft_last_redir(*redir_list)->next = *redir_node; // add node to end of redirection list
@@ -41,11 +41,11 @@ int	ft_initialize_redir_node(s_redir **redir_node, s_redir **redir_list)
 // takes as input the token before the redirection symbol
 // creates a new redirection node with the redir type and file or delimiter (str)
 // returns 0 if success, -1 if malloc fails
-int	ft_create_redir_node(struct s_token **tok, s_redir **redir_list)
+int	ft_create_redir_node(t_token **tok, t_redir **redir_list)
 {
 	s_redir			**redir_node = NULL;
-	struct s_token 	*operator_token;
-	struct s_token 	*following_token;
+	t_token 	*operator_token;
+	t_token 	*following_token;
 
 	printf("ft_create_redir_node 1\n");
 	if (ft_initialize_redir_node(redir_node, redir_list) == -1)
@@ -71,9 +71,9 @@ int	ft_create_redir_node(struct s_token **tok, s_redir **redir_list)
 	return (0);
 }
 
-int	ft_initialize_redir_list(s_redir **redir_list)
+int	ft_initialize_redir_list(t_redir **redir_list)
 {
-	redir_list = malloc (sizeof(s_redir)); // or pointer-sized ?
+	redir_list = malloc (sizeof(t_redir)); // or pointer-sized ?
 	if (redir_list == NULL)
 		return (-1);
 	redir_list->type = 0;
@@ -85,10 +85,10 @@ int	ft_initialize_redir_list(s_redir **redir_list)
 // traverses token list
 // when a redir token is found, create a redirection node
 // returns the last redir node assigned
-s_redir *ft_parse_redirections(struct s_token **tok)
+t_redir *ft_parse_redirections(t_token **tok)
 {
 	s_redir			**redir_list;
-	struct s_token **previous_tok = NULL;
+	t_token **previous_tok = NULL;
 
 	redir_list = ft_initialize_redir_list(redir_list);
 	if (!redir_list)

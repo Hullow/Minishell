@@ -3,21 +3,21 @@
 /*                                                        :::      ::::::::   */
 /*   token_main.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
+/*   By: francis <francis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/06 17:19:58 by cmegret           #+#    #+#             */
-/*   Updated: 2024/10/26 13:18:16 by fallan           ###   ########.fr       */
+/*   Updated: 2024/11/01 18:27:29 by francis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../header/Minishell.h"
 
 // Initializes a new token
-static struct s_token	*ft_init_token(void)
+static t_token	*ft_init_token(void)
 {
-	struct s_token	*tok;
+	t_token	*tok;
 
-	tok = malloc(sizeof(struct s_token));
+	tok = malloc(sizeof(t_token));
 	if (!tok)
 		return (NULL);
 	tok->next = NULL;
@@ -29,7 +29,7 @@ static struct s_token	*ft_init_token(void)
 }
 
 // Processes the prompt, applying tokenization rules in order
-static int	ft_process_prompt(char *prompt, int i, struct s_token **tok)
+static int	ft_process_prompt(char *prompt, int i, t_token **tok)
 {
 	// if (*tok && (*tok)->str)
 	// 	printf("tok->str: %s; tok->is_delimited: %d\n", (*tok)->str, (*tok)->is_delimited);
@@ -48,10 +48,10 @@ static int	ft_process_prompt(char *prompt, int i, struct s_token **tok)
 // Breaks the input (prompt) into tokens by calling each tokenization function
 // Calls ft_process_prompt in a loop to tokenize the prompt
 // Returns a linked list of tokens
-struct s_token	*ft_tokenize(char *prompt)
+t_token	*ft_tokenize(char *prompt)
 {
-	struct s_token	*tok;
-	struct s_token	*head;
+	t_token	*tok;
+	t_token	*head;
 	int				i;
 
 	tok = ft_init_token();

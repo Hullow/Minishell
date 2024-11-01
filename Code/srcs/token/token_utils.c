@@ -3,17 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   token_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
+/*   By: francis <francis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/07 19:00:54 by cmegret           #+#    #+#             */
-/*   Updated: 2024/10/26 19:09:37 by fallan           ###   ########.fr       */
+/*   Updated: 2024/11/01 18:27:29 by francis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../header/Minishell.h"
 
 // traverses the linked list of tokens and returns the last token
-struct	s_token *ft_last_token(struct s_token *tok)
+struct	s_token *ft_last_token(t_token *tok)
 {
 	if (!tok || !tok->next)
 		return (tok);
@@ -23,7 +23,7 @@ struct	s_token *ft_last_token(struct s_token *tok)
 }
 
 // returns the number of tokens in our linked list
-int	ft_count_tokens(struct s_token *tok)
+int	ft_count_tokens(t_token *tok)
 {
 	int	i;
 
@@ -39,9 +39,9 @@ int	ft_count_tokens(struct s_token *tok)
 }
 
 // prints each token's contents (tok->str)
-void	ft_print_all_token_strings(struct s_token **head)
+void	ft_print_all_token_strings(t_token **head)
 {
-	struct s_token	*iterator;
+	t_token	*iterator;
 
 	iterator = *head;
 	while (iterator != 0)
@@ -52,9 +52,9 @@ void	ft_print_all_token_strings(struct s_token **head)
 }
 
 // Traverses the linked list of tokens and prints each token's type, if any
-void	ft_print_token_types(struct s_token *head)
+void	ft_print_token_types(t_token *head)
 {
-	struct s_token	*iterator;
+	t_token	*iterator;
 
 	iterator = head;
 	const char	*token_type_strings[10] = {
@@ -82,7 +82,7 @@ void	ft_print_token_types(struct s_token *head)
 }
 
 // frees the token and if it exists, the token string
-void	ft_free_token(struct s_token *tok)
+void	ft_free_token(t_token *tok)
 {
 	if (!tok)
 		return ;

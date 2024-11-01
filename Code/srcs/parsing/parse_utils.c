@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
+/*   By: francis <francis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/01 13:49:30 by fallan            #+#    #+#             */
-/*   Updated: 2024/11/01 17:36:37 by fallan           ###   ########.fr       */
+/*   Updated: 2024/11/01 18:54:10 by francis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ bool	ft_token_is_word(int token_type)
 }
 
 // returns the number of arguments in our argument list
-int	ft_count_args(s_cmd_args *arg_list)
+int	ft_count_args(t_cmd_args *arg_list)
 {
 	int	i;
 
@@ -51,9 +51,9 @@ int	ft_count_args(s_cmd_args *arg_list)
 }
 
 // frees our linked list of arguments
-void	ft_free_arg_list(s_cmd_args	*arg_list)
+void	ft_free_arg_list(t_cmd_args	*arg_list)
 {
-	s_cmd_args	*temp = NULL;
+	t_cmd_args	*temp = NULL;
 
 	while (arg_list)
 	{
@@ -66,7 +66,7 @@ void	ft_free_arg_list(s_cmd_args	*arg_list)
 }
 
 // traverses the linked list of tokens and returns the last token
-s_redir *ft_last_redir(s_redir *redir_list)
+t_redir *ft_last_redir(t_redir *redir_list)
 {
 	if (!redir_list || !redir_list->next)
 		return (redir_list);

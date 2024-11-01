@@ -3,17 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   token_operator.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
+/*   By: francis <francis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/06 17:27:19 by cmegret           #+#    #+#             */
-/*   Updated: 2024/10/26 13:18:02 by fallan           ###   ########.fr       */
+/*   Updated: 2024/11/01 18:27:29 by francis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../header/Minishell.h"
 
 // creates a redirection append ('>>') operator token
-static int	ft_tokenize_redir_append(char *prompt, int i, struct s_token **tok)
+static int	ft_tokenize_redir_append(char *prompt, int i, t_token **tok)
 {
 	if (prompt[i] == '>' && prompt[i - 1] == '>' && (*tok)->is_quoted == false)
 	{
@@ -27,7 +27,7 @@ static int	ft_tokenize_redir_append(char *prompt, int i, struct s_token **tok)
 }
 
 // creates a here document ('<<') operator token
-static int	ft_tokenize_here_doc(char *prompt, int i, struct s_token **tok)
+static int	ft_tokenize_here_doc(char *prompt, int i, t_token **tok)
 {
 	if (prompt[i] == '<' && prompt[i - 1] == '<' && (*tok)->is_quoted == false)
 	{
@@ -43,7 +43,7 @@ static int	ft_tokenize_here_doc(char *prompt, int i, struct s_token **tok)
 // Function for two rules:
 // ##### 2.2.2.2. Continued operator token and current character usable
 // ##### 2.2.2.3. Continued operator token and current character not usable
-int	ft_continue_operator_token(char *prompt, int i, struct s_token **tok)
+int	ft_continue_operator_token(char *prompt, int i, t_token **tok)
 {
 	if (ft_strlen((*tok)->str) != 1)
 		(*tok)->is_delimited = true;
@@ -59,7 +59,7 @@ int	ft_continue_operator_token(char *prompt, int i, struct s_token **tok)
 // checks if token starts with a '|', '>', or '<' character
 // if a pipe character is found, delimit the token and assign the type PIPE
 // otherwise, start a new, undelimited and uncategorized operator token
-static void	ft_set_operator_token(char c, struct s_token **tok)
+static void	ft_set_operator_token(char c, t_token **tok)
 {
 	if (c == '|')
 	{
@@ -83,7 +83,7 @@ static void	ft_set_operator_token(char c, struct s_token **tok)
 }
 
 // Create a new operator token
-int	ft_new_operator_token(char *prompt, int i, struct s_token **tok)
+int	ft_new_operator_token(char *prompt, int i, t_token **tok)
 {
 	(*tok) = ft_create_new_token(*tok);
 	ft_set_operator_token(prompt[i], tok);

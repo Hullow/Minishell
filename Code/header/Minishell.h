@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
+/*   By: cmegret <cmegret@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/19 13:48:14 by francis           #+#    #+#             */
-/*   Updated: 2024/11/01 17:29:08 by fallan           ###   ########.fr       */
+/*   Updated: 2024/11/01 18:1:56 by cmegret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,20 +38,27 @@
 #define END_OF_INPUT 7
 #define IO_NUMBER 8
 
-typedef struct s_redir {
+// File descriptors
+#define STDIN 0
+#define STDOUT 1
+
+// linked list of redirections
+typedef struct s_redir
+{
 	int				type; // REDIR_INPUT, REDIR_OUTPUT, REDIR_APPEND, REDIR_HEREDOC
 	char			*str; // either file (for input, output, append) or delimiter (for Heredoc)
 	struct s_redir	*next;
-} s_redir;
+}	t_redir;
 
 // linked list of our command arguments
 typedef struct s_cmd_args
 {
-	char		*arg_string;
-	s_cmd_args	*next;
-} s_cmd_args;
+	char				*arg_string;
+	struct s_cmd_args	*next;
+}	t_cmd_args;
 
-struct s_token
+// linked list of tokens
+typedef struct s_token
 {
 	char			*str;
 	int				type;
@@ -61,39 +68,40 @@ struct s_token
 	// bool			is_single_quoted;
 	bool			is_operator;
 	struct s_token	*next;
-};
+}	t_token;
 
-struct s_command
+// linked list of commands (pipes)
+typedef struct s_command
 {
 	char				*cmd_name;
 	char				**args;
 	int					input; // redirection
 	int					output; // redirection
-	s_redir				*redir_list;
+	struct s_redir		*redir_list;
 	struct s_command	*next;
-};
+}	t_command;
 
-struct s_shell_state
+typedef struct s_shell_state
 {
 	char	*current_directory;
-};
+}	t_shell_state;
 
 // Main
 int					main(int argc, char **argv, char **envp);
-void				ft_initialize(int argc, char **argv, struct s_shell_state *shell_state);
+void				ft_initialize(int argc, char **argv, t_shell_state *shell_state);
 void				error_and_exit(const char *message);
 char				*ft_prompt(void);
 
 // Execution
-int					ft_is_and_execute_builtin(struct s_command *cmd,
-						struct s_shell_state *shell_state);
+int					ft_is_and_execute_builtin(t_command *cmd,
+						t_shell_state *shell_state);
 char				**get_env_paths(char **envp);
 char				*get_cmd_path(char *cmd, char **envp);
-int					execute_cmd(struct s_command *cmd, char **envp,
-						struct s_shell_state *shell_state);
+int					execute_cmd(t_command *cmd, char **envp,
+						t_shell_state *shell_state);
 
 // Builtins
-void				ft_cd(struct s_command *cmd,
-						struct s_shell_state *shell_state);
+void				ft_cd(t_command *cmd,
+						t_shell_state *shell_state);
 
 #endif

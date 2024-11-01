@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main_cd.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cmegret <cmegret@student.42lausanne.ch>    +#+  +:+       +#+        */
+/*   By: francis <francis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/11 15:00:25 by cmegret           #+#    #+#             */
-/*   Updated: 2024/09/19 14:54:12 by cmegret          ###   ########.fr       */
+/*   Updated: 2024/11/01 18:27:29 by francis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@
  *   - It updates the current working directory in the shell state.
  *   - It updates the OLDPWD and PWD environment variables.
  */
-void	ft_cd(struct s_command *cmd, struct s_shell_state *shell_state)
+void	ft_cd(t_command *cmd, t_shell_state *shell_state)
 {
 	char	*path;
 
