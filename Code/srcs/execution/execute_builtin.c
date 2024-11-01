@@ -6,7 +6,7 @@
 /*   By: cmegret <cmegret@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/07 12:23:09 by cmegret           #+#    #+#             */
-/*   Updated: 2024/10/30 07:07:55 by cmegret          ###   ########.fr       */
+/*   Updated: 2024/11/01 17:50:19 by cmegret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,11 @@
  * @brief Executes the echo builtin command.
  *
  * This function checks if the given command is "echo". If it is, it executes
- * the echo command with the provided arguments and returns 0. Otherwise, it returns 1.
+ * the echo command with the provided arguments and returns 0.
+ * Otherwise, it returns 1.
  *
- * @param cmd A pointer to the command structure containing the command to be checked.
+ * @param cmd A pointer to the command structure
+ * containing the command to be checked.
  * @return 0 if the command is "echo" and was executed, 1 otherwise.
  */
 int	ft_execute_echo(struct s_command *cmd)
@@ -35,9 +37,11 @@ int	ft_execute_echo(struct s_command *cmd)
  * @brief Executes the cd builtin command.
  *
  * This function checks if the given command is "cd". If it is, it executes
- * the cd command with the provided arguments and returns 0. Otherwise, it returns 1.
+ * the cd command with the provided arguments and returns 0. Otherwise,
+ * it returns 1.
  *
- * @param cmd A pointer to the command structure containing the command to be checked.
+ * @param cmd A pointer to the command structure containing the command
+ * to be checked.
  * @return 0 if the command is "cd" and was executed, 1 otherwise.
  */
 int	ft_execute_cd(struct s_command *cmd)
@@ -56,7 +60,8 @@ int	ft_execute_cd(struct s_command *cmd)
  * This function checks if the given command is "pwd". If it is, it executes
  * the pwd command and returns 0. Otherwise, it returns 1.
  *
- * @param cmd A pointer to the command structure containing the command to be checked.
+ * @param cmd A pointer to the command structure containing the command
+ * to be checked.
  * @return 0 if the command is "pwd" and was executed, 1 otherwise.
  */
 int	ft_execute_pwd(struct s_command *cmd)
@@ -76,7 +81,8 @@ int	ft_execute_pwd(struct s_command *cmd)
  * the export command with the provided arguments and updates the shell state.
  * It returns 0 if the command was executed, otherwise it returns 1.
  *
- * @param cmd A pointer to the command structure containing the command to be checked.
+ * @param cmd A pointer to the command structure containing the command
+ * to be checked.
  * @param shell_state A pointer to the shell state structure.
  * @return 0 if the command is "export" and was executed, 1 otherwise.
  */
@@ -97,7 +103,8 @@ int	ft_execute_export(struct s_command *cmd, struct s_shell_state *shell_state)
  * the unset command with the provided arguments and updates the shell state.
  * It returns 0 if the command was executed, otherwise it returns 1.
  *
- * @param cmd A pointer to the command structure containing the command to be checked.
+ * @param cmd A pointer to the command structure containing the command
+ * to be checked.
  * @param shell_state A pointer to the shell state structure.
  * @return 0 if the command is "unset" and was executed, 1 otherwise.
  */
@@ -117,7 +124,8 @@ int	ft_execute_unset(struct s_command *cmd, struct s_shell_state *shell_state)
  * This function checks if the given command is "env". If it is, it executes
  * the env command and returns 0. Otherwise, it returns 1.
  *
- * @param cmd A pointer to the command structure containing the command to be checked.
+ * @param cmd A pointer to the command structure containing the command
+ * to be checked.
  * @param shell_state A pointer to the shell state structure.
  * @return 0 if the command is "env" and was executed, 1 otherwise.
  */
@@ -138,7 +146,8 @@ int	ft_execute_env(struct s_command *cmd, struct s_shell_state *shell_state)
  * the exit command and updates the shell state. It returns 0 if the command
  * was executed, otherwise it returns 1.
  *
- * @param cmd A pointer to the command structure containing the command to be checked.
+ * @param cmd A pointer to the command structure containing the command
+ * to be checked.
  * @param shell_state A pointer to the shell state structure.
  * @return 0 if the command is "exit" and was executed, 1 otherwise.
  */

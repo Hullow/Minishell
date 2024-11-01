@@ -6,7 +6,7 @@
 /*   By: cmegret <cmegret@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/07 12:23:09 by cmegret           #+#    #+#             */
-/*   Updated: 2024/10/30 10:05:49 by cmegret          ###   ########.fr       */
+/*   Updated: 2024/11/01 17:49:12 by cmegret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,23 +25,23 @@
  * @return 0 if the command is a builtin and was executed, 1 otherwise.
  */
 int	ft_is_and_execute_builtin(struct s_command *cmd,
-    struct s_shell_state *shell_state)
+	struct s_shell_state *shell_state)
 {
-    if (ft_execute_echo(cmd) == 0)
-        return (0);
-    if (ft_execute_cd(cmd) == 0)
-        return (0);
-    if (ft_execute_pwd(cmd) == 0)
-        return (0);
-    if (ft_execute_export(cmd, shell_state) == 0)
-        return (0);
-    if (ft_execute_unset(cmd, shell_state) == 0)
-        return (0);
-    if (ft_execute_env(cmd, shell_state) == 0)
-        return (0);
-    if (ft_execute_exit(cmd, shell_state) == 0)
-        return (0);
-    return (1);
+	if (ft_execute_echo(cmd) == 0)
+		return (0);
+	else if (ft_execute_cd(cmd) == 0)
+		return (0);
+	else if (ft_execute_pwd(cmd) == 0)
+		return (0);
+	else if (ft_execute_export(cmd, shell_state) == 0)
+		return (0);
+	else if (ft_execute_unset(cmd, shell_state) == 0)
+		return (0);
+	else if (ft_execute_env(cmd, shell_state) == 0)
+		return (0);
+	else if (ft_execute_exit(cmd, shell_state) == 0)
+		return (0);
+	return (1);
 }
 
 /**
@@ -83,14 +83,17 @@ static void	handle_child_process(struct s_command *cmd, char **envp)
  * @param cmd_list A pointer to the list of command structures to be executed.
  * @param envp An array of environment variables.
  * @param shell_state A pointer to the shell state structure.
- * @return 0 if all commands were executed successfully, -1 if there was an error.
+ * @return 0 if all commands were executed successfully,
+ * -1 if there was an error.
  */
-int	execute_cmd(struct s_command *cmd_list, char **envp, struct s_shell_state *shell_state)
+int	execute_cmd(struct s_command *cmd_list, char **envp,
+	struct s_shell_state *shell_state)
 {
-	int     fd[2];
-	pid_t   pid;
-	int     in_fd = 0;
+	int		fd[2];
+	pid_t	pid;
+	int		in_fd;
 
+	in_fd = 0;
 	while (cmd_list)
 	{
 		if (cmd_list->next != NULL)
@@ -137,5 +140,5 @@ int	execute_cmd(struct s_command *cmd_list, char **envp, struct s_shell_state *s
 			cmd_list = cmd_list->next;
 		}
 	}
-	return 0;
+	return (0);
 }
