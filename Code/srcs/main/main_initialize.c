@@ -6,7 +6,7 @@
 /*   By: cmegret <cmegret@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/22 17:31:30 by cmegret           #+#    #+#             */
-/*   Updated: 2024/10/25 11:01:54 by cmegret          ###   ########.fr       */
+/*   Updated: 2024/11/01 18:35:40 by cmegret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ static int	count_env_variables(char **envp)
 	return (count);
 }
 
-static void	duplicate_env(struct s_shell_state *shell_state,
+static void	duplicate_env(t_shell_state *shell_state,
 	char **envp, int count)
 {
 	int	i;
@@ -57,7 +57,7 @@ static void	duplicate_env(struct s_shell_state *shell_state,
 }
 
 void	ft_initialize(int argc, char **argv,
-	struct s_shell_state *shell_state, char **envp)
+	t_shell_state *shell_state, char **envp)
 {
 	int	count;
 

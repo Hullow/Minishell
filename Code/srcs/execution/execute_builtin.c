@@ -6,7 +6,7 @@
 /*   By: cmegret <cmegret@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/07 12:23:09 by cmegret           #+#    #+#             */
-/*   Updated: 2024/11/01 17:50:19 by cmegret          ###   ########.fr       */
+/*   Updated: 2024/11/01 18:35:36 by cmegret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@
  * containing the command to be checked.
  * @return 0 if the command is "echo" and was executed, 1 otherwise.
  */
-int	ft_execute_echo(struct s_command *cmd)
+int	ft_execute_echo(t_command *cmd)
 {
 	if (ft_strncmp(cmd->cmd_name, "echo", 4) == 0)
 	{
@@ -44,7 +44,7 @@ int	ft_execute_echo(struct s_command *cmd)
  * to be checked.
  * @return 0 if the command is "cd" and was executed, 1 otherwise.
  */
-int	ft_execute_cd(struct s_command *cmd)
+int	ft_execute_cd(t_command *cmd)
 {
 	if (ft_strncmp(cmd->cmd_name, "cd", 2) == 0)
 	{
@@ -64,7 +64,7 @@ int	ft_execute_cd(struct s_command *cmd)
  * to be checked.
  * @return 0 if the command is "pwd" and was executed, 1 otherwise.
  */
-int	ft_execute_pwd(struct s_command *cmd)
+int	ft_execute_pwd(t_command *cmd)
 {
 	if (ft_strncmp(cmd->cmd_name, "pwd", 3) == 0)
 	{
@@ -86,7 +86,7 @@ int	ft_execute_pwd(struct s_command *cmd)
  * @param shell_state A pointer to the shell state structure.
  * @return 0 if the command is "export" and was executed, 1 otherwise.
  */
-int	ft_execute_export(struct s_command *cmd, struct s_shell_state *shell_state)
+int	ft_execute_export(t_command *cmd, t_shell_state *shell_state)
 {
 	if (ft_strncmp(cmd->cmd_name, "export", 6) == 0)
 	{
@@ -108,7 +108,7 @@ int	ft_execute_export(struct s_command *cmd, struct s_shell_state *shell_state)
  * @param shell_state A pointer to the shell state structure.
  * @return 0 if the command is "unset" and was executed, 1 otherwise.
  */
-int	ft_execute_unset(struct s_command *cmd, struct s_shell_state *shell_state)
+int	ft_execute_unset(t_command *cmd, t_shell_state *shell_state)
 {
 	if (ft_strncmp(cmd->cmd_name, "unset", 5) == 0)
 	{
@@ -129,7 +129,7 @@ int	ft_execute_unset(struct s_command *cmd, struct s_shell_state *shell_state)
  * @param shell_state A pointer to the shell state structure.
  * @return 0 if the command is "env" and was executed, 1 otherwise.
  */
-int	ft_execute_env(struct s_command *cmd, struct s_shell_state *shell_state)
+int	ft_execute_env(t_command *cmd, t_shell_state *shell_state)
 {
 	if (ft_strncmp(cmd->cmd_name, "env", 3) == 0)
 	{
@@ -151,7 +151,7 @@ int	ft_execute_env(struct s_command *cmd, struct s_shell_state *shell_state)
  * @param shell_state A pointer to the shell state structure.
  * @return 0 if the command is "exit" and was executed, 1 otherwise.
  */
-int	ft_execute_exit(struct s_command *cmd, struct s_shell_state *shell_state)
+int	ft_execute_exit(t_command *cmd, t_shell_state *shell_state)
 {
 	if (ft_strncmp(cmd->cmd_name, "exit", 4) == 0)
 	{

@@ -6,7 +6,7 @@
 /*   By: cmegret <cmegret@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/11 15:00:25 by cmegret           #+#    #+#             */
-/*   Updated: 2024/10/25 11:02:51 by cmegret          ###   ########.fr       */
+/*   Updated: 2024/11/01 18:34:35 by cmegret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@
  * @note It updates the current working directory in the shell state.
  * @note It updates the OLDPWD and PWD environment variables.
  */
-void	ft_cd(struct s_command *cmd)
+void	ft_cd(t_command *cmd)
 {
 	char	*path;
 

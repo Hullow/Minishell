@@ -6,7 +6,7 @@
 /*   By: cmegret <cmegret@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/07 12:23:09 by cmegret           #+#    #+#             */
-/*   Updated: 2024/11/01 17:49:12 by cmegret          ###   ########.fr       */
+/*   Updated: 2024/11/01 18:53:45 by cmegret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,7 @@
  * @param shell_state A pointer to the shell state structure.
  * @return 0 if the command is a builtin and was executed, 1 otherwise.
  */
-int	ft_is_and_execute_builtin(struct s_command *cmd,
-	struct s_shell_state *shell_state)
+int	ft_is_and_execute_builtin(t_command *cmd, t_shell_state *shell_state)
 {
 	if (ft_execute_echo(cmd) == 0)
 		return (0);
@@ -55,7 +54,7 @@ int	ft_is_and_execute_builtin(struct s_command *cmd,
  * executed.
  * @param envp An array of environment variables.
  */
-static void	handle_child_process(struct s_command *cmd, char **envp)
+static void	handle_child_process(t_command *cmd, char **envp)
 {
 	char	*cmd_path;
 
@@ -86,8 +85,7 @@ static void	handle_child_process(struct s_command *cmd, char **envp)
  * @return 0 if all commands were executed successfully,
  * -1 if there was an error.
  */
-int	execute_cmd(struct s_command *cmd_list, char **envp,
-	struct s_shell_state *shell_state)
+int	execute_cmd(t_command *cmd_list, char **envp, t_shell_state *shell_state)
 {
 	int		fd[2];
 	pid_t	pid;
@@ -120,9 +118,7 @@ int	execute_cmd(struct s_command *cmd_list, char **envp,
 			handle_child_process(cmd_list, envp);
 		}
 		else if (pid < 0)
-		{
 			error_and_exit("fork");
-		}
 		else
 		{
 			waitpid(pid, NULL, 0);
@@ -134,9 +130,7 @@ int	execute_cmd(struct s_command *cmd_list, char **envp,
 				in_fd = fd[0];
 			}
 			else
-			{
 				close(fd[0]);
-			}
 			cmd_list = cmd_list->next;
 		}
 	}

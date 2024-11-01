@@ -1,20 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   exit.c                                             :+:      :+:    :+:   */
+/*   Execution.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cmegret <cmegret@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/09/22 16:31:14 by cmegret           #+#    #+#             */
-/*   Updated: 2024/11/01 18:35:33 by cmegret          ###   ########.fr       */
+/*   Created: 2024/11/01 18:44:38 by cmegret           #+#    #+#             */
+/*   Updated: 2024/11/01 18:46:10 by cmegret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../../header/Minishell.h"
+#ifndef EXECUTION_H
+# define EXECUTION_H
 
-void	ft_exit(char ***envp, t_shell_state *shell_state)
-{
-	(void)envp;
-	(void)shell_state;
-	exit(shell_state->last_exit_status);
-}
+# include "Minishell.h"
+
+typedef struct s_command		t_command;
+typedef struct s_shell_state	t_shell_state;
+
+// Execution
+int		ft_is_and_execute_builtin(t_command *cmd, t_shell_state *shell_state);
+char	**get_env_paths(char **envp);
+char	*get_cmd_path(char *cmd, char **envp);
+int	execute_cmd(t_command *cmd, char **envp, t_shell_state *shell_state);
+
+#endif

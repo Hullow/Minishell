@@ -3,17 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   token_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: francis <francis@student.42.fr>            +#+  +:+       +#+        */
+/*   By: cmegret <cmegret@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/07 19:00:54 by cmegret           #+#    #+#             */
-/*   Updated: 2024/09/13 19:21:37 by francis          ###   ########.fr       */
+/*   Updated: 2024/11/01 18:33:41 by cmegret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../header/Minishell.h"
 
 // returns the number of tokens in our linked list
-int	ft_count_token_list_args(struct s_token *tok)
+int	ft_count_token_list_args(t_token *tok)
 {
 	int	i;
 
@@ -27,9 +27,9 @@ int	ft_count_token_list_args(struct s_token *tok)
 }
 
 // prints each token's contents (tok->str)
-void	ft_print_all_token_strings(struct s_token **head)
+void	ft_print_all_token_strings(t_token **head)
 {
-	struct s_token	*iterator;
+	t_token	*iterator;
 
 	iterator = *head;
 	while (iterator != 0)
@@ -40,7 +40,7 @@ void	ft_print_all_token_strings(struct s_token **head)
 }
 
 // Traverses the linked list of tokens and prints each token's type, if any
-void	ft_tokenization_checker(struct s_token *head)
+void	ft_tokenization_checker(t_token *head)
 {
 	const char	*token_type_strings[9] = {
 		"UNDEFINED TOKEN", "WORD", "NEWLINE", "REDIR_INPUT", "REDIR_OUTPUT",

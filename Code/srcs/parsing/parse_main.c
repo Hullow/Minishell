@@ -6,21 +6,21 @@
 /*   By: cmegret <cmegret@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/06 17:35:29 by cmegret           #+#    #+#             */
-/*   Updated: 2024/10/30 16:27:20 by cmegret          ###   ########.fr       */
+/*   Updated: 2024/11/01 18:34:50 by cmegret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../header/Minishell.h"
 
-struct s_token *ft_parse_command(struct s_token *token_seq);
-struct s_token *ft_parse_cmd_name_and_suffix(struct s_token *token_seq);
-struct s_token *ft_parse_cmd_name(struct s_token *token_seq);
-struct s_token *ft_parse_cmd_suffix(struct s_token *token_seq, \
+t_token *ft_parse_command(t_token *token_seq);
+t_token *ft_parse_cmd_name_and_suffix(t_token *token_seq);
+t_token *ft_parse_cmd_name(t_token *token_seq);
+t_token *ft_parse_cmd_suffix(t_token *token_seq, \
 int tokens_to_evaluate);
 
-struct s_token	*ft_parse_operators(struct s_token *head)
+t_token	*ft_parse_operators(t_token *head)
 {
-	struct s_token	*iterator;
+	t_token	*iterator;
 
 	iterator = head;
 	while (iterator)
@@ -43,8 +43,8 @@ struct s_token	*ft_parse_operators(struct s_token *head)
 	return (head);
 }
 
-static int	ft_allocate_single_arg(struct s_token *tkn,
-	struct s_command *cmd_sequence)
+static int	ft_allocate_single_arg(t_token *tkn,
+	t_command *cmd_sequence)
 {
 	cmd_sequence->args = malloc(2 * sizeof(char *));
 	if (!cmd_sequence->args)
@@ -55,8 +55,8 @@ static int	ft_allocate_single_arg(struct s_token *tkn,
 	return (0);
 }
 
-static int	ft_allocate_multiple_args(struct s_token *tkn,
-	struct s_command *cmd_sequence, int arg_count)
+static int	ft_allocate_multiple_args(t_token *tkn,
+	t_command *cmd_sequence, int arg_count)
 {
 	int	i;
 
@@ -82,7 +82,7 @@ static int	ft_allocate_multiple_args(struct s_token *tkn,
 	return (0);
 }
 
-static int	ft_process_args(struct s_token *tkn, struct s_command *cmd_sequence)
+static int	ft_process_args(t_token *tkn, t_command *cmd_sequence)
 {
 	int	arg_count;
 
@@ -105,12 +105,12 @@ static int	ft_process_args(struct s_token *tkn, struct s_command *cmd_sequence)
 // Parses our linked list of tokens, starting from left (head)
 // Extracts the command and the arguments 
 // Outputs a struct command with the command name and the arguments
-struct s_command	*ft_parse_old(struct s_token *head)
+t_command	*ft_parse_old(t_token *head)
 {
-	struct s_command	*cmd_sequence;
-	struct s_token		*tkn;
+	t_command	*cmd_sequence;
+	t_token		*tkn;
 
-	cmd_sequence = malloc(sizeof(struct s_command));
+	cmd_sequence = malloc(sizeof(t_command));
 	if (!cmd_sequence)
 		return (NULL);
 	tkn = head;
@@ -123,12 +123,12 @@ struct s_command	*ft_parse_old(struct s_token *head)
 	return (cmd_sequence);
 }
 
-struct s_command	*ft_parse(struct s_token *head)
+t_command	*ft_parse(t_token *head)
 {
-	struct s_command	*cmd_sequence;
-	struct s_token		*tkn;
+	t_command	*cmd_sequence;
+	t_token		*tkn;
 
-	cmd_sequence = malloc(sizeof(struct s_command));
+	cmd_sequence = malloc(sizeof(t_command));
 	if (!cmd_sequence)
 		return (NULL);
 	tkn = head;
@@ -171,7 +171,7 @@ cmd_suffix       : 			  WORD
 // command   		: cmd_name cmd_suffix
 //                  | cmd_name
 //                  ;
-struct s_token *ft_parse_command(struct s_token *token_seq)
+t_token *ft_parse_command(t_token *token_seq)
 {
 	if (ft_parse_cmd_name(token_seq))
 		return (token_seq);
@@ -184,7 +184,7 @@ struct s_token *ft_parse_command(struct s_token *token_seq)
 
 // grammar rule implemented
 // 		command   		 : cmd_name cmd_suffix
-struct s_token *ft_parse_cmd_name_and_suffix(struct s_token *token_seq)
+t_token *ft_parse_cmd_name_and_suffix(t_token *token_seq)
 {
 	if (token_seq->next) // if there is another token
 	{
@@ -208,7 +208,7 @@ struct s_token *ft_parse_cmd_name_and_suffix(struct s_token *token_seq)
 
 // grammar rule  implemented
 // 		cmd_name         : WORD
-struct s_token *ft_parse_cmd_name(struct s_token *token_seq)
+t_token *ft_parse_cmd_name(t_token *token_seq)
 {
 	if (token_seq == NULL)
 		return (NULL);
@@ -229,10 +229,10 @@ struct s_token *ft_parse_cmd_name(struct s_token *token_seq)
 //
 // 		cmd_suffix	: 			  WORD
 //  				| cmd_suffix  WORD
-struct s_token *ft_parse_cmd_suffix(struct s_token *token_seq, \
+t_token *ft_parse_cmd_suffix(t_token *token_seq, \
 int tokens_to_evaluate)
 {
-	struct s_token *iterator;
+	t_token *iterator;
 	int				i;
 
 	iterator = token_seq;

@@ -1,19 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   token_utils.c                                      :+:      :+:    :+:   */
+/*   token_checks.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cmegret <cmegret@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/22 16:35:11 by francis           #+#    #+#             */
-/*   Updated: 2024/09/06 17:33:20 by cmegret          ###   ########.fr       */
+/*   Updated: 2024/11/01 18:33:17 by cmegret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../header/Minishell.h"
 
 // checks if previous character was part of an undelimited operator token
-int	ft_previous_char_is_undelimited_operator(struct s_token *tok)
+int	ft_previous_char_is_undelimited_operator(t_token *tok)
 {
 	if (tok && tok->is_operator && !tok->is_delimited)
 		return (1);
@@ -38,7 +38,7 @@ int	ft_is_blank(char c)
 
 // checks if previous character was part of a word
 // and that that word was not delimited
-int	ft_previous_char_part_of_word(struct s_token *tok)
+int	ft_previous_char_part_of_word(t_token *tok)
 {
 	if (tok && tok->type == WORD && !tok->is_delimited)
 		return (1);
