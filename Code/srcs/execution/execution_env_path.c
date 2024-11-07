@@ -6,7 +6,7 @@
 /*   By: cmegret <cmegret@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/07 19:02:56 by cmegret           #+#    #+#             */
-/*   Updated: 2024/09/20 12:20:45 by cmegret          ###   ########.fr       */
+/*   Updated: 2024/11/07 14:00:14 by cmegret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ A shell execution environment consists of the following:
 	- Shell parameters from the environment inherited by the shell when it begins
 		(see the `export` built-in)
 
-Reference: See [Shell Execution Environment](https://pubs.opengroup.org/onlinepubs/9699919799/utilities/V3_chap02.html#tag_18_12)
+Reference: See [Shell Execution Environment (https://pubs.opengroup.org/onlinepubs/9699919799/utilities/V3_chap02.html#tag_18_12)
 */
 
 /**
