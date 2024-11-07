@@ -6,7 +6,7 @@
 /*   By: cmegret <cmegret@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/07 12:23:09 by cmegret           #+#    #+#             */
-/*   Updated: 2024/11/01 18:53:45 by cmegret          ###   ########.fr       */
+/*   Updated: 2024/11/07 14:08:54 by cmegret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,19 +54,58 @@ int	ft_is_and_execute_builtin(t_command *cmd, t_shell_state *shell_state)
  * executed.
  * @param envp An array of environment variables.
  */
-static void	handle_child_process(t_command *cmd, char **envp)
+static void	handle_child_process(t_command *cmd_list, char **envp)
 {
 	char	*cmd_path;
 
-	cmd_path = NULL;
-	cmd_path = get_cmd_path(cmd->cmd_name, envp);
-	if (cmd_path == NULL)
-		error_and_exit("get_cmd_path");
-	else if (execve(cmd_path, cmd->args, envp) == -1)
+	if (ft_strchr(cmd_list->cmd_name, '/') != NULL)
+		cmd_path = cmd_list->cmd_name;
+	else
+	{
+		cmd_path = get_cmd_path(cmd_list->cmd_name, envp);
+		if (cmd_path == NULL)
+			error_and_exit("get_cmd_path");
+	}
+	if (execve(cmd_path, cmd_list->args, envp) == -1)
 	{
 		free(cmd_path);
 		error_and_exit("execve");
 	}
+}
+
+static void	setup_pipes(int *fd, int in_fd, t_command *cmd_list)
+{
+	if (cmd_list->next != NULL)
+	{
+		if (pipe(fd) == -1)
+			error_and_exit("pipe");
+	}
+	if (in_fd != 0)
+	{
+		dup2(in_fd, STDIN_FILENO);
+		close(in_fd);
+	}
+	if (cmd_list->next != NULL)
+	{
+		dup2(fd[1], STDOUT_FILENO);
+		close(fd[1]);
+		close(fd[0]);
+	}
+}
+
+static void	handle_parent_process(pid_t pid, int *fd, int *in_fd,
+			t_command *cmd_list)
+{
+	waitpid(pid, NULL, 0);
+	if (*in_fd != 0)
+		close(*in_fd);
+	if (cmd_list->next != NULL)
+	{
+		close(fd[1]);
+		*in_fd = fd[0];
+	}
+	else
+		close(fd[0]);
 }
 
 /**
@@ -94,43 +133,20 @@ int	execute_cmd(t_command *cmd_list, char **envp, t_shell_state *shell_state)
 	in_fd = 0;
 	while (cmd_list)
 	{
-		if (cmd_list->next != NULL)
+		if (ft_is_and_execute_builtin(cmd_list, shell_state) == 0)
 		{
-			if (pipe(fd) == -1)
-				error_and_exit("pipe");
+			cmd_list = cmd_list->next;
+			continue ;
 		}
+		setup_pipes(fd, in_fd, cmd_list);
 		pid = fork();
 		if (pid == 0)
-		{
-			if (in_fd != 0)
-			{
-				dup2(in_fd, STDIN_FILENO);
-				close(in_fd);
-			}
-			if (cmd_list->next != NULL)
-			{
-				dup2(fd[1], STDOUT_FILENO);
-				close(fd[1]);
-				close(fd[0]);
-			}
-			if (ft_is_and_execute_builtin(cmd_list, shell_state) == 0)
-				exit(0);
 			handle_child_process(cmd_list, envp);
-		}
 		else if (pid < 0)
 			error_and_exit("fork");
 		else
 		{
-			waitpid(pid, NULL, 0);
-			if (in_fd != 0)
-				close(in_fd);
-			if (cmd_list->next != NULL)
-			{
-				close(fd[1]);
-				in_fd = fd[0];
-			}
-			else
-				close(fd[0]);
+			handle_parent_process(pid, fd, &in_fd, cmd_list);
 			cmd_list = cmd_list->next;
 		}
 	}
