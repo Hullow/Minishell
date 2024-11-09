@@ -6,7 +6,7 @@
 /*   By: cmegret <cmegret@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/07 19:00:54 by cmegret           #+#    #+#             */
-/*   Updated: 2024/11/01 18:33:41 by cmegret          ###   ########.fr       */
+/*   Updated: 2024/11/09 10:56:12 by cmegret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ void	ft_print_all_token_strings(t_token **head)
 void	ft_tokenization_checker(t_token *head)
 {
 	const char	*token_type_strings[9] = {
-		"UNDEFINED TOKEN", "WORD", "NEWLINE", "REDIR_INPUT", "REDIR_OUTPUT",
+		"UNDEFINED TOKEN", "WORD", "MINISHELL_NEWLINE", "REDIR_INPUT", "REDIR_OUTPUT",
 		"REDIR_APPEND", "REDIR_HEREDOC", "PIPE", "END_OF_INPUT"
 	};
 

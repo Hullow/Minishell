@@ -6,7 +6,7 @@
 #    By: cmegret <cmegret@student.42lausanne.ch>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/07/19 14:53:36 by cmegret           #+#    #+#              #
-#    Updated: 2024/11/07 13:58:20 by cmegret          ###   ########.fr        #
+#    Updated: 2024/11/09 10:54:56 by cmegret          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -48,8 +48,8 @@ CC = gcc
 
 # -g3 -fsanitize=address
 # Flags de compilation
-CFLAGS = -Wall -Wextra -Werror
-LIBFLAGS = -L./lib -lft -lftprintf -lreadline
+CFLAGS = -Wall -Wextra -Werror -I/opt/homebrew/opt/readline/include
+LIBFLAGS = -L./lib -lft -lftprintf -L/opt/homebrew/opt/readline/lib -lreadline
 
 # Fichiers sources et objets
 SRCS = main/main.c \

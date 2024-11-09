@@ -6,7 +6,7 @@
 /*   By: cmegret <cmegret@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/07 12:23:09 by cmegret           #+#    #+#             */
-/*   Updated: 2024/11/07 14:08:54 by cmegret          ###   ########.fr       */
+/*   Updated: 2024/11/09 11:52:58 by cmegret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,11 +26,11 @@
  */
 int	ft_is_and_execute_builtin(t_command *cmd, t_shell_state *shell_state)
 {
-	if (ft_execute_echo(cmd) == 0)
+	if (ft_execute_echo(cmd, shell_state) == 0)
 		return (0);
-	else if (ft_execute_cd(cmd) == 0)
+	else if (ft_execute_cd(cmd, shell_state) == 0)
 		return (0);
-	else if (ft_execute_pwd(cmd) == 0)
+	else if (ft_execute_pwd(cmd, shell_state) == 0)
 		return (0);
 	else if (ft_execute_export(cmd, shell_state) == 0)
 		return (0);
@@ -93,10 +93,16 @@ static void	setup_pipes(int *fd, int in_fd, t_command *cmd_list)
 	}
 }
 
-static void	handle_parent_process(pid_t pid, int *fd, int *in_fd,
-			t_command *cmd_list)
+static int	handle_parent_process(pid_t pid, int *fd, int *in_fd,
+				t_command *cmd_list)
 {
-	waitpid(pid, NULL, 0);
+	int	status;
+	int	exit_code;
+
+	exit_code = -1;
+	waitpid(pid, &status, 0);
+	if (WIFEXITED(status))
+		exit_code = WEXITSTATUS(status);
 	if (*in_fd != 0)
 		close(*in_fd);
 	if (cmd_list->next != NULL)
@@ -106,6 +112,7 @@ static void	handle_parent_process(pid_t pid, int *fd, int *in_fd,
 	}
 	else
 		close(fd[0]);
+	return (exit_code);
 }
 
 /**
@@ -146,7 +153,8 @@ int	execute_cmd(t_command *cmd_list, char **envp, t_shell_state *shell_state)
 			error_and_exit("fork");
 		else
 		{
-			handle_parent_process(pid, fd, &in_fd, cmd_list);
+			shell_state->last_exit_status
+				= handle_parent_process(pid, fd, &in_fd, cmd_list);
 			cmd_list = cmd_list->next;
 		}
 	}

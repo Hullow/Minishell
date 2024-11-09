@@ -6,23 +6,28 @@
 /*   By: cmegret <cmegret@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 14:40:07 by cmegret           #+#    #+#             */
-/*   Updated: 2024/10/25 11:33:06 by cmegret          ###   ########.fr       */
+/*   Updated: 2024/11/09 10:48:23 by cmegret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../header/Minishell.h"
 
+int	g_signal = 0;
+
+// Gestionnaire pour SIGINT (CTRL+C)
 void	handle_sigint(int sig)
 {
-	(void)sig;
-	write(STDOUT_FILENO, "\n", 1);
-	rl_on_new_line();
-	//rl_replace_line("", 0);
-	rl_redisplay();
+	if (sig == SIGINT)
+	{
+		write(STDOUT_FILENO, "\n", 1);
+		rl_on_new_line();
+		rl_replace_line("", 0);
+		rl_redisplay();
+	}
 }
 
+// Gestionnaire pour SIGQUIT (CTRL+\)
 void	handle_sigquit(int sig)
 {
 	(void)sig;
-	// Ne rien faire pour 'ctrl-\'
 }

@@ -6,7 +6,7 @@
 /*   By: cmegret <cmegret@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/07 13:57:58 by cmegret           #+#    #+#             */
-/*   Updated: 2024/11/07 13:58:33 by cmegret          ###   ########.fr       */
+/*   Updated: 2024/11/09 11:34:01 by cmegret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ int	ft_execute_env(t_command *cmd, t_shell_state *shell_state)
 {
 	if (ft_strncmp(cmd->cmd_name, "env", 3) == 0)
 	{
-		ft_env(shell_state->envp);
+		ft_env(shell_state);
 		return (0);
 	}
 	return (1);
@@ -49,7 +49,7 @@ int	ft_execute_exit(t_command *cmd, t_shell_state *shell_state)
 {
 	if (ft_strncmp(cmd->cmd_name, "exit", 4) == 0)
 	{
-		ft_exit(&shell_state->envp, shell_state);
+		ft_exit(shell_state, cmd->args);
 		return (0);
 	}
 	return (1);

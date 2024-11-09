@@ -6,7 +6,7 @@
 /*   By: cmegret <cmegret@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/07 12:23:09 by cmegret           #+#    #+#             */
-/*   Updated: 2024/11/07 13:58:28 by cmegret          ###   ########.fr       */
+/*   Updated: 2024/11/09 11:55:02 by cmegret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,11 +23,11 @@
  * containing the command to be checked.
  * @return 0 if the command is "echo" and was executed, 1 otherwise.
  */
-int	ft_execute_echo(t_command *cmd)
+int	ft_execute_echo(t_command *cmd, t_shell_state *shell_state)
 {
 	if (ft_strncmp(cmd->cmd_name, "echo", 4) == 0)
 	{
-		ft_echo(cmd->args);
+		ft_echo(cmd->args, shell_state);
 		return (0);
 	}
 	return (1);
@@ -44,11 +44,11 @@ int	ft_execute_echo(t_command *cmd)
  * to be checked.
  * @return 0 if the command is "cd" and was executed, 1 otherwise.
  */
-int	ft_execute_cd(t_command *cmd)
+int	ft_execute_cd(t_command *cmd, t_shell_state *shell_state)
 {
 	if (ft_strncmp(cmd->cmd_name, "cd", 2) == 0)
 	{
-		ft_cd(cmd);
+		ft_cd(cmd, shell_state);
 		return (0);
 	}
 	return (1);
@@ -64,11 +64,11 @@ int	ft_execute_cd(t_command *cmd)
  * to be checked.
  * @return 0 if the command is "pwd" and was executed, 1 otherwise.
  */
-int	ft_execute_pwd(t_command *cmd)
+int	ft_execute_pwd(t_command *cmd, t_shell_state *shell_state)
 {
 	if (ft_strncmp(cmd->cmd_name, "pwd", 3) == 0)
 	{
-		ft_pwd();
+		ft_pwd(shell_state);
 		return (0);
 	}
 	return (1);
@@ -90,7 +90,7 @@ int	ft_execute_export(t_command *cmd, t_shell_state *shell_state)
 {
 	if (ft_strncmp(cmd->cmd_name, "export", 6) == 0)
 	{
-		ft_export(&shell_state->envp, cmd->args);
+		ft_export(shell_state, cmd->args);
 		return (0);
 	}
 	return (1);
@@ -112,7 +112,7 @@ int	ft_execute_unset(t_command *cmd, t_shell_state *shell_state)
 {
 	if (ft_strncmp(cmd->cmd_name, "unset", 5) == 0)
 	{
-		ft_unset(&shell_state->envp, cmd->args);
+		ft_unset(shell_state, cmd->args);
 		return (0);
 	}
 	return (1);

@@ -6,7 +6,7 @@
 /*   By: cmegret <cmegret@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 14:30:52 by cmegret           #+#    #+#             */
-/*   Updated: 2024/11/01 18:51:58 by cmegret          ###   ########.fr       */
+/*   Updated: 2024/11/09 10:28:53 by cmegret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,5 +27,7 @@ int	main(int argc, char **argv, char **envp)
 		free(prompt);
 		prompt = ft_prompt();
 	}
+	// Gère la fin de fichier (CTRL+D)
+	write(STDOUT_FILENO, "exit\n", 5);
 	return (0);
 }

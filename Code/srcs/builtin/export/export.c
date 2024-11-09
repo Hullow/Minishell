@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main_export.c                                      :+:      :+:    :+:   */
+/*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cmegret <cmegret@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/22 17:18:01 by cmegret           #+#    #+#             */
-/*   Updated: 2024/09/27 15:28:06 by cmegret          ###   ########.fr       */
+/*   Updated: 2024/11/09 11:49:29 by cmegret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,11 +38,10 @@ char	*get_var_name(const char *var)
 	if (!name)
 		error_and_exit("malloc failed");
 	ft_strlcpy(name, var, name_len + 1);
-	name[name_len] = '\0';
 	return (name);
 }
 
-void	ft_export(char ***envp, char **args)
+void	ft_export(t_shell_state *shell_state, char **args)
 {
 	char	*name;
 	int		i;
@@ -52,9 +51,16 @@ void	ft_export(char ***envp, char **args)
 	{
 		name = get_var_name(args[i]);
 		if (!is_valid_name(name))
+		{
 			ft_printf("export: '%s': not a valid identifier\n", args[i]);
-		else if (!update_existing_var(envp, name, args[i]))
-			add_new_var(envp, args[i]);
+			shell_state->last_exit_status = 1;
+		}
+		else
+		{
+			if (!update_existing_var(&shell_state->envp, name, args[i]))
+				add_new_var(&shell_state->envp, args[i]);
+			shell_state->last_exit_status = 0;
+		}
 		free(name);
 		i++;
 	}

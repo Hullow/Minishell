@@ -6,7 +6,7 @@
 /*   By: cmegret <cmegret@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/11 15:00:25 by cmegret           #+#    #+#             */
-/*   Updated: 2024/11/07 12:06:32 by cmegret          ###   ########.fr       */
+/*   Updated: 2024/11/09 11:25:22 by cmegret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,19 +30,30 @@
  * @note It updates the current working directory in the shell state.
  * @note It updates the OLDPWD and PWD environment variables.
  */
-void	ft_cd(t_command *cmd)
+
+void	ft_cd(t_command *cmd, t_shell_state *shell_state)
 {
 	char	*path;
+	char	*oldpwd;
+	char	*newpwd;
 
 	path = cmd->args[1];
-	if ((ft_strncmp(cmd->args[0], "cd", 2) == 0 && path == NULL)
-		|| ft_strncmp(path, "~", 1) == 0)
+	oldpwd = getcwd(NULL, 0);
+	if (!path || ft_strncmp(path, "~", 2) == 0)
 		path = getenv("HOME");
-	else if (ft_strncmp(path, "..", 2) == 0)
+	else if (ft_strncmp(path, "..", 3) == 0)
 		path = "..";
 	if (chdir(path) == -1)
 	{
-		perror("Error with the cd command");
+		perror("cd");
+		shell_state->last_exit_status = 1;
+		free(oldpwd);
 		return ;
 	}
+	update_env_var(&shell_state->envp, "OLDPWD", oldpwd);
+	free(oldpwd);
+	newpwd = getcwd(NULL, 0);
+	update_env_var(&shell_state->envp, "PWD", newpwd);
+	free(newpwd);
+	shell_state->last_exit_status = 0;
 }
