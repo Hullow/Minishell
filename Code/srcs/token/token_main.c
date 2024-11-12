@@ -6,14 +6,14 @@
 /*   By: cmegret <cmegret@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/06 17:19:58 by cmegret           #+#    #+#             */
-/*   Updated: 2024/11/01 18:52:40 by cmegret          ###   ########.fr       */
+/*   Updated: 2024/11/12 16:12:42 by cmegret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../header/Minishell.h"
 
 // Initializes a new token
-static t_token	*ft_init_token(void)
+t_token	*ft_init_token(void)
 {
 	t_token	*tok;
 
@@ -61,5 +61,6 @@ t_token	*ft_tokenize(char *prompt)
 		i += ft_process_prompt(prompt, i, &tok);
 	if (!prompt[i])
 		tok = ft_tokenize_end_of_input(tok);
+	ft_pathname_expansion(&head);
 	return (head);
 }

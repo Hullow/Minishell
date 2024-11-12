@@ -6,7 +6,7 @@
 /*   By: cmegret <cmegret@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/19 13:48:14 by francis           #+#    #+#             */
-/*   Updated: 2024/11/09 10:56:01 by cmegret          ###   ########.fr       */
+/*   Updated: 2024/11/12 16:13:00 by cmegret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,8 @@
 # include <sys/types.h>
 # include <stdbool.h>
 # include <unistd.h>
+# include <dirent.h>
+# include <string.h>
 
 # include "../lib/libft/libft.h"
 # include "../lib/ft_printf/ft_printf.h"
@@ -29,6 +31,7 @@
 # include "Builtin.h"
 # include "Execution.h"
 # include "Signal.h"
+# include "Pathname.h"
 
 // Token types
 # define WORD 1
@@ -91,6 +94,7 @@ int			ft_previous_char_is_undelimited_operator(t_token *tok);
 int			ft_is_operator_character(char c);
 int			ft_is_blank(char c);
 int			ft_previous_char_part_of_word(t_token *tok);
+t_token		*ft_init_token(void);
 
 // Parsing
 t_token		*ft_parse_operators(t_token *head);
