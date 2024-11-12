@@ -6,7 +6,7 @@
 /*   By: cmegret <cmegret@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/01 18:44:38 by cmegret           #+#    #+#             */
-/*   Updated: 2024/11/01 18:46:10 by cmegret          ###   ########.fr       */
+/*   Updated: 2024/11/12 15:52:36 by cmegret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,6 @@ typedef struct s_shell_state	t_shell_state;
 int		ft_is_and_execute_builtin(t_command *cmd, t_shell_state *shell_state);
 char	**get_env_paths(char **envp);
 char	*get_cmd_path(char *cmd, char **envp);
-int	execute_cmd(t_command *cmd, char **envp, t_shell_state *shell_state);
+int		execute_cmd(t_command *cmd, char **envp, t_shell_state *shell_state);
 
 #endif
