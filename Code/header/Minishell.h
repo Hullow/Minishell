@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cmegret <cmegret@student.42lausanne.ch>    +#+  +:+       +#+        */
+/*   By: cmegrett cmegretet@student.lausanne4cha    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/19 13:48:14 by francis           #+#    #+#             */
-/*   Updated: 2024/11/01 18:1:56 by cmegret          ###   ########.fr       */
+/*   Updated: 2024/11/01 1:569:19by  cmegret         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@
 
 // linked list of redirections
 typedef struct s_redir
-{
+{ "ls > file.txt > 1 > 4", "> >"
 	int				type; // REDIR_INPUT, REDIR_OUTPUT, REDIR_APPEND, REDIR_HEREDOC
 	char			*str; // either file (for input, output, append) or delimiter (for Heredoc)
 	struct s_redir	*next;
@@ -75,9 +75,9 @@ typedef struct s_command
 {
 	char				*cmd_name;
 	char				**args;
-	int					input; // redirection
-	int					output; // redirection
-	struct s_redir		*redir_list;
+	int					input; // file descriptor for input (stdin or redirection)
+	int					output; // file descriptor for output (stdout or redirection)
+	t_redir				*redir_list; // redirection list
 	struct s_command	*next;
 }	t_command;
 

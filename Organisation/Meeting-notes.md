@@ -91,3 +91,17 @@
 # 22/10/24
 - Discussed bug with rl_replace_line/readline library on OS X (not fixed)
 - Discussed next steps (cmegret execution of pipes, fallan parsing of redirs)
+
+# 1/11/24
+- Discussed pipelines, redirections
+- To do fallan: 
+	- finish parsing redirections
+	- then pipeline parsing
+	- then put pipeline parsing and execution together with cmegret and check that it works
+- To do cmegret:
+	- finish pipeline execution
+	- then check that it works properly (execution environment, subshells in general: "./" cmd_path, etc.)
+
+- After that:
+	- signals ?
+	- redirection execution together with cmegret (or by fallan)

@@ -55,8 +55,8 @@ void	ft_initialize_cmd_sequence(t_command *cmd_sequence)
 t_command	*ft_parse(t_token *tok)
 {
 	t_command	*cmd_sequence;
-	t_cmd_args			*arg_list = NULL;
-	t_redir				*redir_list = NULL;
+	t_cmd_args	*arg_list = NULL;
+	t_redir		*redir_list = NULL;
 
 	cmd_sequence = malloc(sizeof(t_command)); // malloc a node to our list of commands (cmd_sequence)
 	if (!cmd_sequence)
@@ -73,5 +73,6 @@ t_command	*ft_parse(t_token *tok)
 	}
 	if (ft_allocate_args(cmd_sequence, arg_list) == -1)
 		return (NULL);
+	cmd_sequence->redir_list = redir_list;
 	return (cmd_sequence);
 }

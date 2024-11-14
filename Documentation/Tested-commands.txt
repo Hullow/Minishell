@@ -893,3 +893,11 @@ echo hello
 sh
 echo $VAR
 $VAR
+
+
+echo "hello" > file.txt > file2.txt
+ls | grep file.txt
+ls > temp | grep file.txt
+cat temp
+ls > file2.txt | wc -l
+ls | wc -l
