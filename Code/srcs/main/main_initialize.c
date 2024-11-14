@@ -6,7 +6,7 @@
 /*   By: cmegret <cmegret@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/22 17:31:30 by cmegret           #+#    #+#             */
-/*   Updated: 2024/11/09 10:28:00 by cmegret          ###   ########.fr       */
+/*   Updated: 2024/11/14 15:49:00 by cmegret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,6 +84,22 @@ static void	duplicate_env(t_shell_state *shell_state,
 }
 
 /**
+ * @brief Configure le terminal pour désactiver l'écho du caractère ^C.
+ *
+ * Cette fonction obtient les attributs actuels du terminal, modifie les
+ * attributs pour désactiver l'écho du caractère ^C (généré par Ctrl+C),
+ * et applique les nouveaux attributs immédiatement.
+ */
+static void	setup_terminal(void)
+{
+	struct termios	term;
+
+	tcgetattr(STDIN_FILENO, &term);
+	term.c_lflag &= ~ECHOCTL;
+	tcsetattr(STDIN_FILENO, TCSANOW, &term);
+}
+
+/**
  * @brief Initializes the shell state.
  *
  * This function initializes the shell state by setting up signal handlers,
@@ -100,6 +116,7 @@ void	ft_initialize(int argc, char **argv,
 {
 	int	count;
 
+	setup_terminal();
 	signal(SIGINT, handle_sigint);
 	signal(SIGQUIT, handle_sigquit);
 	check_arguments(argc, argv);

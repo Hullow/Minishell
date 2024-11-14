@@ -6,7 +6,7 @@
 /*   By: cmegret <cmegret@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/06 17:19:58 by cmegret           #+#    #+#             */
-/*   Updated: 2024/11/12 16:37:23 by cmegret          ###   ########.fr       */
+/*   Updated: 2024/11/14 11:21:33 by cmegret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,6 @@ void ft_pathname_expansion(t_token **tokens)
 
 int ft_is_pathname_expansion_needed(char *value)
 {
-	// Implémentez la logique pour déterminer si l'expansion de fichier est nécessaire
 	return (ft_strchr(value, '*') != NULL || ft_strchr(value, '?') != NULL);
 }
 
@@ -56,7 +55,7 @@ char **ft_expand_pathname(char *pattern)
 		if (ft_match_pattern(entry->d_name, pattern))
 		{
 			paths = realloc(paths, sizeof(char *) * (count + 2));
-			paths[count] = strdup(entry->d_name);
+			paths[count] = ft_strdup(entry->d_name);
 			count++;
 		}
 	}

@@ -6,42 +6,11 @@
 /*   By: cmegret <cmegret@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/07 12:23:09 by cmegret           #+#    #+#             */
-/*   Updated: 2024/11/09 16:25:43 by cmegret          ###   ########.fr       */
+/*   Updated: 2024/11/14 15:54:57 by cmegret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../header/Minishell.h"
-
-/**
- * @brief Checks if the command is a builtin and executes it.
- *
- * This function checks if the given command corresponds to a builtin command.
- * If it does, it calls the appropriate sub-function to execute the builtin
- * command and returns 0. Otherwise, it returns 1.
- *
- * @param cmd A pointer to the command structure containing the command
- * to be checked.
- * @param shell_state A pointer to the shell state structure.
- * @return 0 if the command is a builtin and was executed, 1 otherwise.
- */
-int	ft_is_and_execute_builtin(t_command *cmd, t_shell_state *shell_state)
-{
-	if (ft_execute_echo(cmd, shell_state) == 0)
-		return (0);
-	else if (ft_execute_cd(cmd, shell_state) == 0)
-		return (0);
-	else if (ft_execute_pwd(cmd, shell_state) == 0)
-		return (0);
-	else if (ft_execute_export(cmd, shell_state) == 0)
-		return (0);
-	else if (ft_execute_unset(cmd, shell_state) == 0)
-		return (0);
-	else if (ft_execute_env(cmd, shell_state) == 0)
-		return (0);
-	else if (ft_execute_exit(cmd, shell_state) == 0)
-		return (0);
-	return (1);
-}
 
 /**
  * @brief Handles the execution of a command in a child process.
@@ -140,7 +109,7 @@ int	execute_cmd(t_command *cmd_list, char **envp, t_shell_state *shell_state)
 	in_fd = 0;
 	while (cmd_list)
 	{
-		if (ft_is_and_execute_builtin(cmd_list, shell_state) == 0)
+		if (ft_execute_builtin(cmd_list, shell_state) == 0)
 		{
 			cmd_list = cmd_list->next;
 			continue ;

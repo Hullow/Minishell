@@ -6,7 +6,7 @@
 /*   By: cmegret <cmegret@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/06 17:19:58 by cmegret           #+#    #+#             */
-/*   Updated: 2024/11/12 16:12:42 by cmegret          ###   ########.fr       */
+/*   Updated: 2024/11/14 15:34:29 by cmegret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,5 @@ t_token	*ft_tokenize(char *prompt)
 		i += ft_process_prompt(prompt, i, &tok);
 	if (!prompt[i])
 		tok = ft_tokenize_end_of_input(tok);
-	ft_pathname_expansion(&head);
 	return (head);
 }

@@ -829,3 +829,6 @@ find . -name "hello"
 touch
 stat
 file /usr/bin/ls
+
+VAR="../file.txt" 
+echo $VAR

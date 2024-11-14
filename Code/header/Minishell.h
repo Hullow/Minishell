@@ -6,7 +6,7 @@
 /*   By: cmegret <cmegret@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/19 13:48:14 by francis           #+#    #+#             */
-/*   Updated: 2024/11/12 16:13:00 by cmegret          ###   ########.fr       */
+/*   Updated: 2024/11/14 15:44:45 by cmegret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@
 # include <unistd.h>
 # include <dirent.h>
 # include <string.h>
+# include <termios.h>
 
 # include "../lib/libft/libft.h"
 # include "../lib/ft_printf/ft_printf.h"
