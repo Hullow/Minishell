@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_main.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cmegret <cmegret@student.42lausanne.ch>    +#+  +:+       +#+        */
+/*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/06 17:35:29 by cmegret           #+#    #+#             */
-/*   Updated: 2024/11/01 18:34:50 by cmegret          ###   ########.fr       */
+/*   Updated: 2024/11/14 16:25:22 by fallan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -134,7 +134,14 @@ t_command	*ft_parse(t_token *head)
 	tkn = head;
 	if (tkn->type == WORD)
 	{
+		if (!(tkn->str))
+		{
+			printf("no command found\n");
+			return (NULL);
+		}
 		cmd_sequence->cmd_name = ft_strdup(tkn->str);
+		if (!cmd_sequence->cmd_name)
+			return (NULL); // call error function ?
 		if (ft_process_args(tkn, cmd_sequence) == -1)
 			return (NULL); // call error function ?
 	}

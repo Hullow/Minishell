@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute_builtin.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cmegret <cmegret@student.42lausanne.ch>    +#+  +:+       +#+        */
+/*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/07 12:23:09 by cmegret           #+#    #+#             */
-/*   Updated: 2024/11/14 15:54:09 by cmegret          ###   ########.fr       */
+/*   Updated: 2024/11/14 16:13:45 by fallan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,14 @@ int	ft_is_builtin(char *cmd_name)
 
 int	ft_execute_builtin(t_command *cmd, t_shell_state *shell_state)
 {
+	if (!cmd)
+		printf("cmd undefined\n");
+	else if (!cmd->cmd_name)
+		printf("cmd>name undefined\n");
+	else
+		printf("cmd->name: %s\n", cmd->cmd_name);
+		
+		
 	if (ft_is_builtin(cmd->cmd_name) == 0)
 	{
 		if (ft_strncmp(cmd->cmd_name, "echo", 4) == 0)

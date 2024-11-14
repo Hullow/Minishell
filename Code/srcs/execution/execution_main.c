@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution_main.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cmegret <cmegret@student.42lausanne.ch>    +#+  +:+       +#+        */
+/*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/07 12:23:09 by cmegret           #+#    #+#             */
-/*   Updated: 2024/11/14 15:54:57 by cmegret          ###   ########.fr       */
+/*   Updated: 2024/11/14 16:20:09 by fallan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,6 +107,8 @@ int	execute_cmd(t_command *cmd_list, char **envp, t_shell_state *shell_state)
 	int		in_fd;
 
 	in_fd = 0;
+	if (!cmd_list->cmd_name) // move this 
+		return (1); 		 // to ft_parse if possible
 	while (cmd_list)
 	{
 		if (ft_execute_builtin(cmd_list, shell_state) == 0)
