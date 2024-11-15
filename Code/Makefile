@@ -6,7 +6,7 @@
 #    By: cmegret <cmegret@student.42lausanne.ch>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/07/19 14:53:36 by cmegret           #+#    #+#              #
-#    Updated: 2024/11/14 15:54:44 by cmegret          ###   ########.fr        #
+#    Updated: 2024/11/15 12:57:19 by cmegret          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -73,7 +73,6 @@ SRCS = main/main.c \
       builtin/echo/echo.c \
       builtin/exit/exit.c \
       signal/signal.c \
-	  pathname_expension/pathname_expension.c \
 
 # Add path prefix to SRCS files
 SRC = $(addprefix srcs/, $(SRCS))

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution_main.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
+/*   By: cmegret <cmegret@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/07 12:23:09 by cmegret           #+#    #+#             */
-/*   Updated: 2024/11/14 16:20:09 by fallan           ###   ########.fr       */
+/*   Updated: 2024/11/14 20:26:24 by cmegret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,19 @@ static void	handle_child_process(t_command *cmd_list, char **envp)
 	}
 }
 
+/**
+ * @brief Sets up pipes for inter-process communication.
+ *
+ * This function sets up the necessary pipes for communication between
+ * processes. It duplicates file descriptors to set up the standard input
+ * and output for the current command.
+ *
+ * @param fd An array of file descriptors for the pipe.
+ * @param in_fd The file descriptor for the input.
+ * @param cmd_list A pointer to the command structure containing
+ * the command to be
+ * executed.
+ */
 static void	setup_pipes(int *fd, int in_fd, t_command *cmd_list)
 {
 	if (cmd_list->next != NULL)
@@ -62,6 +75,21 @@ static void	setup_pipes(int *fd, int in_fd, t_command *cmd_list)
 	}
 }
 
+/**
+ * @brief Handles the parent process after forking.
+ *
+ * This function is called in the parent process after a fork. It waits for
+ * the child process to finish and retrieves its exit status. It also manages
+ * the file descriptors for the pipes.
+ *
+ * @param pid The process ID of the child process.
+ * @param fd An array of file descriptors for the pipe.
+ * @param in_fd A pointer to the file descriptor for the input.
+ * @param cmd_list A pointer to the command structure containing
+ * the command to be
+ * executed.
+ * @return The exit code of the child process.
+ */
 static int	handle_parent_process(pid_t pid, int *fd, int *in_fd,
 				t_command *cmd_list)
 {
@@ -107,8 +135,6 @@ int	execute_cmd(t_command *cmd_list, char **envp, t_shell_state *shell_state)
 	int		in_fd;
 
 	in_fd = 0;
-	if (!cmd_list->cmd_name) // move this 
-		return (1); 		 // to ft_parse if possible
 	while (cmd_list)
 	{
 		if (ft_execute_builtin(cmd_list, shell_state) == 0)
