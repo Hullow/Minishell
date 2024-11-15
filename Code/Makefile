@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: cmegret <cmegret@student.42lausanne.ch>    +#+  +:+       +#+         #
+#    By: francis <francis@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/07/19 14:53:36 by cmegret           #+#    #+#              #
-#    Updated: 2024/11/15 12:57:19 by cmegret          ###   ########.fr        #
+#    Updated: 2024/11/15 16:51:29 by francis          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -64,14 +64,14 @@ SRCS = main/main.c \
 	  execution/execution_main.c \
 	  execution/execution_env_path.c \
 	  execution/execute_builtin.c \
-	  builtin/cd/cd.c \
-      builtin/env/env.c \
-      builtin/export/export.c \
-      builtin/export/export_utils.c \
-      builtin/unset/unset.c \
-      builtin/pwd/pwd.c \
-      builtin/echo/echo.c \
-      builtin/exit/exit.c \
+	  builtin/cd.c \
+      builtin/env.c \
+      builtin/export.c \
+      builtin/export_utils.c \
+      builtin/unset.c \
+      builtin/pwd.c \
+      builtin/echo.c \
+      builtin/exit.c \
       signal/signal.c \
 
 # Add path prefix to SRCS files
