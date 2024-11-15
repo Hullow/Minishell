@@ -44,7 +44,7 @@
 
 // linked list of redirections
 typedef struct s_redir
-{ "ls > file.txt > 1 > 4", "> >"
+{
 	int				type; // REDIR_INPUT, REDIR_OUTPUT, REDIR_APPEND, REDIR_HEREDOC
 	char			*str; // either file (for input, output, append) or delimiter (for Heredoc)
 	struct s_redir	*next;
