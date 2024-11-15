@@ -6,22 +6,11 @@
 /*   By: cmegret <cmegret@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/07 19:02:56 by cmegret           #+#    #+#             */
-/*   Updated: 2024/09/20 12:20:45 by cmegret          ###   ########.fr       */
+/*   Updated: 2024/11/12 15:54:15 by cmegret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../header/Minishell.h"
-/*
-### 4.0.1. Shell Execution environment
-A shell execution environment consists of the following:
-	- Open files inherited upon invocation of the shell,
-		plus open files controlled by exec
-	- Working directory as set by `cd`
-	- Shell parameters from the environment inherited by the shell when it begins
-		(see the `export` built-in)
-
-Reference: See [Shell Execution Environment](https://pubs.opengroup.org/onlinepubs/9699919799/utilities/V3_chap02.html#tag_18_12)
-*/
 
 /**
  * @brief Retrieves the PATH environment variable and splits

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strncmp.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
+/*   By: cmegret <cmegret@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/18 15:23:50 by fallan            #+#    #+#             */
-/*   Updated: 2023/12/01 18:33:53 by fallan           ###   ########.fr       */
+/*   Updated: 2024/11/14 20:17:10 by cmegret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,30 +14,21 @@
 
 int	ft_strncmp(char *s1, char *s2, unsigned int n)
 {
+	if (s1 == NULL && s2 == NULL)
+		return (0);
+	else if (s1 == NULL)
+		return (-1);
+	else if (s2 == NULL)
+		return (1);
+	while (n > 0 && *s1 && (*s1 == *s2))
+	{
+		s1++;
+		s2++;
+		n--;
+	}
 	if (n == 0)
 		return (0);
-	else if (*s1 > 0 && *s2 == 0)
-		return ((unsigned char) *s1 - (unsigned char) *s2);
-	else if (*s1 == 0 && *s2 > 0)
-		return ((unsigned char) *s1 - (unsigned char) *s2);
-	else
-	{
-		while (n > 0 && *s1 && *s2)
-		{
-			if (*s1 == *s2)
-				n--;
-			else if (*s1 > *s2)
-				return ((unsigned char) *s1 - (unsigned char) *s2);
-			else if (*s1 < *s2)
-				return ((unsigned char) *s1 - (unsigned char) *s2);
-			if (n != 0)
-			{
-				s1++;
-				s2++;
-			}
-		}
-	}
-	return ((unsigned char) *s1 - (unsigned char) *s2);
+	return (*(unsigned char *)s1 - *(unsigned char *)s2);
 }
 
 /* #include <string.h>

@@ -6,34 +6,48 @@
 /*   By: cmegret <cmegret@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/19 13:48:14 by francis           #+#    #+#             */
-/*   Updated: 2024/09/27 14:55:59 by cmegret          ###   ########.fr       */
+/*   Updated: 2024/11/14 15:44:45 by cmegret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <readline/readline.h>
-#include <readline/history.h>
-#include <signal.h>
-#include <sys/wait.h>
-#include <sys/types.h>
-#include <stdbool.h>
+#ifndef MINISHELL_H
+# define MINISHELL_H
 
-#include "../lib/libft/libft.h"
-#include "../lib/ft_printf/ft_printf.h"
+# include <stdio.h>
+# include <stdlib.h>
+# include <readline/readline.h>
+# include <readline/history.h>
+# include <signal.h>
+# include <sys/wait.h>
+# include <sys/types.h>
+# include <stdbool.h>
+# include <unistd.h>
+# include <dirent.h>
+# include <string.h>
+# include <termios.h>
+
+# include "../lib/libft/libft.h"
+# include "../lib/ft_printf/ft_printf.h"
+
+# include "Builtin.h"
+# include "Execution.h"
+# include "Signal.h"
+# include "Pathname.h"
 
 // Token types
-#define WORD 1
-#define NEWLINE 2
-#define REDIR_INPUT 3
-#define REDIR_OUTPUT 4
-#define REDIR_APPEND 5
-#define REDIR_HEREDOC 6
-#define PIPE 7
-#define END_OF_INPUT 8
-#define SUFFIX 9 // TEMPORARY, FOR TESTING PURPOSES, REMOVE AFTERWARDS
+# define WORD 1
+# define MINISHELL_NEWLINE 2
+# define REDIR_INPUT 3
+# define REDIR_OUTPUT 4
+# define REDIR_APPEND 5
+# define REDIR_HEREDOC 6
+# define PIPE 7
+# define END_OF_INPUT 8
+# define SUFFIX 9 // TEMPORARY, FOR TESTING PURPOSES, REMOVE AFTERWARDS
 
-struct s_token
+extern int	g_signal;
+
+typedef struct s_token
 {
 	char			*str;
 	int				type;
@@ -43,76 +57,50 @@ struct s_token
 	// bool			is_single_quoted;
 	bool			is_operator;
 	struct s_token	*next;
-};
+}	t_token;
 
-struct s_command
+typedef struct s_command
 {
 	char				*cmd_name;
 	char				**args;
 	int					fd; // redirection
 	struct s_command	*next;
-};
+}	t_command;
 
-struct s_shell_state
+typedef struct s_shell_state
 {
-	char	*current_directory;
 	char	**envp;
-};
+	int		last_exit_status;
+}	t_shell_state;
 
 // Main
-int					main(int argc, char **argv, char **envp);
-void				ft_initialize(int argc, char **argv,
-						struct s_shell_state *shell_state, char **envp);
-void				error_and_exit(const char *message);
-char				*ft_prompt(void);
+int			main(int argc, char **argv, char **envp);
+void		ft_initialize(int argc, char **argv,
+				t_shell_state *shell_state, char **envp);
+void		error_and_exit(const char *message);
+char		*ft_prompt(void);
 
 // Tokenization
-struct s_token		*ft_create_new_token(struct s_token *tok);
-struct s_token		*ft_tokenize_end_of_input(struct s_token *tok);
-int					ft_continue_operator_token(char *prompt, int i,
-						struct s_token **tok);
-int					ft_new_operator_token(char *prompt, int i,
-						struct s_token **tok);
-int					ft_tokenize_blank(struct s_token **tok);
-int					ft_append_char_to_word(struct s_token **tok, char c);
-int					ft_new_word(struct s_token **tok, char c);
-struct s_token		*ft_tokenize(char *prompt);
-int					ft_previous_char_is_undelimited_operator(struct s_token *tok);
-int					ft_is_operator_character(char c);
-int					ft_is_blank(char c);
-int					ft_previous_char_part_of_word(struct s_token *tok);
+t_token		*ft_create_new_token(t_token *tok);
+t_token		*ft_tokenize_end_of_input(t_token *tok);
+int			ft_continue_operator_token(char *prompt, int i,
+				t_token **tok);
+int			ft_new_operator_token(char *prompt, int i,
+				t_token **tok);
+int			ft_tokenize_blank(t_token **tok);
+int			ft_append_char_to_word(t_token **tok, char c);
+int			ft_new_word(t_token **tok, char c);
+t_token		*ft_tokenize(char *prompt);
+int			ft_previous_char_is_undelimited_operator(t_token *tok);
+int			ft_is_operator_character(char c);
+int			ft_is_blank(char c);
+int			ft_previous_char_part_of_word(t_token *tok);
+t_token		*ft_init_token(void);
 
 // Parsing
-struct s_token		*ft_parse_operators(struct s_token *head);
-void				ft_tokenization_checker(struct s_token *head);
-struct s_command	*ft_parse(struct s_token *head);
-int					ft_count_token_list_args(struct s_token *tok);
+t_token		*ft_parse_operators(t_token *head);
+void		ft_tokenization_checker(t_token *head);
+t_command	*ft_parse(t_token *head);
+int			ft_count_token_list_args(t_token *tok);
 
-// Execution
-int					ft_is_and_execute_builtin(struct s_command *cmd,
-						struct s_shell_state *shell_state);
-char				**get_env_paths(char **envp);
-char				*get_cmd_path(char *cmd, char **envp);
-int					execute_cmd(struct s_command *cmd, char **envp,
-						struct s_shell_state *shell_state);
-
-// Builtin cd
-void				ft_cd(struct s_command *cmd,
-						struct s_shell_state *shell_state);
-
-// Builtin env
-void				ft_env(char **envp);
-
-// Builtin export
-void				ft_export(char ***envp, const char *var);
-const char			*extract_value(const char *new_value);
-char				*build_new_var(const char *name, const char *value);
-int					find_var_index(char **envp, char *name, size_t name_len);
-int					update_existing_var(char ***envp, char *name,
-						const char *new_value);
-void				add_new_var(char ***envp, const char *var);
-char				*get_var_name(const char *var);
-int					is_valid_name(const char *name);
-
-// Builtin unset
-void				ft_unset(char ***envp, const char *var);
+#endif

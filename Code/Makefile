@@ -6,7 +6,7 @@
 #    By: cmegret <cmegret@student.42lausanne.ch>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/07/19 14:53:36 by cmegret           #+#    #+#              #
-#    Updated: 2024/09/23 14:59:18 by cmegret          ###   ########.fr        #
+#    Updated: 2024/11/15 12:57:19 by cmegret          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -48,8 +48,8 @@ CC = gcc
 
 # -g3 -fsanitize=address
 # Flags de compilation
-CFLAGS = -Wall -Wextra -Werror
-LIBFLAGS = -L./lib -lft -lftprintf -lreadline
+CFLAGS = -Wall -Wextra -Werror -I/opt/homebrew/opt/readline/include
+LIBFLAGS = -L./lib -lft -lftprintf -L/opt/homebrew/opt/readline/lib -lreadline
 
 # Fichiers sources et objets
 SRCS = main/main.c \
@@ -63,11 +63,16 @@ SRCS = main/main.c \
 	  parsing/parse_main.c \
 	  execution/execution_main.c \
 	  execution/execution_env_path.c \
-	  builtin/cd/main_cd.c \
-      builtin/env/main_env.c \
-      builtin/export/main_export.c \
+	  execution/execute_builtin.c \
+	  builtin/cd/cd.c \
+      builtin/env/env.c \
+      builtin/export/export.c \
       builtin/export/export_utils.c \
-      builtin/unset/main_unset.c \
+      builtin/unset/unset.c \
+      builtin/pwd/pwd.c \
+      builtin/echo/echo.c \
+      builtin/exit/exit.c \
+      signal/signal.c \
 
 # Add path prefix to SRCS files
 SRC = $(addprefix srcs/, $(SRCS))
@@ -106,7 +111,7 @@ start:
 $(NAME): $(LIBFT) $(FT_PRINTF) $(OBJ)
 	@echo "$(BLUE)Linking: $@$(RESET)"
 	@$(CC) $(CFLAGS) -o $@ $(OBJ) $(LIBFLAGS)
-	@echo "$(GREEN)Compilation successful!$(RESET)"
+	@echo "$(GREEN)\nCompilation successful!\n$(RESET)"
 
 # Règle pour les fichiers objets
 %.o: %.c

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   simple_parser.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
+/*   By: cmegret <cmegret@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/18 15:11:48 by fallan            #+#    #+#             */
-/*   Updated: 2024/09/18 15:30:04 by fallan           ###   ########.fr       */
+/*   Updated: 2024/11/01 18:33:42 by cmegret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ struct s_parsed_string
 	// bool			is_double_quoted;
 	// bool			is_single_quoted;
 	bool			is_operator;
-	struct s_token	*next;
+	t_token	*next;
 };
 
 // either returns NULL or a token type

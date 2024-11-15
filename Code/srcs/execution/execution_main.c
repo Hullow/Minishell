@@ -6,56 +6,11 @@
 /*   By: cmegret <cmegret@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/07 12:23:09 by cmegret           #+#    #+#             */
-/*   Updated: 2024/09/23 15:00:50 by cmegret          ###   ########.fr       */
+/*   Updated: 2024/11/14 20:26:24 by cmegret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../header/Minishell.h"
-
-/**
- * @brief Checks if the command is a builtin and executes it.
- *
- * This function checks if the given command corresponds to a builtin command.
- * If it does, it executes the builtin command and returns 0. Otherwise, it
- * returns 1.
- *
- * @param cmd A pointer to the command structure containing the command
- * to be checked.
- * @param shell_state A pointer to the shell state structure.
- * @return 0 if the command is a builtin and was executed, 1 otherwise.
- */
-int	ft_is_and_execute_builtin(struct s_command *cmd,
-	struct s_shell_state *shell_state)
-{
-	if (ft_strncmp(cmd->cmd_name, "echo", 4) == 0)
-		return (0);
-	else if (ft_strncmp(cmd->cmd_name, "cd", 2) == 0)
-	{
-		ft_cd(cmd, shell_state);
-		return (0);
-	}
-	else if (ft_strncmp(cmd->cmd_name, "pwd", 3) == 0)
-		return (0);
-	else if (ft_strncmp(cmd->cmd_name, "export", 6) == 0)
-	{
-		ft_export(&shell_state->envp, cmd->args[1]);
-		return (0);
-	}
-	else if (ft_strncmp(cmd->cmd_name, "unset", 5) == 0)
-	{
-		ft_unset(&shell_state->envp, cmd->args[1]);
-		return (0);
-	}
-	else if (ft_strncmp(cmd->cmd_name, "env", 3) == 0)
-	{
-		ft_env(shell_state->envp);
-		return (0);
-	}
-	else if (ft_strncmp(cmd->cmd_name, "exit", 4) == 0)
-		return (0);
-	else
-		return (1);
-}
 
 /**
  * @brief Handles the execution of a command in a child process.
@@ -68,15 +23,19 @@ int	ft_is_and_execute_builtin(struct s_command *cmd,
  * executed.
  * @param envp An array of environment variables.
  */
-static void	handle_child_process(struct s_command *cmd, char **envp)
+static void	handle_child_process(t_command *cmd_list, char **envp)
 {
 	char	*cmd_path;
 
-	cmd_path = NULL;
-	cmd_path = get_cmd_path(cmd->cmd_name, envp);
-	if (cmd_path == NULL)
-		error_and_exit("get_cmd_path");
-	else if (execve(cmd_path, cmd->args, envp) == -1)
+	if (ft_strchr(cmd_list->cmd_name, '/') != NULL)
+		cmd_path = cmd_list->cmd_name;
+	else
+	{
+		cmd_path = get_cmd_path(cmd_list->cmd_name, envp);
+		if (cmd_path == NULL)
+			error_and_exit("get_cmd_path");
+	}
+	if (execve(cmd_path, cmd_list->args, envp) == -1)
 	{
 		free(cmd_path);
 		error_and_exit("execve");
@@ -84,52 +43,117 @@ static void	handle_child_process(struct s_command *cmd, char **envp)
 }
 
 /**
- * @brief Handles the parent process after forking.
+ * @brief Sets up pipes for inter-process communication.
  *
- * This function is called in the parent process after a fork. It waits for
- * the child process to finish and returns its status. If any error occurs,
- * it prints an error message and exits the process.
+ * This function sets up the necessary pipes for communication between
+ * processes. It duplicates file descriptors to set up the standard input
+ * and output for the current command.
  *
- * @param pid The process ID of the child process.
- * @return The status of the child process.
+ * @param fd An array of file descriptors for the pipe.
+ * @param in_fd The file descriptor for the input.
+ * @param cmd_list A pointer to the command structure containing
+ * the command to be
+ * executed.
  */
-static int	handle_parent_process(pid_t pid)
+static void	setup_pipes(int *fd, int in_fd, t_command *cmd_list)
 {
-	int	status;
-
-	if (waitpid(pid, &status, 0) == -1)
-		error_and_exit("waitpid");
-	return (status);
+	if (cmd_list->next != NULL)
+	{
+		if (pipe(fd) == -1)
+			error_and_exit("pipe");
+	}
+	if (in_fd != 0)
+	{
+		dup2(in_fd, STDIN_FILENO);
+		close(in_fd);
+	}
+	if (cmd_list->next != NULL)
+	{
+		dup2(fd[1], STDOUT_FILENO);
+		close(fd[1]);
+		close(fd[0]);
+	}
 }
 
 /**
- * @brief Executes a command.
+ * @brief Handles the parent process after forking.
  *
- * This function checks if the command is a builtin and executes it if it is.
- * If the command is not a builtin, it forks a new process to execute the
- * command. It handles both the child and parent processes appropriately.
+ * This function is called in the parent process after a fork. It waits for
+ * the child process to finish and retrieves its exit status. It also manages
+ * the file descriptors for the pipes.
  *
- * @param cmd A pointer to the command structure containing the command
- * to be executed.
+ * @param pid The process ID of the child process.
+ * @param fd An array of file descriptors for the pipe.
+ * @param in_fd A pointer to the file descriptor for the input.
+ * @param cmd_list A pointer to the command structure containing
+ * the command to be
+ * executed.
+ * @return The exit code of the child process.
+ */
+static int	handle_parent_process(pid_t pid, int *fd, int *in_fd,
+				t_command *cmd_list)
+{
+	int	status;
+	int	exit_code;
+
+	exit_code = -1;
+	waitpid(pid, &status, 0);
+	if (WIFEXITED(status))
+		exit_code = WEXITSTATUS(status);
+	if (*in_fd != 0)
+		close(*in_fd);
+	if (cmd_list->next != NULL)
+	{
+		close(fd[1]);
+		*in_fd = fd[0];
+	}
+	else
+		close(fd[0]);
+	return (exit_code);
+}
+
+/**
+ * @brief Executes a list of commands, handling pipes and builtins.
+ *
+ * This function iterates through a list of commands, checking if each command
+ * is a builtin and executing it if it is. If the command is not a builtin, it
+ * forks a new process to execute the command. It handles piping between
+ * commands, setting up the appropriate file descriptors for input and output.
+ * It also manages the parent and child processes, ensuring proper cleanup and
+ * error handling.
+ *
+ * @param cmd_list A pointer to the list of command structures to be executed.
  * @param envp An array of environment variables.
  * @param shell_state A pointer to the shell state structure.
- * @return 0 if the command was executed successfully, -1 if there was an error.
+ * @return 0 if all commands were executed successfully,
+ * -1 if there was an error.
  */
-int	execute_cmd(struct s_command *cmd, char **envp,
-	struct s_shell_state *shell_state)
+int	execute_cmd(t_command *cmd_list, char **envp, t_shell_state *shell_state)
 {
+	int		fd[2];
 	pid_t	pid;
+	int		in_fd;
 
-	if (cmd == NULL || cmd->cmd_name == NULL)
-		return (-1);
-	if (ft_is_and_execute_builtin(cmd, shell_state) == 0)
-		return (0);
-	pid = fork();
-	if (pid == 0)
-		handle_child_process(cmd, envp);
-	else if (pid < 0)
-		error_and_exit("fork");
-	else
-		return (handle_parent_process(pid));
+	in_fd = 0;
+	while (cmd_list)
+	{
+		if (ft_execute_builtin(cmd_list, shell_state) == 0)
+		{
+			cmd_list = cmd_list->next;
+			continue ;
+		}
+		setup_pipes(fd, in_fd, cmd_list);
+		pid = fork();
+		if (pid == 0)
+			handle_child_process(cmd_list, envp);
+		else if (pid < 0)
+			error_and_exit("fork");
+		else
+		{
+			shell_state->last_exit_status
+				= handle_parent_process(pid, fd, &in_fd, cmd_list);
+			cmd_list = cmd_list->next;
+		}
+	}
 	return (0);
 }

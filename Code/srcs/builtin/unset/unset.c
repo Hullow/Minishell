@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main_unset.c                                       :+:      :+:    :+:   */
+/*   unset.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cmegret <cmegret@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/23 14:56:57 by cmegret           #+#    #+#             */
-/*   Updated: 2024/09/27 14:58:14 by cmegret          ###   ########.fr       */
+/*   Updated: 2024/11/09 11:55:27 by cmegret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,20 +39,28 @@ static void	remove_var(char ***envp, int index)
 	*envp = new_envp;
 }
 
-void	ft_unset(char ***envp, const char *var)
+void	ft_unset(t_shell_state *shell_state, char **args)
 {
 	char	*name;
 	int		index;
+	int		i;
 
-	name = get_var_name(var);
-	if (!is_valid_name(name))
+	i = 1;
+	shell_state->last_exit_status = 0;
+	while (args[i])
 	{
-		ft_printf("export: '%s': not a valid identifier\n", var);
+		name = get_var_name(args[i]);
+		if (!is_valid_name(name))
+		{
+			ft_printf("export: '%s': not a valid identifier\n", args[i]);
+			shell_state->last_exit_status = 1;
+			free(name);
+			return ;
+		}
+		index = find_var_index(shell_state->envp, name, ft_strlen(name));
+		if (index != -1)
+			remove_var(&shell_state->envp, index);
 		free(name);
-		return ;
+		i++;
 	}
-	index = find_var_index(*envp, name, ft_strlen(name));
-	if (index != -1)
-		remove_var(envp, index);
-	free(name);
 }

@@ -1,32 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main_env.c                                         :+:      :+:    :+:   */
+/*   Signal.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cmegret <cmegret@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/09/22 16:31:14 by cmegret           #+#    #+#             */
-/*   Updated: 2024/09/22 16:39:45 by cmegret          ###   ########.fr       */
+/*   Created: 2024/11/01 18:44:36 by cmegret           #+#    #+#             */
+/*   Updated: 2024/11/09 10:46:34 by cmegret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../../header/Minishell.h"
+#ifndef SIGNAL_H
+# define SIGNAL_H
 
-/**
- * @brief Prints the environment variables.
- *
- * This function iterates through the environment variables and prints each one.
- *
- * @param envp An array of environment variables.
- */
-void	ft_env(char **envp)
-{
-	int	i;
+# include "Minishell.h"
 
-	i = 0;
-	while (envp[i])
-	{
-		ft_printf("%s\n", envp[i]);
-		i++;
-	}
-}
+// Signal
+void	handle_sigint(int sig);
+void	handle_sigquit(int sig);
+
+#endif
