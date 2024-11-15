@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cmegret <cmegret@student.42lausanne.ch>    +#+  +:+       +#+        */
+/*   By: francis <francis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/14 14:43:16 by cmegret           #+#    #+#             */
-/*   Updated: 2024/11/09 11:28:27 by cmegret          ###   ########.fr       */
+/*   Updated: 2024/11/15 17:08:59 by francis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../../header/Minishell.h"
+#include "../../header/Minishell.h"
 
 void	ft_echo(char **args, t_shell_state *shell_state)
 {

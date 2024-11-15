@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   unset.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cmegret <cmegret@student.42lausanne.ch>    +#+  +:+       +#+        */
+/*   By: francis <francis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/23 14:56:57 by cmegret           #+#    #+#             */
-/*   Updated: 2024/11/09 11:55:27 by cmegret          ###   ########.fr       */
+/*   Updated: 2024/11/15 17:08:59 by francis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../../header/Minishell.h"
+#include "../../header/Minishell.h"
 
 static void	remove_var(char ***envp, int index)
 {
