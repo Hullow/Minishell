@@ -57,6 +57,7 @@ void	ft_print_args(t_command *cmd_sequence)
 	int	i;
 
 	i = -1;
+	printf("ft_print_args:\n");
 	if (cmd_sequence && cmd_sequence->args)
 	{
 		while (cmd_sequence->args[++i])
@@ -64,7 +65,6 @@ void	ft_print_args(t_command *cmd_sequence)
 	}
 	return ;
 }
-
 
 // Parses our linked list of tokens, starting from left (head)
 // Extracts the command and the arguments 

@@ -6,7 +6,7 @@
 /*   By: francis <francis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 19:44:40 by fallan            #+#    #+#             */
-/*   Updated: 2024/11/16 13:39:58 by francis          ###   ########.fr       */
+/*   Updated: 2024/11/16 14:57:44 by francis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,8 @@ int					ft_new_cmd_arg_node(t_cmd_args *arg_list, char *arg_string);
 int					ft_allocate_args(t_command *cmd_sequence, t_cmd_args *arg_list);
 
 // Utils
+void				ft_print_args(t_command *cmd_sequence);
+
 bool				ft_token_is_redir(int token_type);
 bool				ft_token_is_word(int token_type);
 int					ft_count_args(t_cmd_args *arg_list);
