@@ -7,7 +7,7 @@ YELLOW='\033[1;33m'
 BLUE='\033[0;34m'
 NC='\033[0m' # No Color
 
-# Initialisation des compteurs globaux
+# Initialisation des compteurs
 total_tests=0
 successful_tests=0
 
@@ -22,58 +22,48 @@ function run_test {
     local expected_output="$2"
     local expected_exit="$3"
 
-    # Crée un FIFO
+    local cleaned_command=$(echo "$commands" | sed -E 's/exit.*//; s/\\n/ /g; s/\\s+$//')
     local fifo_name=$(mktemp -u)
     mkfifo "$fifo_name"
 
-    # Lancer Minishell en arrière-plan
     "$MINISHELL_PATH" < "$fifo_name" > output.log 2>&1 &
     minishell_pid=$!
-
-    # Injecter les commandes dans le FIFO
     echo -e "$commands" > "$fifo_name"
-
-    # Attendre que Minishell termine
     wait $minishell_pid
     actual_exit=$?
 
-    # Lire la sortie de Minishell
-    actual_output=$(cat output.log)
+    python3 clean_output.py output.log cleaned_output.log
+    actual_output=$(cat cleaned_output.log)
 
-    # Supprimer les lignes de prompt liées à la commande `exit`
-    actual_output=$(echo "$actual_output" | grep -v "exit")
+    rm -f "$fifo_name" output.log cleaned_output.log
 
-    # Nettoyer
-    rm -f "$fifo_name" output.log
-
-    # Vérifier la sortie et le code de retour
-    echo -e "${BLUE}--- Running Command: ${commands} ---${NC}"
-	((total_tests++))
-    if [[ "$actual_output" == *"$expected_output"* ]] && [ "$actual_exit" -eq "$expected_exit" ]; then
-        echo -e "${GREEN}✔ Command '${commands%%\\n*}' : SUCCESS${NC}"
+    echo -e "${YELLOW}--- Running Command: ${cleaned_command} ---${NC}"
+    ((total_tests++))
+    if [[ "$(echo "$actual_output" | xargs)" == "$(echo "$expected_output" | xargs)" ]] && [ "$actual_exit" -eq "$expected_exit" ]; then
+        echo -e "${GREEN}✔ Command '${cleaned_command}' : SUCCESS${NC}"
         echo -e "${BLUE}Expected Output: ${NC}$expected_output"
         echo -e "${BLUE}Actual Output:   ${NC}$actual_output"
         echo -e "${BLUE}Expected Exit:   ${NC}$expected_exit"
         echo -e "${BLUE}Actual Exit:     ${NC}$actual_exit"
         echo
-		((successful_tests++))
-        return 0
+        ((successful_tests++))
     else
-        echo -e "${RED}✗ Command '${commands%%\\n*}' : FAIL${NC}"
+        echo -e "${RED}✗ Command '${cleaned_command}' : FAIL${NC}"
         echo -e "${RED}Expected Output: ${NC}$expected_output"
         echo -e "${RED}Actual Output:   ${NC}$actual_output"
         echo -e "${RED}Expected Exit:   ${NC}$expected_exit"
         echo -e "${RED}Actual Exit:     ${NC}$actual_exit"
         echo
-        return 1
     fi
 }
 
 # Tests
-run_test "echo Hello\nexit\n" "Hello" 0
-run_test "invalid_command\nexit\n" "command not found" 127
-run_test "    \nexit\n" "" 0
-run_test ": \nexit\n" "" 0
+run_test ":\nexit\n" "" 0
+run_test " \nexit\n" "" 0
+run_test "         \nexit\n" "" 0
+run_test "      \nexit\n" "" 0
+run_test "#\nexit\n" "" 0
+run_test "!\nexit\n" "" 1
 
 # Fonction pour afficher les résultats
 function display_results {
@@ -84,7 +74,7 @@ function display_results {
     echo "====================="
 }
 
-# Appeler le résumé des résultats une seule fois
+# Appeler la fonction pour afficher les résultats
 display_results
 
 # Code de sortie global

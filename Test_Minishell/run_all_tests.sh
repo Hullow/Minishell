@@ -90,7 +90,7 @@ for script in tests/test_*.sh; do
         continue
     fi
 
-    if [[ "$all_tests" == true ]]; then
+    if [[ "$run_all" == true ]]; then
         run_test_script "$script"
     else
         # Demande confirmation pour exécuter le test

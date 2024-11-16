@@ -21,6 +21,7 @@ function run_test {
     local commands="$1"
     local expected_output="$2"
     local expected_exit="$3"
+    local test_name="$4"
 
     local cleaned_command=$(echo "$commands" | sed -E 's/exit.*//; s/\\n/ /g; s/\\s+$//')
     local fifo_name=$(mktemp -u)
@@ -28,7 +29,7 @@ function run_test {
 
     "$MINISHELL_PATH" < "$fifo_name" > output.log 2>&1 &
     minishell_pid=$!
-    echo -e "$commands" > "$fifo_name"
+    echo -e "$commands" | sed 's/\\\\/\\\\\\\\/g' > "$fifo_name"
     wait $minishell_pid
     actual_exit=$?
 
@@ -37,10 +38,12 @@ function run_test {
 
     rm -f "$fifo_name" output.log cleaned_output.log
 
-    echo -e "${YELLOW}--- Running Command: ${cleaned_command} ---${NC}"
+    echo -e "${YELLOW}--- Running Test: ${test_name} ---${NC}"
     ((total_tests++))
-    if [[ "$(echo "$actual_output" | xargs)" == "$(echo "$expected_output" | xargs)" ]] && [ "$actual_exit" -eq "$expected_exit" ]; then
-        echo -e "${GREEN}✔ Command '${cleaned_command}' : SUCCESS${NC}"
+	expected_output=$(echo -n "$expected_output" | sed 's/\\\\/\\/g')
+	actual_output=$(echo -n "$actual_output" | sed 's/\\\\/\\/g')
+	if diff <(echo -n "$actual_output") <(echo -n "$expected_output") &>/dev/null && [ "$actual_exit" -eq "$expected_exit" ]; then
+        echo -e "${GREEN}✔ Test '${test_name}' : SUCCESS${NC}"
         echo -e "${BLUE}Expected Output: ${NC}$expected_output"
         echo -e "${BLUE}Actual Output:   ${NC}$actual_output"
         echo -e "${BLUE}Expected Exit:   ${NC}$expected_exit"
@@ -48,30 +51,24 @@ function run_test {
         echo
         ((successful_tests++))
     else
-        echo -e "${RED}✗ Command '${cleaned_command}' : FAIL${NC}"
-        echo -e "${RED}Expected Output: ${NC}$expected_output"
-        echo -e "${RED}Actual Output:   ${NC}$actual_output"
-        echo -e "${RED}Expected Exit:   ${NC}$expected_exit"
-        echo -e "${RED}Actual Exit:     ${NC}$actual_exit"
+        echo -e "${RED}✗ Test '${test_name}' : FAIL${NC}"
+        echo -e "${BLUE}Expected Output: ${NC}$expected_output"
+        echo -e "${BLUE}Actual Output:   ${NC}$actual_output"
+        echo -e "${BLUE}Expected Exit:   ${NC}$expected_exit"
+        echo -e "${BLUE}Actual Exit:     ${NC}$actual_exit"
         echo
     fi
 }
 
-# Tests
-run_test ">\nexit\n" "syntax error near unexpected token 'newline'" 2
-run_test "<\nexit\n" "syntax error near unexpected token 'newline'" 2
-run_test ">>\nexit\n" "syntax error near unexpected token 'newline'" 2
-run_test "<<\nexit\n" "syntax error near unexpected token 'newline'" 2
-run_test "<>\nexit\n" "syntax error near unexpected token 'newline'" 2
-run_test ">>>>>\nexit\n" "syntax error near unexpected token '>>'" 2
-run_test ">>>>>>>>>>>>>>>\nexit\n" "syntax error near unexpected token '>>'" 2
-run_test "<<<<<\nexit\n" "syntax error near unexpected token '<<'" 2
-run_test "<<<<<<<<<<<<<<<<\nexit\n" "syntax error near unexpected token '<<'" 2
-run_test "> > > >\nexit\n" "syntax error near unexpected token '>'" 2
-run_test ">> >> >> >>\nexit\n" "syntax error near unexpected token '>>'" 2
-run_test ">>>> >> >> >>\nexit\n" "syntax error near unexpected token '>>'" 2
+run_test "/\nexit\n" "/: Is a directory" 126 "Root directory access"
+run_test "//\nexit\n" "//: Is a directory" 126 "Double root directory access"
+run_test "/.\nexit\n" "/.: Is a directory" 126 "Single dot directory"
+run_test "/./././././.\nexit\n" "/./././././.: Is a directory" 126 "Multiple dots directory"
+run_test "///////\nexit\n" "///////: Is a directory" 126 "Many slashes directory"
+run_test "\\\nexit\n" "\\: command not found" 127 "Single backslash command"
+run_test "\\\\\nexit\n" "\\\\: command not found" 127 "Double backslash command"
+run_test "\\\\\\\\\\\\\nexit\n" "\\\\\\\\\\\\: command not found" 127 "Multiple backslashes command"
 
-# Fonction pour afficher les résultats
 function display_results {
     echo "====================="
     echo -e "${YELLOW}Résultats des Tests :${NC}"
@@ -80,10 +77,8 @@ function display_results {
     echo "====================="
 }
 
-# Appeler la fonction pour afficher les résultats
 display_results
 
-# Code de sortie global
 if [ $successful_tests -eq $total_tests ]; then
     exit 0
 else

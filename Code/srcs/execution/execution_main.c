@@ -6,7 +6,7 @@
 /*   By: cmegret <cmegret@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/07 12:23:09 by cmegret           #+#    #+#             */
-/*   Updated: 2024/11/16 12:05:49 by cmegret          ###   ########.fr       */
+/*   Updated: 2024/11/16 12:48:29 by cmegret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,13 +34,13 @@ static void	handle_child_process(t_command *cmd_list, char **envp)
 		cmd_path = get_cmd_path(cmd_list->cmd_name, envp);
 		if (cmd_path == NULL)
 		{
-			perror("minishell: command not found");
+			printf("%s: command not found\n", cmd_list->cmd_name);
 			exit(127);
 		}
 	}
 	if (access(cmd_path, F_OK) != 0)
 	{
-		perror("minishell: command not found");
+		printf("%s: command not found\n", cmd_list->cmd_name);
 		exit(127);
 	}
 	else if (access(cmd_path, X_OK) != 0)
