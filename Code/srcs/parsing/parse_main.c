@@ -22,6 +22,8 @@ t_token	*ft_parse_operators(t_token *head)
 	{
 		if (!(iterator->type))
 		{
+			if (!iterator->str)
+				return (head);
 			if (!(ft_strncmp(iterator->str, ">", 2)))
 				iterator->type = REDIR_OUTPUT;
 			else if (!(ft_strncmp(iterator->str, "<", 2)))
