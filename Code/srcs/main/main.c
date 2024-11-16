@@ -6,7 +6,7 @@
 /*   By: cmegret <cmegret@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 14:30:52 by cmegret           #+#    #+#             */
-/*   Updated: 2024/11/14 16:00:55 by cmegret          ###   ########.fr       */
+/*   Updated: 2024/11/15 20:10:40 by cmegret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,8 @@ int	main(int argc, char **argv, char **envp)
 	{
 		add_history(prompt);
 		//ft_tokenization_checker(ft_parse_operators(ft_tokenize(prompt)));
-		execute_cmd(ft_parse(ft_tokenize(prompt)), envp, &shell_state);
+		execute_cmd(ft_parse(ft_tokenize(prompt), &shell_state),
+			shell_state.envp, &shell_state);
 		free(prompt);
 		prompt = ft_prompt();
 	}

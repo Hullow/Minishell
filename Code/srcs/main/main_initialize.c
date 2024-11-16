@@ -6,7 +6,7 @@
 /*   By: cmegret <cmegret@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/22 17:31:30 by cmegret           #+#    #+#             */
-/*   Updated: 2024/11/14 15:49:00 by cmegret          ###   ########.fr       */
+/*   Updated: 2024/11/15 19:46:29 by cmegret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ static void	duplicate_env(t_shell_state *shell_state,
 	i = 0;
 	shell_state->envp = malloc(sizeof(char *) * (count + 1));
 	if (!shell_state->envp)
-		error_and_exit("malloc failed");
+		error_and_exit("malloc failed", 1);
 	while (i < count)
 	{
 		shell_state->envp[i] = ft_strdup(envp[i]);
@@ -76,7 +76,7 @@ static void	duplicate_env(t_shell_state *shell_state,
 			while (i-- > 0)
 				free(shell_state->envp[i]);
 			free(shell_state->envp);
-			error_and_exit("ft_strdup failed");
+			error_and_exit("ft_strdup failed", 1);
 		}
 		i++;
 	}

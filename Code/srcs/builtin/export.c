@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: francis <francis@student.42.fr>            +#+  +:+       +#+        */
+/*   By: cmegret <cmegret@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/22 17:18:01 by cmegret           #+#    #+#             */
-/*   Updated: 2024/11/15 17:08:59 by francis          ###   ########.fr       */
+/*   Updated: 2024/11/15 19:45:48 by cmegret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ char	*get_var_name(const char *var)
 		name_len++;
 	name = (char *)malloc(sizeof(char) * (name_len + 1));
 	if (!name)
-		error_and_exit("malloc failed");
+		error_and_exit("malloc failed", 1);
 	ft_strlcpy(name, var, name_len + 1);
 	return (name);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_main.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
+/*   By: cmegret <cmegret@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/06 17:35:29 by cmegret           #+#    #+#             */
-/*   Updated: 2024/11/14 16:25:22 by fallan           ###   ########.fr       */
+/*   Updated: 2024/11/15 20:18:47 by cmegret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,58 +43,65 @@ t_token	*ft_parse_operators(t_token *head)
 	return (head);
 }
 
-static int	ft_allocate_single_arg(t_token *tkn,
-	t_command *cmd_sequence)
+static int	ft_allocate_single_arg(t_token *tkn, t_command *cmd_sequence,
+	t_shell_state *shell_state)
 {
 	cmd_sequence->args = malloc(2 * sizeof(char *));
 	if (!cmd_sequence->args)
 		return (-1); // call error function ?
-	cmd_sequence->args[0] = ft_strdup(tkn->str);
+	cmd_sequence->args[0] = expand_exit_status(tkn->str, shell_state->last_exit_status);
+	if (!cmd_sequence->args[0])
+		return (-1);
 	cmd_sequence->args[1] = NULL;
 	cmd_sequence->next = NULL; // A CHANGER
 	return (0);
 }
 
-static int	ft_allocate_multiple_args(t_token *tkn,
-	t_command *cmd_sequence, int arg_count)
+static int	ft_allocate_multiple_args(t_token *tkn, t_command *cmd_sequence, int arg_count, t_shell_state *shell_state)
 {
 	int	i;
 
 	cmd_sequence->args = malloc((arg_count + 1) * sizeof(char *));
 	if (!cmd_sequence->args)
-		return (-1); // call error function ?
+		return (-1);
 	cmd_sequence->args[0] = ft_strdup(tkn->str);
+	if (!cmd_sequence->args[0])
+		return (-1);
+
 	tkn = tkn->next;
 	i = 1;
 	while (tkn)
 	{
 		if (tkn->type == WORD)
 		{
-			cmd_sequence->args[i] = ft_strdup(tkn->str);
-			if (cmd_sequence->args[i] == NULL)
+			cmd_sequence->args[i] = expand_exit_status(tkn->str,
+					shell_state->last_exit_status);
+			if (!cmd_sequence->args[i])
 				return (-1);
 			i++;
 		}
 		tkn = tkn->next;
 	}
 	cmd_sequence->args[i] = NULL;
-	cmd_sequence->next = NULL; // A CHANGER
+	cmd_sequence->next = NULL;
 	return (0);
 }
 
-static int	ft_process_args(t_token *tkn, t_command *cmd_sequence)
+static int	ft_process_args(t_token *tkn, t_command *cmd_sequence,
+	t_shell_state *shell_state)
 {
 	int	arg_count;
 
 	arg_count = ft_count_token_list_args(tkn);
 	if (arg_count == 1)
 	{
-		if (ft_allocate_single_arg(tkn, cmd_sequence) == -1)
+		if (ft_allocate_single_arg(tkn, cmd_sequence, shell_state) == -1)
 			return (-1);
 	}
 	else
 	{
-		if (ft_allocate_multiple_args(tkn, cmd_sequence, arg_count) == -1)
+		if (ft_allocate_multiple_args(tkn, cmd_sequence,
+				arg_count, shell_state) == -1)
 			return (-1);
 	}
 	return (0);
@@ -105,7 +112,7 @@ static int	ft_process_args(t_token *tkn, t_command *cmd_sequence)
 // Parses our linked list of tokens, starting from left (head)
 // Extracts the command and the arguments 
 // Outputs a struct command with the command name and the arguments
-t_command	*ft_parse_old(t_token *head)
+/* t_command	*ft_parse_old(t_token *head)
 {
 	t_command	*cmd_sequence;
 	t_token		*tkn;
@@ -121,9 +128,9 @@ t_command	*ft_parse_old(t_token *head)
 			return (NULL); // call error function ?
 	}
 	return (cmd_sequence);
-}
+} */
 
-t_command	*ft_parse(t_token *head)
+t_command	*ft_parse(t_token *head, t_shell_state *shell_state)
 {
 	t_command	*cmd_sequence;
 	t_token		*tkn;
@@ -142,7 +149,7 @@ t_command	*ft_parse(t_token *head)
 		cmd_sequence->cmd_name = ft_strdup(tkn->str);
 		if (!cmd_sequence->cmd_name)
 			return (NULL); // call error function ?
-		if (ft_process_args(tkn, cmd_sequence) == -1)
+		if (ft_process_args(tkn, cmd_sequence, shell_state) == -1)
 			return (NULL); // call error function ?
 	}
 	return (cmd_sequence);

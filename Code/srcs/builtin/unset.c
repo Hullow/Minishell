@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   unset.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: francis <francis@student.42.fr>            +#+  +:+       +#+        */
+/*   By: cmegret <cmegret@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/23 14:56:57 by cmegret           #+#    #+#             */
-/*   Updated: 2024/11/15 17:08:59 by francis          ###   ########.fr       */
+/*   Updated: 2024/11/15 19:45:53 by cmegret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ static void	remove_var(char ***envp, int index)
 		i++;
 	new_envp = (char **)ft_calloc(i, sizeof(char *));
 	if (!new_envp)
-		error_and_exit("ft_calloc failed");
+		error_and_exit("ft_calloc failed", 1);
 	i = 0;
 	while (i < index)
 	{

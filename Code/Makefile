@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: francis <francis@student.42.fr>            +#+  +:+       +#+         #
+#    By: cmegret <cmegret@student.42lausanne.ch>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/07/19 14:53:36 by cmegret           #+#    #+#              #
-#    Updated: 2024/11/15 16:51:29 by francis          ###   ########.fr        #
+#    Updated: 2024/11/15 23:43:13 by cmegret          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -61,6 +61,7 @@ SRCS = main/main.c \
       token/token_creation.c \
       token/token_operator.c \
 	  parsing/parse_main.c \
+	  parsing/expend_exit_status.c \
 	  execution/execution_main.c \
 	  execution/execution_env_path.c \
 	  execution/execute_builtin.c \
