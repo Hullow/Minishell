@@ -45,6 +45,7 @@ void	ft_initialize_cmd_sequence(t_command *cmd_sequence)
 {
 	cmd_sequence->cmd_name = NULL;
 	cmd_sequence->args = NULL;
+	cmd_sequence->arg_list = NULL;
 	cmd_sequence->input = STDIN;
 	cmd_sequence->output = STDOUT;
 	cmd_sequence->redir_list = NULL;
@@ -71,7 +72,6 @@ void	ft_print_args(t_command *cmd_sequence)
 t_command	*ft_parse(t_token *tok)
 {
 	t_command	*cmd_sequence;
-	t_cmd_args	*arg_list = NULL;
 	t_redir		*redir_list = NULL;
 
 	cmd_sequence = malloc(sizeof(t_command)); // malloc a node to our list of commands (cmd_sequence)
@@ -83,14 +83,11 @@ t_command	*ft_parse(t_token *tok)
 	{
 		if (ft_token_is_redir(tok->type))
 			ft_add_redir(&tok, redir_list); // add redirections to our redirections list
-		else if (ft_token_is_word(tok->type)) // add WORD tokens to argument list
-		{
-			arg_list = ft_add_cmd_arg(tok->str, cmd_sequence, arg_list); // before: cmd_sequence->cmd_name = strdup(tok->str);
-			printf("ft_parse: first argument: %s\n", arg_list->arg_string);
-		}
+		else if (ft_token_is_word(tok->type))
+			ft_add_cmd_arg(tok->str, cmd_sequence); // add WORD tokens to argument list
 		tok = tok->next;
 	}
-	if (ft_allocate_args(cmd_sequence, arg_list) == -1)
+	if (ft_allocate_args(cmd_sequence, cmd_sequence->arg_list) == -1)
 		return (NULL);
 	cmd_sequence->redir_list = redir_list;
 	ft_print_args(cmd_sequence);

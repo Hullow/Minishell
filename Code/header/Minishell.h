@@ -71,9 +71,12 @@ typedef struct s_token
 }	t_token;
 
 // linked list of commands (pipes)
+// n.b.: **args is the array of arguments used by execve,
+//		 while *arg_list is the list of arguments filled by our parser
 typedef struct s_command
 {
 	char				*cmd_name;
+	t_cmd_args			*arg_list;
 	char				**args;
 	int					input; // file descriptor for input (stdin or redirection)
 	int					output; // file descriptor for output (stdout or redirection)
