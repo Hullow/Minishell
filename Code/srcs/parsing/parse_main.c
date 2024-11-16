@@ -49,6 +49,20 @@ void	ft_initialize_cmd_sequence(t_command *cmd_sequence)
 	cmd_sequence->next = NULL;
 }
 
+void	ft_print_args(t_command *cmd_sequence)
+{
+	int	i;
+
+	i = -1;
+	if (cmd_sequence && cmd_sequence->args)
+	{
+		while (cmd_sequence->args[++i])
+			printf("arg[%d]: [%s]\n", i, cmd_sequence->args[i]);
+	}
+	return ;
+}
+
+
 // Parses our linked list of tokens, starting from left (head)
 // Extracts the command and the arguments 
 // Outputs a struct command with the command name and the arguments
@@ -68,11 +82,15 @@ t_command	*ft_parse(t_token *tok)
 		if (ft_token_is_redir(tok->type))
 			ft_add_redir(&tok, redir_list); // add redirections to our redirections list
 		else if (ft_token_is_word(tok->type)) // add WORD tokens to argument list
-			ft_add_cmd_arg(tok->str, cmd_sequence, arg_list); // before: cmd_sequence->cmd_name = strdup(tok->str);
+		{
+			arg_list = ft_add_cmd_arg(tok->str, cmd_sequence, arg_list); // before: cmd_sequence->cmd_name = strdup(tok->str);
+			printf("ft_parse: first argument: %s\n", arg_list->arg_string);
+		}
 		tok = tok->next;
 	}
 	if (ft_allocate_args(cmd_sequence, arg_list) == -1)
 		return (NULL);
 	cmd_sequence->redir_list = redir_list;
+	ft_print_args(cmd_sequence);
 	return (cmd_sequence);
 }
