@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Builtin.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cmegret <cmegret@student.42lausanne.ch>    +#+  +:+       +#+        */
+/*   By: francis <francis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/01 18:38:32 by cmegret           #+#    #+#             */
-/*   Updated: 2024/11/14 15:55:59 by cmegret          ###   ########.fr       */
+/*   Updated: 2024/11/20 16:30:21 by francis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ typedef struct s_shell_state	t_shell_state;
 int			ft_is_builtin(char *cmd_name);
 int			ft_execute_builtin(t_command *cmd, t_shell_state *shell_state);
 
-// Builtin cdﬁﬁ
+// Builtin cd
 void		ft_cd(t_command *cmd, t_shell_state *shell_state);
 
 // Builtin env

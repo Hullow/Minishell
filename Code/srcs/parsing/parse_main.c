@@ -71,11 +71,12 @@ void	ft_print_args(t_command *cmd_sequence)
 // Parses our linked list of tokens, starting from left (head)
 // Extracts the command and the arguments 
 // Outputs a struct command with the command name and the arguments
-t_command	*ft_parse(t_token *tok)
+t_command	*ft_parse(t_token *tok, t_shell_state *shell_state)
 {
 	t_command	*cmd_sequence;
 	t_redir		*redir_list = NULL;
 
+	(void)shell_state;
 	cmd_sequence = malloc(sizeof(t_command)); // malloc a node to our list of commands (cmd_sequence)
 	if (!cmd_sequence)
 		return (NULL);

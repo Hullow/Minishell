@@ -6,12 +6,9 @@
 /*   By: francis <francis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/19 13:48:14 by francis           #+#    #+#             */
-/*   Updated: 2024/11/20 16:03:04 by francis          ###   ########.fr       */
+/*   Updated: 2024/11/20 16:40:47 by francis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
-#ifndef MINISHELL_H
-# define MINISHELL_H
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
@@ -35,8 +32,7 @@
 # include "Builtin.h"
 # include "Execution.h"
 # include "Signal.h"
-# include "Pathname.h"
-
+# include "Expansion.h"
 #include "Tokenizer.h"
 #include "Parser.h"
 
@@ -99,7 +95,6 @@ typedef struct s_command
 }	t_command;
 
 typedef struct s_shell_state
-typedef struct s_shell_state
 {
 	char	**envp;
 	int		last_exit_status;
@@ -111,29 +106,5 @@ void		ft_initialize(int argc, char **argv,
 				t_shell_state *shell_state, char **envp);
 void		error_and_exit(const char *message, int last_exit_status);
 char		*ft_prompt(void);
-
-// Tokenization
-t_token		*ft_create_new_token(t_token *tok);
-t_token		*ft_tokenize_end_of_input(t_token *tok);
-int			ft_continue_operator_token(char *prompt, int i,
-				t_token **tok);
-int			ft_new_operator_token(char *prompt, int i,
-				t_token **tok);
-int			ft_tokenize_blank(t_token **tok);
-int			ft_append_char_to_word(t_token **tok, char c);
-int			ft_new_word(t_token **tok, char c);
-t_token		*ft_tokenize(char *prompt);
-int			ft_previous_char_is_undelimited_operator(t_token *tok);
-int			ft_is_operator_character(char c);
-int			ft_is_blank(char c);
-int			ft_previous_char_part_of_word(t_token *tok);
-t_token		*ft_init_token(void);
-
-// Parsing
-t_token		*ft_parse_operators(t_token *head);
-void		ft_tokenization_checker(t_token *head);
-t_command	*ft_parse(t_token *head, t_shell_state *shell_state);
-int			ft_count_token_list_args(t_token *tok);
-char		*expand_exit_status(char *arg, int last_exit_status);
 
 #endif

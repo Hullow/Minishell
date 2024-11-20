@@ -1,8 +1,8 @@
 #include <stdio.h>
 
-// credits to @nbelouar
-// shows how the default shell of our system tokenizes
+// Shows how the default shell of our system (bash, zsh, ...) tokenizes prompts
 // e.g. ./a.out echo '"hello"'
+// credits to @nbelouar
 int main(int argc, char *argv[])
 {
     int i;

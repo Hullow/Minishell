@@ -6,7 +6,7 @@
 /*   By: francis <francis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/06 17:19:58 by cmegret           #+#    #+#             */
-/*   Updated: 2024/11/20 16:07:36 by francis          ###   ########.fr       */
+/*   Updated: 2024/11/20 16:37:08 by francis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,7 @@
 t_token	*ft_init_token(void)
 {
 	t_token	*tok;
-	t_token	*tok;
 
-	tok = malloc(sizeof(t_token));
 	tok = malloc(sizeof(t_token));
 	if (!tok)
 		return (NULL);
