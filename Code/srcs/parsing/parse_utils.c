@@ -6,7 +6,7 @@
 /*   By: francis <francis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/01 13:49:30 by fallan            #+#    #+#             */
-/*   Updated: 2024/11/20 16:32:43 by francis          ###   ########.fr       */
+/*   Updated: 2024/11/20 18:07:51 by francis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,10 +41,7 @@ int	ft_count_args(t_cmd_args *arg_list)
 
 	i = 0;
 	if (!arg_list)
-	{
-		printf("ft_count_args: zero args found\n");
 		return (0);
-	}
 	while (arg_list)
 	{
 		i++;

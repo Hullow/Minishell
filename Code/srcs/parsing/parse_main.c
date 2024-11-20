@@ -93,7 +93,6 @@ t_command	*ft_parse(t_token *tok, t_shell_state *shell_state)
 	if (ft_allocate_args(cmd_sequence, cmd_sequence->arg_list) == -1)
 		return (NULL);
 	cmd_sequence->redir_list = redir_list;
-	ft_print_args(cmd_sequence);
 	return (cmd_sequence);
 }
 

@@ -6,7 +6,7 @@
 /*   By: francis <francis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 19:48:46 by fallan            #+#    #+#             */
-/*   Updated: 2024/11/20 16:42:37 by francis          ###   ########.fr       */
+/*   Updated: 2024/11/20 16:52:32 by francis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,5 @@ int			ft_count_tokens(t_token *tok);
 void		ft_print_all_token_strings(t_token **head);
 void		ft_print_token_types(t_token *head);
 void		ft_free_token(t_token *tok);
-
-
 
 #endif
