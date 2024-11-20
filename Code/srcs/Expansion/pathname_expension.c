@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pathname_expension.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cmegret <cmegret@student.42lausanne.ch>    +#+  +:+       +#+        */
+/*   By: francis <francis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/06 17:19:58 by cmegret           #+#    #+#             */
-/*   Updated: 2024/11/14 11:21:33 by cmegret          ###   ########.fr       */
+/*   Updated: 2024/11/20 16:21:47 by francis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ char **ft_expand_pathname(char *pattern)
 	{
 		if (ft_match_pattern(entry->d_name, pattern))
 		{
-			paths = realloc(paths, sizeof(char *) * (count + 2));
+			paths = realloc(paths, sizeof(char *) * (count + 2)); // REALLOC pas autorisée, attention
 			paths[count] = ft_strdup(entry->d_name);
 			count++;
 		}
