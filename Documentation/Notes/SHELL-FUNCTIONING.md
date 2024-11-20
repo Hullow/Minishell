@@ -15,6 +15,17 @@ This document describes how the minishell should work, based on the [Shell Comma
 
 - Note 2: "(..)" means part of the original document is ignored.
 
+## 0. [Summary](https://www.gnu.org/software/bash/manual/bash.html#Shell-Operation)
+> Basically, the shell does the following when it reads and executes a command:
+
+> 1. Reads its input from the user’s terminal.
+> 2. Breaks the input into words and operators, obeying the quoting rules. These tokens are separated by metacharacters.
+> 3. Parses the tokens into simple and compound commands (see Shell Commands).
+> 4. Performs the various shell expansions (see Shell Expansions), breaking the expanded tokens into lists of filenames (see Filename Expansion) and commands and arguments.
+> 5. Performs any necessary redirections and removes the redirection operators and their operands from the argument list (see ### 3.4 Redirections).
+> 6. Executes the command (see #4. Command execution).
+> 7. Optionally waits for the command to complete and collects its exit status (see Exit Status). 
+
 ## 1. Reads input
 ### Input sources
 (see `Requirements.md` -> `To clarify`)
@@ -294,7 +305,9 @@ IF
 
 #### 3.1.2. IO_number
 ELSE IF
-- the string consists solely of digits and the delimiter character is `<` or `>`
+- the string consists solely of digits
+<br>AND
+- the delimiter character is `<` or `>`
 
 => return the token identifier IO_NUMBER
 
@@ -353,14 +366,17 @@ ELSE<br>
 (rule 7b)<br>
 b) IF
 - the token contains an unquoted `=` that is not part of an embedded parameter expansion construct (see [rule 5 in Token recognition](#2225-parameter-expansion)):
-	- if it begins with `=`
-		=> the token identifier is WORD
-	- if all characters preceding `=` are underscores, digits, or alphabetics from the [portable character set](https://pubs.opengroup.org/onlinepubs/009695399/basedefs/xbd_chap06.html#tag_06_01) (see [definition of a name](https://pubs.opengroup.org/onlinepubs/009695399/basedefs/xbd_chap03.html#tag_03_230))
-		=> the token identifier is ASSIGNMENT_WORD
-	- else
-		=> the token identifier is either ASSIGNMENT_WORD or WORD (unspecified)
-c. ELSE
-		=> the token identifier is WORD
+	- IF<br>
+		- it begins with `=`
+		<br>&emsp;=> the token identifier is WORD
+	- ELSE IF<br>
+		- all characters preceding `=` are underscores, digits, or alphabetics from the [portable character set](https://pubs.opengroup.org/onlinepubs/009695399/basedefs/xbd_chap06.html#tag_06_01) (see [definition of a name](https://pubs.opengroup.org/onlinepubs/009695399/basedefs/xbd_chap03.html#tag_03_230))
+		<br>&emsp;=> the token identifier is ASSIGNMENT_WORD
+	- ELSE
+		<br>&emsp;=> the token identifier is either ASSIGNMENT_WORD or WORD (unspecified by POSIX; see what Bash does)
+
+c) ELSE
+		<br>&emsp;=> the token identifier is WORD
 
 > Assignment to the name within a returned ASSIGNMENT_WORD token shall occur as specified in [Simple Commands](https://pubs.opengroup.org/onlinepubs/9699919799/utilities/V3_chap02.html#tag_18_09_01).
 <br>&emsp;`=> ?`
@@ -380,19 +396,14 @@ literally:
 #### 3.4.1. Types of redirection
 #### 3.4.1.1. Input redirection
 - IF
-	- General format: `[n]<word`
+	- General format: `<word`
 
 	=> perform filename expansion of *word*<br>
-	=> open the resulting file for reading:<br>
-		&emsp;- IF<br>
-				- n is specified<br>
-					=> on file descriptor n<br>
-		&emsp;- ELSE<br>
-				- on stdin (file descriptor 0)<br>
+	=> open the resulting file for reading on stdin (file descriptor 0)<br>
 
 #### 3.4.1.2. Output redirection
 - IF
-	- General format: `[n]>word`
+	- General format: `>word`
 
 	=> perform filename expansion of *word*:<br>
 
@@ -402,17 +413,11 @@ literally:
 	&emsp; ELSE<br>
 	&emsp;&emsp;=> truncate the file to zero size<br>
 
-	=> open the resulting file for writing:<br>
-
-	&emsp; - IF<br>
-				- n is specified<br>
-					=> on file descriptor n<br>
-	&emsp; - ELSE<br>
-				- on stdout (file descriptor 1)<br>
+	=> open the resulting file for writing on stdout (file descriptor 1)<br>
 
 #### 3.4.1.3. Append redirected output
 - IF
-	- General format: `[n]>>word`
+	- General format: `>>word`
 
 	=> perform filename expansion of *word*:<br>
 
@@ -420,26 +425,20 @@ literally:
 	&emsp;&emsp;- the file does not exist:<br>
 	&emsp;&emsp;=> create the file<br>
 
-	=> open the resulting file for appending:<br>
-
-	&emsp; - IF<br>
-				- n is specified<br>
-					=> on file descriptor n<br>
-	&emsp; - ELSE<br>
-				- on stdout (file descriptor 1)<br>
+	=> open the resulting file for appending on stdout (file descriptor 1)<br>
 
 #### 3.4.1.4. Here Documents
 IF
 	- General format:
 	```bash
-	[n]<<word
+	<<word
 		here-document
 	delimiter
 	```
 
 	=> do not perform any parameter expansion or filename expansion on *word*
 	=> read input from the current source until a line containing only *word* (with no trailing tabs or spaces) is seen
-	=> use all the lines read up to that point as the standard input (or file descriptor *n* if *n* is specified) for a command
+	=> use all the lines read up to that point as the standard input for a command
 
 - IF
 	- any part of *word* is quoted
@@ -498,20 +497,6 @@ ELSE
     If host is a valid hostname or Internet address, and port is an integer port number or service name, Bash attempts to open the corresponding UDP socket. 
 ```
 
-#### 3.4.5. Lack of file descriptor number (Implicit redirections)
-- IF
-	- the file descriptor number is omitted, and
-	- the first character of the redirection operator is ‘<’
-
-=> the redirection refers to the standard input (file descriptor 0)
-
-- IF
-	- the file descriptor number is omitted, and
-	- the first character of the redirection operator is ‘>’
-
-=> the redirection refers to the standard output (file descriptor 1)
-
-
 ## 4. [Command execution](https://pubs.opengroup.org/onlinepubs/9699919799/utilities/V3_chap02.html#tag_18_09)
 A **command** is either a **simple command** or a **pipeline**.
 - Unless otherwise cited, the exit status of a command shall be that of the last simple command executed by the command.
@@ -552,6 +537,16 @@ A **command** is either a **simple command** or a **pipeline**.
 
 => `export VAR=2 | echo $VAR` => ""
 => `export` or `unset` in a subshell have not effect outside the subshell
+
+
+#### Execve
+> By default, file descriptors remain open across an execve(). File descriptors that are marked close-on-exec are closed; see the description of FD_CLOEXEC in fcntl(2). (If a file descriptor is closed, this will cause the release of all record locks obtained on the underlying file by this process. See fcntl(2) for details.) POSIX.1 says that if file descriptors 0, 1, and 2 would otherwise be closed after a successful execve(), and the process would gain privilege because the set-user-ID or set-group-ID mode bit was set on the executed file, then the system may open an unspecified file for each of these file descriptors. As a general principle, no portable program, whether privileged or not, can assume that these three file descriptors will remain closed across an execve().
+
+#### Close
+> Closes a file descriptor, so that it no longer refers to any file and may be reused. Any record locks (see fcntl(2)) held on the file it was associated with, and owned by the  process, are removed (regardless of the file descriptor that was used to obtain the lock). If fd is the last file descriptor referring to the underlying open file description (see open(2)), the resources associated with the open file description are freed; if the file descriptor was the last reference to a file which has been removed using unlink(2), the file is deleted.
+
+#### Open
+> The open() system call opens the file specified by pathname. If the specified file does not exist, it may optionally (if O_CREAT is specified in flags) be created by open(). The return value of open() is a file descriptor, a small, nonnegative integer that is used in subsequent system calls (read(2), write(2), lseek(2), fcntl(2), etc.) to refer to the open file. The file descriptor returned by a successful call will be the lowest-numbered file descriptor not currently open for the process
 
 #### 4.0.3. Exit status
 - The exit status of an executed command is the value returned by the `waitpid` system call or equivalent function.
@@ -683,7 +678,7 @@ ELSE
 
 #### 4.1.2. Pipelines
 - Pipeline: a sequence of one or more commands separated by the control operator `'|'`
-- For each command, except the last, the shell shall:
+- For each command, except the last, the shell will:
 	- connect the standard output of the command to the standard input of the next command
 	- as if by creating a pipe, and passing the *write end of the pipe* as **the standard output of the command** and the *read end of the pipe* as the **standard input of the next command**
 
@@ -700,9 +695,13 @@ ELSE
 - The shell shall wait for the last command specified in the pipeline to complete, and may also wait for all commands to complete
 
 - Execution environment:
-	- A subshell environment shall be created as a duplicate of the shell environment, except that signal traps that are not being ignored shall be set to the default action.
-	- Each command of a multi-command pipeline is in a subshell environment; as an extension, however, any or all commands in a pipeline may be executed in the current environment.
-	- All other commands shall be executed in the current shell environment.
+	- A Subshell environment: is a duplicate of the shell environment, except:<br>
+		IF<br>
+		- some signal traps are not being ignored
+
+		=> set those signal traps to the default action
+	- Each command of a multi-command pipeline is in a subshell environment
+	- All other commands are executed in the current shell environment
 
 - Exit Status: the exit status of the last command specified in the pipeline
 

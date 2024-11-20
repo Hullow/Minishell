@@ -1,23 +1,20 @@
 /* ************************************************************************** */
-/*                                                                            */
+/*	                                                                    */
 /*                                                        :::      ::::::::   */
 /*   parse_main.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cmegret <cmegret@student.42lausanne.ch>    +#+  +:+       +#+        */
+/*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/06 17:35:29 by cmegret           #+#    #+#             */
 /*   Updated: 2024/11/15 20:18:47 by cmegret          ###   ########.fr       */
+/*   Updated: 2024/11/01 13:18:40 by fallan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../header/Minishell.h"
 
-t_token *ft_parse_command(t_token *token_seq);
-t_token *ft_parse_cmd_name_and_suffix(t_token *token_seq);
-t_token *ft_parse_cmd_name(t_token *token_seq);
-t_token *ft_parse_cmd_suffix(t_token *token_seq, \
-int tokens_to_evaluate);
-
+// probably not necessary, likely done before 
 t_token	*ft_parse_operators(t_token *head)
 {
 	t_token	*iterator;
@@ -27,6 +24,8 @@ t_token	*ft_parse_operators(t_token *head)
 	{
 		if (!(iterator->type))
 		{
+			if (!iterator->str)
+				return (head);
 			if (!(ft_strncmp(iterator->str, ">", 2)))
 				iterator->type = REDIR_OUTPUT;
 			else if (!(ft_strncmp(iterator->str, "<", 2)))
@@ -43,6 +42,61 @@ t_token	*ft_parse_operators(t_token *head)
 	return (head);
 }
 
+// Initializes our cmd_sequence (everything to NULL except input, output)
+void	ft_initialize_cmd_sequence(t_command *cmd_sequence)
+{
+	cmd_sequence->cmd_name = NULL;
+	cmd_sequence->args = NULL;
+	cmd_sequence->arg_list = NULL;
+	cmd_sequence->input = STDIN;
+	cmd_sequence->output = STDOUT;
+	cmd_sequence->redir_list = NULL;
+	cmd_sequence->next = NULL;
+}
+
+void	ft_print_args(t_command *cmd_sequence)
+{
+	int	i;
+
+	i = -1;
+	printf("ft_print_args:\n");
+	if (cmd_sequence && cmd_sequence->args)
+	{
+		while (cmd_sequence->args[++i])
+			printf("arg[%d]: [%s]\n", i, cmd_sequence->args[i]);
+	}
+	return ;
+}
+
+// Parses our linked list of tokens, starting from left (head)
+// Extracts the command and the arguments 
+// Outputs a struct command with the command name and the arguments
+t_command	*ft_parse(t_token *tok)
+{
+	t_command	*cmd_sequence;
+	t_redir		*redir_list = NULL;
+
+	cmd_sequence = malloc(sizeof(t_command)); // malloc a node to our list of commands (cmd_sequence)
+	if (!cmd_sequence)
+		return (NULL);
+	ft_initialize_cmd_sequence(cmd_sequence);
+	ft_parse_operators(tok);
+	while (tok)
+	{
+		if (ft_token_is_redir(tok->type))
+			ft_add_redir(&tok, redir_list); // add redirections to our redirections list
+		else if (ft_token_is_word(tok->type))
+			ft_add_cmd_arg(tok->str, cmd_sequence); // add WORD tokens to argument list
+		tok = tok->next;
+	}
+	if (ft_allocate_args(cmd_sequence, cmd_sequence->arg_list) == -1)
+		return (NULL);
+	cmd_sequence->redir_list = redir_list;
+	ft_print_args(cmd_sequence);
+	return (cmd_sequence);
+}
+
+/* TO ADD: EXPAND_EXIT_STATUS: see this codxe from cmegret:
 static int	ft_allocate_single_arg(t_token *tkn, t_command *cmd_sequence,
 	t_shell_state *shell_state)
 {
@@ -106,172 +160,4 @@ static int	ft_process_args(t_token *tkn, t_command *cmd_sequence,
 	}
 	return (0);
 }
-
-// OLD VERSION (before ft_parse_command, etc. use)
-//
-// Parses our linked list of tokens, starting from left (head)
-// Extracts the command and the arguments 
-// Outputs a struct command with the command name and the arguments
-/* t_command	*ft_parse_old(t_token *head)
-{
-	t_command	*cmd_sequence;
-	t_token		*tkn;
-
-	cmd_sequence = malloc(sizeof(t_command));
-	if (!cmd_sequence)
-		return (NULL);
-	tkn = head;
-	if (tkn->type == WORD)
-	{
-		cmd_sequence->cmd_name = ft_strdup(tkn->str);
-		if (ft_process_args(tkn, cmd_sequence) == -1)
-			return (NULL); // call error function ?
-	}
-	return (cmd_sequence);
-} */
-
-t_command	*ft_parse(t_token *head, t_shell_state *shell_state)
-{
-	t_command	*cmd_sequence;
-	t_token		*tkn;
-
-	cmd_sequence = malloc(sizeof(t_command));
-	if (!cmd_sequence)
-		return (NULL);
-	tkn = head;
-	if (tkn->type == WORD)
-	{
-		if (!(tkn->str))
-		{
-			printf("no command found\n");
-			return (NULL);
-		}
-		cmd_sequence->cmd_name = ft_strdup(tkn->str);
-		if (!cmd_sequence->cmd_name)
-			return (NULL); // call error function ?
-		if (ft_process_args(tkn, cmd_sequence, shell_state) == -1)
-			return (NULL); // call error function ?
-	}
-	return (cmd_sequence);
-}
-
-/*
-Simplified grammar to implement:
-command   		 : cmd_name cmd_suffix
-                 | cmd_name
-                 ;
-
-cmd_name         : WORD
-
-cmd_suffix       : 			  WORD
-                 | cmd_suffix WORD
 */
-
-// We do not implement (for now):
-// 	- pipes parsing: we start at "command" in the grammar
-// 	- '=' : so no rules 7a+7b, and only cmd_name, no cmd_word
-// 	- io_redirect
-// 	- cmd_prefix
-
-
-// To parse: `ls -la`
-// 	=> before using these functions, we got
-// "string: {ls} – token type: WORD
-// string: {-la} – token type: WORD" => why ?
-// 
-// `ls` is executed without the `-la` option 
-
-// grammar rule  implemented:
-// command   		: cmd_name cmd_suffix
-//                  | cmd_name
-//                  ;
-t_token *ft_parse_command(t_token *token_seq)
-{
-	if (ft_parse_cmd_name(token_seq))
-		return (token_seq);
-	else if (ft_parse_cmd_name_and_suffix(token_seq))
-		return (token_seq);
-	else
-		return (NULL);
-	return (token_seq);
-}
-
-// grammar rule implemented
-// 		command   		 : cmd_name cmd_suffix
-t_token *ft_parse_cmd_name_and_suffix(t_token *token_seq)
-{
-	if (token_seq->next) // if there is another token
-	{
-		if (ft_parse_cmd_name(token_seq) != NULL && \
-		ft_parse_cmd_suffix(token_seq->next, \
-		ft_count_token_list_args(token_seq)) != NULL)
-			return (token_seq);
-		else
-		{
-			printf("ft_parse_cmd_name_and_suffix: ft_parse_cmd_name and/or ft_parse_cmd_suffix couldn't parse, returning NULL\n");
-			return (NULL);
-		}
-	}
-	else // if there is only one token
-	{
-		printf("ft_parse_cmd_name_and_suffix: only found one token, returning NULL\n");
-		return (NULL);
-	}
-	printf("ft_parse_cmd_and_suffix successful\n");
-}
-
-// grammar rule  implemented
-// 		cmd_name         : WORD
-t_token *ft_parse_cmd_name(t_token *token_seq)
-{
-	if (token_seq == NULL)
-		return (NULL);
-	if (token_seq->str)
-		token_seq->type = WORD;
-	else
-	{
-		printf("ft_parse_cmd_name: empty token string, returning NULL\n");
-		return (NULL);
-	}
-	return (token_seq);
-}
-
-// This function parses command suffix symbols, 
-// useful for input like `cp file1.txt file2.txt file3.txt /destination/directory/`
-//
-// grammar rule  implemented
-//
-// 		cmd_suffix	: 			  WORD
-//  				| cmd_suffix  WORD
-t_token *ft_parse_cmd_suffix(t_token *token_seq, \
-int tokens_to_evaluate)
-{
-	t_token *iterator;
-	int				i;
-
-	iterator = token_seq;
-	i = 0;
-	if (token_seq->next == NULL && token_seq->str) // WORD
-		token_seq->type = SUFFIX; // SUFFIX use: for testing purposes
-	else if (token_seq->next && token_seq->str) // cmd_suffix WORD (iteration + some recursion)
-	{
-		while (++i < tokens_to_evaluate) // iteration: goes to the end of the cmd_suffix sequence to parse
-			iterator = iterator->next; // (this can be the last token in the linked list, or not)
-		if (iterator->str) // if we find a str at the end,
-			iterator->type = SUFFIX; // assign it the type WORD (SUFFIX use: for testing purposes)
-		else
-		{
-			printf("ft_parse_cmd_name: last token has no string, returning NULL\n");
-			return (NULL);
-		}
-	}
-	else
-	{
-		printf("ft_parse_cmd_name: empty token string, returning NULL\n");
-		return (NULL);
-	}
-	tokens_to_evaluate--;
-	if (tokens_to_evaluate) // if there are tokens left to evaluate to the right (avoids infinite loop)
-		ft_parse_cmd_suffix(token_seq, tokens_to_evaluate); // parse cmd_suffix again
-	return (token_seq);
-}

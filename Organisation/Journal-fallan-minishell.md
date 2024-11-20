@@ -178,3 +178,74 @@ POSIX.1-2017's special grammar notation is based on the syntax used by the `yacc
 - Reading more about parsing concepts (leftmost/rightmost derivation, and approaches (types of parsing: top-down, bottom-up, LL, Recursive descent, LR, ...))
 - Implementing a parser for a very simple grammar => doesn't seem to relevant to our parser; too different, but helps make issues concrete. Will try directly a recursive descent parser with our data structures and grammar instead.
 - Trying to implement Recursive descent parsing with an iterative component to avoid infinite loop (see parse_main.c). New branch created that corresponds to the task: `parse_cmd_prefixes_suffixes`
+
+# 19/9/24
+- With Cmegret @42 Lausanne
+- Still implementing parsing of command suffixes; need to refactor parsing_main.c
+
+# 20/9/24
+- Call with Cmegret: discussed his work on new prompt, refactoring, and parsing issues. Ideas: make diagram(s), ask Copilot, go ahead and refactor when things work
+
+# 26/9/24
+- Parsing prefixes/suffixes: worked on implementing more rules, but figured in the end the implementation is wrong
+
+# 27/9/24
+- Call with Cmegret: discussed and fixed issues with builtins (export, unset, cd) and pathname expansion
+- Re-dove into parsing theory:
+	- left recursion: an issue, need to fix grammar or use something different than recursive descent parsing. Learned how to fix direct left recursion, tried on a small subset of the grammar, and found no indirect left recursion (still need to check, maybe asking Copilot)
+	- parser generators: looked at lex, yacc, bison, but too many steps and likely not allowed in the project. [for personal interest maybe](https://www.geeksforgeeks.org/introduction-to-yacc/)
+	- figured parsing info must actually be stored, if correctly understood, in an AST
+	- started looking at an AST implementation in C
+
+Next time:
+- finish reading about AST implementation (and see chat https://chatgpt.com/c/66eaa0fb-b8fc-8007-a3e4-2c31a481fe64 for explanations)
+- maybe try compiling or even coding an AST implementation for arithmetic expressions, with grammar etc.
+- try to make sense of the way ASTs are built/filled out, out of the grammar
+=> maybe relevant to read either of:
+	- [3. Parsing - CSE 5317/4305: Design and Construction of Compilers Leonidas Fegaras University of Texas at Arlington, CSE](https://lambda.uta.edu/cse5317/notes/node11.html)
+	- [Compiler Design - Spring 2018 - 3.0 Frontend - Thomas R. Gross](https://ethz.ch/content/dam/ethz/special-interest/infk/inst-cs/lst-dam/documents/Education/Classes/Spring2018/210_Compiler_Design/Slides/w03_01-front-end-overview_18.pdf)
+	- [Parse Tree and Syntax Tree](https://www.geeksforgeeks.org/parse-tree-and-syntax-tree/)
+- after that, take another look at either of:
+	- [COMP 530: Lab 1: Parser for a Shell](https://www.cs.unc.edu/~porter/courses/comp530/f23/lab1.html) which contains some implementation details
+	- [Building Recursive Descent Parsers: The Definitive Guide - Boolean World](https://www.booleanworld.com/building-recursive-descent-parsers-definitive-guide/)
+
+# 3/10/24
+- Call with cmegret: discussed his tests for pipes and command execution structure. We looked at the execution code briefly. Also discussed fixing grammar to parse recursively without infinite loops.
+- Looked at Keleshev's AST in C, copied the code, now thinking about how to write code to 'fill' an AST from a linked list of tokens
+
+# 4/10/2024
+- Started trying to implement an AST for our shell, with some help from Copilot by the way of implementation suggestions (see `/Example-code/AST.c`).
+- Preprocessed grammar to remove direct left recursion following Wikipedia's algorithm
+=> this shouldn't create semantic issues because the only semantic rules found in the grammar are in rules without direct left recursion, not concerned by the preprocessing
+- Some uncommitted changes to recover from 42's Linux session; including a merge of the duplicate Tokenization-and-parsing.md files (in Documentation/Notes/Topics/Parsing)
+- Discussed parsing, and general order of functioning of the shell with ahanzi (quote removal, expansions, redirections), and added summary from Bash reference manual at the beginning of Shell-functioning.md
+
+# 10/10/2024
+- AST: using Copilot for help, advanced on writing the structures and some idea of how to initialize. Issue:
+how to traverse and use the AST ? Maybe some things should be done when the AST node is created ? Or only at the end after having initialized the whole thing ? We'll see next time
+
+# 11/10/2024
+- Continued working on AST data structures. Unclear how they will be used exactly.
+
+# 17/10/24
+- AST: talk with nbelouar, his binary tree (see his [repo](https://github.com/Lbatisseur/mini_shell/blob/dylan/parser.c)). ! : he says that AST parsing means AST (recursive!) execution !!! Need to think this through.
+- Wrote parsing functions for nonterminal symbols starting from the bottom (here_end, redir_heredoc, io_here)
+
+# 25/10/24
+- Call with cmegret, discussed bug with rl_replace_line on OS X
+- Wrote code to parse redirections and files/delimiters, and place them together in a linked list s_redir. No code to integrate the list in the broader code. Code untested for now.
+
+# 26/10/24
+- Finished coding parsing of redirections. Now debugging. Need to rewrite initializations of redir_list and redir_node first to compile and 
+stop segfaults.
+
+# 31/10/24
+- Started working on orchestration of redirections parsing in ft_parse (parse_main.c). 
+
+# 1/11/24
+- Things to merge in main besides our code : see to-do list
+- re-wrote redirection parsing, and adding arguments to cmd_sequence (first
+via a linked list, then we copy from this linked list into cmd_sequence **args, so execve can use it directly)
+- Old redirection parsing code still in parse_redir_OLD.c, to delete at some point, maybe useful so not deleted yet
+- Test: compiles ok, no more segfault, arguments don't seem to work anymore (`make` works, but not `make clean`)
+- need to test if things stored correctly, (then write code to execute redirections)

@@ -830,5 +830,77 @@ touch
 stat
 file /usr/bin/ls
 
+find . -name "parse_main.c"
+find . -name parse_main.c
+
+/bin/ls
+
+
+echo "hello" | echo "goodbye"
+"echo" "hello"
+> file.txt "echo" "hello"
+cat file.txt 
+export VAR_NEW=$PWD
+env | grep VAR_NEW
+export VAR_NEW="$PWD"
+unset VAR_NEW
+env | grep VAR_NEW
+export VAR_NEW="$PWD"
+env | grep VAR_NEW
+export VAR_NEW='$PWD'
+unset VAR_NEW
+env | grep VAR_NEW
+export VAR_NEW='$PWD'
+env | grep VAR_NEW
+history -n > temp.txt
+cat temp.txt
+rm temp.txt
+
+echo """""" hello
+echo "" "" "" hello
+echo -n bonjour hello
+echo -nnnAn bonjour hello
+
+echo "hello" > file
+echo > >
+echo hello > 2
+echo hello > 2 > 3 > 4
+cat 3 
+cat 4
+cat < 2 > 1 < file
+cat 2 file
+cat 2 file > 1
+cat 2 file >> 1
+cat 1
+echo "hello" > 3 > 4
+rm 1 2 3 4 
+echo hello" > 3 > 4 "hello"
+echo > 3 > 4 "hello"
+cat 4
+cat 3
+
+
+export VAR="> file"
+echo hello$VAR
+echo "hello" $VAR
+$(echo "hello" $VAR)
+export VAR="echo "hello" > file"
+echo hello > file
+export VAR="echo hello > file"
+rm file
+export VAR="echo hello"
+echo hello
+sh
+echo $VAR
+$VAR
+
+
+echo "hello" > file.txt > file2.txt
+ls | grep file.txt
+ls > temp | grep file.txt
+cat temp
+ls > file2.txt | wc -l
+ls | wc -l
+
 VAR="../file.txt" 
 echo $VAR

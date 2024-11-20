@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   token_checks.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cmegret <cmegret@student.42lausanne.ch>    +#+  +:+       +#+        */
+/*   By: francis <francis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/22 16:35:11 by francis           #+#    #+#             */
-/*   Updated: 2024/11/01 18:33:17 by cmegret          ###   ########.fr       */
+/*   Updated: 2024/11/20 16:06:29 by francis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ int	ft_is_blank(char c)
 // and that that word was not delimited
 int	ft_previous_char_part_of_word(t_token *tok)
 {
-	if (tok && tok->type == WORD && !tok->is_delimited)
+	if (tok && tok->type == WORD && !(tok->is_delimited))
 		return (1);
 	return (0);
 }

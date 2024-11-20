@@ -3,12 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   Minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cmegret <cmegret@student.42lausanne.ch>    +#+  +:+       +#+        */
+/*   By: francis <francis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/19 13:48:14 by francis           #+#    #+#             */
-/*   Updated: 2024/11/15 20:09:38 by cmegret          ###   ########.fr       */
+/*   Updated: 2024/11/20 16:03:04 by francis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+#ifndef MINISHELL_H
+# define MINISHELL_H
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
@@ -34,19 +37,41 @@
 # include "Signal.h"
 # include "Pathname.h"
 
+#include "Tokenizer.h"
+#include "Parser.h"
+
 // Token types
-# define WORD 1
-# define MINISHELL_NEWLINE 2
-# define REDIR_INPUT 3
-# define REDIR_OUTPUT 4
-# define REDIR_APPEND 5
-# define REDIR_HEREDOC 6
-# define PIPE 7
-# define END_OF_INPUT 8
-# define SUFFIX 9 // TEMPORARY, FOR TESTING PURPOSES, REMOVE AFTERWARDS
+#define WORD 1
+#define REDIR_INPUT 2
+#define REDIR_OUTPUT 3
+#define REDIR_APPEND 4
+#define REDIR_HEREDOC 5
+#define PIPE 6
+#define END_OF_INPUT 7
+#define IO_NUMBER 8
+
+// File descriptors
+#define STDIN 0
+#define STDOUT 1
 
 extern int	g_signal;
 
+// linked list of redirections
+typedef struct s_redir
+{
+	int				type; // REDIR_INPUT, REDIR_OUTPUT, REDIR_APPEND, REDIR_HEREDOC
+	char			*str; // either file (for input, output, append) or delimiter (for Heredoc)
+	struct s_redir	*next;
+}	t_redir;
+
+// linked list of our command arguments
+typedef struct s_cmd_args
+{
+	char				*arg_string;
+	struct s_cmd_args	*next;
+}	t_cmd_args;
+
+// linked list of tokens
 typedef struct s_token
 {
 	char			*str;
@@ -59,14 +84,21 @@ typedef struct s_token
 	struct s_token	*next;
 }	t_token;
 
+// linked list of commands (pipes)
+// n.b.: **args is the array of arguments used by execve,
+//		 while *arg_list is the list of arguments filled by our parser
 typedef struct s_command
 {
 	char				*cmd_name;
+	t_cmd_args			*arg_list;
 	char				**args;
-	int					fd; // redirection
+	int					input; // file descriptor for input (stdin or redirection)
+	int					output; // file descriptor for output (stdout or redirection)
+	t_redir				*redir_list; // redirection list
 	struct s_command	*next;
 }	t_command;
 
+typedef struct s_shell_state
 typedef struct s_shell_state
 {
 	char	**envp;

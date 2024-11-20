@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   token_main.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cmegret <cmegret@student.42lausanne.ch>    +#+  +:+       +#+        */
+/*   By: francis <francis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/06 17:19:58 by cmegret           #+#    #+#             */
-/*   Updated: 2024/11/14 15:34:29 by cmegret          ###   ########.fr       */
+/*   Updated: 2024/11/20 16:07:36 by francis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,9 @@
 t_token	*ft_init_token(void)
 {
 	t_token	*tok;
+	t_token	*tok;
 
+	tok = malloc(sizeof(t_token));
 	tok = malloc(sizeof(t_token));
 	if (!tok)
 		return (NULL);
@@ -31,6 +33,8 @@ t_token	*ft_init_token(void)
 // Processes the prompt, applying tokenization rules in order
 static int	ft_process_prompt(char *prompt, int i, t_token **tok)
 {
+	// if (*tok && (*tok)->str)
+	// 	printf("tok->str: %s; tok->is_delimited: %d\n", (*tok)->str, (*tok)->is_delimited);
 	if (ft_previous_char_is_undelimited_operator(*tok))
 		return (ft_continue_operator_token(prompt, i, tok));
 	else if (ft_is_operator_character(prompt[i]))

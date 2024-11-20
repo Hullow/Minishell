@@ -1,5 +1,7 @@
+This file is meant as a temporary support for writing parse*.c code files.
+
 /*
-Simplified grammar to implement:
+Simplified grammar to implement (only suffixes):
 command   		 : cmd_name cmd_suffix
                  | cmd_name
                  ;
@@ -9,10 +11,52 @@ cmd_name         : WORD
 cmd_suffix       : 			  WORD
                  | cmd_suffix WORD
 */
+=> implemented
+
+/*
+more complex:suffixes with io_redirect
+command   		 : cmd_name cmd_suffix
+                 | cmd_name
+                 ;
+
+cmd_name         : WORD                   /* Apply rule 7a (see Shell-functioning.md): */
+                 ;
+
+cmd_suffix       :            io_redirect
+                 | cmd_suffix io_redirect
+                 |            WORD
+                 | cmd_suffix WORD
+                 ;
+
+redirect_list    :               io_redirect
+                 | redirect_list io_redirect
+                 ;
+
+/* n.b.: io_redirect necessarily has > 1 tokens */
+io_redirect      :           io_file   
+                 | IO_NUMBER io_file
+                 |           io_here
+                 | IO_NUMBER io_here
+                 ;
+
+io_file          : '<'			filename
+                 | '>'			filename
+                 | REDIR_APPEND	filename
+                 ;
+
+filename         : WORD                      /* Apply rule 2 (see Shell-functioning.md)*/
+                 ;
+
+io_here          : REDIR_HEREDOC     here_end
+                 ;
+
+here_end         : WORD                      /* Apply rule 3 (see Shell-functioning.md)*/
+                 ;
+*/
+
 
 Parsing `ls -la`:
 start: command => cmd_name cmd_suffix => WORD cmd_suffix => WORD WORD
-
 
 Parsing `cp -r directory`:
 
@@ -75,3 +119,5 @@ cmd_suffix: tokens to evaluate to the right: 4-- => 3
 - WORD (`cp`) WORD (`file1.txt`) WORD (`file3.txt`) WORD (`/destination/directory/`)
 
 tokens to evaluate to the right:  
+
+
