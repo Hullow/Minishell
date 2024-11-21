@@ -76,7 +76,7 @@ t_command	*ft_parse(t_token *tok, t_shell_state *shell_state)
 	t_command	*cmd_sequence;
 	t_redir		*redir_list = NULL;
 
-	(void)shell_state;
+	(void)shell_state; // for envp and variables (exit status: $?, other variables)
 	cmd_sequence = malloc(sizeof(t_command)); // malloc a node to our list of commands (cmd_sequence)
 	if (!cmd_sequence)
 		return (NULL);
@@ -95,69 +95,3 @@ t_command	*ft_parse(t_token *tok, t_shell_state *shell_state)
 	cmd_sequence->redir_list = redir_list;
 	return (cmd_sequence);
 }
-
-/* TO ADD: EXPAND_EXIT_STATUS: see this codxe from cmegret:
-static int	ft_allocate_single_arg(t_token *tkn, t_command *cmd_sequence,
-	t_shell_state *shell_state)
-{
-	cmd_sequence->args = malloc(2 * sizeof(char *));
-	if (!cmd_sequence->args)
-		return (-1); // call error function ?
-	cmd_sequence->args[0] = expand_exit_status(tkn->str, shell_state->last_exit_status);
-	if (!cmd_sequence->args[0])
-		return (-1);
-	cmd_sequence->args[1] = NULL;
-	cmd_sequence->next = NULL; // A CHANGER
-	return (0);
-}
-
-static int	ft_allocate_multiple_args(t_token *tkn, t_command *cmd_sequence, int arg_count, t_shell_state *shell_state)
-{
-	int	i;
-
-	cmd_sequence->args = malloc((arg_count + 1) * sizeof(char *));
-	if (!cmd_sequence->args)
-		return (-1);
-	cmd_sequence->args[0] = ft_strdup(tkn->str);
-	if (!cmd_sequence->args[0])
-		return (-1);
-
-	tkn = tkn->next;
-	i = 1;
-	while (tkn)
-	{
-		if (tkn->type == WORD)
-		{
-			cmd_sequence->args[i] = expand_exit_status(tkn->str,
-					shell_state->last_exit_status);
-			if (!cmd_sequence->args[i])
-				return (-1);
-			i++;
-		}
-		tkn = tkn->next;
-	}
-	cmd_sequence->args[i] = NULL;
-	cmd_sequence->next = NULL;
-	return (0);
-}
-
-static int	ft_process_args(t_token *tkn, t_command *cmd_sequence,
-	t_shell_state *shell_state)
-{
-	int	arg_count;
-
-	arg_count = ft_count_token_list_args(tkn);
-	if (arg_count == 1)
-	{
-		if (ft_allocate_single_arg(tkn, cmd_sequence, shell_state) == -1)
-			return (-1);
-	}
-	else
-	{
-		if (ft_allocate_multiple_args(tkn, cmd_sequence,
-				arg_count, shell_state) == -1)
-			return (-1);
-	}
-	return (0);
-}
-*/

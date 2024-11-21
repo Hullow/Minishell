@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_command_args.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: francis <francis@student.42.fr>            +#+  +:+       +#+        */
+/*   By: cmegret <cmegret@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/01 17:26:12 by fallan            #+#    #+#             */
-/*   Updated: 2024/11/20 18:07:18 by francis          ###   ########.fr       */
+/*   Updated: 2024/11/21 14:34:19 by cmegret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,11 +81,9 @@ int	ft_allocate_args(t_command *cmd_sequence, t_cmd_args *arg_list)
 	int	i;
 
 	arg_count = ft_count_args(arg_list);
-	if (arg_count == 0)
-		return (0);
 	cmd_sequence->args = malloc((arg_count + 2) * sizeof(char *));
 	if (!cmd_sequence->args)
-			return (-1);
+		return (-1);
 	cmd_sequence->args[0] = ft_strdup(cmd_sequence->cmd_name);
 	i = 0;
 	while (arg_list && i < arg_count)

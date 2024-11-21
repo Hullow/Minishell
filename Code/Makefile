@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: francis <francis@student.42.fr>            +#+  +:+       +#+         #
+#    By: cmegret <cmegret@student.42lausanne.ch>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/07/19 14:53:36 by cmegret           #+#    #+#              #
-#    Updated: 2024/11/20 16:44:33 by francis          ###   ########.fr        #
+#    Updated: 2024/11/21 14:34:24 by cmegret          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -64,7 +64,6 @@ SRCS = main/main.c \
 	  parsing/parse_redir.c \
 	  parsing/parse_utils.c \
 	  parsing/parse_command_args.c \
-	  expansion/exit_status_expansion.c \
 	  expansion/pathname_expansion.c \
 	  execution/execution_main.c \
 	  execution/execution_env_path.c \

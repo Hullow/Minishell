@@ -25,6 +25,7 @@ function display_help {
     echo -e "Options:"
     echo -e "  -h       Affiche cette aide et quitte."
     echo -e "  -all     Exécute tous les tests sans demande de confirmation."
+    echo -e "  -XX      Exécute uniquement le fichier de test avec le numéro XX (par ex., -07 pour test_07_echo_command.sh)."
     echo
     exit 0
 }
@@ -52,10 +53,14 @@ function check_and_build_minishell {
 
 # Vérification des flags
 run_all=false
+specific_test=""
 while [[ "$1" != "" ]]; do
     case $1 in
         -h ) display_help ;;
         -all ) run_all=true ;;
+        -[0-9][0-9] )
+            specific_test=$(ls tests/test_"${1:1}"_*.sh 2>/dev/null)
+            ;;
         * ) echo -e "${RED}Option invalide : $1${NC}"; display_help ;;
     esac
     shift
@@ -74,10 +79,21 @@ check_and_build_minishell
 # Affichage de l'en-tête
 display_header
 
+# Si un test spécifique est demandé
+if [[ -n "$specific_test" ]]; then
+    if ls $specific_test 1> /dev/null 2>&1; then
+        run_test_script "$specific_test"
+    else
+        echo -e "${RED}❌ Test file matching $specific_test not found.${NC}"
+        exit 1
+    fi
+    exit 0
+fi
+
+# Lancer chaque script de test
 is_first_command=true
 skip_remaining_tests=false
 
-# Lancer chaque script de test avec confirmation y/N si le flag -all n'est pas défini
 for script in tests/test_*.sh; do
     if [ "$is_first_command" = true ]; then
         is_first_command=false
