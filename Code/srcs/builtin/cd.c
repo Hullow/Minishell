@@ -6,7 +6,7 @@
 /*   By: cmegret <cmegret@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/11 15:00:25 by cmegret           #+#    #+#             */
-/*   Updated: 2024/11/21 14:34:42 by cmegret          ###   ########.fr       */
+/*   Updated: 2024/11/21 14:47:48 by cmegret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,72 +58,139 @@
 	shell_state->last_exit_status = 0;
 } */
 
-void	ft_cd(t_command *cmd, t_shell_state *shell_state)
+/**
+ * @brief Get the old working directory (OLDPWD).
+ *
+ * This function retrieves the current working directory before changing it.
+ *
+ * @return A pointer to a string containing the current directory.
+ *         Returns NULL and prints an error message if getcwd fails.
+ */
+static char	*get_oldpwd(void)
 {
-	char	*path;
 	char	*oldpwd;
-	char	*newpwd;
 
-	// Vérifie si les arguments sont valides
-	if (!cmd || !shell_state || !cmd->args)
-	{
-		fprintf(stderr, "Error: Invalid command or shell state\n");
-		shell_state->last_exit_status = 1;
-		return ;
-	}
-	// Obtenir le répertoire courant
 	oldpwd = getcwd(NULL, 0);
 	if (!oldpwd)
-	{
 		perror("getcwd");
-		shell_state->last_exit_status = 1;
-		return ;
-	}
-	// Déterminer le chemin à utiliser
-	path = cmd->args[1];
+	return (oldpwd);
+}
+
+/**
+ * @brief Determine the target path for the cd command.
+ *
+ * This function determines the path to which the shell should navigate,
+ * handling special cases such as "~" for the home directory and "-" for OLDPWD.
+ *
+ * @param args The arguments for the cd command.
+ * @return A pointer to the target path as a string.
+ */
+static char	*get_target_path(char **args)
+{
+	char	*path;
+
+	path = args[1];
 	if (!path || ft_strncmp(path, "~", 2) == 0)
-	{
 		path = getenv("HOME");
-		if (!path)
-		{
-			fprintf(stderr, "cd: HOME not set\n");
-			free(oldpwd);
-			shell_state->last_exit_status = 1;
-			return ;
-		}
-	}
 	else if (ft_strncmp(path, "-", 2) == 0)
 	{
 		path = getenv("OLDPWD");
-		if (!path)
-		{
-			fprintf(stderr, "cd: OLDPWD not set\n");
-			free(oldpwd);
-			shell_state->last_exit_status = 1;
-			return ;
-		}
-		printf("%s\n", path); // Affiche OLDPWD pour `cd -`
+		if (path)
+			printf("%s\n", path);
 	}
-	// Effectuer le changement de répertoire
+	return (path);
+}
+
+/**
+ * @brief Change the current working directory.
+ *
+ * Attempts to change the current working directory to the specified path.
+ *
+ * @param path The target path to navigate to.
+ * @return 0 if successful, 1 if an error occurred.
+ */
+static int	change_directory(const char *path)
+{
 	if (chdir(path) == -1)
 	{
 		perror("cd");
-		free(oldpwd);
-		shell_state->last_exit_status = 1;
-		return ;
+		return (1);
 	}
-	// Mettre à jour les variables d'environnement
+	return (0);
+}
+
+/**
+ * @brief Update the shell's environment variables for PWD and OLDPWD.
+ *
+ * This function updates the OLDPWD and PWD environment variables
+ * after a successful directory change.
+ *
+ * @param shell_state The current shell state structure.
+ * @param oldpwd The previous working directory.
+ */
+static void	update_environment(t_shell_state *shell_state, char *oldpwd)
+{
+	char	*newpwd;
+
 	update_env_var(&shell_state->envp, "OLDPWD", oldpwd);
-	free(oldpwd);
 	newpwd = getcwd(NULL, 0);
 	if (!newpwd)
 	{
 		perror("getcwd");
-		shell_state->last_exit_status = 1;
 		return ;
 	}
 	update_env_var(&shell_state->envp, "PWD", newpwd);
 	free(newpwd);
-	// Mettre à jour le statut de sortie
+}
+
+static int	handle_cd_init(t_command *cmd, t_shell_state *shell_state, char **oldpwd)
+{
+	if (!cmd || !shell_state || !cmd->args)
+	{
+		fprintf(stderr, "Error: Invalid command or shell state\n");
+		shell_state->last_exit_status = 1;
+		return (1);
+	}
+	*oldpwd = get_oldpwd();
+	if (!*oldpwd)
+	{
+		shell_state->last_exit_status = 1;
+		return (1);
+	}
+	return (0);
+}
+
+/**
+ * @brief Execute the cd command.
+ *
+ * Changes the current directory based on the provided command arguments,
+ * updates the environment variables, and handles errors appropriately.
+ *
+ * @param cmd The command structure containing the arguments.
+ * @param shell_state The shell state structure.
+ */
+void	ft_cd(t_command *cmd, t_shell_state *shell_state)
+{
+	char	*path;
+	char	*oldpwd;
+
+	if (handle_cd_init(cmd, shell_state, &oldpwd))
+		return ;
+	path = get_target_path(cmd->args);
+	if (!path)
+	{
+		fprintf(stderr, "cd: Target path not set\n");
+		free(oldpwd);
+		shell_state->last_exit_status = 1;
+		return ;
+	}
+	if (change_directory(path))
+	{
+		free(oldpwd);
+		shell_state->last_exit_status = 1;
+		return ;
+	}
+	update_environment(shell_state, oldpwd);
+	free(oldpwd);
 	shell_state->last_exit_status = 0;
 }
