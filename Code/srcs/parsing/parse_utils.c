@@ -6,7 +6,7 @@
 /*   By: francis <francis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/01 13:49:30 by fallan            #+#    #+#             */
-/*   Updated: 2024/11/21 18:14:29 by francis          ###   ########.fr       */
+/*   Updated: 2024/11/21 19:12:51 by francis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,81 +35,11 @@ bool	ft_token_is_word(int token_type)
 		return (0);
 }
 
-// returns the number of arguments in our argument list
-int	ft_count_args(t_cmd_args *arg_list)
+// checks if token is of type WORD 
+bool	ft_token_is_pipe(int token_type)
 {
-	int	i;
-
-	i = 0;
-	if (!arg_list)
-		return (0);
-	while (arg_list)
-	{
-		i++;
-		arg_list = arg_list->next;
-	}
-	return (i);
-}
-
-// frees our linked list of arguments
-void	ft_free_arg_list(t_cmd_args	*arg_list)
-{
-	t_cmd_args	*temp = NULL;
-
-	while (arg_list)
-	{
-		temp = arg_list;
-		if (arg_list->arg_string)
-			free(arg_list->arg_string);
-		arg_list = arg_list->next;
-		free(temp);
-	}
-}
-
-// traverses the linked list of tokens and returns the last token
-t_redir *ft_last_redir(t_redir *redir_list)
-{
-	if (!redir_list || !redir_list->next)
-		return (redir_list);
-	while (redir_list->next)
-		redir_list = redir_list->next;
-	return (redir_list);
-}
-
-char	*ft_return_redir_type(int redir_type)
-{
-	if (redir_type == REDIR_APPEND)
-		return("REDIR_APPEND");
-	else if (redir_type == REDIR_INPUT)
-		return("REDIR_INPUT");
-	else if (redir_type == REDIR_OUTPUT)
-		return("REDIR_OUTPUT");
-	else if (redir_type == REDIR_HEREDOC)
-		return("REDIR_HEREDOC");
+	if (token_type == PIPE)
+		return (1);
 	else
-		return (NULL);
-}
-
-// prints redirection number, type, and destination/origin/delimiter
-int	ft_print_redirs(t_redir *redir_list)
-{
-	t_redir	*head;
-	int	i;
-
-	printf("ft_print_redirs:\n****************\n");
-	if (!redir_list)
-	{
-		printf("no redirections\n");
 		return (0);
-	}
-	head = redir_list;
-	i = 1;
-	while (redir_list)
-	{
-		printf("redirection %d is of type: {%s} to/from/delimiter {%s}\n", i, ft_return_redir_type(redir_list->type), redir_list->str);
-		redir_list = redir_list->next;
-		i++;
-	}
-	redir_list = head;
-	return (i);
 }

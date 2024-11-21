@@ -6,7 +6,7 @@
 /*   By: francis <francis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 19:44:40 by fallan            #+#    #+#             */
-/*   Updated: 2024/11/21 16:23:26 by francis          ###   ########.fr       */
+/*   Updated: 2024/11/21 19:11:16 by francis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,21 +32,23 @@ int			ft_add_redir(t_token **tok, t_command *cmd_sequence);
 // Command arguments
 int			ft_add_cmd_arg(char *tok_str, t_command *cmd_seq);
 int			ft_new_cmd_arg_node(t_cmd_args *arg_list, char *arg_string);
-int			ft_allocate_args(t_command *cmd_sequence, t_cmd_args *arg_list);
+int			ft_allocate_args(t_command *cmd_sequence);
 
 // Utils
 	// Checkers
 bool		ft_token_is_redir(int token_type);
 bool		ft_token_is_word(int token_type);
+bool		ft_token_is_pipe(int token_type);
 t_redir		*ft_last_redir(t_redir *redir_list);
 
 	// Command arguments
-void		ft_print_args(t_command *cmd_sequence);
 int			ft_count_args(t_cmd_args *arg_list);
 void		ft_free_arg_list(t_cmd_args *arg_list);
 
-	// Other
+// Debug
+void		ft_print_args(t_command *cmd_sequence);
 int			ft_print_redirs(t_redir *redir_list);
 char		*ft_return_redir_type(int redir_type);
+void		ft_print_command_sequences(t_command *head);
 
 #endif

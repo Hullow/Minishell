@@ -54,18 +54,15 @@ void	ft_initialize_cmd_sequence(t_command *cmd_sequence)
 	cmd_sequence->next = NULL;
 }
 
-void	ft_print_args(t_command *cmd_sequence)
+// add a command sequence/pipe to our linked list of commands
+t_command	*ft_add_pipe(t_command *cmd_sequence)
 {
-	int	i;
-
-	i = -1;
-	printf("ft_print_args:\n");
-	if (cmd_sequence && cmd_sequence->args)
-	{
-		while (cmd_sequence->args[++i])
-			printf("arg[%d]: [%s]\n", i, cmd_sequence->args[i]);
-	}
-	return ;
+	cmd_sequence->next = malloc(sizeof(t_command)); // malloc a node to our list of commands (cmd_sequence)
+	if (!(cmd_sequence->next))
+		return (NULL);
+	cmd_sequence = cmd_sequence->next;
+	ft_initialize_cmd_sequence(cmd_sequence);
+	return (cmd_sequence);
 }
 
 // Parses our linked list of tokens, starting from left (head)
@@ -74,11 +71,13 @@ void	ft_print_args(t_command *cmd_sequence)
 t_command	*ft_parse(t_token *tok, t_shell_state *shell_state)
 {
 	t_command	*cmd_sequence;
+	t_command	*head;
 
 	(void)shell_state; // for envp and variables (exit status: $?, other variables)
 	cmd_sequence = malloc(sizeof(t_command)); // malloc a node to our list of commands (cmd_sequence)
 	if (!cmd_sequence)
 		return (NULL);
+	head = cmd_sequence;
 	ft_initialize_cmd_sequence(cmd_sequence);
 	ft_parse_operators(tok);
 	while (tok)
@@ -87,10 +86,12 @@ t_command	*ft_parse(t_token *tok, t_shell_state *shell_state)
 			ft_add_redir(&tok, cmd_sequence); // add redirections to our redirections list
 		else if (ft_token_is_word(tok->type))
 			ft_add_cmd_arg(tok->str, cmd_sequence); // add WORD tokens to argument list
+		else if (ft_token_is_pipe(tok->type))
+			cmd_sequence = ft_add_pipe(cmd_sequence); // add new command sequence tokens to argument list
 		tok = tok->next;
 	}
-	if (ft_allocate_args(cmd_sequence, cmd_sequence->arg_list) == -1)
+	if (ft_allocate_args(head) == -1) // need to modify this to go over the whole cmd_list (all pipes)
 		return (NULL);
-	// ft_print_redirs(cmd_sequence->redir_list);
-	return (cmd_sequence);
+	ft_print_command_sequences(head);
+	return (head);
 }

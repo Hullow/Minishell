@@ -6,11 +6,21 @@
 /*   By: francis <francis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/01 17:28:03 by fallan            #+#    #+#             */
-/*   Updated: 2024/11/21 18:24:31 by francis          ###   ########.fr       */
+/*   Updated: 2024/11/21 19:12:26 by francis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../header/Minishell.h"
+
+// traverses the linked list of tokens and returns the last token
+t_redir *ft_last_redir(t_redir *redir_list)
+{
+	if (!redir_list || !redir_list->next)
+		return (redir_list);
+	while (redir_list->next)
+		redir_list = redir_list->next;
+	return (redir_list);
+}
 
 // creates a new redirection node
 // if no redirection list existing, initialize the list

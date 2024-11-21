@@ -3,14 +3,45 @@
 /*                                                        :::      ::::::::   */
 /*   parse_command_args.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cmegret <cmegret@student.42lausanne.ch>    +#+  +:+       +#+        */
+/*   By: francis <francis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/01 17:26:12 by fallan            #+#    #+#             */
-/*   Updated: 2024/11/21 14:41:56 by cmegret          ###   ########.fr       */
+/*   Updated: 2024/11/21 19:13:02 by francis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../header/Minishell.h"
+
+// returns the number of arguments in our argument list
+int	ft_count_args(t_cmd_args *arg_list)
+{
+	int	i;
+
+	i = 0;
+	if (!arg_list)
+		return (0);
+	while (arg_list)
+	{
+		i++;
+		arg_list = arg_list->next;
+	}
+	return (i);
+}
+
+// frees our linked list of arguments
+void	ft_free_arg_list(t_cmd_args	*arg_list)
+{
+	t_cmd_args	*temp = NULL;
+
+	while (arg_list)
+	{
+		temp = arg_list;
+		if (arg_list->arg_string)
+			free(arg_list->arg_string);
+		arg_list = arg_list->next;
+		free(temp);
+	}
+}
 
 // add a command argument to our linked list of command arguments
 // if no argument, malloc the first argument
@@ -73,29 +104,33 @@ int	ft_add_cmd_arg(char *tok_str, t_command *cmd_seq) // before: cmd_seq->cmd_na
 	return (0);
 }
 
-// copies the command arguments from the linked list to the array of arguments
+// copies the command arguments from the argument linked list to the array of arguments
 // free the linked list of command arguments
-int	ft_allocate_args(t_command *cmd_sequence, t_cmd_args *arg_list)
+// do this over all commands (pipes)
+int	ft_allocate_args(t_command *cmd_sequence)
 {
 	int	arg_count;
 	int	i;
 
-	arg_count = ft_count_args(arg_list);
-	cmd_sequence->args = malloc((arg_count + 2) * sizeof(char *));
-	if (!cmd_sequence->args)
-		return (-1);
-	cmd_sequence->args[0] = ft_strdup(cmd_sequence->cmd_name);
-	i = 0;
-	while (arg_list && i < arg_count)
+	while (cmd_sequence)
 	{
-		cmd_sequence->args[i + 1] = ft_strdup(cmd_sequence->arg_list->arg_string);
-		if (cmd_sequence->args[i + 1] == NULL)
+		arg_count = ft_count_args(cmd_sequence->arg_list);
+		cmd_sequence->args = malloc((arg_count + 2) * sizeof(char *));
+		if (!cmd_sequence->args)
 			return (-1);
-		i++;
-		cmd_sequence->arg_list = cmd_sequence->arg_list->next;
-		arg_list = arg_list->next;
+		cmd_sequence->args[0] = ft_strdup(cmd_sequence->cmd_name);
+		i = 0;
+		while (cmd_sequence->arg_list && i < arg_count)
+		{
+			cmd_sequence->args[i + 1] = ft_strdup(cmd_sequence->arg_list->arg_string);
+			if (cmd_sequence->args[i + 1] == NULL)
+				return (-1);
+			i++;
+			cmd_sequence->arg_list = cmd_sequence->arg_list->next;
+		}
+		cmd_sequence->args[i + 1] = NULL;
+		ft_free_arg_list(cmd_sequence->arg_list);
+		cmd_sequence = cmd_sequence->next;
 	}
-	cmd_sequence->args[i + 1] = NULL;
-	ft_free_arg_list(cmd_sequence->arg_list);
 	return (0);
 }

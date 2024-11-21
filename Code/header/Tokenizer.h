@@ -6,7 +6,7 @@
 /*   By: francis <francis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 19:48:46 by fallan            #+#    #+#             */
-/*   Updated: 2024/11/20 16:52:32 by francis          ###   ########.fr       */
+/*   Updated: 2024/11/21 18:34:15 by francis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ typedef struct s_cmd_args		t_cmd_args;
 typedef struct s_command		t_command;
 typedef struct s_shell_state	t_shell_state;
 
-// Are these two redundant ?
+// Are these two redundant ? => a bit yes
 t_token		*ft_init_token(void);
 t_token		*ft_create_new_token(t_token *tok);
 

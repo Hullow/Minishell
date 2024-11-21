@@ -875,6 +875,7 @@ cat 1
 echo "hello" > 3 > 4
 rm 1 2 3 4 
 echo hello" > 3 > 4 "hello"
+echo > file1 < file2 << file3 hello goodbye
 echo > 3 > 4 "hello"
 cat 4
 cat 3
