@@ -74,7 +74,6 @@ void	ft_print_args(t_command *cmd_sequence)
 t_command	*ft_parse(t_token *tok, t_shell_state *shell_state)
 {
 	t_command	*cmd_sequence;
-	t_redir		*redir_list = NULL;
 
 	(void)shell_state; // for envp and variables (exit status: $?, other variables)
 	cmd_sequence = malloc(sizeof(t_command)); // malloc a node to our list of commands (cmd_sequence)
@@ -85,13 +84,13 @@ t_command	*ft_parse(t_token *tok, t_shell_state *shell_state)
 	while (tok)
 	{
 		if (ft_token_is_redir(tok->type))
-			ft_add_redir(&tok, redir_list); // add redirections to our redirections list
+			ft_add_redir(&tok, cmd_sequence); // add redirections to our redirections list
 		else if (ft_token_is_word(tok->type))
 			ft_add_cmd_arg(tok->str, cmd_sequence); // add WORD tokens to argument list
 		tok = tok->next;
 	}
 	if (ft_allocate_args(cmd_sequence, cmd_sequence->arg_list) == -1)
 		return (NULL);
-	cmd_sequence->redir_list = redir_list;
+	// ft_print_redirs(cmd_sequence->redir_list);
 	return (cmd_sequence);
 }

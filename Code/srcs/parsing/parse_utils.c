@@ -6,7 +6,7 @@
 /*   By: francis <francis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/01 13:49:30 by fallan            #+#    #+#             */
-/*   Updated: 2024/11/20 18:07:51 by francis          ###   ########.fr       */
+/*   Updated: 2024/11/21 18:14:29 by francis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 // checks if a token is of a redirection type
 // (REDIR_INPUT, REDIR_OUTPUT, REDIR_APPEND, REDIR_HEREDOC)
+// returns 1 if yes, 0 otherwise
 bool	ft_token_is_redir(int token_type)
 {
 	if (token_type == REDIR_INPUT || \
@@ -73,4 +74,42 @@ t_redir *ft_last_redir(t_redir *redir_list)
 	while (redir_list->next)
 		redir_list = redir_list->next;
 	return (redir_list);
+}
+
+char	*ft_return_redir_type(int redir_type)
+{
+	if (redir_type == REDIR_APPEND)
+		return("REDIR_APPEND");
+	else if (redir_type == REDIR_INPUT)
+		return("REDIR_INPUT");
+	else if (redir_type == REDIR_OUTPUT)
+		return("REDIR_OUTPUT");
+	else if (redir_type == REDIR_HEREDOC)
+		return("REDIR_HEREDOC");
+	else
+		return (NULL);
+}
+
+// prints redirection number, type, and destination/origin/delimiter
+int	ft_print_redirs(t_redir *redir_list)
+{
+	t_redir	*head;
+	int	i;
+
+	printf("ft_print_redirs:\n****************\n");
+	if (!redir_list)
+	{
+		printf("no redirections\n");
+		return (0);
+	}
+	head = redir_list;
+	i = 1;
+	while (redir_list)
+	{
+		printf("redirection %d is of type: {%s} to/from/delimiter {%s}\n", i, ft_return_redir_type(redir_list->type), redir_list->str);
+		redir_list = redir_list->next;
+		i++;
+	}
+	redir_list = head;
+	return (i);
 }
