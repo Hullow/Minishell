@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Builtin.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: francis <francis@student.42.fr>            +#+  +:+       +#+        */
+/*   By: cmegret <cmegret@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/01 18:38:32 by cmegret           #+#    #+#             */
-/*   Updated: 2024/11/20 16:30:21 by francis          ###   ########.fr       */
+/*   Updated: 2024/11/21 14:54:00 by cmegret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,12 @@ int			ft_execute_builtin(t_command *cmd, t_shell_state *shell_state);
 
 // Builtin cd
 void		ft_cd(t_command *cmd, t_shell_state *shell_state);
+char		*get_oldpwd(void);
+char		*get_target_path(char **args);
+int			change_directory(const char *path);
+void		update_environment(t_shell_state *shell_state, char *oldpwd);
+int			handle_cd_init(t_command *cmd, t_shell_state *shell_state,
+				char **oldpwd);
 
 // Builtin env
 void		ft_env(t_shell_state *shell_state);
