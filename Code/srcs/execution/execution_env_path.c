@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution_env_path.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cmegret <cmegret@student.42lausanne.ch>    +#+  +:+       +#+        */
+/*   By: francis <francis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/07 19:02:56 by cmegret           #+#    #+#             */
-/*   Updated: 2024/11/12 15:54:15 by cmegret          ###   ########.fr       */
+/*   Updated: 2024/11/20 16:04:54 by francis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,16 +72,16 @@ char	*get_cmd_path(char *cmd, char **envp)
 	int		i;
 
 	if (cmd == NULL || envp == NULL)
-		error_and_exit("cmd or envp is NULL");
+		error_and_exit("cmd or envp is NULL", 1);
 	paths = get_env_paths(envp);
 	if (!paths)
-		error_and_exit("get_env_paths failed");
+		error_and_exit("get_env_paths failed", 1);
 	i = 0;
 	while (paths[i])
 	{
 		full_path = ft_strjoin(ft_strjoin(paths[i], "/"), cmd);
 		if (!full_path)
-			error_and_exit("ft_strjoin failed");
+			error_and_exit("ft_strjoin failed", 1);
 		if (access(full_path, X_OK) == 0)
 		{
 			free(paths);

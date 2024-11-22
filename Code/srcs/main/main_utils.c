@@ -6,7 +6,7 @@
 /*   By: cmegret <cmegret@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 14:36:39 by cmegret           #+#    #+#             */
-/*   Updated: 2024/10/15 15:28:36 by cmegret          ###   ########.fr       */
+/*   Updated: 2024/11/21 14:45:18 by cmegret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,21 +104,25 @@ char	*ft_prompt(void)
 }
 
 /**
- * @brief Prints an error message and exits the program.
+ * @brief Prints an error message and exits the program with the specified
+ * status.
  *
- * This function prints the provided error message using perror and then
- * exits the program with a failure status.
+ * This function uses perror to print the provided error message, followed by
+ * a description of the current error condition. It then exits the program
+ * with the given exit status.
  *
- * @param message A pointer to a string containing the
- * error message to be printed.
+ * @param message A pointer to a string containing the error message to be
+ * printed.
+ * @param last_exit_status The exit status to use when terminating the program.
  *
- * @note The function uses perror to print the error message, which includes
- *       the string pointed to by message followed by a description of the
- *       current error condition.
- * @note The function then calls exit with EXIT_FAILURE to terminate the program.
+ * @note This function is designed to be called when a critical error occurs
+ *       that prevents the program from continuing.
  */
-void	error_and_exit(const char *message)
+void	error_and_exit(const char *message, int last_exit_status)
 {
-	perror(message);
-	exit(EXIT_FAILURE);
+	if (message != NULL)
+		perror(message);
+	else
+		write(STDERR_FILENO, "Unknown error\n", 14);
+	exit(last_exit_status);
 }

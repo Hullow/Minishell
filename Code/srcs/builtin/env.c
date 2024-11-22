@@ -6,11 +6,11 @@
 /*   By: cmegret <cmegret@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/22 16:31:14 by cmegret           #+#    #+#             */
-/*   Updated: 2024/11/09 16:24:52 by cmegret          ###   ########.fr       */
+/*   Updated: 2024/11/21 14:45:17 by cmegret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../../header/Minishell.h"
+#include "../../header/Minishell.h"
 
 void	update_env_var(char ***envp, char *key, const char *value)
 {

@@ -6,7 +6,7 @@
 /*   By: cmegret <cmegret@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/07 12:23:09 by cmegret           #+#    #+#             */
-/*   Updated: 2024/11/14 20:26:24 by cmegret          ###   ########.fr       */
+/*   Updated: 2024/11/22 18:59:06 by cmegret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,12 +33,26 @@ static void	handle_child_process(t_command *cmd_list, char **envp)
 	{
 		cmd_path = get_cmd_path(cmd_list->cmd_name, envp);
 		if (cmd_path == NULL)
-			error_and_exit("get_cmd_path");
+		{
+			printf("%s: command not found\n", cmd_list->cmd_name);
+			exit(127);
+		}
+	}
+	if (access(cmd_path, F_OK) != 0)
+	{
+		printf("%s: command not found\n", cmd_list->cmd_name);
+		exit(127);
+	}
+	else if (access(cmd_path, X_OK) != 0)
+	{
+		perror("minishell: permission denied");
+		exit(126);
 	}
 	if (execve(cmd_path, cmd_list->args, envp) == -1)
 	{
 		free(cmd_path);
-		error_and_exit("execve");
+		perror("execve failed");
+		exit(1);
 	}
 }
 
@@ -57,21 +71,19 @@ static void	handle_child_process(t_command *cmd_list, char **envp)
  */
 static void	setup_pipes(int *fd, int in_fd, t_command *cmd_list)
 {
-	if (cmd_list->next != NULL)
-	{
-		if (pipe(fd) == -1)
-			error_and_exit("pipe");
-	}
+	if (cmd_list->next != NULL && pipe(fd) == -1)
+		error_and_exit("pipe failed", 1);
 	if (in_fd != 0)
 	{
-		dup2(in_fd, STDIN_FILENO);
+		if (dup2(in_fd, STDIN_FILENO) == -1)
+			error_and_exit("dup2 failed", 1);
 		close(in_fd);
 	}
 	if (cmd_list->next != NULL)
 	{
-		dup2(fd[1], STDOUT_FILENO);
+		if (dup2(fd[1], STDOUT_FILENO) == -1)
+			error_and_exit("dup2 failed", 1);
 		close(fd[1]);
-		close(fd[0]);
 	}
 }
 
@@ -90,13 +102,13 @@ static void	setup_pipes(int *fd, int in_fd, t_command *cmd_list)
  * executed.
  * @return The exit code of the child process.
  */
-static int	handle_parent_process(pid_t pid, int *fd, int *in_fd,
-				t_command *cmd_list)
+static int	handle_parent_process(pid_t pid, int *fd,
+	int *in_fd, t_command *cmd_list)
 {
 	int	status;
 	int	exit_code;
 
-	exit_code = -1;
+	exit_code = 0;
 	waitpid(pid, &status, 0);
 	if (WIFEXITED(status))
 		exit_code = WEXITSTATUS(status);
@@ -145,9 +157,13 @@ int	execute_cmd(t_command *cmd_list, char **envp, t_shell_state *shell_state)
 		setup_pipes(fd, in_fd, cmd_list);
 		pid = fork();
 		if (pid == 0)
+		{
+			if (cmd_list->next != NULL)
+				close(fd[0]);
 			handle_child_process(cmd_list, envp);
+		}
 		else if (pid < 0)
-			error_and_exit("fork");
+			error_and_exit("fork failed", 1);
 		else
 		{
 			shell_state->last_exit_status

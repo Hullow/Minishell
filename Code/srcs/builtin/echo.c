@@ -1,29 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pwd.c                                              :+:      :+:    :+:   */
+/*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cmegret <cmegret@student.42lausanne.ch>    +#+  +:+       +#+        */
+/*   By: francis <francis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/14 14:22:59 by cmegret           #+#    #+#             */
-/*   Updated: 2024/11/09 11:52:12 by cmegret          ###   ########.fr       */
+/*   Created: 2024/10/14 14:43:16 by cmegret           #+#    #+#             */
+/*   Updated: 2024/11/15 17:08:59 by francis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../../header/Minishell.h"
+#include "../../header/Minishell.h"
 
-void	ft_pwd(t_shell_state *shell_state)
+void	ft_echo(char **args, t_shell_state *shell_state)
 {
-	char	*cwd;
+	int	i;
 
-	cwd = getcwd(NULL, 0);
-	if (cwd == NULL)
+	i = 1;
+	while (args[i])
 	{
-		perror("getcwd");
-		shell_state->last_exit_status = 1;
-		return ;
+		ft_printf("%s", args[i]);
+		if (args[i + 1])
+			ft_printf(" ");
+		i++;
 	}
-	printf("%s\n", cwd);
-	free(cwd);
+	ft_printf("\n");
 	shell_state->last_exit_status = 0;
 }

@@ -6,7 +6,7 @@
 /*   By: cmegret <cmegret@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/19 13:48:14 by francis           #+#    #+#             */
-/*   Updated: 2024/11/14 15:44:45 by cmegret          ###   ########.fr       */
+/*   Updated: 2024/11/21 16:33:17 by cmegret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ typedef struct s_shell_state
 int			main(int argc, char **argv, char **envp);
 void		ft_initialize(int argc, char **argv,
 				t_shell_state *shell_state, char **envp);
-void		error_and_exit(const char *message);
+void		error_and_exit(const char *message, int last_exit_status);
 char		*ft_prompt(void);
 
 // Tokenization

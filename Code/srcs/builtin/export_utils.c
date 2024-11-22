@@ -6,11 +6,11 @@
 /*   By: cmegret <cmegret@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/22 18:40:16 by cmegret           #+#    #+#             */
-/*   Updated: 2024/09/22 18:44:42 by cmegret          ###   ########.fr       */
+/*   Updated: 2024/11/15 19:45:37 by cmegret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../../header/Minishell.h"
+#include "../../header/Minishell.h"
 
 const char	*extract_value(const char *new_value)
 {
@@ -86,7 +86,7 @@ void	add_new_var(char ***envp, const char *var)
 		i++;
 	new_envp = (char **)ft_calloc(i + 2, sizeof(char *));
 	if (!new_envp)
-		error_and_exit("ft_calloc failed");
+		error_and_exit("ft_calloc failed", 1);
 	i = 0;
 	while ((*envp)[i] != NULL)
 	{
@@ -95,7 +95,7 @@ void	add_new_var(char ***envp, const char *var)
 	}
 	new_envp[i] = ft_strdup(var);
 	if (!new_envp[i])
-		error_and_exit("ft_strdup failed");
+		error_and_exit("ft_strdup failed", 1);
 	free(*envp);
 	*envp = new_envp;
 }
