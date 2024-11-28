@@ -10,6 +10,7 @@
 - [ksh source code](https://github.com/openbsd/src/blob/master/bin/ksh/exec.c)
 - [Bash git repository](https://git.savannah.gnu.org/cgit/bash.git/tree/doc/README): Documentation is useful, has schemas etc. (according to tfrily)
 - [Advanced Bash-Scripting Guide - TLDP](https://tldp.org/LDP/abs/html/)
+- [Subshells - TLDP](https://tldp.org/LDP/abs/html/subshells.html)
 
 ## Minishell projects
 - [EnthusiastiCon - Stefanie Schirmer “OMG building a shell in 10 minutes”](https://www.youtube.com/watch?v=k6TTj4C0LF0)
@@ -18,6 +19,15 @@
 
 ## Syntax and parsing
 - [CSE12 UCSD - Abstract Syntax Trees](https://cseweb.ucsd.edu/~kube/cls/12.s13/Lectures/lec16/lec16.pdf)
+- [3. Parsing - CSE 5317/4305: Design and Construction of Compilers Leonidas Fegaras University of Texas at Arlington, CSE](https://lambda.uta.edu/cse5317/notes/node11.html)
+- [Left recursion - Wikipedia](https://en.wikipedia.org/wiki/Left_recursion)
+- [What are some ways to prevent left recursion in parser generation? - Quora](https://www.quora.com/What-are-some-ways-to-prevent-left-recursion-in-parser-generation)
+- [COMP 530: Lab 1: Parser for a Shell](https://www.cs.unc.edu/~porter/courses/comp530/f23/lab1.html)
+- [Abstract Syntax Tree – An Example in C](https://keleshev.com/abstract-syntax-tree-an-example-in-c/)
+- [Compiler Design - Spring 2018 - 3.0 Frontend - Thomas R. Gross](https://ethz.ch/content/dam/ethz/special-interest/infk/inst-cs/lst-dam/documents/Education/Classes/Spring2018/210_Compiler_Design/Slides/w03_01-front-end-overview_18.pdf)
+- [Parse Tree and Syntax Tree](https://www.geeksforgeeks.org/parse-tree-and-syntax-tree/)
+- [Building Recursive Descent Parsers: The Definitive Guide - Boolean World](https://www.booleanworld.com/building-recursive-descent-parsers-definitive-guide/)
+- [Right Recursion versus Left Recursion -  IBM](https://www.ibm.com/docs/en/zvm/7.4?topic=topics-right-recursion-versus-left-recursion)
 
 ## Testing
 - [Conférences 42sh 2019 - Python & Testsuite fonctionnelle](https://www.youtube.com/watch?v=1CoFy6eM7_I&list=PLo31Bhg3nNkZHhqAjlwo5tNOa-FEXKnEe&index=6)
@@ -27,6 +37,8 @@
 - see `man bash`
 - [Builtins - Bash Reference Manual (v5.2)](https://www.gnu.org/software/bash/manual/bash.html#Shell-Builtin-Commands)
 - [Shell builtin – Wikipedia](https://en.wikipedia.org/wiki/Shell_builtin)
+- [cd_pwd.c - ksh93](https://github.com/att/ast/blob/master/src/cmd/ksh93/bltins/cd_pwd.c)
+
 
 ### Readline
 - [The GNU Readline Library](https://www.gnu.org/software/readline/)

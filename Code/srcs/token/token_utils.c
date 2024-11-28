@@ -3,21 +3,33 @@
 /*                                                        :::      ::::::::   */
 /*   token_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cmegret <cmegret@student.42lausanne.ch>    +#+  +:+       +#+        */
+/*   By: francis <francis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/07 19:00:54 by cmegret           #+#    #+#             */
-/*   Updated: 2024/11/09 10:56:12 by cmegret          ###   ########.fr       */
+/*   Updated: 2024/11/20 16:11:19 by francis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../header/Minishell.h"
 
+// traverses the linked list of tokens and returns the last token
+struct	s_token *ft_last_token(t_token *tok)
+{
+	if (!tok || !tok->next)
+		return (tok);
+	while (tok->next)
+		tok = tok->next;
+	return (tok);
+}
+
 // returns the number of tokens in our linked list
-int	ft_count_token_list_args(t_token *tok)
+int	ft_count_tokens(t_token *tok)
 {
 	int	i;
 
 	i = 0;
+	if (!tok)
+		return (0);
 	while (tok)
 	{
 		i++;
@@ -40,29 +52,41 @@ void	ft_print_all_token_strings(t_token **head)
 }
 
 // Traverses the linked list of tokens and prints each token's type, if any
-void	ft_tokenization_checker(t_token *head)
+void	ft_print_token_types(t_token *head)
 {
-	const char	*token_type_strings[9] = {
-		"UNDEFINED TOKEN", "WORD", "MINISHELL_NEWLINE", "REDIR_INPUT", "REDIR_OUTPUT",
+	t_token	*iterator;
+
+	iterator = head;
+	const char	*token_type_strings[10] = {
+		"UNDEFINED TOKEN", "WORD", "REDIR_INPUT", "REDIR_OUTPUT",
 		"REDIR_APPEND", "REDIR_HEREDOC", "PIPE", "END_OF_INPUT"
 	};
-
-	while (head)
+	while (iterator)
 	{
-		if (head->str && head->type)
-			printf("string: {%s} – token type: %s\n",
-				head->str, token_type_strings[head->type]);
+		if (iterator->str && iterator->type)
+			printf("string: {%s} – token type: %s (%d)\n",
+				iterator->str, token_type_strings[iterator->type], iterator->type);
 		else
 		{
 			printf("type or string not found: ");
-			if (head->type)
-				printf("head-type: %s, head->str not found\n",
-					token_type_strings[head->type]);
-			if (head->str)
-				printf("head-str: %s, head->type not found\n", head->str);
+			if (iterator->type)
+				printf("iterator-type: %s, iterator->str not found\n",
+					token_type_strings[iterator->type]);
+			if (iterator->str)
+				printf("iterator-str: %s, iterator->type not found\n", iterator->str);
 			else
-				printf("nor head->str nor head-type found\n");
+				printf("nor iterator->str nor iterator-type found\n");
 		}
-		head = head->next;
+		iterator = iterator->next;
 	}
+}
+
+// frees the token and if it exists, the token string
+void	ft_free_token(t_token *tok)
+{
+	if (!tok)
+		return ;
+	if (tok->str)
+		free(tok->str);
+	free(tok);
 }

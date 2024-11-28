@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   token_operator.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cmegret <cmegret@student.42lausanne.ch>    +#+  +:+       +#+        */
+/*   By: francis <francis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/06 17:27:19 by cmegret           #+#    #+#             */
-/*   Updated: 2024/11/01 18:33:38 by cmegret          ###   ########.fr       */
+/*   Updated: 2024/11/20 16:10:19 by francis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,10 @@ static void	ft_set_operator_token(char c, t_token **tok)
 		return ;
 	}
 	else if (c == '>')
+	{
 		(*tok)->str = ft_strdup(">");
+
+	}
 	else if (c == '<')
 		(*tok)->str = ft_strdup("<");
 	(*tok)->is_operator = true;

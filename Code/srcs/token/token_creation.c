@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   token_creation.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cmegret <cmegret@student.42lausanne.ch>    +#+  +:+       +#+        */
+/*   By: francis <francis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/06 17:21:26 by cmegret           #+#    #+#             */
-/*   Updated: 2024/11/01 18:33:24 by cmegret          ###   ########.fr       */
+/*   Updated: 2024/11/20 16:06:59 by francis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,7 @@ int	ft_new_word(t_token **tok, char c)
 	(*tok)->type = WORD;
 	(*tok)->is_operator = false;
 	(*tok)->str = ft_strdup(character);
+	(*tok)->is_delimited = false;
 	return (1);
 }
 

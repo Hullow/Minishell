@@ -6,7 +6,7 @@
 #    By: francis <francis@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/07/19 14:53:36 by cmegret           #+#    #+#              #
-#    Updated: 2024/11/28 17:03:52 by francis          ###   ########.fr        #
+#    Updated: 2024/11/28 17:15:47 by francis          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -61,7 +61,11 @@ SRCS = main/main.c \
       token/token_creation.c \
       token/token_operator.c \
 	  parsing/parse_main.c \
-	  parsing/expend_exit_status.c \
+	  parsing/parse_redir.c \
+	  parsing/parse_command_args.c \
+	  parsing/parse_utils.c \
+	  parsing/parse_debug.c \
+	  expansion/pathname_expansion.c \
 	  execution/execution_main.c \
 	  execution/execution_env_path.c \
 	  execution/execute_builtin.c \
