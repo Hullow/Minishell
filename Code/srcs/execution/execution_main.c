@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution_main.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: francis <francis@student.42.fr>            +#+  +:+       +#+        */
+/*   By: cmegret <cmegret@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/07 12:23:09 by cmegret           #+#    #+#             */
-/*   Updated: 2024/11/28 17:23:43 by francis          ###   ########.fr       */
+/*   Updated: 2024/11/29 16:43:00 by cmegret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,19 +71,19 @@ static void	handle_child_process(t_command *cmd_list, char **envp)
  */
 static void	setup_pipes(int *fd, int in_fd, t_command *cmd_list)
 {
-	if (cmd_list->next != NULL && pipe(fd) == -1)
-		error_and_exit("pipe failed", 1);
+	if (cmd_list->next != NULL)
+	{
+		if (pipe(fd) == -1)
+			error_and_exit("pipe failed", 1);
+		if (dup2(fd[1], STDOUT_FILENO) == -1) // MODIFIED (29/11 on call)
+			error_and_exit("dup2 failed", 1);
+		close(fd[1]);
+	} 
 	if (in_fd != 0)
 	{
 		if (dup2(in_fd, STDIN_FILENO) == -1)
 			error_and_exit("dup2 failed", 1);
 		close(in_fd);
-	}
-	if (cmd_list->next != NULL)
-	{
-		if (dup2(fd[1], STDOUT_FILENO) == -1)
-			error_and_exit("dup2 failed", 1);
-		close(fd[1]);
 	}
 }
 

@@ -6,7 +6,7 @@
 /*   By: francis <francis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/21 19:06:55 by francis           #+#    #+#             */
-/*   Updated: 2024/11/21 19:10:57 by francis          ###   ########.fr       */
+/*   Updated: 2024/11/29 15:52:34 by francis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,11 +18,11 @@ void	ft_print_args(t_command *cmd_sequence)
 	int	i;
 
 	i = -1;
-	printf("ft_print_args:\n");
+	// printf("ft_print_args:\n");
 	if (cmd_sequence && cmd_sequence->args)
 	{
 		while (cmd_sequence->args[++i])
-			printf("arg[%d]: [%s]\n", i, cmd_sequence->args[i]);
+			printf("\targ[%d]: [%s]\n", i, cmd_sequence->args[i]);
 	}
 	return ;
 }
@@ -50,14 +50,14 @@ int	ft_print_redirs(t_redir *redir_list)
 
 	if (!redir_list)
 	{
-		printf("no redirections\n");
+		printf("\tno redirections\n");
 		return (0);
 	}
 	head = redir_list;
 	i = 1;
 	while (redir_list)
 	{
-		printf("	redirection %d is of type: {%s} to/from/delimiter {%s}\n", i, ft_return_redir_type(redir_list->type), redir_list->str);
+		printf("\tredirection %d is of type: {%s} to/from/delimiter {%s}\n", i, ft_return_redir_type(redir_list->type), redir_list->str);
 		redir_list = redir_list->next;
 		i++;
 	}
@@ -71,7 +71,7 @@ void	ft_print_command_sequences(t_command *head)
 	printf("command sequences:\n");
 	while (head)
 	{
-		printf("\n*****\n	command: {%s}\n – arguments:\n", head->cmd_name);
+		printf("*****\n - command: {%s}\n – arguments:\n", head->cmd_name);
 		ft_print_args(head);
 		printf(" – redirections:\n");
 		ft_print_redirs(head->redir_list);

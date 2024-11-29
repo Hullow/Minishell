@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main_initialize.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cmegret <cmegret@student.42lausanne.ch>    +#+  +:+       +#+        */
+/*   By: francis <francis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/22 17:31:30 by cmegret           #+#    #+#             */
-/*   Updated: 2024/11/15 19:46:29 by cmegret          ###   ########.fr       */
+/*   Updated: 2024/11/29 15:27:42 by francis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,8 +59,7 @@ static int	count_env_variables(char **envp)
  * @param envp An array of environment variables.
  * @param count The number of environment variables.
  */
-static void	duplicate_env(t_shell_state *shell_state,
-	char **envp, int count)
+static void	duplicate_env(t_shell_state *shell_state, char **envp, int count)
 {
 	int	i;
 

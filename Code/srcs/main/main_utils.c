@@ -6,7 +6,7 @@
 /*   By: francis <francis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 14:36:39 by cmegret           #+#    #+#             */
-/*   Updated: 2024/11/28 17:24:12 by francis          ###   ########.fr       */
+/*   Updated: 2024/11/29 15:48:57 by francis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,6 +87,7 @@ char	*ft_prompt(void)
 		if (last_folder != NULL)
 			last_folder++;
 		message = ft_create_message_prompt(last_folder);
+		// printf("message: {%s}\n", message);
 		if (message == NULL)
 		{
 			perror("malloc");

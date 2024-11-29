@@ -6,7 +6,7 @@
 /*   By: francis <francis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/01 17:26:12 by fallan            #+#    #+#             */
-/*   Updated: 2024/11/28 17:24:58 by francis          ###   ########.fr       */
+/*   Updated: 2024/11/28 18:31:10 by francis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,22 +68,26 @@ int	ft_new_cmd_arg_node(t_cmd_args *arg_list, char *arg_string)
 	return (0);
 }
 
-// add a command argument: either cmd_name if no cmd_name yet
-// or a command argument to our linked list of command arguments
-int	ft_add_cmd_arg(char *tok_str, t_command *cmd_seq) // before: cmd_seq->cmd_name = strdup(tok->str);
+// adds a command name or command argument:
+// IF no cmd_name => add cmd_name
+// ELSE => add a command argument to arg_list (our linked list of command arguments)
+int	ft_add_cmd_arg(char *tok_str, t_command *cmd_seq)
 {
 	t_cmd_args	*head;
 
-	if (!cmd_seq->cmd_name) // no command name
+	if (!(cmd_seq->cmd_name)) // if no command name
 		cmd_seq->cmd_name = ft_strdup(tok_str); // malloc and add the command name
-	else
+
+	else // if command name, add tok_str to argument list
 	{
-		if (!(cmd_seq->arg_list)) // if no argument list yet, malloc the argument list
+
+		// MALLOC
+		if (!(cmd_seq->arg_list)) // if no argument list present, malloc one
 		{
 			cmd_seq->arg_list = malloc (sizeof(t_cmd_args));
 			head = cmd_seq->arg_list;
 		}
-		else
+		else // go to end of argument list and malloc
 		{
 			head = cmd_seq->arg_list;
 			while (cmd_seq->arg_list->next) // go to the penultimate element of the argument list
@@ -93,7 +97,9 @@ int	ft_add_cmd_arg(char *tok_str, t_command *cmd_seq) // before: cmd_seq->cmd_na
 		}
 		if (!(cmd_seq->arg_list)) // malloc check
 			return (-1);
-		cmd_seq->arg_list->arg_string = ft_strdup(tok_str); // malloc and add the command argument
+
+		// ADDING THE STRING
+		cmd_seq->arg_list->arg_string = ft_strdup(tok_str);
 		if (!(cmd_seq->arg_list->arg_string))
 				return (-1);
 		cmd_seq->arg_list->next = NULL;
@@ -106,12 +112,17 @@ int	ft_add_cmd_arg(char *tok_str, t_command *cmd_seq) // before: cmd_seq->cmd_na
 
 // copies the command arguments from the argument linked list to the array of arguments
 // free the linked list of command arguments
-// do this over all commands (pipes)
+// do this for each command (each pipe)
 int	ft_allocate_args(t_command *cmd_sequence)
 {
-	int	arg_count;
-	int	i;
+	int			arg_count;
+	int			i;
+	t_cmd_args	*arg_list;
 
+	if (cmd_sequence->arg_list)
+		arg_list = cmd_sequence->arg_list;
+	else
+		arg_list = NULL;
 	while (cmd_sequence && cmd_sequence->cmd_name)
 	{
 		arg_count = ft_count_args(cmd_sequence->arg_list);
@@ -120,13 +131,13 @@ int	ft_allocate_args(t_command *cmd_sequence)
 			return (-1);
 		cmd_sequence->args[0] = ft_strdup(cmd_sequence->cmd_name);
 		i = 0;
-		while (cmd_sequence->arg_list && i < arg_count)
+		while (arg_list && i < arg_count)
 		{
-			cmd_sequence->args[i + 1] = ft_strdup(cmd_sequence->arg_list->arg_string);
+			cmd_sequence->args[i + 1] = ft_strdup(arg_list->arg_string);
 			if (cmd_sequence->args[i + 1] == NULL)
 				return (-1);
 			i++;
-			cmd_sequence->arg_list = cmd_sequence->arg_list->next;
+			arg_list = arg_list->next;
 		}
 		cmd_sequence->args[i + 1] = NULL;
 		ft_free_arg_list(cmd_sequence->arg_list);

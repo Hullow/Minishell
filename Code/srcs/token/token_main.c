@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   token_main.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: francis <francis@student.42.fr>            +#+  +:+       +#+        */
+/*   By: cmegret <cmegret@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/06 17:19:58 by cmegret           #+#    #+#             */
-/*   Updated: 2024/11/20 16:37:08 by francis          ###   ########.fr       */
+/*   Updated: 2024/11/29 16:42:59 by cmegret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,6 @@ t_token	*ft_tokenize(char *prompt)
 	while (prompt[i])
 		i += ft_process_prompt(prompt, i, &tok);
 	if (!prompt[i])
-		tok = ft_tokenize_end_of_input(tok);
+		tok = ft_tokenize_end_of_input(tok); // probably unnecessary
 	return (head);
 }

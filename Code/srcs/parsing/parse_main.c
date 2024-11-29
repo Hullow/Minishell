@@ -14,7 +14,7 @@
 
 #include "../../header/Minishell.h"
 
-// probably not necessary, likely done before 
+// parses operator tokens and assigns them the appropriate token type
 t_token	*ft_parse_operators(t_token *head)
 {
 	t_token	*iterator;
@@ -83,14 +83,15 @@ t_command	*ft_parse(t_token *tok, t_shell_state *shell_state)
 	while (tok)
 	{
 		if (ft_token_is_redir(tok->type))
-			ft_add_redir(&tok, cmd_sequence); // add redirections to our redirections list
+			ft_add_redir(&tok, cmd_sequence); // add redirection to our redirections list
 		else if (ft_token_is_word(tok->type))
-			ft_add_cmd_arg(tok->str, cmd_sequence); // add WORD tokens to argument list
+			ft_add_cmd_arg(tok->str, cmd_sequence); // add command name if missing, else add command argument to argument list
 		else if (ft_token_is_pipe(tok->type))
-			cmd_sequence = ft_add_pipe(cmd_sequence); // add new command sequence tokens to argument list
+			cmd_sequence = ft_add_pipe(cmd_sequence); // add new command to command sequence (=> create new pipe)
+		printf("tok: {%s}, tok->next: {%p}\n", tok->str, tok->next);
 		tok = tok->next;
 	}
-	if (ft_allocate_args(head) == -1) // need to modify this to go over the whole cmd_list (all pipes)
+	if (ft_allocate_args(head) == -1) // copy arguments from argument list to argument array (for each command)
 		return (NULL);
 	ft_print_command_sequences(head);
 	return (head);
