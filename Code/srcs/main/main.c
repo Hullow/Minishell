@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: francis <francis@student.42.fr>            +#+  +:+       +#+        */
+/*   By: cmegret <cmegret@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 14:30:52 by cmegret           #+#    #+#             */
-/*   Updated: 2024/11/29 16:42:37 by francis          ###   ########.fr       */
+/*   Updated: 2024/11/29 17:15:32 by cmegret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,8 @@ t_command *ft_debug_parsing(t_token *tok)
 		cmd_sequence->args[0] = ft_strdup(tok->str);
 		tok = tok->next;
 	}
+	if (cmd_sequence->cmd_name == NULL || ft_strlen(cmd_sequence->cmd_name) == 0) // or ft_strlen ((*cmd_sequence)->cmd_name == NULL))
+		return (NULL); // what if redirection creates file(s) ?
 	i = 1;
 	while (tok)
 	{	
@@ -45,8 +47,6 @@ t_command *ft_debug_parsing(t_token *tok)
 		tok = tok->next;
 	}
 	cmd_sequence->args[i] = NULL;
-	if (cmd_sequence->cmd_name == NULL || ft_strlen(cmd_sequence->cmd_name) == 0) // or ft_strlen ((*cmd_sequence)->cmd_name == NULL))
-		cmd_sequence = NULL;
 	return (cmd_sequence);
 }
 
@@ -65,9 +65,8 @@ int	main(int argc, char **argv, char **envp)
 		printf("\nprompt initial: {%s}\n", prompt);
 		//ft_tokenization_checker(ft_parse_operators(ft_tokenize(prompt)));
 		token_list = ft_tokenize(prompt);
-		cmd_sequence = ft_debug_parsing(token_list);
-		// cmd_sequence = ft_parse(token_list, &shell_state);
-		ft_print_command_sequences(cmd_sequence);
+		// cmd_sequence = ft_debug_parsing(token_list);
+		cmd_sequence = ft_parse(token_list, &shell_state);
 		execute_cmd(cmd_sequence, shell_state. envp, &shell_state);
 		printf("\nprompt before: {%s}\n", prompt);
 		free(prompt);

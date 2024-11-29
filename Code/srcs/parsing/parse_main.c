@@ -94,5 +94,7 @@ t_command	*ft_parse(t_token *tok, t_shell_state *shell_state)
 	if (ft_allocate_args(head) == -1) // copy arguments from argument list to argument array (for each command)
 		return (NULL);
 	ft_print_command_sequences(head);
+	if (cmd_sequence->cmd_name == NULL || ft_strlen(cmd_sequence->cmd_name) == 0) // or ft_strlen ((*cmd_sequence)->cmd_name == NULL))
+		return (NULL); // what if redirection creates file(s) ?
 	return (head);
 }
