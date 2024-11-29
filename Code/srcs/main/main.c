@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cmegret <cmegret@student.42lausanne.ch>    +#+  +:+       +#+        */
+/*   By: francis <francis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 14:30:52 by cmegret           #+#    #+#             */
-/*   Updated: 2024/11/29 17:15:32 by cmegret          ###   ########.fr       */
+/*   Updated: 2024/11/29 18:43:11 by francis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ t_command *ft_debug_parsing(t_token *tok)
 		tok = tok->next;
 	}
 	if (cmd_sequence->cmd_name == NULL || ft_strlen(cmd_sequence->cmd_name) == 0) // or ft_strlen ((*cmd_sequence)->cmd_name == NULL))
-		return (NULL); // what if redirection creates file(s) ?
+		return (NULL);
 	i = 1;
 	while (tok)
 	{	
@@ -65,8 +65,9 @@ int	main(int argc, char **argv, char **envp)
 		printf("\nprompt initial: {%s}\n", prompt);
 		//ft_tokenization_checker(ft_parse_operators(ft_tokenize(prompt)));
 		token_list = ft_tokenize(prompt);
-		// cmd_sequence = ft_debug_parsing(token_list);
-		cmd_sequence = ft_parse(token_list, &shell_state);
+		cmd_sequence = ft_debug_parsing(token_list);
+		// cmd_sequence = ft_parse(token_list, &shell_state);
+		ft_print_command_sequences(cmd_sequence);
 		execute_cmd(cmd_sequence, shell_state. envp, &shell_state);
 		printf("\nprompt before: {%s}\n", prompt);
 		free(prompt);
