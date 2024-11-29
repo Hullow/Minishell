@@ -6,7 +6,7 @@
 /*   By: cmegret <cmegret@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/21 14:51:14 by cmegret           #+#    #+#             */
-/*   Updated: 2024/11/21 14:51:47 by cmegret          ###   ########.fr       */
+/*   Updated: 2024/11/28 10:44:55 by cmegret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,31 +28,6 @@ char	*get_oldpwd(void)
 	if (!oldpwd)
 		perror("getcwd");
 	return (oldpwd);
-}
-
-/**
- * @brief Determine the target path for the cd command.
- *
- * This function determines the path to which the shell should navigate,
- * handling special cases such as "~" for the home directory and "-" for OLDPWD.
- *
- * @param args The arguments for the cd command.
- * @return A pointer to the target path as a string.
- */
-char	*get_target_path(char **args)
-{
-	char	*path;
-
-	path = args[1];
-	if (!path || ft_strncmp(path, "~", 2) == 0)
-		path = getenv("HOME");
-	else if (ft_strncmp(path, "-", 2) == 0)
-	{
-		path = getenv("OLDPWD");
-		if (path)
-			printf("%s\n", path);
-	}
-	return (path);
 }
 
 /**
