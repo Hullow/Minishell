@@ -6,7 +6,7 @@
 /*   By: francis <francis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/21 19:06:55 by francis           #+#    #+#             */
-/*   Updated: 2024/11/30 18:24:38 by francis          ###   ########.fr       */
+/*   Updated: 2024/11/30 21:16:17 by francis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,19 +65,24 @@ int	ft_print_redirs(t_redir *redir_list)
 	return (i);
 }
 
-// print all command sequences: command name, command arguments, redirections
+// derived from ft_print_command_sequences: 
+// stops the "exit bug" from happening on (ARM) OS X
 void	ft_exit_bug_print_debugger(t_command *head)
 {
+	int	i = -1;
+
 	while (head)
 	{
-		printf("- command: {%s}", head->cmd_name);
-		ft_print_args(head);
-		printf("\n");
+		printf("%s", head->cmd_name);
+		while (++i < (int) ft_strlen(head->cmd_name))
+			printf("\b"); // removes previous characters
+		i = -1;
 		head = head->next;
 	}
-	// printf("head address after: {%p}\n", head); // this makes the bug reappear!
+	// printf("head address after: {%p}\n", head); // this can make the bug reappear in some cases!
 }
 
+// prints the command in each pipe, its arguments and redirections
 void	ft_print_command_sequences(t_command *head)
 {
 	printf("command sequences:\n");
