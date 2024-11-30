@@ -68,6 +68,7 @@ t_command	*ft_add_pipe(t_command *cmd_sequence)
 // Parses our linked list of tokens, starting from left (head)
 // Extracts the command and the arguments 
 // Outputs a struct command with the command name and the arguments
+// NEED TO ADD ERROR HANDLING !
 t_command	*ft_parse(t_token *tok, t_shell_state *shell_state)
 {
 	t_command	*cmd_sequence;
@@ -88,13 +89,11 @@ t_command	*ft_parse(t_token *tok, t_shell_state *shell_state)
 			ft_add_cmd_arg(tok->str, cmd_sequence); // add command name if missing, else add command argument to argument list
 		else if (ft_token_is_pipe(tok->type))
 			cmd_sequence = ft_add_pipe(cmd_sequence); // add new command to command sequence (=> create new pipe)
-		printf("tok: {%s}, tok->next: {%p}\n", tok->str, tok->next);
 		tok = tok->next;
 	}
 	if (ft_allocate_args(head) == -1) // copy arguments from argument list to argument array (for each command)
 		return (NULL);
-	ft_print_command_sequences(head);
-	if (cmd_sequence->cmd_name == NULL || ft_strlen(cmd_sequence->cmd_name) == 0) // or ft_strlen ((*cmd_sequence)->cmd_name == NULL))
+	if (cmd_sequence->cmd_name == NULL || ft_strlen(cmd_sequence->cmd_name) == 0)
 		return (NULL); // what if redirection creates file(s) ?
 	return (head);
 }

@@ -6,7 +6,7 @@
 /*   By: francis <francis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/01 17:26:12 by fallan            #+#    #+#             */
-/*   Updated: 2024/11/28 18:31:10 by francis          ###   ########.fr       */
+/*   Updated: 2024/11/30 18:30:17 by francis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,27 +117,27 @@ int	ft_allocate_args(t_command *cmd_sequence)
 {
 	int			arg_count;
 	int			i;
-	t_cmd_args	*arg_list;
+	t_cmd_args	*arg_iterator;
 
-	if (cmd_sequence->arg_list)
-		arg_list = cmd_sequence->arg_list;
-	else
-		arg_list = NULL;
 	while (cmd_sequence && cmd_sequence->cmd_name)
 	{
+		if (cmd_sequence->arg_list)
+			arg_iterator = cmd_sequence->arg_list;
+		else
+			arg_iterator = NULL;
 		arg_count = ft_count_args(cmd_sequence->arg_list);
 		cmd_sequence->args = malloc((arg_count + 2) * sizeof(char *));
 		if (!cmd_sequence->args)
 			return (-1);
 		cmd_sequence->args[0] = ft_strdup(cmd_sequence->cmd_name);
 		i = 0;
-		while (arg_list && i < arg_count)
+		while (arg_iterator && i < arg_count)
 		{
-			cmd_sequence->args[i + 1] = ft_strdup(arg_list->arg_string);
+			cmd_sequence->args[i + 1] = ft_strdup(arg_iterator->arg_string);
 			if (cmd_sequence->args[i + 1] == NULL)
 				return (-1);
 			i++;
-			arg_list = arg_list->next;
+			arg_iterator = arg_iterator->next;
 		}
 		cmd_sequence->args[i + 1] = NULL;
 		ft_free_arg_list(cmd_sequence->arg_list);

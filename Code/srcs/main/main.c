@@ -6,7 +6,7 @@
 /*   By: francis <francis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 14:30:52 by cmegret           #+#    #+#             */
-/*   Updated: 2024/11/30 17:02:26 by francis          ###   ########.fr       */
+/*   Updated: 2024/11/30 19:56:37 by francis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,18 +62,14 @@ int	main(int argc, char **argv, char **envp)
 	while (prompt != NULL)
 	{
 		add_history(prompt);
-		printf("\nprompt initial: {%s}\n", prompt);
 		//ft_tokenization_checker(ft_parse_operators(ft_tokenize(prompt)));
 		token_list = ft_tokenize(prompt);
-		// cmd_sequence = ft_debug_parsing(token_list);
 		cmd_sequence = ft_parse(token_list, &shell_state);
-		ft_print_command_sequences(cmd_sequence);
+		ft_exit_bug_print_debugger(cmd_sequence); // prevents the "exit bug"
+		// ft_print_command_sequences(cmd_sequence);
 		execute_cmd(cmd_sequence, shell_state. envp, &shell_state);
-		printf("\nprompt before: {%s}\n", prompt);
 		free(prompt);
 		prompt = ft_prompt();
-		printf("\nprompt after: {%s}\n", prompt);
 	}
-	// printf("after 11\n");
 	return (0);
 }

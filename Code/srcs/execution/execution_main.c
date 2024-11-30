@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution_main.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cmegret <cmegret@student.42lausanne.ch>    +#+  +:+       +#+        */
+/*   By: francis <francis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/07 12:23:09 by cmegret           #+#    #+#             */
-/*   Updated: 2024/11/29 16:43:00 by cmegret          ###   ########.fr       */
+/*   Updated: 2024/11/30 19:41:58 by francis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,13 +34,13 @@ static void	handle_child_process(t_command *cmd_list, char **envp)
 		cmd_path = get_cmd_path(cmd_list->cmd_name, envp);
 		if (cmd_path == NULL)
 		{
-			printf("%s: command not found\n", cmd_list->cmd_name);
+			printf("%s: command not found\n", cmd_list->cmd_name); // DOUBLON ?
 			exit(127);
 		}
 	}
 	if (access(cmd_path, F_OK) != 0)
 	{
-		printf("%s: command not found\n", cmd_list->cmd_name);
+		printf("%s: command not found\n", cmd_list->cmd_name); // DOUBLON ?
 		exit(127);
 	}
 	else if (access(cmd_path, X_OK) != 0)
@@ -75,7 +75,7 @@ static void	setup_pipes(int *fd, int in_fd, t_command *cmd_list)
 	{
 		if (pipe(fd) == -1)
 			error_and_exit("pipe failed", 1);
-		if (dup2(fd[1], STDOUT_FILENO) == -1) // MODIFIED (29/11 on call)
+		if (dup2(fd[1], STDOUT_FILENO) == -1) // MODIFIED (29/11 on call) // Question: pourquoi tu récupères pas ce que dup2 retourne ?
 			error_and_exit("dup2 failed", 1);
 		close(fd[1]);
 	} 
@@ -116,11 +116,11 @@ static int	handle_parent_process(pid_t pid, int *fd,
 		close(*in_fd);
 	if (cmd_list->next != NULL)
 	{
-		close(fd[1]);
+		close(fd[1]); // not closed already by setup_pipes ?
 		*in_fd = fd[0];
 	}
 	else
-		close(fd[0]);
+		close(fd[0]); // why ?
 	return (exit_code);
 }
 
@@ -159,7 +159,7 @@ int	execute_cmd(t_command *cmd_list, char **envp, t_shell_state *shell_state)
 		if (pid == 0)
 		{
 			if (cmd_list->next != NULL)
-				close(fd[0]);
+				close(fd[0]); // why ?
 			handle_child_process(cmd_list, envp);
 		}
 		else if (pid < 0)

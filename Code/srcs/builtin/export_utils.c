@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cmegret <cmegret@student.42lausanne.ch>    +#+  +:+       +#+        */
+/*   By: francis <francis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/22 18:40:16 by cmegret           #+#    #+#             */
-/*   Updated: 2024/11/15 19:45:37 by cmegret          ###   ########.fr       */
+/*   Updated: 2024/11/30 18:59:59 by francis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,5 +97,6 @@ void	add_new_var(char ***envp, const char *var)
 	if (!new_envp[i])
 		error_and_exit("ft_strdup failed", 1);
 	free(*envp);
+	// free each element of the environment ?
 	*envp = new_envp;
 }
