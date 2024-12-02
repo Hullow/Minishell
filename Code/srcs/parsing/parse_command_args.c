@@ -6,7 +6,7 @@
 /*   By: francis <francis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/01 17:26:12 by fallan            #+#    #+#             */
-/*   Updated: 2024/12/02 18:16:11 by francis          ###   ########.fr       */
+/*   Updated: 2024/12/02 18:45:36 by francis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,16 +109,13 @@ int	ft_allocate_cmd_args_to_array(t_command *cmd_sequence)
 	int			i;
 	t_cmd_args	*arg_iterator;
 
-	printf("ft_allocate_cmd_args_to_array\n");
 	while (cmd_sequence)
 	{
-		printf("segfault check 3.5\n");
 		if (cmd_sequence->arg_list)
 			arg_iterator = cmd_sequence->arg_list;
 		else
 			return (1);
 		arg_count = ft_count_args(cmd_sequence->arg_list);
-		printf("arg count: %d\n", arg_count);
 		cmd_sequence->args = malloc((arg_count + 1) * sizeof(char *));
 		if (!cmd_sequence->args)
 			return (-1);
@@ -126,25 +123,15 @@ int	ft_allocate_cmd_args_to_array(t_command *cmd_sequence)
 		while (arg_iterator && i < arg_count)
 		{
 			cmd_sequence->args[i] = ft_strdup(arg_iterator->arg_string);
-			printf("allocating {%s} to args[%d]\n", arg_iterator->arg_string, i);
 			if (cmd_sequence->args[i] == NULL)
 				return (-1);
-			i++;
 			arg_iterator = arg_iterator->next;
+			i++;
 		}
 		cmd_sequence->args[i] = NULL;
-		printf("segfault check 1\n");
-		ft_free_arg_list(cmd_sequence->arg_list);
-		printf("segfault check 2\n");
-		cmd_sequence = cmd_sequence->next;
-		printf("segfault check 3\n");
-	}
-	if (cmd_sequence->args)
-	{
-		printf("segfault check 4\n");
 		cmd_sequence->cmd_name = cmd_sequence->args[0];
-		printf("segfault check 5\n");
+		ft_free_arg_list(cmd_sequence->arg_list);
+		cmd_sequence = cmd_sequence->next;
 	}
-	printf("segfault check 6\n");
 	return (0);
 }

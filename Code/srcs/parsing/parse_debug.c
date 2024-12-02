@@ -6,7 +6,7 @@
 /*   By: francis <francis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/21 19:06:55 by francis           #+#    #+#             */
-/*   Updated: 2024/11/30 21:16:17 by francis          ###   ########.fr       */
+/*   Updated: 2024/12/02 18:45:01 by francis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,7 @@ void	ft_print_command_sequences(t_command *head)
 		printf("*****\n - command: {%s}\n", head->cmd_name);
 		printf(" – arguments:\n");
 		ft_print_args(head);
-		printf(" – redirections:\n");
+		printf("\n – redirections:\n");
 		ft_print_redirs(head->redir_list);
 		head = head->next;
 	}
