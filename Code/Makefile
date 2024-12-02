@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: francis <francis@student.42.fr>            +#+  +:+       +#+         #
+#    By: cmegret <cmegret@student.42lausanne.ch>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/07/19 14:53:36 by cmegret           #+#    #+#              #
-#    Updated: 2024/11/28 17:15:47 by francis          ###   ########.fr        #
+#    Updated: 2024/12/02 14:58:06 by cmegret          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -70,7 +70,6 @@ SRCS = main/main.c \
 	  execution/execution_env_path.c \
 	  execution/execute_builtin.c \
 	  builtin/cd.c \
-	  builtin/cd_utils.c \
       builtin/env.c \
       builtin/export.c \
       builtin/export_utils.c \

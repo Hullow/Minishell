@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: cmegret <cmegret@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/09/22 17:18:01 by cmegret           #+#    #+#             */
-/*   Updated: 2024/11/15 19:45:48 by cmegret          ###   ########.fr       */
+/*   Created: 2024/09/22 18:40:16 by cmegret           #+#    #+#             */
+/*   Updated: 2024/12/02 16:53:34 by cmegret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ void	ft_export(t_shell_state *shell_state, char **args)
 		name = get_var_name(args[i]);
 		if (!is_valid_name(name))
 		{
-			ft_printf("export: '%s': not a valid identifier\n", args[i]);
+			printf("export: '%s': not a valid identifier\n", args[i]);
 			shell_state->last_exit_status = 1;
 		}
 		else

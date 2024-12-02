@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: francis <francis@student.42.fr>            +#+  +:+       +#+        */
+/*   By: cmegret <cmegret@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/14 14:43:16 by cmegret           #+#    #+#             */
-/*   Updated: 2024/11/15 17:08:59 by francis          ###   ########.fr       */
+/*   Created: 2024/09/22 18:40:16 by cmegret           #+#    #+#             */
+/*   Updated: 2024/12/02 14:46:00 by cmegret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,11 +19,11 @@ void	ft_echo(char **args, t_shell_state *shell_state)
 	i = 1;
 	while (args[i])
 	{
-		ft_printf("%s", args[i]);
+		printf("%s", args[i]);
 		if (args[i + 1])
-			ft_printf(" ");
+			printf(" ");
 		i++;
 	}
-	ft_printf("\n");
+	printf("\n");
 	shell_state->last_exit_status = 0;
 }
