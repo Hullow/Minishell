@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yourlogin <youremail@student.42lausanne.ch>    +#+  +:+       +#+        */
+/*   By: cmegret <cmegret@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/12/02 08:50:48 by yourlogin         #+#    #+#             */
-/*   Updated: 2024/12/02 08:50:48 by yourlogin        ###   ########.ch       */
+/*   Created: 2024/07/19 14:53:36 by cmegret           #+#    #+#             */
+/*   Updated: 2024/12/02 16:45:17 by cmegret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,22 +37,22 @@
 # include "Execution.h"
 # include "Signal.h"
 # include "Expansion.h"
-#include "Tokenizer.h"
-#include "Parser.h"
+# include "Tokenizer.h"
+# include "Parser.h"
 
 // Token types
-#define WORD 1
-#define REDIR_INPUT 2
-#define REDIR_OUTPUT 3
-#define REDIR_APPEND 4
-#define REDIR_HEREDOC 5
-#define PIPE 6
-#define END_OF_INPUT 7
-#define IO_NUMBER 8
+# define WORD 1
+# define REDIR_INPUT 2
+# define REDIR_OUTPUT 3
+# define REDIR_APPEND 4
+# define REDIR_HEREDOC 5
+# define PIPE 6
+# define END_OF_INPUT 7
+# define IO_NUMBER 8
 
 // File descriptors
-#define STDIN 0
-#define STDOUT 1
+# define STDIN 0
+# define STDOUT 1
 
 extern int	g_signal;
 
