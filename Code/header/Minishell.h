@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: francis <francis@student.42.fr>            +#+  +:+       +#+        */
+/*   By: yourlogin <youremail@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/07/19 13:48:14 by francis           #+#    #+#             */
-/*   Updated: 2024/11/28 17:18:46 by francis          ###   ########.fr       */
+/*   Created: 2024/12/02 08:50:48 by yourlogin         #+#    #+#             */
+/*   Updated: 2024/12/02 08:50:48 by yourlogin        ###   ########.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,10 @@
 # include <dirent.h>
 # include <string.h>
 # include <termios.h>
+
+# ifndef ECHOCTL
+#  define ECHOCTL 0x00000040
+# endif
 
 # include "../lib/libft/libft.h"
 # include "../lib/ft_printf/ft_printf.h"
