@@ -84,14 +84,14 @@ t_command	*ft_parse(t_token *tok, t_shell_state *shell_state)
 	while (tok)
 	{
 		if (ft_token_is_redir(tok->type))
-			ft_add_redir(&tok, cmd_sequence); // add redirection to our redirections list
+			ft_add_redir(&tok, cmd_sequence, NULL); // add redirection to our redirections list
 		else if (ft_token_is_word(tok->type))
-			ft_add_cmd_arg(tok->str, cmd_sequence); // add command name if missing, else add command argument to argument list
+			ft_add_cmd_arg_to_list(tok->str, cmd_sequence); // add command name if missing, else add command argument to argument list
 		else if (ft_token_is_pipe(tok->type))
 			cmd_sequence = ft_add_pipe(cmd_sequence); // add new command to command sequence (=> create new pipe)
 		tok = tok->next;
 	}
-	if (ft_allocate_args(head) == -1) // copy arguments from argument list to argument array (for each command)
+	if (ft_allocate_cmd_args_to_array(head) == -1) // copy arguments from argument list to argument array (for each command)
 		return (NULL);
 	if (cmd_sequence->cmd_name == NULL || ft_strlen(cmd_sequence->cmd_name) == 0)
 		return (NULL); // what if redirection creates file(s) ?
