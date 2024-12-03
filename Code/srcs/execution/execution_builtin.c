@@ -6,7 +6,7 @@
 /*   By: cmegret <cmegret@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/22 18:40:16 by cmegret           #+#    #+#             */
-/*   Updated: 2024/12/03 10:20:41 by cmegret          ###   ########.fr       */
+/*   Updated: 2024/12/03 10:39:00 by cmegret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,6 +88,7 @@ int	handle_parent_builtin(t_command *cmd_list, t_shell_state *shell_state)
 
 	if (cmd_list->next == NULL && ft_is_builtin(cmd_list->cmd_name) == 0)
 	{
+		shell_state->last_exit_status = 0;
 		configure_redirections(cmd_list, &saved_stdin,
 			&saved_stdout, shell_state);
 		if (shell_state->last_exit_status != 0)

@@ -6,7 +6,7 @@
 /*   By: cmegret <cmegret@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/22 18:40:16 by cmegret           #+#    #+#             */
-/*   Updated: 2024/12/03 10:27:40 by cmegret          ###   ########.fr       */
+/*   Updated: 2024/12/03 10:39:28 by cmegret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,7 @@ void	execute_child(t_command *cmd_list,
 		close(fd[1]);
 	}
 	close(fd[0]);
+	shell_state->last_exit_status = 0;
 	configure_redirections(cmd_list, &saved_stdin, &saved_stdout, shell_state);
 	if (shell_state->last_exit_status != 0)
 	{
