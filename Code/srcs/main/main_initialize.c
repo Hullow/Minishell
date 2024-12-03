@@ -6,7 +6,7 @@
 /*   By: cmegret <cmegret@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/22 18:40:16 by cmegret           #+#    #+#             */
-/*   Updated: 2024/12/02 16:53:11 by cmegret          ###   ########.fr       */
+/*   Updated: 2024/12/03 10:26:16 by cmegret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,6 +101,26 @@ static void	setup_terminal(void)
 /**
  * @brief Initializes the shell state.
  *
+ * This function initializes the shell state by
+ * counting the environment variables,
+ * duplicating the environment variables,
+ * and setting the initial last exit status to 0.
+ *
+ * @param shell_state The shell state to initialize.
+ * @param envp The environment variables.
+ */
+static void	initialize_shell_state(t_shell_state *shell_state, char **envp)
+{
+	int	count;
+
+	count = count_env_variables(envp);
+	duplicate_env(shell_state, envp, count);
+	shell_state->last_exit_status = 0;
+}
+
+/**
+ * @brief Initializes the shell state.
+ *
  * This function initializes the shell state by setting up signal handlers,
  * checking command-line arguments, counting environment variables, and
  * duplicating the environment variables into the shell state structure.
@@ -113,12 +133,9 @@ static void	setup_terminal(void)
 void	ft_initialize(int argc, char **argv,
 	t_shell_state *shell_state, char **envp)
 {
-	int	count;
-
 	setup_terminal();
 	signal(SIGINT, handle_sigint);
 	signal(SIGQUIT, handle_sigquit);
 	check_arguments(argc, argv);
-	count = count_env_variables(envp);
-	duplicate_env(shell_state, envp, count);
+	initialize_shell_state(shell_state, envp);
 }

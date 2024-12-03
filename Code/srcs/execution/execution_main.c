@@ -6,7 +6,7 @@
 /*   By: cmegret <cmegret@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/22 18:40:16 by cmegret           #+#    #+#             */
-/*   Updated: 2024/12/03 08:30:46 by cmegret          ###   ########.fr       */
+/*   Updated: 2024/12/03 10:27:40 by cmegret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,9 @@ void	handle_parent(pid_t pid, int in_fd, int *fd)
 void	execute_child(t_command *cmd_list,
 	t_shell_state *shell_state, int in_fd, int *fd)
 {
+	int	saved_stdin;
+	int	saved_stdout;
+
 	if (in_fd != 0)
 	{
 		dup2(in_fd, STDIN_FILENO);
@@ -57,10 +60,17 @@ void	execute_child(t_command *cmd_list,
 		close(fd[1]);
 	}
 	close(fd[0]);
+	configure_redirections(cmd_list, &saved_stdin, &saved_stdout, shell_state);
+	if (shell_state->last_exit_status != 0)
+	{
+		restore_redirections(saved_stdin, saved_stdout);
+		exit(shell_state->last_exit_status);
+	}
 	if (ft_is_builtin(cmd_list->cmd_name) == 0)
 		ft_execute_builtin(cmd_list, shell_state);
 	else
 		handle_child_process(cmd_list, shell_state->envp);
+	restore_redirections(saved_stdin, saved_stdout);
 	exit(shell_state->last_exit_status);
 }
 

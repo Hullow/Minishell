@@ -6,7 +6,7 @@
 /*   By: cmegret <cmegret@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/22 18:40:16 by cmegret           #+#    #+#             */
-/*   Updated: 2024/12/03 08:32:58 by cmegret          ###   ########.fr       */
+/*   Updated: 2024/12/03 10:20:41 by cmegret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,9 +83,20 @@ void	ft_execute_builtin(t_command *cmd, t_shell_state *shell_state)
  */
 int	handle_parent_builtin(t_command *cmd_list, t_shell_state *shell_state)
 {
+	int	saved_stdin;
+	int	saved_stdout;
+
 	if (cmd_list->next == NULL && ft_is_builtin(cmd_list->cmd_name) == 0)
 	{
+		configure_redirections(cmd_list, &saved_stdin,
+			&saved_stdout, shell_state);
+		if (shell_state->last_exit_status != 0)
+		{
+			restore_redirections(saved_stdin, saved_stdout);
+			return (0);
+		}
 		ft_execute_builtin(cmd_list, shell_state);
+		restore_redirections(saved_stdin, saved_stdout);
 		return (0);
 	}
 	return (1);

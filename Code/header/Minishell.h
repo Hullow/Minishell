@@ -6,7 +6,7 @@
 /*   By: cmegret <cmegret@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/19 14:53:36 by cmegret           #+#    #+#             */
-/*   Updated: 2024/12/02 16:45:17 by cmegret          ###   ########.fr       */
+/*   Updated: 2024/12/03 09:41:13 by cmegret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@
 # include <dirent.h>
 # include <string.h>
 # include <termios.h>
+# include <fcntl.h>
 
 # ifndef ECHOCTL
 #  define ECHOCTL 0x00000040

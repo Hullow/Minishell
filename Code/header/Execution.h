@@ -6,7 +6,7 @@
 /*   By: cmegret <cmegret@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/01 18:44:38 by cmegret           #+#    #+#             */
-/*   Updated: 2024/12/03 07:40:33 by cmegret          ###   ########.fr       */
+/*   Updated: 2024/12/03 10:07:10 by cmegret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,5 +33,8 @@ char	*get_cmd_path(char *cmd, char **envp);
 void	handle_child_process(t_command *cmd_list, char **envp);
 char	*resolve_cmd_path(char *cmd_name, char **envp);
 void	check_access_rights(char *cmd_path, char *cmd_name);
+void	configure_redirections(t_command *cmd, int *saved_stdin,
+			int *saved_stdout, t_shell_state *shell_state);
+void	restore_redirections(int saved_stdin, int saved_stdout);
 
 #endif
