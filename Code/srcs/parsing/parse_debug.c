@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_debug.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: francis <francis@student.42.fr>            +#+  +:+       +#+        */
+/*   By: cmegret <cmegret@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/21 19:06:55 by francis           #+#    #+#             */
-/*   Updated: 2024/12/02 18:45:01 by francis          ###   ########.fr       */
+/*   Updated: 2024/12/03 07:47:14 by cmegret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,13 +31,13 @@ void	ft_print_args(t_command *cmd_sequence)
 char	*ft_return_redir_type(int redir_type)
 {
 	if (redir_type == REDIR_APPEND)
-		return("REDIR_APPEND");
+		return ("REDIR_APPEND");
 	else if (redir_type == REDIR_INPUT)
-		return("REDIR_INPUT");
+		return ("REDIR_INPUT");
 	else if (redir_type == REDIR_OUTPUT)
-		return("REDIR_OUTPUT");
+		return ("REDIR_OUTPUT");
 	else if (redir_type == REDIR_HEREDOC)
-		return("REDIR_HEREDOC");
+		return ("REDIR_HEREDOC");
 	else
 		return (NULL);
 }

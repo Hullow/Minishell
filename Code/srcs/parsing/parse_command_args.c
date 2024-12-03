@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_command_args.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: francis <francis@student.42.fr>            +#+  +:+       +#+        */
+/*   By: cmegret <cmegret@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/01 17:26:12 by fallan            #+#    #+#             */
-/*   Updated: 2024/12/02 18:45:36 by francis          ###   ########.fr       */
+/*   Updated: 2024/12/03 07:46:28 by cmegret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,9 @@ int	ft_count_args(t_cmd_args *arg_list)
 // frees our linked list of arguments
 void	ft_free_arg_list(t_cmd_args	*arg_list)
 {
-	t_cmd_args	*temp = NULL;
+	t_cmd_args	*temp;
 
+	temp = NULL;
 	while (arg_list)
 	{
 		temp = arg_list;
