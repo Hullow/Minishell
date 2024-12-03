@@ -3,15 +3,23 @@
 /*                                                        :::      ::::::::   */
 /*   pwd.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: francis <francis@student.42.fr>            +#+  +:+       +#+        */
+/*   By: cmegret <cmegret@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/14 14:22:59 by cmegret           #+#    #+#             */
-/*   Updated: 2024/11/15 17:08:59 by francis          ###   ########.fr       */
+/*   Updated: 2024/12/03 08:35:49 by cmegret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../header/Minishell.h"
 
+/**
+ * @brief Prints the current working directory.
+ *
+ * This function retrieves and prints the current working directory.
+ * If it fails to retrieve the directory, it prints an error message.
+ *
+ * @param shell_state The current state of the shell.
+ */
 void	ft_pwd(t_shell_state *shell_state)
 {
 	char	*cwd;

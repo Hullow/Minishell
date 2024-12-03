@@ -6,7 +6,7 @@
 #    By: cmegret <cmegret@student.42lausanne.ch>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/07/19 14:53:36 by cmegret           #+#    #+#              #
-#    Updated: 2024/12/03 07:41:50 by cmegret          ###   ########.fr        #
+#    Updated: 2024/12/03 08:42:41 by cmegret          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -73,7 +73,7 @@ SRCS = main/main.c \
 	  builtin/cd.c \
       builtin/env.c \
       builtin/export.c \
-      builtin/export_utils.c \
+      builtin/env_utils.c \
       builtin/unset.c \
       builtin/pwd.c \
       builtin/echo.c \

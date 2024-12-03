@@ -6,12 +6,23 @@
 /*   By: cmegret <cmegret@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/22 18:40:16 by cmegret           #+#    #+#             */
-/*   Updated: 2024/12/03 07:39:02 by cmegret          ###   ########.fr       */
+/*   Updated: 2024/12/03 08:30:46 by cmegret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../header/Minishell.h"
 
+/**
+ * @brief Handles the parent process after a fork.
+ *
+ * This function closes the write end of the pipe,
+ * closes the input file descriptor if it is not 0,
+ * and waits for the child process to finish.
+ *
+ * @param pid The PID of the child process.
+ * @param in_fd The input file descriptor.
+ * @param fd The array of file descriptors for the pipe.
+ */
 void	handle_parent(pid_t pid, int in_fd, int *fd)
 {
 	close(fd[1]);
@@ -20,6 +31,18 @@ void	handle_parent(pid_t pid, int in_fd, int *fd)
 	waitpid(pid, NULL, 0);
 }
 
+/**
+ * @brief Executes the child process.
+ *
+ * This function redirects file descriptors for input and output,
+ * closes unused file descriptors, and executes either a builtin command
+ * or a child process.
+ *
+ * @param cmd_list The list of commands to execute.
+ * @param shell_state The current state of the shell.
+ * @param in_fd The input file descriptor.
+ * @param fd The array of file descriptors for the pipe.
+ */
 void	execute_child(t_command *cmd_list,
 	t_shell_state *shell_state, int in_fd, int *fd)
 {
@@ -41,6 +64,17 @@ void	execute_child(t_command *cmd_list,
 	exit(shell_state->last_exit_status);
 }
 
+/**
+ * @brief Executes a pipeline of commands.
+ *
+ * This function creates a pipe if necessary, forks a child process,
+ * and handles the parent and child processes accordingly.
+ *
+ * @param cmd_list The list of commands to execute.
+ * @param shell_state The current state of the shell.
+ * @param in_fd The input file descriptor.
+ * @return The output file descriptor of the pipe or 0.
+ */
 int	execute_pipeline(t_command *cmd_list,
 	t_shell_state *shell_state, int in_fd)
 {
@@ -61,6 +95,16 @@ int	execute_pipeline(t_command *cmd_list,
 	return (0);
 }
 
+/**
+ * @brief Executes a list of commands.
+ *
+ * This function iterates through the list of commands, executes each pipeline
+ * of commands, and handles builtin commands.
+ *
+ * @param cmd_list The list of commands to execute.
+ * @param shell_state The current state of the shell.
+ * @return 0 on success.
+ */
 int	execute_cmd(t_command *cmd_list, t_shell_state *shell_state)
 {
 	int	in_fd;

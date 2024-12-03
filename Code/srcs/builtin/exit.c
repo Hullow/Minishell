@@ -3,15 +3,26 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: francis <francis@student.42.fr>            +#+  +:+       +#+        */
+/*   By: cmegret <cmegret@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/22 16:31:14 by cmegret           #+#    #+#             */
-/*   Updated: 2024/11/15 17:08:59 by francis          ###   ########.fr       */
+/*   Updated: 2024/12/03 08:37:00 by cmegret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../header/Minishell.h"
 
+/**
+ * @brief Exits the shell.
+ *
+ * This function exits the shell with the specified exit status.
+ * If a numeric argument is provided, it uses that as the exit status.
+ * If the argument is not numeric,
+ * it prints an error message and exits with status 2.
+ *
+ * @param shell_state The current state of the shell.
+ * @param args The arguments containing the exit status.
+ */
 void	ft_exit(t_shell_state *shell_state, char **args)
 {
 	int	exit_status;

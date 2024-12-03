@@ -6,12 +6,24 @@
 /*   By: cmegret <cmegret@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/03 08:36:16 by cmegret           #+#    #+#             */
-/*   Updated: 2024/12/03 07:37:22 by cmegret          ###   ########.fr       */
+/*   Updated: 2024/12/03 08:31:54 by cmegret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../header/Minishell.h"
 
+/**
+ * @brief Checks the access rights for a command path.
+ *
+ * This function checks if the command path exists and if it is executable.
+ * If the command path does not exist,
+ * it prints an error message and exits with status 127.
+ * If the command path is not executable,
+ * it prints an error message and exits with status 126.
+ *
+ * @param cmd_path The path of the command to check.
+ * @param cmd_name The name of the command.
+ */
 void	check_access_rights(char *cmd_path, char *cmd_name)
 {
 	if (access(cmd_path, F_OK) != 0)
@@ -26,6 +38,20 @@ void	check_access_rights(char *cmd_path, char *cmd_name)
 	}
 }
 
+/**
+ * @brief Resolves the command path.
+ *
+ * This function resolves the full path of the command.
+ * If the command name contains a '/',
+ * it returns the command name as is.
+ * Otherwise, it searches for the command in the PATH environment variable.
+ * If the command is not found,
+ * it prints an error message and exits with status 127.
+ *
+ * @param cmd_name The name of the command to resolve.
+ * @param envp The environment variables.
+ * @return The resolved command path.
+ */
 char	*resolve_cmd_path(char *cmd_name, char **envp)
 {
 	char	*cmd_path;
@@ -41,6 +67,16 @@ char	*resolve_cmd_path(char *cmd_name, char **envp)
 	return (cmd_path);
 }
 
+/**
+ * @brief Handles the execution of a child process.
+ *
+ * This function resolves the command path, checks the access rights,
+ * and executes the command using execve. If execve fails, it prints
+ * an error message and exits with status 1.
+ *
+ * @param cmd_list The list of commands to execute.
+ * @param envp The environment variables.
+ */
 void	handle_child_process(t_command *cmd_list, char **envp)
 {
 	char	*cmd_path;

@@ -6,12 +6,21 @@
 /*   By: cmegret <cmegret@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/22 18:40:16 by cmegret           #+#    #+#             */
-/*   Updated: 2024/12/02 16:53:34 by cmegret          ###   ########.fr       */
+/*   Updated: 2024/12/03 08:41:36 by cmegret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../header/Minishell.h"
 
+/**
+ * @brief Checks if a variable name is valid.
+ *
+ * This function checks if the given variable name contains only alphanumeric
+ * characters or underscores.
+ *
+ * @param name The name of the variable to check.
+ * @return 1 if the name is valid, 0 otherwise.
+ */
 int	is_valid_name(const char *name)
 {
 	int	i;
@@ -26,6 +35,15 @@ int	is_valid_name(const char *name)
 	return (1);
 }
 
+/**
+ * @brief Extracts the variable name from a string.
+ *
+ * This function extracts the variable name from a string in the format
+ * "name=value".
+ *
+ * @param var The string containing the variable.
+ * @return The extracted variable name.
+ */
 char	*get_var_name(const char *var)
 {
 	size_t	name_len;
@@ -41,6 +59,15 @@ char	*get_var_name(const char *var)
 	return (name);
 }
 
+/**
+ * @brief Exports environment variables.
+ *
+ * This function adds or updates environment variables in the shell's
+ * environment.
+ *
+ * @param shell_state The current state of the shell.
+ * @param args The arguments containing the variables to export.
+ */
 void	ft_export(t_shell_state *shell_state, char **args)
 {
 	char	*name;
@@ -58,7 +85,7 @@ void	ft_export(t_shell_state *shell_state, char **args)
 		else
 		{
 			if (!update_existing_var(&shell_state->envp, name, args[i]))
-				add_new_var(&shell_state->envp, args[i]);
+				add_new_env_var(&shell_state->envp, ft_strdup(args[i]));
 			shell_state->last_exit_status = 0;
 		}
 		free(name);

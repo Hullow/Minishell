@@ -6,13 +6,22 @@
 /*   By: cmegret <cmegret@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/23 14:56:57 by cmegret           #+#    #+#             */
-/*   Updated: 2024/12/02 14:47:26 by cmegret          ###   ########.fr       */
+/*   Updated: 2024/12/03 08:48:44 by cmegret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../header/Minishell.h"
 
-static void	remove_var(char ***envp, int index)
+/**
+ * @brief Removes an environment variable at a given index.
+ *
+ * This function removes the environment variable at the specified index
+ * from the environment variables array.
+ *
+ * @param envp The environment variables array.
+ * @param index The index of the variable to remove.
+ */
+void	remove_var(char ***envp, int index)
 {
 	int		i;
 	char	**new_envp;
@@ -39,6 +48,15 @@ static void	remove_var(char ***envp, int index)
 	*envp = new_envp;
 }
 
+/**
+ * @brief Unsets environment variables.
+ *
+ * This function removes the specified environment variables from the shell's
+ * environment.
+ *
+ * @param shell_state The current state of the shell.
+ * @param args The arguments containing the names of the variables to unset.
+ */
 void	ft_unset(t_shell_state *shell_state, char **args)
 {
 	char	*name;
@@ -52,7 +70,7 @@ void	ft_unset(t_shell_state *shell_state, char **args)
 		name = get_var_name(args[i]);
 		if (!is_valid_name(name))
 		{
-			printf("export: '%s': not a valid identifier\n", args[i]);
+			printf("unset: '%s': not a valid identifier\n", args[i]);
 			shell_state->last_exit_status = 1;
 			free(name);
 			return ;

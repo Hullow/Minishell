@@ -6,7 +6,7 @@
 /*   By: cmegret <cmegret@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/22 18:40:16 by cmegret           #+#    #+#             */
-/*   Updated: 2024/12/02 16:53:52 by cmegret          ###   ########.fr       */
+/*   Updated: 2024/12/03 08:57:03 by cmegret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,38 +18,38 @@
 typedef struct s_command		t_command;
 typedef struct s_shell_state	t_shell_state;
 
-int			ft_is_builtin(char *cmd_name);
-void		ft_execute_builtin(t_command *cmd, t_shell_state *shell_state);
-
-// Builtin cd
+// Builtin CD
 void		ft_cd(t_command *cmd, t_shell_state *shell_state);
 char		*get_env_var(char **envp, char *key);
+void		update_env_var(char ***envp, char *name, const char *value);
 
-// Builtin env
+// Builtin ECHO
+void		ft_echo(char **args, t_shell_state *shell_state);
+
+// Builtin ENV
 void		ft_env(t_shell_state *shell_state);
-void		update_env_var(char ***envp, char *key, const char *value);
-
-// Builtin export
-void		ft_export(t_shell_state *shell_state, char **args);
-const char	*extract_value(const char *new_value);
+int			update_existing_var(char ***envp,
+				char *name, const char *new_value);
 char		*build_new_var(const char *name, const char *value);
-int			find_var_index(char **envp, char *name, size_t name_len);
-int			update_existing_var(char ***envp, char *name,
-				const char *new_value);
+const char	*extract_value(const char *new_value);
+void		add_new_env_var(char ***envp, char *new_var);
+void		copy_env_vars(char **new_envp, char **envp, int count);
+int			find_var_index(char **envp, char *key, size_t key_len);
 void		add_new_var(char ***envp, const char *var);
+
+// Builtin EXIT
+void		ft_exit(t_shell_state *shell_state, char **args);
+
+// Builtin EXPORT
+void		ft_export(t_shell_state *shell_state, char **args);
 char		*get_var_name(const char *var);
 int			is_valid_name(const char *name);
 
-// Builtin unset
-void		ft_unset(t_shell_state *shell_state, char **args);
-
-// Builtin pwd
+// Builtin PWD
 void		ft_pwd(t_shell_state *shell_state);
 
-// Builtin echo
-void		ft_echo(char **args, t_shell_state *shell_state);
-
-// Builtin exit
-void		ft_exit(t_shell_state *shell_state, char **args);
+// Builtin UNSET
+void		ft_unset(t_shell_state *shell_state, char **args);
+void		remove_var(char ***envp, int index);
 
 #endif
