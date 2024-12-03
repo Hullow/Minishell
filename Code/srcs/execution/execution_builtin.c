@@ -6,7 +6,7 @@
 /*   By: cmegret <cmegret@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/22 18:40:16 by cmegret           #+#    #+#             */
-/*   Updated: 2024/12/02 16:53:25 by cmegret          ###   ########.fr       */
+/*   Updated: 2024/12/03 07:37:48 by cmegret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,4 +49,14 @@ void	ft_execute_builtin(t_command *cmd, t_shell_state *shell_state)
 		ft_exit(shell_state, cmd->args);
 	else if (ft_strncmp(cmd->cmd_name, "env", 4) == 0)
 		ft_env(shell_state);
+}
+
+int	handle_parent_builtin(t_command *cmd_list, t_shell_state *shell_state)
+{
+	if (cmd_list->next == NULL && ft_is_builtin(cmd_list->cmd_name) == 0)
+	{
+		ft_execute_builtin(cmd_list, shell_state);
+		return (0);
+	}
+	return (1);
 }

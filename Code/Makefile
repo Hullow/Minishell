@@ -6,7 +6,7 @@
 #    By: cmegret <cmegret@student.42lausanne.ch>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/07/19 14:53:36 by cmegret           #+#    #+#              #
-#    Updated: 2024/12/02 14:58:06 by cmegret          ###   ########.fr        #
+#    Updated: 2024/12/03 07:41:50 by cmegret          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -68,7 +68,8 @@ SRCS = main/main.c \
 	  expansion/pathname_expansion.c \
 	  execution/execution_main.c \
 	  execution/execution_env_path.c \
-	  execution/execute_builtin.c \
+	  execution/execution_builtin.c \
+	  execution/execution_external.c \
 	  builtin/cd.c \
       builtin/env.c \
       builtin/export.c \
