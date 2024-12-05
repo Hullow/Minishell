@@ -93,7 +93,7 @@ t_command	*ft_parse(t_token *tok, t_shell_state *shell_state)
 	}
 	if (ft_allocate_cmd_args_to_array(head) == -1) // copy arguments from argument list to argument array (for each command)
 		return (NULL);
-	if (cmd_sequence->cmd_name == NULL || ft_strlen(cmd_sequence->cmd_name) == 0)
-		return (NULL); // what if redirection creates file(s) ?
+	// if (cmd_sequence->cmd_name == NULL || ft_strlen(cmd_sequence->cmd_name) == 0)
+	// 	return (NULL); // what if redirection creates file(s) ?
 	return (head);
 }

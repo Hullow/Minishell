@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution_main.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cmegret <cmegret@student.42lausanne.ch>    +#+  +:+       +#+        */
+/*   By: francis <francis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/22 18:40:16 by cmegret           #+#    #+#             */
-/*   Updated: 2024/12/03 10:39:28 by cmegret          ###   ########.fr       */
+/*   Updated: 2024/12/05 19:13:58 by francis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,10 +67,13 @@ void	execute_child(t_command *cmd_list,
 		restore_redirections(saved_stdin, saved_stdout);
 		exit(shell_state->last_exit_status);
 	}
-	if (ft_is_builtin(cmd_list->cmd_name) == 0)
-		ft_execute_builtin(cmd_list, shell_state);
-	else
-		handle_child_process(cmd_list, shell_state->envp);
+	if (cmd_list->cmd_name != NULL || ft_strlen(cmd_list->cmd_name) != 0)
+	{
+		if (ft_is_builtin(cmd_list->cmd_name) == 0)
+			ft_execute_builtin(cmd_list, shell_state);
+		else
+			handle_child_process(cmd_list, shell_state->envp);
+	}
 	restore_redirections(saved_stdin, saved_stdout);
 	exit(shell_state->last_exit_status);
 }
