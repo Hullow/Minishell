@@ -6,7 +6,7 @@
 /*   By: cmegret <cmegret@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/22 18:40:16 by cmegret           #+#    #+#             */
-/*   Updated: 2024/12/06 15:14:07 by cmegret          ###   ########.fr       */
+/*   Updated: 2024/12/06 15:35:45 by cmegret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,10 +27,13 @@ void	handle_parent(pid_t pid, int in_fd, int *fd)
 {
 	printf("DEBUG PARENT: Entrée dans handle_parent\n");
 
-	if (close(fd[1]) == -1)
-		perror("close fd[1]");
-	else
-		printf("DEBUG PARENT: Fermeture de fd[1] réussie\n");
+	if (fd[1] != -1)
+	{
+		if (close(fd[1]) == -1)
+			perror("close fd[1]");
+		else
+			printf("DEBUG PARENT: Fermeture de fd[1] réussie\n");
+	}
 	if (in_fd != 0)
 	{
 		if (close(in_fd) == -1)
@@ -127,19 +130,36 @@ int	execute_pipeline(t_command *cmd_list,
 	int		fd[2];
 	pid_t	pid;
 
-	fd[0] = STDIN_FILENO;
-	fd[1] = STDOUT_FILENO;
-	if (cmd_list->next && pipe(fd) == -1)
-		error_and_exit("pipe failed", 1);
+	// Initialiser fd à -1 pour les deux éléments
+	fd[0] = -1;
+	fd[1] = -1;
+
+	printf("DEBUG PIPE: Début de execute_pipeline\n");
+	if (cmd_list->next)
+	{
+		if (pipe(fd) == -1)
+			error_and_exit("pipe failed", 1);
+		printf("DEBUG PIPE: Pipe créé avec succès : fd[0] = %d, fd[1] = %d\n", fd[0], fd[1]);
+	}
 	pid = fork();
 	if (pid == 0)
+	{
+		printf("DEBUG PIPE: Dans le processus enfant\n");
 		execute_child(cmd_list, shell_state, in_fd, fd);
+	}
 	else if (pid < 0)
 		error_and_exit("fork failed", 1);
 	else
+	{
+		printf("DEBUG PIPE: Dans le processus parent, pid = %d\n", pid);
 		handle_parent(pid, in_fd, fd);
+	}
 	if (cmd_list->next)
+	{
+		printf("DEBUG PIPE: Commande suivante présente, retour fd[0] = %d\n", fd[0]);
 		return (fd[0]);
+	}
+	printf("DEBUG PIPE: Pas de commande suivante, retour 0\n");
 	return (0);
 }
 
