@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution_main.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: francis <francis@student.42.fr>            +#+  +:+       +#+        */
+/*   By: cmegret <cmegret@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/22 18:40:16 by cmegret           #+#    #+#             */
-/*   Updated: 2024/12/05 19:13:58 by francis          ###   ########.fr       */
+/*   Updated: 2024/12/06 14:33:36 by cmegret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,32 +49,48 @@ void	execute_child(t_command *cmd_list,
 	int	saved_stdin;
 	int	saved_stdout;
 
+	printf("DEBUG: Entrée dans execute_child\n");
+	printf("DEBUG: in_fd: %d, fd[0]: %d, fd[1]: %d\n", in_fd, fd[0], fd[1]);
 	if (in_fd != 0)
 	{
+		printf("DEBUG: Redirection de in_fd vers STDIN_FILENO\n");
 		dup2(in_fd, STDIN_FILENO);
 		close(in_fd);
 	}
 	if (cmd_list->next)
 	{
+		printf("DEBUG: Redirection de fd[1] vers STDOUT_FILENO\n");
 		dup2(fd[1], STDOUT_FILENO);
 		close(fd[1]);
 	}
 	close(fd[0]);
 	shell_state->last_exit_status = 0;
+	printf("DEBUG: Avant configure_redirections\n");
 	configure_redirections(cmd_list, &saved_stdin, &saved_stdout, shell_state);
+	printf("DEBUG: Après configure_redirections, last_exit_status: %d\n", shell_state->last_exit_status);
 	if (shell_state->last_exit_status != 0)
 	{
+		printf("DEBUG: Erreur dans configure_redirections, restauration des redirections\n");
 		restore_redirections(saved_stdin, saved_stdout);
 		exit(shell_state->last_exit_status);
 	}
 	if (cmd_list->cmd_name != NULL || ft_strlen(cmd_list->cmd_name) != 0)
 	{
+		printf("DEBUG: cmd_list->cmd_name: %s\n", cmd_list->cmd_name);
 		if (ft_is_builtin(cmd_list->cmd_name) == 0)
+		{
+			printf("DEBUG: Exécution d'une commande builtin\n");
 			ft_execute_builtin(cmd_list, shell_state);
+		}
 		else
+		{
+			printf("DEBUG: Exécution d'une commande externe\n");
 			handle_child_process(cmd_list, shell_state->envp);
+		}
 	}
+	printf("DEBUG: Restauration des redirections\n");
 	restore_redirections(saved_stdin, saved_stdout);
+	printf("DEBUG: Sortie de execute_child avec last_exit_status: %d\n", shell_state->last_exit_status);
 	exit(shell_state->last_exit_status);
 }
 
