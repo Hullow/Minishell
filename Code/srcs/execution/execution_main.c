@@ -6,7 +6,7 @@
 /*   By: cmegret <cmegret@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/22 18:40:16 by cmegret           #+#    #+#             */
-/*   Updated: 2024/12/06 14:33:36 by cmegret          ###   ########.fr       */
+/*   Updated: 2024/12/06 15:14:07 by cmegret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,10 +25,24 @@
  */
 void	handle_parent(pid_t pid, int in_fd, int *fd)
 {
-	close(fd[1]);
+	printf("DEBUG PARENT: Entrée dans handle_parent\n");
+
+	if (close(fd[1]) == -1)
+		perror("close fd[1]");
+	else
+		printf("DEBUG PARENT: Fermeture de fd[1] réussie\n");
 	if (in_fd != 0)
-		close(in_fd);
-	waitpid(pid, NULL, 0);
+	{
+		if (close(in_fd) == -1)
+			perror("close in_fd");
+		else
+			printf("DEBUG PARENT: Fermeture de in_fd réussie\n");
+	}
+	if (waitpid(pid, NULL, 0) == -1)
+		perror("waitpid");
+	else
+		printf("DEBUG PARENT: Processus enfant terminé\n");
+	printf("DEBUG PARENT: Sortie de handle_parent\n");
 }
 
 /**
@@ -49,48 +63,50 @@ void	execute_child(t_command *cmd_list,
 	int	saved_stdin;
 	int	saved_stdout;
 
-	printf("DEBUG: Entrée dans execute_child\n");
-	printf("DEBUG: in_fd: %d, fd[0]: %d, fd[1]: %d\n", in_fd, fd[0], fd[1]);
+	printf("DEBUG CHILD: Entrée dans execute_child\n");
+	printf("DEBUG CHILD: in_fd: %d, fd[0]: %d, fd[1]: %d\n", in_fd, fd[0], fd[1]);
 	if (in_fd != 0)
 	{
-		printf("DEBUG: Redirection de in_fd vers STDIN_FILENO\n");
-		dup2(in_fd, STDIN_FILENO);
+		printf("DEBUG CHILD: Redirection de in_fd vers STDIN_FILENO\n");
+		if (dup2(in_fd, STDIN_FILENO) == -1)
+			error_and_exit("dup2 failed", 1);
 		close(in_fd);
 	}
 	if (cmd_list->next)
 	{
-		printf("DEBUG: Redirection de fd[1] vers STDOUT_FILENO\n");
-		dup2(fd[1], STDOUT_FILENO);
+		printf("DEBUG CHILD: Redirection de fd[1] vers STDOUT_FILENO\n");
+		if (dup2(fd[1], STDOUT_FILENO) == -1)
+			error_and_exit("dup2 failed", 1);
 		close(fd[1]);
 	}
 	close(fd[0]);
 	shell_state->last_exit_status = 0;
-	printf("DEBUG: Avant configure_redirections\n");
+	printf("DEBUG CHILD: Avant configure_redirections\n");
 	configure_redirections(cmd_list, &saved_stdin, &saved_stdout, shell_state);
-	printf("DEBUG: Après configure_redirections, last_exit_status: %d\n", shell_state->last_exit_status);
+	printf("DEBUG CHILD: Après configure_redirections, last_exit_status: %d\n", shell_state->last_exit_status);
 	if (shell_state->last_exit_status != 0)
 	{
-		printf("DEBUG: Erreur dans configure_redirections, restauration des redirections\n");
+		printf("DEBUG CHILD: Erreur dans configure_redirections, restauration des redirections\n");
 		restore_redirections(saved_stdin, saved_stdout);
 		exit(shell_state->last_exit_status);
 	}
 	if (cmd_list->cmd_name != NULL || ft_strlen(cmd_list->cmd_name) != 0)
 	{
-		printf("DEBUG: cmd_list->cmd_name: %s\n", cmd_list->cmd_name);
+		printf("DEBUG CHILD: cmd_list->cmd_name: %s\n", cmd_list->cmd_name);
 		if (ft_is_builtin(cmd_list->cmd_name) == 0)
 		{
-			printf("DEBUG: Exécution d'une commande builtin\n");
+			printf("DEBUG CHILD: Exécution d'une commande builtin\n");
 			ft_execute_builtin(cmd_list, shell_state);
 		}
 		else
 		{
-			printf("DEBUG: Exécution d'une commande externe\n");
+			printf("DEBUG CHILD: Exécution d'une commande externe\n");
 			handle_child_process(cmd_list, shell_state->envp);
 		}
 	}
-	printf("DEBUG: Restauration des redirections\n");
+	printf("DEBUG CHILD: Restauration des redirections\n");
 	restore_redirections(saved_stdin, saved_stdout);
-	printf("DEBUG: Sortie de execute_child avec last_exit_status: %d\n", shell_state->last_exit_status);
+	printf("DEBUG CHILD: Sortie de execute_child avec last_exit_status: %d\n", shell_state->last_exit_status);
 	exit(shell_state->last_exit_status);
 }
 
@@ -111,6 +127,8 @@ int	execute_pipeline(t_command *cmd_list,
 	int		fd[2];
 	pid_t	pid;
 
+	fd[0] = STDIN_FILENO;
+	fd[1] = STDOUT_FILENO;
 	if (cmd_list->next && pipe(fd) == -1)
 		error_and_exit("pipe failed", 1);
 	pid = fork();
