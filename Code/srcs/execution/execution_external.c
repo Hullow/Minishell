@@ -6,7 +6,7 @@
 /*   By: cmegret <cmegret@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/03 08:36:16 by cmegret           #+#    #+#             */
-/*   Updated: 2024/12/06 15:08:06 by cmegret          ###   ########.fr       */
+/*   Updated: 2024/12/06 15:40:52 by cmegret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,19 +81,11 @@ void	handle_child_process(t_command *cmd_list, char **envp)
 {
 	char	*cmd_path;
 
-	printf("DEBUG CHILD: Entrée dans handle_child_process\n");
-	printf("DEBUG CHILD: cmd_list->cmd_name: %s\n", cmd_list->cmd_name);
 	cmd_path = resolve_cmd_path(cmd_list->cmd_name, envp);
-	printf("DEBUG CHILD: cmd_path après resolve_cmd_path: %s\n", cmd_path);
 	check_access_rights(cmd_path, cmd_list->cmd_name);
-	printf("DEBUG CHILD: Après check_access_rights\n");
-	printf("DEBUG CHILD: Appel de execve avec cmd_path: %s\n", cmd_path);
 	if (execve(cmd_path, cmd_list->args, envp) == -1)
 	{
 		free(cmd_path);
-		perror("minishell");
-		printf("DEBUG CHILD: execve a échoué\n");
-		exit(1);
+		error_and_exit("minishell", 1);
 	}
-	printf("DEBUG CHILD: Sortie de handle_child_process\n");
 }

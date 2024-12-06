@@ -6,7 +6,7 @@
 /*   By: cmegret <cmegret@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/22 18:40:16 by cmegret           #+#    #+#             */
-/*   Updated: 2024/12/06 15:35:45 by cmegret          ###   ########.fr       */
+/*   Updated: 2024/12/06 15:39:04 by cmegret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,27 +25,18 @@
  */
 void	handle_parent(pid_t pid, int in_fd, int *fd)
 {
-	printf("DEBUG PARENT: Entrée dans handle_parent\n");
-
 	if (fd[1] != -1)
 	{
 		if (close(fd[1]) == -1)
 			perror("close fd[1]");
-		else
-			printf("DEBUG PARENT: Fermeture de fd[1] réussie\n");
 	}
 	if (in_fd != 0)
 	{
 		if (close(in_fd) == -1)
 			perror("close in_fd");
-		else
-			printf("DEBUG PARENT: Fermeture de in_fd réussie\n");
 	}
 	if (waitpid(pid, NULL, 0) == -1)
 		perror("waitpid");
-	else
-		printf("DEBUG PARENT: Processus enfant terminé\n");
-	printf("DEBUG PARENT: Sortie de handle_parent\n");
 }
 
 /**
@@ -66,50 +57,34 @@ void	execute_child(t_command *cmd_list,
 	int	saved_stdin;
 	int	saved_stdout;
 
-	printf("DEBUG CHILD: Entrée dans execute_child\n");
-	printf("DEBUG CHILD: in_fd: %d, fd[0]: %d, fd[1]: %d\n", in_fd, fd[0], fd[1]);
 	if (in_fd != 0)
 	{
-		printf("DEBUG CHILD: Redirection de in_fd vers STDIN_FILENO\n");
 		if (dup2(in_fd, STDIN_FILENO) == -1)
 			error_and_exit("dup2 failed", 1);
 		close(in_fd);
 	}
 	if (cmd_list->next)
 	{
-		printf("DEBUG CHILD: Redirection de fd[1] vers STDOUT_FILENO\n");
 		if (dup2(fd[1], STDOUT_FILENO) == -1)
 			error_and_exit("dup2 failed", 1);
 		close(fd[1]);
 	}
 	close(fd[0]);
 	shell_state->last_exit_status = 0;
-	printf("DEBUG CHILD: Avant configure_redirections\n");
 	configure_redirections(cmd_list, &saved_stdin, &saved_stdout, shell_state);
-	printf("DEBUG CHILD: Après configure_redirections, last_exit_status: %d\n", shell_state->last_exit_status);
 	if (shell_state->last_exit_status != 0)
 	{
-		printf("DEBUG CHILD: Erreur dans configure_redirections, restauration des redirections\n");
 		restore_redirections(saved_stdin, saved_stdout);
 		exit(shell_state->last_exit_status);
 	}
 	if (cmd_list->cmd_name != NULL || ft_strlen(cmd_list->cmd_name) != 0)
 	{
-		printf("DEBUG CHILD: cmd_list->cmd_name: %s\n", cmd_list->cmd_name);
 		if (ft_is_builtin(cmd_list->cmd_name) == 0)
-		{
-			printf("DEBUG CHILD: Exécution d'une commande builtin\n");
 			ft_execute_builtin(cmd_list, shell_state);
-		}
 		else
-		{
-			printf("DEBUG CHILD: Exécution d'une commande externe\n");
 			handle_child_process(cmd_list, shell_state->envp);
-		}
 	}
-	printf("DEBUG CHILD: Restauration des redirections\n");
 	restore_redirections(saved_stdin, saved_stdout);
-	printf("DEBUG CHILD: Sortie de execute_child avec last_exit_status: %d\n", shell_state->last_exit_status);
 	exit(shell_state->last_exit_status);
 }
 
@@ -130,36 +105,20 @@ int	execute_pipeline(t_command *cmd_list,
 	int		fd[2];
 	pid_t	pid;
 
-	// Initialiser fd à -1 pour les deux éléments
 	fd[0] = -1;
 	fd[1] = -1;
-
-	printf("DEBUG PIPE: Début de execute_pipeline\n");
 	if (cmd_list->next)
-	{
 		if (pipe(fd) == -1)
 			error_and_exit("pipe failed", 1);
-		printf("DEBUG PIPE: Pipe créé avec succès : fd[0] = %d, fd[1] = %d\n", fd[0], fd[1]);
-	}
 	pid = fork();
 	if (pid == 0)
-	{
-		printf("DEBUG PIPE: Dans le processus enfant\n");
 		execute_child(cmd_list, shell_state, in_fd, fd);
-	}
 	else if (pid < 0)
 		error_and_exit("fork failed", 1);
 	else
-	{
-		printf("DEBUG PIPE: Dans le processus parent, pid = %d\n", pid);
 		handle_parent(pid, in_fd, fd);
-	}
 	if (cmd_list->next)
-	{
-		printf("DEBUG PIPE: Commande suivante présente, retour fd[0] = %d\n", fd[0]);
 		return (fd[0]);
-	}
-	printf("DEBUG PIPE: Pas de commande suivante, retour 0\n");
 	return (0);
 }
 
