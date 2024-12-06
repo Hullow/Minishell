@@ -5,10 +5,11 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: cmegret <cmegret@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/09/22 18:40:16 by cmegret           #+#    #+#             */
-/*   Updated: 2024/12/06 15:39:04 by cmegret          ###   ########.fr       */
+/*   Created: 2024/12/06 16:28:13 by cmegret           #+#    #+#             */
+/*   Updated: 2024/12/06 16:29:04 by cmegret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 
 #include "../../header/Minishell.h"
 
@@ -23,7 +24,7 @@
  * @param in_fd The input file descriptor.
  * @param fd The array of file descriptors for the pipe.
  */
-void	handle_parent(pid_t pid, int in_fd, int *fd)
+void	handle_parent(int in_fd, int *fd)
 {
 	if (fd[1] != -1)
 	{
@@ -35,8 +36,6 @@ void	handle_parent(pid_t pid, int in_fd, int *fd)
 		if (close(in_fd) == -1)
 			perror("close in_fd");
 	}
-	if (waitpid(pid, NULL, 0) == -1)
-		perror("waitpid");
 }
 
 /**
@@ -99,8 +98,8 @@ void	execute_child(t_command *cmd_list,
  * @param in_fd The input file descriptor.
  * @return The output file descriptor of the pipe or 0.
  */
-int	execute_pipeline(t_command *cmd_list,
-	t_shell_state *shell_state, int in_fd)
+pid_t	execute_pipeline(t_command *cmd_list,
+	t_shell_state *shell_state, int in_fd, int *next_in_fd)
 {
 	int		fd[2];
 	pid_t	pid;
@@ -116,10 +115,29 @@ int	execute_pipeline(t_command *cmd_list,
 	else if (pid < 0)
 		error_and_exit("fork failed", 1);
 	else
-		handle_parent(pid, in_fd, fd);
+		handle_parent(in_fd, fd);
 	if (cmd_list->next)
-		return (fd[0]);
-	return (0);
+		*next_in_fd = fd[0];
+	else
+		*next_in_fd = 0;
+	return (pid);
+}
+
+void	wait_for_pipeline(pid_t *pipeline_pids, int pid_count)
+{
+	int	i;
+	int	status;
+
+	i = 0;
+	while (i < pid_count)
+	{
+		if (pipeline_pids[i] > 0)
+		{
+			if (waitpid(pipeline_pids[i], &status, 0) == -1)
+				perror("waitpid");
+		}
+		i++;
+	}
 }
 
 /**
@@ -134,15 +152,22 @@ int	execute_pipeline(t_command *cmd_list,
  */
 int	execute_cmd(t_command *cmd_list, t_shell_state *shell_state)
 {
-	int	in_fd;
+	int		in_fd;
+	pid_t	pipeline_pids[1024];
+	int		pid_count;
 
 	in_fd = 0;
+	pid_count = 0;
 	while (cmd_list)
 	{
 		if (handle_parent_builtin(cmd_list, shell_state) == 0)
 			return (0);
-		in_fd = execute_pipeline(cmd_list, shell_state, in_fd);
+		pipeline_pids[pid_count] = execute_pipeline(cmd_list,
+				shell_state, in_fd, &in_fd);
+		if (pipeline_pids[pid_count] > 0)
+			pid_count++;
 		cmd_list = cmd_list->next;
 	}
+	wait_for_pipeline(pipeline_pids, pid_count);
 	return (0);
 }
