@@ -6,7 +6,7 @@
 /*   By: francis <francis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/07 14:36:57 by francis           #+#    #+#             */
-/*   Updated: 2024/12/07 14:37:53 by francis          ###   ########.fr       */
+/*   Updated: 2024/12/07 15:21:08 by francis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,15 +84,12 @@ t_command	*ft_parse(t_token *tok, t_shell_state *shell_state)
 		if (ft_token_is_redir(tok->type))
 			ft_add_redir(&tok, cmd_list, NULL); // add redirection to our redirections list
 		else if (ft_token_is_word(tok->type))
-			ft_add_cmd_arg_to_list(tok->str, cmd_list); // add command name if missing, else add command argument to argument list
+			ft_add_cmd_arg_to_list(tok->str, &(cmd_list->arg_list)); // add command name if missing, else add command argument to argument list
 		else if (ft_token_is_pipe(tok->type))
 			cmd_list = ft_add_pipe(cmd_list); // add new command to command sequence (=> create new pipe)
 		tok = tok->next;
 	}
-	// copy arguments from argument list to argument array (for each command)
 	if (ft_allocate_cmd_args_to_array(head) == -1)
 		return (NULL);
-	// if (cmd_list->cmd_name == NULL || ft_strlen(cmd_list->cmd_name) == 0)
-	// 	return (NULL); // what if redirection creates file(s) ?
 	return (head);
 }
