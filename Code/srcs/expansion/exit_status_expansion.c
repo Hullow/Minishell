@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit_status_expansion.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cmegret <cmegret@student.42lausanne.ch>    +#+  +:+       +#+        */
+/*   By: francis <francis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/15 20:01:43 by cmegret           #+#    #+#             */
-/*   Updated: 2024/11/21 14:41:56 by cmegret          ###   ########.fr       */
+/*   Updated: 2024/12/07 13:48:19 by francis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,16 +14,16 @@
 
 // OLD CODE in parse_main.c
 /*
-static int	ft_allocate_multiple_args(t_token *tkn, t_command *cmd_sequence, int arg_count, t_shell_state *shell_state)
+static int	ft_allocate_multiple_args(t_token *tkn, t_command *cmd_list, int arg_count, t_shell_state *shell_state)
 {
 (....)
 	while (tkn)
 	{
 		if (tkn->type == WORD)
 		{
-			cmd_sequence->args[i] = expand_exit_status(tkn->str,
+			cmd_list->args[i] = expand_exit_status(tkn->str,
 					shell_state->last_exit_status);
-			if (!cmd_sequence->args[i])
+			if (!cmd_list->args[i])
 				return (-1);
 			i++;
 		}

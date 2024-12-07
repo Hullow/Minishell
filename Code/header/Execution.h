@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Execution.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cmegret <cmegret@student.42lausanne.ch>    +#+  +:+       +#+        */
+/*   By: francis <francis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/12/06 16:28:57 by cmegret           #+#    #+#             */
-/*   Updated: 2024/12/06 16:29:03 by cmegret          ###   ########.fr       */
+/*   Created: 2024/12/07 14:36:57 by francis           #+#    #+#             */
+/*   Updated: 2024/12/07 14:37:57 by francis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,9 +34,10 @@ char	*get_cmd_path(char *cmd, char **envp);
 void	handle_child_process(t_command *cmd_list, char **envp);
 char	*resolve_cmd_path(char *cmd_name, char **envp);
 void	check_access_rights(char *cmd_path, char *cmd_name);
-void	configure_redirections(t_command *cmd, int *saved_stdin,
-			int *saved_stdout, t_shell_state *shell_state);
-void	restore_redirections(int saved_stdin, int saved_stdout);
+void	configure_redirections(t_command *cmd, t_shell_state *shell_state);
+void	restore_redirections(t_command *cmd_list);
 void	wait_for_pipeline(pid_t *pipeline_pids, int pid_count);
+void	setup_file_descriptors(t_command *cmd_list, int in_fd, int *fd);
+void	run_command(t_command *cmd_list, t_shell_state *shell_state);
 
 #endif

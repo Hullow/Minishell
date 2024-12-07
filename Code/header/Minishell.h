@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   Minishell.h                                        :+:      :+:    :+:   */
+/*   execution_main.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cmegret <cmegret@student.42lausanne.ch>    +#+  +:+       +#+        */
+/*   By: yourlogin <youremail@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/07/19 14:53:36 by cmegret           #+#    #+#             */
-/*   Updated: 2024/12/03 09:41:13 by cmegret          ###   ########.fr       */
+/*   Created: 2024/12/07 13:55:06 by yourlogin         #+#    #+#             */
+/*   Updated: 2024/12/07 13:55:06 by yourlogin        ###   ########.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,8 +93,8 @@ typedef struct s_command
 	char				*cmd_name;
 	t_cmd_args			*arg_list;
 	char				**args;
-	int					input; // file descriptor for input (stdin or redirection)
-	int					output; // file descriptor for output (stdout or redirection)
+	int					saved_input; // file descriptor for input (stdin or redirection)
+	int					saved_output; // file descriptor for output (stdout or redirection)
 	t_redir				*redir_list; // redirection list
 	struct s_command	*next;
 }	t_command;

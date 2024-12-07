@@ -3,14 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   main_initialize.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cmegret <cmegret@student.42lausanne.ch>    +#+  +:+       +#+        */
+/*   By: francis <francis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/09/22 18:40:16 by cmegret           #+#    #+#             */
-/*   Updated: 2024/12/03 10:26:16 by cmegret          ###   ########.fr       */
+/*   Created: 2024/12/07 14:36:57 by francis           #+#    #+#             */
+/*   Updated: 2024/12/07 14:38:15 by francis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../header/Minishell.h"
+
 /**
  * @brief Checks the command-line arguments.
  *
@@ -133,9 +134,9 @@ static void	initialize_shell_state(t_shell_state *shell_state, char **envp)
 void	ft_initialize(int argc, char **argv,
 	t_shell_state *shell_state, char **envp)
 {
-	setup_terminal();
 	signal(SIGINT, handle_sigint);
 	signal(SIGQUIT, handle_sigquit);
 	check_arguments(argc, argv);
 	initialize_shell_state(shell_state, envp);
+	setup_terminal();
 }

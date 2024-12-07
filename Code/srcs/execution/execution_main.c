@@ -3,13 +3,12 @@
 /*                                                        :::      ::::::::   */
 /*   execution_main.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cmegret <cmegret@student.42lausanne.ch>    +#+  +:+       +#+        */
+/*   By: francis <francis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/12/06 16:28:13 by cmegret           #+#    #+#             */
-/*   Updated: 2024/12/06 16:29:04 by cmegret          ###   ########.fr       */
+/*   Created: 2024/12/07 14:37:18 by francis           #+#    #+#             */
+/*   Updated: 2024/12/07 14:37:21 by francis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 
 #include "../../header/Minishell.h"
 
@@ -39,23 +38,17 @@ void	handle_parent(int in_fd, int *fd)
 }
 
 /**
- * @brief Executes the child process.
+ * @brief Sets up file descriptors for input and output redirection.
  *
- * This function redirects file descriptors for input and output,
- * closes unused file descriptors, and executes either a builtin command
- * or a child process.
+ * This function redirects the input file descriptor to STDIN and the output
+ * file descriptor to STDOUT if necessary. It also closes unused file descriptors.
  *
  * @param cmd_list The list of commands to execute.
- * @param shell_state The current state of the shell.
  * @param in_fd The input file descriptor.
  * @param fd The array of file descriptors for the pipe.
  */
-void	execute_child(t_command *cmd_list,
-	t_shell_state *shell_state, int in_fd, int *fd)
+void setup_file_descriptors(t_command *cmd_list, int in_fd, int *fd)
 {
-	int	saved_stdin;
-	int	saved_stdout;
-
 	if (in_fd != 0)
 	{
 		if (dup2(in_fd, STDIN_FILENO) == -1)
@@ -69,13 +62,19 @@ void	execute_child(t_command *cmd_list,
 		close(fd[1]);
 	}
 	close(fd[0]);
-	shell_state->last_exit_status = 0;
-	configure_redirections(cmd_list, &saved_stdin, &saved_stdout, shell_state);
-	if (shell_state->last_exit_status != 0)
-	{
-		restore_redirections(saved_stdin, saved_stdout);
-		exit(shell_state->last_exit_status);
-	}
+}
+
+/**
+* @brief Runs the specified command.
+*
+* This function checks if the command is a builtin command and executes it.
+* If it is not a builtin command, it handles the child process execution.
+*
+* @param cmd_list The list of commands to execute.
+* @param shell_state The current state of the shell.
+*/
+void run_command(t_command *cmd_list, t_shell_state *shell_state)
+{
 	if (cmd_list->cmd_name != NULL || ft_strlen(cmd_list->cmd_name) != 0)
 	{
 		if (ft_is_builtin(cmd_list->cmd_name) == 0)
@@ -83,8 +82,33 @@ void	execute_child(t_command *cmd_list,
 		else
 			handle_child_process(cmd_list, shell_state->envp);
 	}
-	restore_redirections(saved_stdin, saved_stdout);
-	exit(shell_state->last_exit_status);
+}
+
+/**
+ * @brief Executes the child process.
+ *
+ * This function redirects file descriptors for input and output,
+ * closes unused file descriptors, and executes either a builtin command
+ * or a child process.
+ *
+ * @param cmd_list The list of commands to execute.
+ * @param shell_state The current state of the shell.
+ * @param in_fd The input file descriptor.
+ * @param fd The array of file descriptors for the pipe.
+ */
+void execute_child(t_command *cmd_list, t_shell_state *shell_state, int in_fd, int *fd)
+{
+    setup_file_descriptors(cmd_list, in_fd, fd);
+    shell_state->last_exit_status = 0;
+    configure_redirections(cmd_list, shell_state);
+    if (shell_state->last_exit_status != 0)
+    {
+        restore_redirections(cmd_list);
+        exit(shell_state->last_exit_status);
+    }
+    run_command(cmd_list, shell_state);
+    restore_redirections(cmd_list);
+    exit(shell_state->last_exit_status);
 }
 
 /**
@@ -132,10 +156,8 @@ void	wait_for_pipeline(pid_t *pipeline_pids, int pid_count)
 	while (i < pid_count)
 	{
 		if (pipeline_pids[i] > 0)
-		{
 			if (waitpid(pipeline_pids[i], &status, 0) == -1)
 				perror("waitpid");
-		}
 		i++;
 	}
 }

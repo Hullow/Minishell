@@ -6,7 +6,7 @@
 /*   By: francis <francis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/01 17:28:03 by fallan            #+#    #+#             */
-/*   Updated: 2024/12/01 17:53:53 by francis          ###   ########.fr       */
+/*   Updated: 2024/12/07 13:48:19 by francis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,30 +61,30 @@ t_token	*ft_assign_redir_str(t_token **tok, t_redir *redir_list)
 // advance one token in the token list, 
 // and add that token's string to our redirection node
 // N.b.: head is initialized to NULL by the calling function
-int	ft_add_redir(t_token **tok, t_command *cmd_sequence, t_redir *head_redir)
+int	ft_add_redir(t_token **tok, t_command *cmd_list, t_redir *head_redir)
 {
-	if (cmd_sequence->redir_list) // if we have redirections
+	if (cmd_list->redir_list) // if we have redirections
 	{
-		head_redir = cmd_sequence->redir_list; // to save one line, maybe make a function that modifies address of redir_list to last redir and returns head_redir
-		cmd_sequence->redir_list = ft_last_redir(cmd_sequence->redir_list); // goes to the last redir
-		cmd_sequence->redir_list->next = malloc (sizeof(t_redir));
-		if (!(cmd_sequence->redir_list->next))
+		head_redir = cmd_list->redir_list; // to save one line, maybe make a function that modifies address of redir_list to last redir and returns head_redir
+		cmd_list->redir_list = ft_last_redir(cmd_list->redir_list); // goes to the last redir
+		cmd_list->redir_list->next = malloc (sizeof(t_redir));
+		if (!(cmd_list->redir_list->next))
 			return (-1);
-		cmd_sequence->redir_list = cmd_sequence->redir_list->next;
+		cmd_list->redir_list = cmd_list->redir_list->next;
 	}
 	else
 	{
-		cmd_sequence->redir_list = malloc (sizeof(t_redir));
-		head_redir = cmd_sequence->redir_list; // to save one line, maybe add head_redir to each t_redir ? Then you can malloc in a function call that also sets head_redir to whatever
+		cmd_list->redir_list = malloc (sizeof(t_redir));
+		head_redir = cmd_list->redir_list; // to save one line, maybe add head_redir to each t_redir ? Then you can malloc in a function call that also sets head_redir to whatever
 	}
-	if (!cmd_sequence->redir_list)
+	if (!cmd_list->redir_list)
 		return (-1);
-	cmd_sequence->redir_list->type = (*tok)->type; // to save one line, maybe make function ft_set_type_and_next_to_NULL
-	cmd_sequence->redir_list->next = NULL;
+	cmd_list->redir_list->type = (*tok)->type; // to save one line, maybe make function ft_set_type_and_next_to_NULL
+	cmd_list->redir_list->next = NULL;
 	if ((*tok)->next && !ft_token_is_redir((*tok)->next->type)) // if there is a token after, assign it to redir_list->str
-		*tok = ft_assign_redir_str(tok, cmd_sequence->redir_list);
+		*tok = ft_assign_redir_str(tok, cmd_list->redir_list);
 	else
-		cmd_sequence->redir_list->str = NULL;
-	cmd_sequence->redir_list = head_redir;
+		cmd_list->redir_list->str = NULL;
+	cmd_list->redir_list = head_redir;
 	return (0);
 }

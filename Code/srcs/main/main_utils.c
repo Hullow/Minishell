@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cmegret <cmegret@student.42lausanne.ch>    +#+  +:+       +#+        */
+/*   By: francis <francis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/22 18:40:16 by cmegret           #+#    #+#             */
-/*   Updated: 2024/12/02 16:53:09 by cmegret          ###   ########.fr       */
+/*   Updated: 2024/12/07 14:45:55 by francis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,6 @@ char	*ft_prompt(void)
 		if (last_folder != NULL)
 			last_folder++;
 		message = ft_create_message_prompt(last_folder);
-		// printf("message: {%s}\n", message);
 		if (message == NULL)
 		{
 			perror("malloc");

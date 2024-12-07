@@ -3,36 +3,33 @@
 /*                                                        :::      ::::::::   */
 /*   execution_redir.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cmegret <cmegret@student.42lausanne.ch>    +#+  +:+       +#+        */
+/*   By: francis <francis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/12/03 09:39:48 by cmegret           #+#    #+#             */
-/*   Updated: 2024/12/03 10:49:39 by cmegret          ###   ########.fr       */
+/*   Created: 2024/12/07 14:37:29 by francis           #+#    #+#             */
+/*   Updated: 2024/12/07 14:37:30 by francis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../header/Minishell.h"
 
 /**
- * @brief Configures the redirections for a command and saves
- * the original file descriptors.
- *
- * This function sets up the file descriptors for input and output redirections
- * based on the redirection list of the command and saves
- * the original file descriptors.
- *
- * @param cmd The command containing the redirection list.
- * @param saved_stdin Pointer to save the original stdin file descriptor.
- * @param saved_stdout Pointer to save the original stdout file descriptor.
- */
-void	configure_redirections(t_command *cmd, int *saved_stdin,
-	int *saved_stdout, t_shell_state *shell_state)
+* @brief Configures the redirections for a command and saves
+* the original file descriptors.
+*
+* This function sets up the file descriptors for input and output redirections
+* based on the redirection list of the command and saves
+* the original file descriptors.
+*
+* @param cmd The command containing the redirection list.
+* @param shell_state The shell state containing the last exit status.
+*/
+void	configure_redirections(t_command *cmd, t_shell_state *shell_state)
 {
 	t_redir	*redir;
 	int		fd;
 
-	*saved_stdin = dup(STDIN_FILENO);
-	*saved_stdout = dup(STDOUT_FILENO);
-
+	cmd->saved_input = dup(STDIN_FILENO);
+	cmd->saved_output = dup(STDOUT_FILENO);
 	redir = cmd->redir_list;
 	while (redir)
 	{
@@ -85,15 +82,15 @@ void	configure_redirections(t_command *cmd, int *saved_stdin,
 /**
  * @brief Restores the original file descriptors.
  *
- * This function restores the original file descriptors for stdin and stdout.
+ * This function restores the original file descriptors for stdin and stdout
+ * that were saved in the command structure.
  *
- * @param saved_stdin The original stdin file descriptor.
- * @param saved_stdout The original stdout file descriptor.
+ * @param cmd_list The command list containing the saved file descriptors.
  */
-void	restore_redirections(int saved_stdin, int saved_stdout)
+void	restore_redirections(t_command *cmd_list)
 {
-	dup2(saved_stdin, STDIN_FILENO);
-	dup2(saved_stdout, STDOUT_FILENO);
-	close(saved_stdin);
-	close(saved_stdout);
+    dup2(cmd_list->saved_input, STDIN_FILENO);
+    dup2(cmd_list->saved_output, STDOUT_FILENO);
+    close(cmd_list->saved_input);
+    close(cmd_list->saved_output);
 }
