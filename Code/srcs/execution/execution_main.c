@@ -47,7 +47,7 @@ void	handle_parent(int in_fd, int *fd)
  * @param in_fd The input file descriptor.
  * @param fd The array of file descriptors for the pipe.
  */
-void setup_file_descriptors(t_command *cmd_list, int in_fd, int *fd)
+void	setup_file_descriptors(t_command *cmd_list, int in_fd, int *fd)
 {
 	if (in_fd != 0)
 	{
@@ -61,7 +61,8 @@ void setup_file_descriptors(t_command *cmd_list, int in_fd, int *fd)
 			error_and_exit("dup2 failed", 1);
 		close(fd[1]);
 	}
-	close(fd[0]);
+	if (fd[0] != -1)
+		close(fd[0]);
 }
 
 /**
@@ -73,7 +74,7 @@ void setup_file_descriptors(t_command *cmd_list, int in_fd, int *fd)
 * @param cmd_list The list of commands to execute.
 * @param shell_state The current state of the shell.
 */
-void run_command(t_command *cmd_list, t_shell_state *shell_state)
+void	run_command(t_command *cmd_list, t_shell_state *shell_state)
 {
 	if (cmd_list->cmd_name != NULL || ft_strlen(cmd_list->cmd_name) != 0)
 	{
@@ -96,19 +97,19 @@ void run_command(t_command *cmd_list, t_shell_state *shell_state)
  * @param in_fd The input file descriptor.
  * @param fd The array of file descriptors for the pipe.
  */
-void execute_child(t_command *cmd_list, t_shell_state *shell_state, int in_fd, int *fd)
+void	execute_child(t_command *cmd_list, t_shell_state *shell_state, int in_fd, int *fd)
 {
-    setup_file_descriptors(cmd_list, in_fd, fd);
-    shell_state->last_exit_status = 0;
-    configure_redirections(cmd_list, shell_state);
-    if (shell_state->last_exit_status != 0)
-    {
-        restore_redirections(cmd_list);
-        exit(shell_state->last_exit_status);
-    }
-    run_command(cmd_list, shell_state);
-    restore_redirections(cmd_list);
-    exit(shell_state->last_exit_status);
+	setup_file_descriptors(cmd_list, in_fd, fd);
+	shell_state->last_exit_status = 0;
+	configure_redirections(cmd_list, shell_state);
+	if (shell_state->last_exit_status != 0)
+	{
+		restore_redirections(cmd_list);
+		exit(shell_state->last_exit_status);
+	}
+	run_command(cmd_list, shell_state);
+	restore_redirections(cmd_list);
+	exit(shell_state->last_exit_status);
 }
 
 /**
