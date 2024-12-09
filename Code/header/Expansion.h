@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Expansion.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: francis <francis@student.42.fr>            +#+  +:+       +#+        */
+/*   By: cmegret <cmegret@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/01 18:44:38 by cmegret           #+#    #+#             */
-/*   Updated: 2024/11/20 16:33:36 by francis          ###   ########.fr       */
+/*   Updated: 2024/12/09 14:14:09 by cmegret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,17 +17,13 @@
 
 typedef struct s_token	t_token;
 
-// Pathname expansion
-void	ft_pathname_expansion(t_token **tokens);
-int		ft_is_pathname_expansion_needed(char *value);
-char	**ft_expand_pathname(char *pattern);
-int		ft_match_pattern(const char *str, const char *pattern);
-void	ft_replace_token_with_expanded_paths(t_token **token, char **expanded_paths);
-
-// Exit status expansion ($?)
-char	*expand_exit_status(char *arg, int last_exit_status);
-
-// Parameter expansion
-// => see parameter_expansion.c
+char	*expand_variables(char *str, t_shell_state *state);
+void	expand_command_variables(t_command *cmd_list,
+			t_shell_state *shell_state);
+char	*get_expansion_var_name(char *str);
+char	*ft_chartostr(char c);
+char	*ft_strjoin_free(char *s1, char *s2);
+char	*handle_quotes(char *str, int *i, int *in_quotes, int *in_dquotes);
+char	*handle_expansion(char *str, int *i, t_shell_state *state);
 
 #endif

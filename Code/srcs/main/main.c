@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: francis <francis@student.42.fr>            +#+  +:+       +#+        */
+/*   By: cmegret <cmegret@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/07 14:36:43 by francis           #+#    #+#             */
-/*   Updated: 2024/12/07 14:36:46 by francis          ###   ########.fr       */
+/*   Updated: 2024/12/09 10:49:21 by cmegret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ int	main(int argc, char **argv, char **envp)
 		//ft_tokenization_checker(ft_parse_operators(ft_tokenize(prompt)));
 		token_list = ft_tokenize(prompt);
 		cmd_list = ft_parse(token_list, &shell_state);
+		expand_command_variables(cmd_list, &shell_state);
 		// ft_exit_bug_print_debugger(cmd_list); // prevents the "exit bug"
 		// ft_print_command_sequences(cmd_list);
 		execute_cmd(cmd_list, &shell_state);
