@@ -6,7 +6,7 @@
 /*   By: cmegret <cmegret@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/09 10:41:17 by cmegret           #+#    #+#             */
-/*   Updated: 2024/12/10 17:06:53 by cmegret          ###   ########.fr       */
+/*   Updated: 2024/12/10 17:16:08 by cmegret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,8 @@ void	expand_redir_variables(t_redir *redir_list, t_shell_state *shell_state)
 	word_count = 0;
 	while (redir_list)
 	{
-		expanded_str = process_redir_str(redir_list->str, shell_state, &word_count);
+		expanded_str
+			= process_redir_str(redir_list->str, shell_state, &word_count);
 		free(redir_list->str);
 		redir_list->str = expanded_str;
 		redir_list = redir_list->next;
