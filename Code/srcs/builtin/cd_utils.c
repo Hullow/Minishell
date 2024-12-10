@@ -6,7 +6,7 @@
 /*   By: cmegret <cmegret@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/22 18:40:16 by cmegret           #+#    #+#             */
-/*   Updated: 2024/12/10 17:41:18 by cmegret          ###   ########.fr       */
+/*   Updated: 2024/12/10 18:17:14 by cmegret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ char	*get_env_var(char **envp, char *key)
 	size_t	key_len;
 	int		index;
 
-	key_len = strlen(key);
+	key_len = ft_strlen(key);
 	index = find_var_index(envp, key, key_len);
 	if (index != -1)
 		return (envp[index] + key_len + 1);

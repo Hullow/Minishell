@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strjoin.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
+/*   By: cmegret <cmegret@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/18 15:22:41 by fallan            #+#    #+#             */
-/*   Updated: 2024/02/12 14:52:46 by fallan           ###   ########.fr       */
+/*   Updated: 2024/12/10 18:33:38 by cmegret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,29 +14,28 @@
 
 char	*ft_strjoin(char const *s1, char const *s2)
 {
-	char			*str;
-	unsigned int	i;
-	unsigned int	len1;
-	unsigned int	len2;
+	int		i;
+	int		j;
+	char	*str;
 
-	len1 = ft_strlen(s1);
-	len2 = ft_strlen(s2);
-	str = malloc((len1 + len2 + 1) * sizeof(char));
-	if (str)
+	i = 0;
+	j = 0;
+	if (s1 == NULL || s2 == NULL)
+		return (NULL);
+	str = (char *)malloc(sizeof(char) * (ft_strlen(s1) + ft_strlen(s2) + 1));
+	if (str == NULL)
+		return (NULL);
+	while (s1[i] != '\0')
 	{
-		i = 0;
-		while (s1[i])
-		{
-			str[i] = s1[i];
-			i++;
-		}
-		while (s2[i - len1])
-		{
-			str[i] = s2[i - len1];
-			i++;
-		}
-		str[i] = '\0';
+		str[i] = s1[i];
+		i++;
 	}
+	while (s2[j] != '\0')
+	{
+		str[i + j] = s2[j];
+		j++;
+	}
+	str[i + j] = '\0';
 	return (str);
 }
 

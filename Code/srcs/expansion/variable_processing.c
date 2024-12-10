@@ -6,7 +6,7 @@
 /*   By: cmegret <cmegret@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/09 10:41:17 by cmegret           #+#    #+#             */
-/*   Updated: 2024/12/10 18:02:28 by cmegret          ###   ########.fr       */
+/*   Updated: 2024/12/10 19:02:46 by cmegret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,19 +34,19 @@ char	*process_redir_str(char *str,
 	t_params	params;
 
 	j = 0;
-	expanded_str = ft_strdup("");
+	temp_table = NULL;
 	while (str[j])
 	{
 		params.arg = str;
 		params.j = &j;
 		temp_table = malloc(sizeof(char *)
-			* (count_words_in_arg(str, shell_state) + 1));
+				* (count_words_in_arg(str, shell_state) + 1));
 		params.table = temp_table;
 		params.word_count = word_count;
 		if (str[j] == '$')
 		{
 			process_variable(&params, shell_state);
-			expanded_str = ft_strjoin(expanded_str, temp_table[0]);
+			expanded_str = ft_strjoin(ft_strdup(""), temp_table[0]);
 			ft_free_array(temp_table);
 		}
 		else
@@ -74,8 +74,11 @@ void	expand_redir_variables(t_redir *redir_list, t_shell_state *shell_state)
 	{
 		expanded_str
 			= process_redir_str(redir_list->str, shell_state, &word_count);
-		free(redir_list->str);
-		redir_list->str = expanded_str;
+		if (expanded_str)
+		{
+			free(redir_list->str);
+			redir_list->str = expanded_str;
+		}
 		redir_list = redir_list->next;
 	}
 }
