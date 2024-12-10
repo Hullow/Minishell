@@ -6,7 +6,7 @@
 /*   By: francis <francis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/21 19:06:55 by francis           #+#    #+#             */
-/*   Updated: 2024/12/07 14:34:59 by francis          ###   ########.fr       */
+/*   Updated: 2024/12/10 19:17:54 by francis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,7 @@ int	ft_print_redirs(t_redir *redir_list)
 	t_redir	*head;
 	int		i;
 
+	printf("ft_print_redirs:\n");
 	if (!redir_list)
 	{
 		printf("\tno redirections\n");
@@ -58,7 +59,7 @@ int	ft_print_redirs(t_redir *redir_list)
 	i = 1;
 	while (redir_list)
 	{
-		printf("\tredirection %d is of type: {%s} to/from/delimiter {%s}\n", \
+		printf("\t- redirection %d is of type: {%s} to/from/delimiter {%s}\n", \
 			i, ft_return_redir_type(redir_list->type), redir_list->str);
 		redir_list = redir_list->next;
 		i++;

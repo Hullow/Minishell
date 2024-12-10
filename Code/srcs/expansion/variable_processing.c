@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   variable_processing.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cmegret <cmegret@student.42lausanne.ch>    +#+  +:+       +#+        */
+/*   By: francis <francis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/09 10:41:17 by cmegret           #+#    #+#             */
-/*   Updated: 2024/12/10 19:02:46 by cmegret          ###   ########.fr       */
+/*   Updated: 2024/12/10 19:22:39 by francis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,8 @@ char	*process_redir_str(char *str,
 
 	j = 0;
 	temp_table = NULL;
+	if (!str)
+		return (NULL);
 	while (str[j])
 	{
 		params.arg = str;
