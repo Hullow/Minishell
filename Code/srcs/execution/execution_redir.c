@@ -6,7 +6,7 @@
 /*   By: cmegret <cmegret@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/07 14:37:29 by francis           #+#    #+#             */
-/*   Updated: 2024/12/10 15:40:49 by cmegret          ###   ########.fr       */
+/*   Updated: 2024/12/10 15:42:46 by cmegret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ void	configure_redirections(t_command *cmd, t_shell_state *shell_state)
 			shell_state->last_exit_status = 1;
 			return ;
 		}
-		if (!is_valid_filename(redir->str))
+		if (redir->str && !is_valid_filename(redir->str))
 		{
 			shell_state->last_exit_status = 1;
 			return ;
