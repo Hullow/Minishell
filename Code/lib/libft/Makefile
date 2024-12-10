@@ -6,7 +6,7 @@
 #    By: cmegret <cmegret@student.42lausanne.ch>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/04/04 18:04:59 by fallan            #+#    #+#              #
-#    Updated: 2024/12/02 16:17:44 by cmegret          ###   ########.fr        #
+#    Updated: 2024/12/09 17:12:38 by cmegret          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,7 +26,7 @@ ft_memchr.c ft_memset.c ft_strjoin.c ft_strjoin3.c ft_strncmp.c ft_substr.c ft_b
 ft_split.c ft_strlcat.c ft_strnstr.c ft_tolower.c ft_calloc.c ft_isdigit.c ft_memcpy.c ft_strchr.c $\
 ft_strlcpy.c ft_strrchr.c ft_toupper.c ft_lstclear_bonus.c ft_lstiter_bonus.c ft_lstmap_bonus.c $\
 ft_lstnew_bonus.c ft_lstadd_front_bonus.c ft_lstsize_bonus.c ft_lstlast_bonus.c ft_lstadd_back_bonus.c ft_lstdelone_bonus.c $\
-get_next_line.c get_next_line_utils.c ft_free.c
+get_next_line.c get_next_line_utils.c ft_free.c ft_isspace.c
 
 SRC = $(addprefix src/, $(SRCS))
 

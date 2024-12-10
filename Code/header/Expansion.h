@@ -6,7 +6,7 @@
 /*   By: cmegret <cmegret@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/01 18:44:38 by cmegret           #+#    #+#             */
-/*   Updated: 2024/12/09 14:14:09 by cmegret          ###   ########.fr       */
+/*   Updated: 2024/12/10 12:37:18 by cmegret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,15 +15,23 @@
 
 # include "Minishell.h"
 
-typedef struct s_token	t_token;
+typedef struct s_params		t_params;
 
-char	*expand_variables(char *str, t_shell_state *state);
 void	expand_command_variables(t_command *cmd_list,
 			t_shell_state *shell_state);
-char	*get_expansion_var_name(char *str);
-char	*ft_chartostr(char c);
-char	*ft_strjoin_free(char *s1, char *s2);
-char	*handle_quotes(char *str, int *i, int *in_quotes, int *in_dquotes);
-char	*handle_expansion(char *str, int *i, t_shell_state *state);
+char	**fill_table(t_command *cmd_list,
+			t_shell_state *shell_state);
+int		count_total_words(t_command *cmd_list);
+int		count_words_in_arg(char *arg);
+int		count_variable_words(char *arg, int *j);
+int		count_non_variable_words(char *arg, int *j);
+int		count_env_variable_words(char *var);
+void	ft_free_array(char **array);
+char	*ft_extract_word(char *str, int *index);
+int		expand_env_variable(char *var,
+			char **table, int *word_count);
+int		process_variable(t_params *params,
+			t_shell_state *shell_state);
+int		process_non_variable(t_params *params);
 
 #endif

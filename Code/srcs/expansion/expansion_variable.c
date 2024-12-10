@@ -6,69 +6,79 @@
 /*   By: cmegret <cmegret@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/09 10:41:17 by cmegret           #+#    #+#             */
-/*   Updated: 2024/12/09 14:54:15 by cmegret          ###   ########.fr       */
+/*   Updated: 2024/12/10 12:29:08 by cmegret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../header/Minishell.h"
 
-char	*expand_variables(char *str, t_shell_state *state)
+// Nouvelle fonction fill_table_values refactorisée
+void	fill_table_values(char **table,
+	t_command *cmd_list, t_shell_state *shell_state)
 {
-	char	*result;
-	char	*tmp;
-	int		i;
-	int		in_quotes;
-	int		in_dquotes;
+	int			i;
+	int			j;
+	int			word_count;
+	t_params	params;
 
-	if (!str)
-		return (NULL);
-	result = ft_strdup("");
 	i = 0;
-	in_quotes = 0;
-	in_dquotes = 0;
-	while (str[i])
+	word_count = 0;
+	while (cmd_list->args[i])
 	{
-		tmp = handle_quotes(str, &i, &in_quotes, &in_dquotes);
-		if (!tmp && str[i] == '$' && !in_quotes)
-			tmp = handle_expansion(str, &i, state);
-		if (!tmp)
-			tmp = ft_chartostr(str[i++]);
-		result = ft_strjoin_free(result, tmp);
-		free(tmp);
+		j = 0;
+		while (cmd_list->args[i][j])
+		{
+			params.arg = cmd_list->args[i];
+			params.j = &j;
+			params.table = table;
+			params.word_count = &word_count;
+			if (cmd_list->args[i][j] == '$')
+				process_variable(&params, shell_state);
+			else
+				process_non_variable(&params);
+		}
+		i++;
 	}
-	return (result);
+	table[word_count] = NULL;
 }
 
-void	expand_command_variables(t_command *cmd_list, t_shell_state *shell_state)
+// Fonction principale refactorisée
+char	**fill_table(t_command *cmd_list, t_shell_state *shell_state)
 {
-	t_command	*current;
-	t_redir		*redir;
-	int			i;
+	char	**table;
+	int		word_count;
 
-	current = cmd_list;
-	i = 0;
-	while (current)
+	word_count = count_total_words(cmd_list);
+	table = malloc(sizeof(char *) * (word_count + 1));
+	if (!table)
+		return (NULL);
+	fill_table_values(table, cmd_list, shell_state);
+	return (table);
+}
+
+void	expand_command_variables(t_command *cmd_list,
+	t_shell_state *shell_state)
+{
+	char	**table;
+	int		i;
+
+	table = fill_table(cmd_list, shell_state);
+	if (table)
 	{
-		if (current->cmd_name)
-			current->cmd_name
-				= expand_variables(current->cmd_name, shell_state);
-		if (current->args)
+		i = 0;
+		while (table[i])
 		{
-			i = 0;
-			while (current->args[i])
-			{
-				current->args[i]
-					= expand_variables(current->args[i], shell_state);
-				i++;
-			}
+			printf("table[%d]: %s\n", i, table[i]);
+			i++;
 		}
-		redir = current->redir_list;
-		while (redir)
+		ft_free_array(cmd_list->args);
+		cmd_list->args = table;
+		cmd_list->cmd_name = table[0];
+		i = 0;
+		while (cmd_list->args[i])
 		{
-			if (redir->str)
-				redir->str = expand_variables(redir->str, shell_state);
-			redir = redir->next;
+			printf("cmd_list->args[%d]: %s\n", i, cmd_list->args[i]);
+			i++;
 		}
-		current = current->next;
 	}
 }

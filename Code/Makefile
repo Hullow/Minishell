@@ -6,7 +6,7 @@
 #    By: cmegret <cmegret@student.42lausanne.ch>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/07/19 14:53:36 by cmegret           #+#    #+#              #
-#    Updated: 2024/12/09 14:11:15 by cmegret          ###   ########.fr        #
+#    Updated: 2024/12/10 12:19:32 by cmegret          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -66,7 +66,9 @@ SRCS = main/main.c \
 	  parsing/parse_utils.c \
 	  parsing/parse_debug.c \
 	  expansion/expansion_variable.c \
-	  expansion/expansion_variable_utils.c \
+	  expansion/string_utils.c \
+	  expansion/variable_count_utils.c \
+	  expansion/variable_processing.c \
 	  execution/execution_main.c \
 	  execution/execution_env_path.c \
 	  execution/execution_builtin.c \

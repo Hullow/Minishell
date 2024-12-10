@@ -105,6 +105,14 @@ typedef struct s_shell_state
 	int		last_exit_status;
 }	t_shell_state;
 
+typedef struct s_params
+{
+	char	*arg;
+	int		*j;
+	char	**table;
+	int		*word_count;
+}	t_params;
+
 // Main
 int			main(int argc, char **argv, char **envp);
 void		ft_initialize(int argc, char **argv,
