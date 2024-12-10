@@ -6,11 +6,78 @@
 /*   By: cmegret <cmegret@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/09 10:41:17 by cmegret           #+#    #+#             */
-/*   Updated: 2024/12/10 12:42:01 by cmegret          ###   ########.fr       */
+/*   Updated: 2024/12/10 17:16:08 by cmegret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../header/Minishell.h"
+
+/**
+ * @brief Processes a redirection string, expanding any variables found.
+ * 
+ * This function iterates over the given string, expanding any variables
+ * found and concatenating the expanded values to the resulting string.
+ * 
+ * @param str The input string containing potential variables to expand.
+ * @param shell_state The current state of the shell, used for variable
+ * expansion.
+ * @param word_count A pointer to an integer that keeps track of the word count.
+ * 
+ * @return A new string with all variables expanded.
+ */
+char	*process_redir_str(char *str,
+	t_shell_state *shell_state, int *word_count)
+{
+	int			j;
+	char		*expanded_str;
+	char		**temp_table;
+	t_params	params;
+
+	j = 0;
+	expanded_str = ft_strdup("");
+	while (str[j])
+	{
+		params.arg = str;
+		params.j = &j;
+		temp_table = malloc(sizeof(char *) * (count_words_in_arg(str) + 1));
+		params.table = temp_table;
+		params.word_count = word_count;
+		if (str[j] == '$')
+		{
+			process_variable(&params, shell_state);
+			expanded_str = ft_strjoin(expanded_str, temp_table[0]);
+			ft_free_array(temp_table);
+		}
+		else
+			j++;
+	}
+	return (expanded_str);
+}
+
+/**
+ * @brief Expands the variables in the redirection list.
+ * 
+ * This function iterates over the redirection list, expanding any variables
+ * found and updating the redirection strings accordingly.
+ * 
+ * @param redir_list The redirection list containing the redirections.
+ * @param shell_state The current state of the shell.
+ */
+void	expand_redir_variables(t_redir *redir_list, t_shell_state *shell_state)
+{
+	char	*expanded_str;
+	int		word_count;
+
+	word_count = 0;
+	while (redir_list)
+	{
+		expanded_str
+			= process_redir_str(redir_list->str, shell_state, &word_count);
+		free(redir_list->str);
+		redir_list->str = expanded_str;
+		redir_list = redir_list->next;
+	}
+}
 
 /**
  * @brief Expands an environment variable and fills the table with its words.

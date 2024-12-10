@@ -31,6 +31,10 @@
 #  define ECHOCTL 0x00000040
 # endif
 
+# ifndef NAME_MAX
+#  define NAME_MAX 255
+# endif
+
 # include "../lib/libft/libft.h"
 # include "../lib/ft_printf/ft_printf.h"
 
@@ -120,5 +124,6 @@ void		ft_initialize(int argc, char **argv,
 				t_shell_state *shell_state, char **envp);
 void		error_and_exit(const char *message, int last_exit_status);
 char		*ft_prompt(void);
+void		check_arguments(int argc, char **argv);
 
 #endif
