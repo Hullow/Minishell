@@ -6,13 +6,22 @@
 /*   By: cmegret <cmegret@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/09 10:41:17 by cmegret           #+#    #+#             */
-/*   Updated: 2024/12/10 12:29:08 by cmegret          ###   ########.fr       */
+/*   Updated: 2024/12/10 12:40:25 by cmegret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../header/Minishell.h"
 
-// Nouvelle fonction fill_table_values refactorisée
+/**
+ * @brief Fills the table with expanded values from the command list.
+ * 
+ * This function iterates over the arguments in the command list, expanding
+ * any variables found and adding the resulting words to the table.
+ * 
+ * @param table The table to fill with expanded values.
+ * @param cmd_list The command list containing the arguments.
+ * @param shell_state The current state of the shell.
+ */
 void	fill_table_values(char **table,
 	t_command *cmd_list, t_shell_state *shell_state)
 {
@@ -42,7 +51,16 @@ void	fill_table_values(char **table,
 	table[word_count] = NULL;
 }
 
-// Fonction principale refactorisée
+/**
+ * @brief Creates and fills a table with expanded values from the command list.
+ * 
+ * This function allocates memory for the table based on the total number of
+ * words, then fills the table with expanded values.
+ * 
+ * @param cmd_list The command list containing the arguments.
+ * @param shell_state The current state of the shell.
+ * @return char** The filled table with expanded values.
+ */
 char	**fill_table(t_command *cmd_list, t_shell_state *shell_state)
 {
 	char	**table;
@@ -56,6 +74,15 @@ char	**fill_table(t_command *cmd_list, t_shell_state *shell_state)
 	return (table);
 }
 
+/**
+ * @brief Expands the variables in the command list and updates the arguments.
+ * 
+ * This function replaces the arguments in the command list with the expanded
+ * values from the table, and updates the command name.
+ * 
+ * @param cmd_list The command list containing the arguments.
+ * @param shell_state The current state of the shell.
+ */
 void	expand_command_variables(t_command *cmd_list,
 	t_shell_state *shell_state)
 {

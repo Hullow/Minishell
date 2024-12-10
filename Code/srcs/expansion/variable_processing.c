@@ -6,13 +6,23 @@
 /*   By: cmegret <cmegret@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/09 10:41:17 by cmegret           #+#    #+#             */
-/*   Updated: 2024/12/10 12:27:19 by cmegret          ###   ########.fr       */
+/*   Updated: 2024/12/10 12:42:01 by cmegret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../header/Minishell.h"
 
-// Fonction pour étendre une variable d'environnement et remplir le tableau
+/**
+ * @brief Expands an environment variable and fills the table with its words.
+ * 
+ * This function retrieves the value of the environment variable, splits it
+ * into words, and adds each word to the table.
+ * 
+ * @param var The environment variable name.
+ * @param table The table to fill with the words.
+ * @param word_count A pointer to the current word count in the table.
+ * @return int The number of words added to the table.
+ */
 int	expand_env_variable(char *var, char **table, int *word_count)
 {
 	char	*env_value;
@@ -35,7 +45,17 @@ int	expand_env_variable(char *var, char **table, int *word_count)
 	return (k);
 }
 
-// Fonction pour traiter une variable
+/**
+ * @brief Processes a variable in the argument string.
+ * 
+ * This function checks if the variable is a special variable (e.g., $?),
+ * or an environment variable, and processes it accordingly, adding the
+ * resulting words to the table.
+ * 
+ * @param params A pointer to the structure containing the parameters.
+ * @param shell_state The current state of the shell.
+ * @return int The number of words added to the table.
+ */
 int	process_variable(t_params *params, t_shell_state *shell_state)
 {
 	int	count;
@@ -61,7 +81,15 @@ int	process_variable(t_params *params, t_shell_state *shell_state)
 	return (count);
 }
 
-// Fonction pour traiter une partie non variable
+/**
+ * @brief Processes a non-variable part of the argument string.
+ * 
+ * This function extracts a word from the argument string that is not a
+ * variable and adds it to the table.
+ * 
+ * @param params A pointer to the structure containing the parameters.
+ * @return int 1 if a word was added to the table, 0 otherwise.
+ */
 int	process_non_variable(t_params *params)
 {
 	int		start;

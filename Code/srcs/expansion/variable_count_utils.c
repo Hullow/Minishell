@@ -6,13 +6,21 @@
 /*   By: cmegret <cmegret@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/09 10:41:17 by cmegret           #+#    #+#             */
-/*   Updated: 2024/12/10 12:08:30 by cmegret          ###   ########.fr       */
+/*   Updated: 2024/12/10 12:41:26 by cmegret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../header/Minishell.h"
 
-// Fonction pour compter les mots dans une variable d'environnement
+/**
+ * @brief Counts the number of words in an environment variable.
+ * 
+ * This function retrieves the value of the environment variable, splits it
+ * into words, and counts the number of words.
+ * 
+ * @param var The environment variable name.
+ * @return int The number of words in the environment variable value.
+ */
 int	count_env_variable_words(char *var)
 {
 	char	*env_value;
@@ -36,7 +44,16 @@ int	count_env_variable_words(char *var)
 	return (count);
 }
 
-// Fonction pour compter les mots d'une variable
+/**
+ * @brief Counts the number of words in a variable.
+ * 
+ * This function checks if the variable is a special variable (e.g., $?),
+ * or an environment variable, and counts the number of words accordingly.
+ * 
+ * @param arg The argument string containing the variable.
+ * @param j A pointer to the current index in the argument string.
+ * @return int The number of words in the variable.
+ */
 int	count_variable_words(char *arg, int *j)
 {
 	int	word_count;
@@ -57,7 +74,16 @@ int	count_variable_words(char *arg, int *j)
 	return (word_count);
 }
 
-// Fonction pour compter les mots non variables
+/**
+ * @brief Counts the number of non-variable words in an argument.
+ * 
+ * This function counts the number of words in the argument string that are
+ * not variables.
+ * 
+ * @param arg The argument string.
+ * @param j A pointer to the current index in the argument string.
+ * @return int The number of non-variable words in the argument.
+ */
 int	count_non_variable_words(char *arg, int *j)
 {
 	int	word_count;
@@ -68,7 +94,15 @@ int	count_non_variable_words(char *arg, int *j)
 	return (word_count);
 }
 
-// Fonction pour compter les mots dans un argument
+/**
+ * @brief Counts the number of words in an argument.
+ * 
+ * This function iterates over the argument string and counts the number of
+ * words, including both variables and non-variable words.
+ * 
+ * @param arg The argument string.
+ * @return int The number of words in the argument.
+ */
 int	count_words_in_arg(char *arg)
 {
 	int	j;
@@ -86,7 +120,15 @@ int	count_words_in_arg(char *arg)
 	return (word_count);
 }
 
-// Fonction pour compter le nombre total de mots
+/**
+ * @brief Counts the total number of words in the command list.
+ * 
+ * This function iterates over the command list and counts the total number
+ * of words in all arguments.
+ * 
+ * @param cmd_list The command list containing the arguments.
+ * @return int The total number of words in the command list.
+ */
 int	count_total_words(t_command *cmd_list)
 {
 	int	word_count;
