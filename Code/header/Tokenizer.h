@@ -6,7 +6,7 @@
 /*   By: francis <francis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 19:48:46 by fallan            #+#    #+#             */
-/*   Updated: 2024/11/21 18:34:15 by francis          ###   ########.fr       */
+/*   Updated: 2024/12/10 19:03:05 by francis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,10 +41,12 @@ int			ft_is_blank(char c);
 int			ft_previous_char_part_of_word(t_token *tok);
 
 // Tokenization utils
+void		ft_free_token(t_token *tok);
+
+// Tokenization debugging
 t_token		*ft_last_token(t_token *tok);
 int			ft_count_tokens(t_token *tok);
 void		ft_print_all_token_strings(t_token **head);
 void		ft_print_token_types(t_token *head);
-void		ft_free_token(t_token *tok);
 
 #endif

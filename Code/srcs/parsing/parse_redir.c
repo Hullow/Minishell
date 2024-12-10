@@ -6,7 +6,7 @@
 /*   By: francis <francis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/01 17:28:03 by fallan            #+#    #+#             */
-/*   Updated: 2024/12/10 18:30:59 by francis          ###   ########.fr       */
+/*   Updated: 2024/12/10 18:53:46 by francis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ int	ft_add_redir(t_token **tok, t_command *cmd_list, t_redir *head_redir)
 {
 	if (cmd_list->redir_list)
 	{
-		head_redir = ft_last_redir(&(cmd_list->redir_list)); // head_redir = cmd_list->redir_list;// to save one line, maybe make a function that modifies address of redir_list to last redir and returns head_redir 
+		head_redir = ft_last_redir(&(cmd_list->redir_list));
 		cmd_list->redir_list->next = malloc (sizeof(t_redir));
 		if (!(cmd_list->redir_list->next))
 			return (-1);

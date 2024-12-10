@@ -6,7 +6,7 @@
 /*   By: francis <francis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/21 19:06:55 by francis           #+#    #+#             */
-/*   Updated: 2024/12/07 14:34:59 by francis          ###   ########.fr       */
+/*   Updated: 2024/12/10 18:57:40 by francis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	ft_print_args(t_command *cmd_list)
 	int	i;
 
 	i = -1;
-	// printf("ft_print_args:\n");
+	printf("ft_print_args:\n");
 	if (cmd_list && cmd_list->args)
 	{
 		while (cmd_list->args[++i])
@@ -69,6 +69,16 @@ int	ft_print_redirs(t_redir *redir_list)
 
 // derived from ft_print_command_sequences: 
 // stops the "exit bug" from happening on (ARM) OS X
+// How it works:
+//		printf("%s", head->cmd_name);
+//			=> print the cmd_name variable
+// 		while (++i < (int) ft_strlen(head->cmd_name))
+//			printf("\b");
+//			=> erase each printed character using printf("\b");
+//	N.b.: in some cases, this code at the end of the function
+// 	makes the bug reappear:
+		// printf("head address after: {%p}\n", head);
+		// this can make the bug reappear in some cases!
 void	ft_exit_bug_print_debugger(t_command *head)
 {
 	int	i;
@@ -78,12 +88,10 @@ void	ft_exit_bug_print_debugger(t_command *head)
 	{
 		printf("%s", head->cmd_name);
 		while (++i < (int) ft_strlen(head->cmd_name))
-			printf("\b"); // removes previous characters
+			printf("\b");
 		i = -1;
 		head = head->next;
 	}
-	// printf("head address after: {%p}\n", head);
-		// this can make the bug reappear in some cases!
 }
 
 // prints the command in each pipe, its arguments and redirections
