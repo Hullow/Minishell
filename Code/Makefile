@@ -6,7 +6,7 @@
 #    By: cmegret <cmegret@student.42lausanne.ch>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/07/19 14:53:36 by cmegret           #+#    #+#              #
-#    Updated: 2024/12/10 12:19:32 by cmegret          ###   ########.fr        #
+#    Updated: 2024/12/10 17:41:29 by cmegret          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -70,11 +70,14 @@ SRCS = main/main.c \
 	  expansion/variable_count_utils.c \
 	  expansion/variable_processing.c \
 	  execution/execution_main.c \
+	  execution/execution_pipeline.c \
 	  execution/execution_env_path.c \
 	  execution/execution_builtin.c \
 	  execution/execution_external.c \
 	  execution/execution_redir.c \
+	  execution/execution_redir_utils.c \
 	  builtin/cd.c \
+	  builtin/cd_utils.c \
       builtin/env.c \
       builtin/export.c \
       builtin/env_utils.c \
