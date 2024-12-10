@@ -6,7 +6,7 @@
 /*   By: cmegret <cmegret@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/09 10:41:17 by cmegret           #+#    #+#             */
-/*   Updated: 2024/12/10 17:38:02 by cmegret          ###   ########.fr       */
+/*   Updated: 2024/12/10 18:05:59 by cmegret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,8 @@
  * @param cmd_list The command list containing the arguments.
  * @param shell_state The current state of the shell.
  */
-void	fill_table_values(char **table,
-	t_command *cmd_list, t_shell_state *shell_state)
+void	fill_table_values(char **table, t_command *cmd_list,
+	t_shell_state *shell_state)
 {
 	int			i;
 	int			j;
@@ -55,8 +55,8 @@ void	fill_table_values(char **table,
  * @brief Fills the command table with expanded values.
  * 
  * This function iterates over the command list, counts the total number of words
- * for each command, allocates memory for the table, fills the table with
- * expanded
+ * for each command, allocates memory for the table, fills
+ * the table with expanded
  * values, and updates the command arguments and command name.
  * 
  * @param cmd_list The list of commands to process.
@@ -71,7 +71,7 @@ void	fill_table(t_command *cmd_list, t_shell_state *shell_state)
 	current_cmd = cmd_list;
 	while (current_cmd)
 	{
-		word_count = count_total_words(current_cmd);
+		word_count = count_total_words(current_cmd, shell_state);
 		table = malloc(sizeof(char *) * (word_count + 1));
 		if (!table)
 		{

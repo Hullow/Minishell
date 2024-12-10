@@ -6,7 +6,7 @@
 /*   By: cmegret <cmegret@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/09 10:41:17 by cmegret           #+#    #+#             */
-/*   Updated: 2024/12/10 17:16:08 by cmegret          ###   ########.fr       */
+/*   Updated: 2024/12/10 18:02:28 by cmegret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,8 @@ char	*process_redir_str(char *str,
 	{
 		params.arg = str;
 		params.j = &j;
-		temp_table = malloc(sizeof(char *) * (count_words_in_arg(str) + 1));
+		temp_table = malloc(sizeof(char *)
+			* (count_words_in_arg(str, shell_state) + 1));
 		params.table = temp_table;
 		params.word_count = word_count;
 		if (str[j] == '$')
@@ -88,16 +89,18 @@ void	expand_redir_variables(t_redir *redir_list, t_shell_state *shell_state)
  * @param var The environment variable name.
  * @param table The table to fill with the words.
  * @param word_count A pointer to the current word count in the table.
+ * @param shell_state The current state of the shell.
  * @return int The number of words added to the table.
  */
-int	expand_env_variable(char *var, char **table, int *word_count)
+int	expand_env_variable(char *var, char **table,
+	int *word_count, t_shell_state *shell_state)
 {
 	char	*env_value;
 	char	**split_env;
 	int		k;
 
 	k = 0;
-	env_value = getenv(var);
+	env_value = get_env_var(shell_state->envp, var);
 	if (env_value)
 	{
 		split_env = ft_split(env_value, ' ');
@@ -139,7 +142,7 @@ int	process_variable(t_params *params, t_shell_state *shell_state)
 	else
 	{
 		count += expand_env_variable(&params->arg[*(params->j) + 1],
-				params->table, params->word_count);
+				params->table, params->word_count, shell_state);
 		(*(params->j))++;
 		while (params->arg[*(params->j)]
 			&& !ft_isspace(params->arg[*(params->j)]))
