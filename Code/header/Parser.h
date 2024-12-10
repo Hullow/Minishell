@@ -6,7 +6,7 @@
 /*   By: francis <francis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 19:44:40 by fallan            #+#    #+#             */
-/*   Updated: 2024/12/10 14:30:17 by francis          ###   ########.fr       */
+/*   Updated: 2024/12/10 18:31:22 by francis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,9 +36,9 @@ t_command	*ft_parse(t_token *tok, t_shell_state *shell_state);
 t_token		*ft_parse_operators(t_token *head);
 
 // Redirections
-t_redir		*ft_new_redir_node(t_redir *redir_list);
 int			ft_add_redir(t_token **tok, t_command *cmd_list, t_redir *head_redir);
 t_token		**ft_assign_redir_str(t_token **tok, t_redir *redir_list);
+t_redir		*ft_last_redir(t_redir **redir_list);
 
 // Command arguments
 int			ft_add_cmd_arg_to_list(char *tok_str, t_cmd_args **arg_list);
@@ -50,7 +50,7 @@ int			ft_allocate_cmd_args_to_array(t_command *cmd_list);
 bool		ft_token_is_redir(int token_type);
 bool		ft_token_is_word(int token_type);
 bool		ft_token_is_pipe(int token_type);
-t_redir		*ft_last_redir(t_redir *redir_list);
+t_redir		*ft_last_redir(t_redir **redir_list);
 
 	// Command arguments
 int			ft_count_args(t_cmd_args *arg_list);
