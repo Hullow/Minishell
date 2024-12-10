@@ -6,7 +6,7 @@
 /*   By: cmegret <cmegret@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/01 18:44:38 by cmegret           #+#    #+#             */
-/*   Updated: 2024/12/10 12:37:18 by cmegret          ###   ########.fr       */
+/*   Updated: 2024/12/10 17:11:06 by cmegret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,11 +15,12 @@
 
 # include "Minishell.h"
 
-typedef struct s_params		t_params;
+typedef struct s_params	t_params;
+typedef struct s_redir	t_redir;
 
 void	expand_command_variables(t_command *cmd_list,
 			t_shell_state *shell_state);
-char	**fill_table(t_command *cmd_list,
+void	fill_table(t_command *cmd_list,
 			t_shell_state *shell_state);
 int		count_total_words(t_command *cmd_list);
 int		count_words_in_arg(char *arg);
@@ -33,5 +34,9 @@ int		expand_env_variable(char *var,
 int		process_variable(t_params *params,
 			t_shell_state *shell_state);
 int		process_non_variable(t_params *params);
+void	expand_redir_variables(t_redir *redir_list,
+			t_shell_state *shell_state);
+char	*process_redir_str(char *str,
+			t_shell_state *shell_state, int *word_count);
 
 #endif
