@@ -6,7 +6,7 @@
 /*   By: francis <francis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/07 14:37:29 by francis           #+#    #+#             */
-/*   Updated: 2024/12/07 14:37:30 by francis          ###   ########.fr       */
+/*   Updated: 2024/12/10 14:28:57 by francis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,12 @@ void	configure_redirections(t_command *cmd, t_shell_state *shell_state)
 		if (redir->str == NULL || redir->str[0] == '\0')
 		{
 			printf("minishell: syntax error near unexpected token `newline'\n");
+			shell_state->last_exit_status = 1;
+			return ;
+		}
+		if (redir->str && redir->str_type != WORD)
+		{
+			printf("minishell: syntax error near unexpected token `%s'\n", redir->str);
 			shell_state->last_exit_status = 1;
 			return ;
 		}

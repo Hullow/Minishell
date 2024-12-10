@@ -62,6 +62,7 @@ typedef struct s_redir
 {
 	int				type; // REDIR_INPUT, REDIR_OUTPUT, REDIR_APPEND, REDIR_HEREDOC
 	char			*str; // either file (for input, output, append) or delimiter (for Heredoc)
+	int				str_type; // the type of redirection after
 	struct s_redir	*next;
 }	t_redir;
 

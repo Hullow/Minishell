@@ -6,7 +6,7 @@
 /*   By: francis <francis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/01 17:28:03 by fallan            #+#    #+#             */
-/*   Updated: 2024/12/07 13:48:19 by francis          ###   ########.fr       */
+/*   Updated: 2024/12/10 14:22:32 by francis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,11 +49,13 @@ t_redir	*ft_new_redir_node(t_redir *redir_list)
 // copies the string from our token to the redirection node
 // advances by one token in the token linked list
 // returns the token
-t_token	*ft_assign_redir_str(t_token **tok, t_redir *redir_list)
+t_token	**ft_assign_redir_str(t_token **tok, t_redir *redir_list)
 {
 	*tok = (*tok)->next;
 	redir_list->str = ft_strdup((*tok)->str);
-	return (*tok);
+	redir_list->str_type = (*tok)->type;
+	// printf("ft_assign_redir_str\n");
+	return (tok);
 }
 
 // adds a redirection node to our redirection list in our command struct
@@ -61,9 +63,14 @@ t_token	*ft_assign_redir_str(t_token **tok, t_redir *redir_list)
 // advance one token in the token list, 
 // and add that token's string to our redirection node
 // N.b.: head is initialized to NULL by the calling function
+
+ // if we have redirections, goes to last redirection
+ // mallocs a new redirection
+ // sets the type of the redirection
+ // if there is a token after the 
 int	ft_add_redir(t_token **tok, t_command *cmd_list, t_redir *head_redir)
 {
-	if (cmd_list->redir_list) // if we have redirections
+	if (cmd_list->redir_list)
 	{
 		head_redir = cmd_list->redir_list; // to save one line, maybe make a function that modifies address of redir_list to last redir and returns head_redir
 		cmd_list->redir_list = ft_last_redir(cmd_list->redir_list); // goes to the last redir
@@ -79,12 +86,13 @@ int	ft_add_redir(t_token **tok, t_command *cmd_list, t_redir *head_redir)
 	}
 	if (!cmd_list->redir_list)
 		return (-1);
-	cmd_list->redir_list->type = (*tok)->type; // to save one line, maybe make function ft_set_type_and_next_to_NULL
+	cmd_list->redir_list->type = (*tok)->type;
 	cmd_list->redir_list->next = NULL;
-	if ((*tok)->next && !ft_token_is_redir((*tok)->next->type)) // if there is a token after, assign it to redir_list->str
-		*tok = ft_assign_redir_str(tok, cmd_list->redir_list);
+	// > |
+	if ((*tok)->next) // if there is a token after, assign it to redir_list->str
+		tok = ft_assign_redir_str(tok, cmd_list->redir_list);
 	else
-		cmd_list->redir_list->str = NULL;
+		cmd_list->redir_list->str = NULL; // Need error handling
 	cmd_list->redir_list = head_redir;
 	return (0);
 }

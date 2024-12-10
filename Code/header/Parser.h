@@ -6,7 +6,7 @@
 /*   By: francis <francis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 19:44:40 by fallan            #+#    #+#             */
-/*   Updated: 2024/12/07 15:11:40 by francis          ###   ########.fr       */
+/*   Updated: 2024/12/10 14:30:17 by francis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@ t_token		*ft_parse_operators(t_token *head);
 // Redirections
 t_redir		*ft_new_redir_node(t_redir *redir_list);
 int			ft_add_redir(t_token **tok, t_command *cmd_list, t_redir *head_redir);
+t_token		**ft_assign_redir_str(t_token **tok, t_redir *redir_list);
 
 // Command arguments
 int			ft_add_cmd_arg_to_list(char *tok_str, t_cmd_args **arg_list);
