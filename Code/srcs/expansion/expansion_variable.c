@@ -89,6 +89,8 @@ void	expand_command_variables(t_command *cmd_list,
 	char	**table;
 	int		i;
 
+	if (!cmd_list->args || !cmd_list->args[0])
+		return ;
 	table = fill_table(cmd_list, shell_state);
 	if (table)
 	{
