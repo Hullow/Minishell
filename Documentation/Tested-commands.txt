@@ -905,3 +905,51 @@ ls | wc -l
 
 VAR="../file.txt" 
 echo $VAR
+
+$USER
+echo $USER
+echo "$USER"
+echo '$USER'
+echo $BCIUAHOAJBCAE
+echo $?
+echo '$USER'
+echo "$USER"
+VAR="ls /etc/*.conf" && echo $VAR
+VAR="ls .." && echo $VAR
+ls ..
+$VAR
+VAR="echo hello"
+$VAR
+unset VAR
+VAR1="echo hello world"
+VAR2="FIN"
+echo $VAR1 $VAR2
+VAR2="| grep h"
+echo $VAR1 $VAR2
+VAR2="FIN"
+echo $VAR1 au revoir $VAR2
+VAR2=$?
+echo $VAR1 au revoir $VAR2
+$VAR3=VAR2
+$VAR3=$VAR2
+$VAR3
+VAR1
+echo $VAR1
+echo $VAR2
+VAR1=VAR2
+echo $VAR1
+VAR1=$VAR2
+echo $VAR1
+VAR2=$?
+VAR1=$VAR2
+echo $VAR1
+echo $VAR2
+VAR2=$?
+echo $VAR2
+export VAR2=$?
+echo $VAR2
+VAR1=VAR2
+echo VAR1
+echo $VAR1
+VAR1=$VAR2
+echo $VAR1
