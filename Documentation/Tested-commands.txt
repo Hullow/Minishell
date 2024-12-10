@@ -953,3 +953,85 @@ echo VAR1
 echo $VAR1
 VAR1=$VAR2
 echo $VAR1
+
+## Here-documents
+
+sort << EOF
+> 2 
+> 3
+> 1
+> 0
+> -2
+> EOF
+
+echo "hello" > testfile
+echo "world" >> testfile
+echo "!" >> testfile
+cat << EOF
+> 
+> testfile 
+> 
+> EOF
+
+rm testfile
+<< EOF
+> echo "hello" > testfile
+> echo "world" >> testfile
+> EOF
+
+
+ls << EOF | grep m
+> EOF
+
+cat << EOF
+> $VAR1
+> $VAR2
+> EOF
+
+cat << EOF | grep h
+> $VAR1
+> $VAR2
+
+cat << EOF | grep h
+> "$VAR1"
+> "$VAR2"
+> EOF
+
+cat << EOF > file.txt
+> hello 
+> world
+> EOF
+
+cat << EOF
+> file.txt 
+> EOF
+
+cat < file.txt 
+hello 
+world
+
+cat << EOF < file.txt
+> blabla
+> EOF
+
+cat << EOF < file.txt
+> EOF
+
+cat << EOF >> file.txt
+> thank you
+> very much
+> EOF
+
+touch \'
+rm '
+rm ''
+rm '''
+rm \'
+
+touch '|'
+rm '|'
+
+touch '>'
+rm '>'
+
+<tabs>
