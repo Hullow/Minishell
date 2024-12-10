@@ -3,14 +3,33 @@
 /*                                                        :::      ::::::::   */
 /*   main_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: francis <francis@student.42.fr>            +#+  +:+       +#+        */
+/*   By: cmegret <cmegret@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/22 18:40:16 by cmegret           #+#    #+#             */
-/*   Updated: 2024/12/07 14:45:55 by francis          ###   ########.fr       */
+/*   Updated: 2024/12/10 17:15:20 by cmegret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../header/Minishell.h"
+
+/**
+ * @brief Checks the command-line arguments.
+ *
+ * This function checks if any command-line arguments are provided.
+ * If arguments are provided, it prints a usage message and exits the program.
+ *
+ * @param argc The number of command-line arguments.
+ * @param argv An array of command-line arguments.
+ */
+void	check_arguments(int argc, char **argv)
+{
+	if (argc > 1)
+	{
+		printf("Usage: %s\n", argv[0]);
+		printf("No arguments are allowed\n");
+		exit(EXIT_FAILURE);
+	}
+}
 
 /**
  * @brief Colors a given message with the specified ANSI color code.
