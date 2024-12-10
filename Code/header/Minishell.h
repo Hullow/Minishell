@@ -31,6 +31,10 @@
 #  define ECHOCTL 0x00000040
 # endif
 
+# ifndef NAME_MAX
+#  define NAME_MAX 255
+# endif
+
 # include "../lib/libft/libft.h"
 # include "../lib/ft_printf/ft_printf.h"
 
