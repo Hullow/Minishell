@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Execution.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: francis <francis@student.42.fr>            +#+  +:+       +#+        */
+/*   By: cmegret <cmegret@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/07 14:36:57 by francis           #+#    #+#             */
-/*   Updated: 2024/12/07 14:37:57 by francis          ###   ########.fr       */
+/*   Updated: 2024/12/10 17:26:50 by cmegret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,5 +39,6 @@ void	restore_redirections(t_command *cmd_list);
 void	wait_for_pipeline(pid_t *pipeline_pids, int pid_count);
 void	setup_file_descriptors(t_command *cmd_list, int in_fd, int *fd);
 void	run_command(t_command *cmd_list, t_shell_state *shell_state);
+int		is_valid_filename(const char *filename);
 
 #endif

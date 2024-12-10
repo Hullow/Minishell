@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution_main.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: francis <francis@student.42.fr>            +#+  +:+       +#+        */
+/*   By: cmegret <cmegret@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/07 14:37:18 by francis           #+#    #+#             */
-/*   Updated: 2024/12/07 14:37:21 by francis          ###   ########.fr       */
+/*   Updated: 2024/12/10 17:31:56 by cmegret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,8 @@ void	handle_parent(int in_fd, int *fd)
  * @brief Sets up file descriptors for input and output redirection.
  *
  * This function redirects the input file descriptor to STDIN and the output
- * file descriptor to STDOUT if necessary. It also closes unused file descriptors.
+ * file descriptor to STDOUT if necessary. It also closes unused
+ * file descriptors.
  *
  * @param cmd_list The list of commands to execute.
  * @param in_fd The input file descriptor.
@@ -97,7 +98,8 @@ void	run_command(t_command *cmd_list, t_shell_state *shell_state)
  * @param in_fd The input file descriptor.
  * @param fd The array of file descriptors for the pipe.
  */
-void	execute_child(t_command *cmd_list, t_shell_state *shell_state, int in_fd, int *fd)
+void	execute_child(t_command *cmd_list,
+	t_shell_state *shell_state, int in_fd, int *fd)
 {
 	setup_file_descriptors(cmd_list, in_fd, fd);
 	shell_state->last_exit_status = 0;
@@ -110,57 +112,6 @@ void	execute_child(t_command *cmd_list, t_shell_state *shell_state, int in_fd, i
 	run_command(cmd_list, shell_state);
 	restore_redirections(cmd_list);
 	exit(shell_state->last_exit_status);
-}
-
-/**
- * @brief Executes a pipeline of commands.
- *
- * This function creates a pipe if necessary, forks a child process,
- * and handles the parent and child processes accordingly.
- *
- * @param cmd_list The list of commands to execute.
- * @param shell_state The current state of the shell.
- * @param in_fd The input file descriptor.
- * @return The output file descriptor of the pipe or 0.
- */
-pid_t	execute_pipeline(t_command *cmd_list,
-	t_shell_state *shell_state, int in_fd, int *next_in_fd)
-{
-	int		fd[2];
-	pid_t	pid;
-
-	fd[0] = -1;
-	fd[1] = -1;
-	if (cmd_list->next)
-		if (pipe(fd) == -1)
-			error_and_exit("pipe failed", 1);
-	pid = fork();
-	if (pid == 0)
-		execute_child(cmd_list, shell_state, in_fd, fd);
-	else if (pid < 0)
-		error_and_exit("fork failed", 1);
-	else
-		handle_parent(in_fd, fd);
-	if (cmd_list->next)
-		*next_in_fd = fd[0];
-	else
-		*next_in_fd = 0;
-	return (pid);
-}
-
-void	wait_for_pipeline(pid_t *pipeline_pids, int pid_count)
-{
-	int	i;
-	int	status;
-
-	i = 0;
-	while (i < pid_count)
-	{
-		if (pipeline_pids[i] > 0)
-			if (waitpid(pipeline_pids[i], &status, 0) == -1)
-				perror("waitpid");
-		i++;
-	}
 }
 
 /**

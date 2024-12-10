@@ -124,5 +124,6 @@ void		ft_initialize(int argc, char **argv,
 				t_shell_state *shell_state, char **envp);
 void		error_and_exit(const char *message, int last_exit_status);
 char		*ft_prompt(void);
+void		check_arguments(int argc, char **argv);
 
 #endif
