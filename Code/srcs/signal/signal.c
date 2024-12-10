@@ -29,8 +29,8 @@ void	handle_sigint(int sig)
 // Gestionnaire pour SIGQUIT (CTRL+\)
 void	handle_sigquit(int sig)
 {
-	(void)sig;
-	rl_on_new_line();
-	rl_replace_line("", 0);
-	rl_redisplay();
+    if (sig == SIGQUIT)
+    {
+        // Ne rien faire
+    }
 }
