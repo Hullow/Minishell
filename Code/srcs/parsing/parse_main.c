@@ -6,7 +6,7 @@
 /*   By: francis <francis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/07 14:36:57 by francis           #+#    #+#             */
-/*   Updated: 2024/12/07 15:21:08 by francis          ###   ########.fr       */
+/*   Updated: 2024/12/10 18:17:18 by francis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ void	ft_initialize_cmd_list(t_command *cmd_list)
 // add a command sequence/pipe to our linked list of commands
 t_command	*ft_add_pipe(t_command *cmd_list)
 {
-	cmd_list->next = malloc(sizeof(t_command)); // malloc a node to our list of commands (cmd_list)
+	cmd_list->next = malloc(sizeof(t_command));
 	if (!(cmd_list->next))
 		return (NULL);
 	cmd_list = cmd_list->next;
@@ -67,13 +67,24 @@ t_command	*ft_add_pipe(t_command *cmd_list)
 // Extracts the command and the arguments 
 // Outputs a struct command with the command name and the arguments
 // NEED TO ADD ERROR HANDLING !
+// shell_state: for envp and variables (exit status: $?, other variables)
+// while() loop:
+// 	- goes over each token of our token list
+//	- checks token type
+//	- then, depending on type:
+//		- adds a redirection to our redirection list
+//		- adds a command argument to our command arguments list
+//		- adds a new command (/pipe) to our list of commands
+// after the while() loop, copy command arguments from the list to the array
+// with ft_allocate_cmd_args_to_array (n.b.: for each command/pipe)
+// return the first node of our list of commands (t_command	*head)
 t_command	*ft_parse(t_token *tok, t_shell_state *shell_state)
 {
 	t_command	*cmd_list;
 	t_command	*head;
 
-	(void)shell_state; // for envp and variables (exit status: $?, other variables)
-	cmd_list = malloc(sizeof(t_command)); // malloc a node to our list of commands (cmd_list)
+	(void)shell_state;
+	cmd_list = malloc(sizeof(t_command));
 	if (!cmd_list)
 		return (NULL);
 	head = cmd_list;
@@ -82,11 +93,11 @@ t_command	*ft_parse(t_token *tok, t_shell_state *shell_state)
 	while (tok)
 	{
 		if (ft_token_is_redir(tok->type))
-			ft_add_redir(&tok, cmd_list, NULL); // add redirection to our redirections list
+			ft_add_redir(&tok, cmd_list, NULL);
 		else if (ft_token_is_word(tok->type))
-			ft_add_cmd_arg_to_list(tok->str, &(cmd_list->arg_list)); // add command name if missing, else add command argument to argument list
+			ft_add_cmd_arg_to_list(tok->str, &(cmd_list->arg_list));
 		else if (ft_token_is_pipe(tok->type))
-			cmd_list = ft_add_pipe(cmd_list); // add new command to command sequence (=> create new pipe)
+			cmd_list = ft_add_pipe(cmd_list);
 		tok = tok->next;
 	}
 	if (ft_allocate_cmd_args_to_array(head) == -1)
