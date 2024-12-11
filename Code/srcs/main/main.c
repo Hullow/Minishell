@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cmegret <cmegret@student.42lausanne.ch>    +#+  +:+       +#+        */
+/*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/07 14:36:43 by francis           #+#    #+#             */
-/*   Updated: 2024/12/10 18:12:17 by cmegret          ###   ########.fr       */
+/*   Updated: 2024/12/11 14:04:24 by fallan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,8 +32,33 @@ int	main(int argc, char **argv, char **envp)
 		// ft_exit_bug_print_debugger(cmd_list); // prevents the "exit bug"
 		// ft_print_command_sequences(cmd_list);
 		execute_cmd(cmd_list, &shell_state);
+		ft_free_cmd_list(cmd_list);
 		free(prompt);
 		prompt = ft_prompt();
 	}
 	return (0);
+}
+
+/**
+ * @brief Prints an error message and exits the program with the specified
+ * status.
+ *
+ * This function uses perror to print the provided error message, followed by
+ * a description of the current error condition. It then exits the program
+ * with the given exit status.
+ *
+ * @param message A pointer to a string containing the error message to be
+ * printed.
+ * @param last_exit_status The exit status to use when terminating the program.
+ *
+ * @note This function is designed to be called when a critical error occurs
+ *       that prevents the program from continuing.
+ */
+void	error_and_exit(const char *message, int last_exit_status)
+{
+	if (message != NULL)
+		perror(message);
+	else
+		write(STDERR_FILENO, "Unknown error\n", 14);
+	exit(last_exit_status);
 }

@@ -123,7 +123,12 @@ int			main(int argc, char **argv, char **envp);
 void		ft_initialize(int argc, char **argv,
 				t_shell_state *shell_state, char **envp);
 void		error_and_exit(const char *message, int last_exit_status);
-char		*ft_prompt(void);
 void		check_arguments(int argc, char **argv);
+
+// Prompt
+char		*ft_prompt(void);
+
+// Utils
+void		ft_free_cmd_list(t_command *head_cmd);
 
 #endif

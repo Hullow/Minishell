@@ -6,7 +6,7 @@
 /*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/07 14:36:57 by francis           #+#    #+#             */
-/*   Updated: 2024/12/11 11:45:51 by fallan           ###   ########.fr       */
+/*   Updated: 2024/12/11 13:58:17 by fallan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,6 +105,5 @@ t_command	*ft_parse(t_token *tok, t_shell_state *shell_state)
 	ft_free_token_list(head_tok);
 	if (ft_allocate_cmd_args_to_array(head_cmd) == -1)
 		return (NULL);
-	// ft_free_cmd_list;
 	return (head_cmd);
 }
