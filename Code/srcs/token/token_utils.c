@@ -3,21 +3,30 @@
 /*                                                        :::      ::::::::   */
 /*   token_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: francis <francis@student.42.fr>            +#+  +:+       +#+        */
+/*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/07 19:00:54 by cmegret           #+#    #+#             */
-/*   Updated: 2024/12/10 19:03:37 by francis          ###   ########.fr       */
+/*   Updated: 2024/12/11 11:46:17 by fallan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../header/Minishell.h"
 
-// frees the token and if it exists, the token string
-void	ft_free_token(t_token *tok)
+// frees the token 
+
+// frees our linked list of tokens, and when it exists, each token string
+void	ft_free_token_list(t_token *tok)
 {
+	t_token	*temp;
+	
 	if (!tok)
 		return ;
-	if (tok->str)
-		free(tok->str);
-	free(tok);
+	while (tok)
+	{
+		temp = tok;
+		tok = tok->next;
+		if (temp->str)
+			free(temp->str);
+		free(temp);
+	}
 }

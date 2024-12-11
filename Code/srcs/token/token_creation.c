@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   token_creation.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: francis <francis@student.42.fr>            +#+  +:+       +#+        */
+/*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/06 17:21:26 by cmegret           #+#    #+#             */
-/*   Updated: 2024/11/20 16:06:59 by francis          ###   ########.fr       */
+/*   Updated: 2024/12/11 11:26:51 by fallan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,6 +82,8 @@ int	ft_append_char_to_word(t_token **tok, char c)
 	char	character[2];
 
 	temp = ft_strdup((*tok)->str);
+	if ((*tok)->str)
+		free((*tok)->str);
 	character[0] = c;
 	character[1] = '\0';
 	(*tok)->str = ft_strjoin(temp, character);

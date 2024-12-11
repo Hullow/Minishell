@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_main.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: francis <francis@student.42.fr>            +#+  +:+       +#+        */
+/*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/07 14:36:57 by francis           #+#    #+#             */
-/*   Updated: 2024/12/10 18:52:42 by francis          ###   ########.fr       */
+/*   Updated: 2024/12/11 11:45:51 by fallan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,19 +77,21 @@ t_command	*ft_add_pipe(t_command *cmd_list)
 //		- adds a new command (/pipe) to our list of commands
 // after the while() loop, copy command arguments from the list to the array
 // with ft_allocate_cmd_args_to_array (n.b.: for each command/pipe)
-// return the first node of our list of commands (t_command	*head)
+// return the first node of our list of commands (t_command	*head_cmd)
 t_command	*ft_parse(t_token *tok, t_shell_state *shell_state)
 {
 	t_command	*cmd_list;
-	t_command	*head;
+	t_command	*head_cmd;
+	t_token		*head_tok;
 
 	(void)shell_state;
 	cmd_list = malloc(sizeof(t_command));
 	if (!cmd_list)
 		return (NULL);
-	head = cmd_list;
 	ft_initialize_cmd_list(cmd_list);
 	ft_parse_operators(tok);
+	head_cmd = cmd_list;
+	head_tok = tok;
 	while (tok)
 	{
 		if (ft_token_is_redir(tok->type))
@@ -100,7 +102,9 @@ t_command	*ft_parse(t_token *tok, t_shell_state *shell_state)
 			cmd_list = ft_add_pipe(cmd_list);
 		tok = tok->next;
 	}
-	if (ft_allocate_cmd_args_to_array(head) == -1)
+	ft_free_token_list(head_tok);
+	if (ft_allocate_cmd_args_to_array(head_cmd) == -1)
 		return (NULL);
-	return (head);
+	// ft_free_cmd_list;
+	return (head_cmd);
 }
