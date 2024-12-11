@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   variable_processing.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: francis <francis@student.42.fr>            +#+  +:+       +#+        */
+/*   By: cmegret <cmegret@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/09 10:41:17 by cmegret           #+#    #+#             */
-/*   Updated: 2024/12/10 19:22:39 by francis          ###   ########.fr       */
+/*   Updated: 2024/12/11 10:27:41 by cmegret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,14 +26,12 @@
  * @return A new string with all variables expanded.
  */
 char	*process_redir_str(char *str,
-	t_shell_state *shell_state, int *word_count)
+	t_shell_state *shell_state, int *word_count, int j)
 {
-	int			j;
 	char		*expanded_str;
 	char		**temp_table;
 	t_params	params;
 
-	j = 0;
 	temp_table = NULL;
 	if (!str)
 		return (NULL);
@@ -75,7 +73,7 @@ void	expand_redir_variables(t_redir *redir_list, t_shell_state *shell_state)
 	while (redir_list)
 	{
 		expanded_str
-			= process_redir_str(redir_list->str, shell_state, &word_count);
+			= process_redir_str(redir_list->str, shell_state, &word_count, 0);
 		if (expanded_str)
 		{
 			free(redir_list->str);

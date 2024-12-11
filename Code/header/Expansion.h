@@ -6,7 +6,7 @@
 /*   By: cmegret <cmegret@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/01 18:44:38 by cmegret           #+#    #+#             */
-/*   Updated: 2024/12/10 18:06:37 by cmegret          ###   ########.fr       */
+/*   Updated: 2024/12/11 10:27:30 by cmegret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,6 @@ int		process_non_variable(t_params *params);
 void	expand_redir_variables(t_redir *redir_list,
 			t_shell_state *shell_state);
 char	*process_redir_str(char *str,
-			t_shell_state *shell_state, int *word_count);
+			t_shell_state *shell_state, int *word_count, int j);
 
 #endif

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   token_main.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: francis <francis@student.42.fr>            +#+  +:+       +#+        */
+/*   By: cmegret <cmegret@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/06 17:19:58 by cmegret           #+#    #+#             */
-/*   Updated: 2024/12/10 18:59:25 by francis          ###   ########.fr       */
+/*   Updated: 2024/12/11 10:28:05 by cmegret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ t_token	*ft_init_token(void)
 // Processes the prompt, applying tokenization rules in order
 // For debugging:
 	// if (*tok && (*tok)->str)
-	// 	printf("tok->str: %s; tok->is_delimited: %d\n", \
+	// 	printf("tok->str: %s; tok->is_delimited: %d\n",
 	//     (*tok)->str, (*tok)->is_delimited);
 static int	ft_process_prompt(char *prompt, int i, t_token **tok)
 {

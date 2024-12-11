@@ -1022,6 +1022,73 @@ cat << EOF >> file.txt
 > very much
 > EOF
 
+cat << EOF | cat | grep b	
+
+cmegret@c1r2s2:~$ cat << eof
+> $HOME
+> eof
+/home/cmegret
+cmegret@c1r2s2:~$ cat << eof
+$HOME
+eof
+^C
+cmegret@c1r2s2:~$ cat << eof
+> $USER
+> $HOME
+> eof
+cmegret
+/home/cmegret
+cmegret@c1r2s2:~$ export VAR=2
+cmegret@c1r2s2:~$ cat << EOF
+> $VAR
+> EOF
+2
+cmegret@c1r2s2:~$ 
+
+
+
+cmegret@c1r2s2:~$ cat << EOF | grep b
+> blabla
+> merci
+> aurevoir
+> EOF
+blabla
+
+cmegret@c1r2s2:~$ cat << EOF | cat << EOF | grep
+> blabla
+> ^C
+
+cmegret@c1r2s2:~$ cat << EOF | cat << EOF | grep
+> blabla
+> ^C
+
+cmegret@c1r2s2:~$ cat << EOF | cat << EOF | grep
+> blabla
+> ^C
+
+cmegret@c1r2s2:~$ cat << EOF | cat << EOF | grep b
+> blabla
+> EOF
+> ^C
+
+cmegret@c1r2s2:~$ cat << EOF | cat << EOF2 | grep b
+> blabla
+> EOF2
+> EOF
+> merci
+> EOF2
+
+cmegret@c1r2s2:~$ cat << EOF | cat << EOF2 | grep b
+> blabla
+> EOF
+> merci
+> EOF2
+
+cmegret@c1r2s2:~$ cat << EOF | cat | grep b
+
+
+## QUotes
+
 touch \'
 rm '
 rm ''

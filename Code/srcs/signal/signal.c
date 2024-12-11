@@ -6,7 +6,7 @@
 /*   By: cmegret <cmegret@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 14:40:07 by cmegret           #+#    #+#             */
-/*   Updated: 2024/11/14 20:19:46 by cmegret          ###   ########.fr       */
+/*   Updated: 2024/12/11 10:26:01 by cmegret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,5 @@ void	handle_sigint(int sig)
 // Gestionnaire pour SIGQUIT (CTRL+\)
 void	handle_sigquit(int sig)
 {
-    if (sig == SIGQUIT)
-    {
-        // Ne rien faire
-    }
+	(void)sig;
 }
