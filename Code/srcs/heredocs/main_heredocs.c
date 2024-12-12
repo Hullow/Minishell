@@ -6,29 +6,59 @@
 /*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/12 17:27:25 by fallan            #+#    #+#             */
-/*   Updated: 2024/12/12 18:42:11 by fallan           ###   ########.fr       */
+/*   Updated: 2024/12/12 19:01:40 by fallan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../header/Minishell.h"
 
-cat << EOF | cat << EOF2
-
-// linked list of redirections
-typedef struct s_redir
+// prompt, parse et enregistre donnees d'input dans une liste chainee de heredoc
+void	ft_open_and_store_heredoc(t_command *cmd_list)
 {
-	int				type; // REDIR_INPUT, REDIR_OUTPUT, REDIR_APPEND, REDIR_HEREDOC
-	char			*str; // either file (for input, output, append) or delimiter (for Heredoc)
-	int				str_type; // the type of redirection after
-	struct s_redir	*next;
-}	t_redir;
+	char	*prompt;
 
-void	ft_add_heredoc(t_command *cmd_list)
-{
-	// reprendre ft_add_redir
-	
+	prompt = ft_prompt(REDIR_HEREDOC);
+	while (prompt != NULL)
+	{
+		ft_prompt(REDIR_HEREDOC);
+		ft_tokenize_parse_expand_heredoc(); //ft_isspace, ft_check_expansion, ft_expand
+		
+		prompt = ft_prompt(REDIR_HEREDOC);
+	}
+	ft_tokenize_heredoc
+	open()
 }
 
+
+/**
+ * @brief Handles input redirection.
+ * 
+ * This function opens the file specified in the redirection structure
+ * for reading. It then duplicates the file descriptor to STDIN_FILENO.
+ * 
+ * @param redir The redirection structure containing the file information.
+ * @param shell_state The current state of the shell.
+ * @return 0 on success, -1 on failure.
+ */
+static int	handle_redir_input(t_redir *redir, t_shell_state *shell_state)
+{
+	int	fd;
+
+	fd = open(redir->str, O_RDONLY);
+	if (fd == -1)
+	{
+		perror("open");
+		shell_state->last_exit_status = 1;
+		return (-1);
+	}
+	dup2(fd, STDIN_FILENO);
+	close(fd);
+	return (0);
+}
+
+
+// parcourir les commandes et les listes de redirections
+// si on tombe sur un heredoc, on l'ouvre, et on stocke 
 t_heredoc	*ft_fill_heredocs(t_command *cmd_list)
 {
 	t_redir	*iterator;
@@ -39,12 +69,12 @@ t_heredoc	*ft_fill_heredocs(t_command *cmd_list)
 		while (iterator)
 		{
 			if (iterator->str_type == REDIR_HEREDOC) // {'<<', 'file.txt'}, {'<<', 'EOF1'}, {'<<', 'EOF2'}
-				ft_add_heredoc(cmd_list);
+				ft_open_and_store_heredoc(cmd_list);
 			iterator = iterator->next;
 		}
 		cmd_list = cmd_list->next;
 	}
-	return (cmd_list-)
+	return (cmd_list);
 }
 
 // 2.7 Redirection
@@ -63,18 +93,3 @@ t_heredoc	*ft_fill_heredocs(t_command *cmd_list)
 //  and continues until there is a line containing only the delimiter 
 //  and a <newline>, with no <blank> characters in between.
 
-void	ft_handle_redir_heredoc(t_command *cmd_list)
-{
-	t_heredoc	*heredoc_list;
-
-	while (cmd_list)
-	{
-		heredoc_list = cmd_list->heredoc_list;
-		while (heredoc_list)
-		{
-			ft_prompt(REDIR_HEREDOC);
-			
-		}
-		cmd_list = cmd_list->next;
-	}
-}

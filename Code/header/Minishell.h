@@ -87,6 +87,9 @@ typedef struct s_heredoc
 {
 	char				*delimiter;
 	bool				is_delimiter_quoted;
+	char				***contents; // array of array of strings
+	// alternative: liste chainee separant les nodes par '\n' => probablement plus simple a implementer
+	
 	struct s_heredoc	*next;
 }	t_heredoc;
 
