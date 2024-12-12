@@ -6,7 +6,7 @@
 #    By: fallan <fallan@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/07/19 14:53:36 by cmegret           #+#    #+#              #
-#    Updated: 2024/12/11 14:05:57 by fallan           ###   ########.fr        #
+#    Updated: 2024/12/12 17:29:04 by fallan           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -58,10 +58,12 @@ SRCS = main/main.c \
       main/main_prompt.c \
       token/token_main.c \
       token/token_checks.c \
-      token/token_debug.c \
-      token/token_utils.c \
+      token/token_char_checks.c \
       token/token_creation.c \
+      token/token_debug.c \
       token/token_operator.c \
+      token/token_quotes.c \
+      token/token_utils.c \
 	  parsing/parse_main.c \
 	  parsing/parse_redir.c \
 	  parsing/parse_command_args.c \
@@ -78,6 +80,7 @@ SRCS = main/main.c \
 	  execution/execution_external.c \
 	  execution/execution_redir.c \
 	  execution/execution_redir_utils.c \
+	  heredocs/
 	  builtin/cd.c \
 	  builtin/cd_utils.c \
       builtin/env.c \

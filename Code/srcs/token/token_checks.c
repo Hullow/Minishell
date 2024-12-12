@@ -3,35 +3,28 @@
 /*                                                        :::      ::::::::   */
 /*   token_checks.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: francis <francis@student.42.fr>            +#+  +:+       +#+        */
+/*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/22 16:35:11 by francis           #+#    #+#             */
-/*   Updated: 2024/11/20 16:06:29 by francis          ###   ########.fr       */
+/*   Updated: 2024/12/12 15:30:29 by fallan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../header/Minishell.h"
 
+// checks if token is between quotes : single quotes and/or double quotes
+bool	ft_is_quoted(t_token *tok)
+{
+	if (tok->is_single_quoted || tok->is_double_quoted)
+		return (true);
+	else
+		return (false);
+}
+
 // checks if previous character was part of an undelimited operator token
 int	ft_previous_char_is_undelimited_operator(t_token *tok)
 {
 	if (tok && tok->is_operator && !tok->is_delimited)
-		return (1);
-	return (0);
-}
-
-// checks if character is a redirection operator character
-int	ft_is_operator_character(char c)
-{
-	if (c == '>' || c == '<' || c == '|')
-		return (1);
-	return (0);
-}
-
-// checks if character is a blank (space or tab)
-int	ft_is_blank(char c)
-{
-	if (c == ' ' || c == '\t')
 		return (1);
 	return (0);
 }

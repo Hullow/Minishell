@@ -1,5 +1,13 @@
 # Quoting
 
+## Requirements
+> • Not interpret unclosed quotes or special characters which are not required by the
+subject such as `\` (backslash) or `;` (semicolon).<br>
+> • Handle `’` (single quote) which should prevent the shell from interpreting the meta-
+characters in the quoted sequence.<br>
+> • Handle `"` (double quote) which should prevent the shell from interpreting the meta-
+characters in the quoted sequence except for `$` (dollar sign).
+
 ## 0. Summary
 > 1. Reads its input from the user’s terminal.
 > 2. Breaks the input into words and operators, obeying the quoting rules. These tokens are separated by metacharacters.
@@ -14,7 +22,16 @@
 	- Double quotes `"`:
 		- Preserves the literal value of all characters within the quotes, except `$`
 		- A double quote may not occur between double quotes
-		- Examples: see `Quoting.md`
+		- Examples: see "Tests" below
+
+[POSIX-2024](https://pubs.opengroup.org/onlinepubs/9799919799/utilities/V3_chap02.html#tag_19_02):
+- The application shall quote the following characters if they are to represent themselves:
+> |  &  ;  <  >  (  )  $  `  \  "  '  <space>  <tab>  <newline>
+
+and the following might need to be quoted under certain circumstances. That is, these characters are sometimes special depending on conditions described elsewhere in this volume of POSIX.1-2024:
+
+> *  ?  [  ]  ^  -  !  #  ~  =  %  {  ,  }
+
 	
 ### [Word](https://www.gnu.org/software/bash/manual/bash.html#index-word)
 Bash reference manual:

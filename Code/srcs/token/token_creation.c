@@ -6,7 +6,7 @@
 /*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/06 17:21:26 by cmegret           #+#    #+#             */
-/*   Updated: 2024/12/11 11:26:51 by fallan           ###   ########.fr       */
+/*   Updated: 2024/12/12 15:45:22 by fallan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,12 +21,14 @@ t_token	*ft_create_new_token(t_token *tok)
 	{
 		newtoken = malloc(sizeof(t_token));
 		if (!newtoken)
-			return (0);
+			return (NULL);
 		newtoken->str = NULL;
 		newtoken->type = 0;
-		newtoken->is_operator = NULL;
-		newtoken->next = NULL;
+		newtoken->is_operator = false;
 		newtoken->is_delimited = false;
+		newtoken->is_single_quoted = false;
+		newtoken->is_double_quoted = false;
+		newtoken->next = NULL;
 		tok->is_delimited = true;
 		tok->next = newtoken;
 		tok = tok->next;
@@ -48,7 +50,8 @@ t_token	*ft_tokenize_end_of_input(t_token *tok)
 		tok->type = END_OF_INPUT;
 		tok->is_delimited = true;
 		tok->is_operator = false;
-		tok->is_quoted = false;
+		tok->is_single_quoted = false;
+		tok->is_double_quoted = false;
 	}
 	return (tok);
 }
@@ -71,7 +74,6 @@ int	ft_new_word(t_token **tok, char c)
 	(*tok)->type = WORD;
 	(*tok)->is_operator = false;
 	(*tok)->str = ft_strdup(character);
-	(*tok)->is_delimited = false;
 	return (1);
 }
 

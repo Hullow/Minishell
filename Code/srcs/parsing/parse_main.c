@@ -6,7 +6,7 @@
 /*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/07 14:36:57 by francis           #+#    #+#             */
-/*   Updated: 2024/12/11 13:58:17 by fallan           ###   ########.fr       */
+/*   Updated: 2024/12/12 17:52:20 by fallan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,7 @@ t_command	*ft_parse(t_token *tok, t_shell_state *shell_state)
 	if (!cmd_list)
 		return (NULL);
 	ft_initialize_cmd_list(cmd_list);
-	ft_parse_operators(tok);
+	ft_parse_operators(tok); // not removable so far (see ft_print_token_types)
 	head_cmd = cmd_list;
 	head_tok = tok;
 	while (tok)

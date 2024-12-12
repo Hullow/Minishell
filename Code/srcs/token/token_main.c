@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   token_main.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cmegret <cmegret@student.42lausanne.ch>    +#+  +:+       +#+        */
+/*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/06 17:19:58 by cmegret           #+#    #+#             */
-/*   Updated: 2024/12/11 10:28:05 by cmegret          ###   ########.fr       */
+/*   Updated: 2024/12/12 16:09:11 by fallan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,10 @@ t_token	*ft_init_token(void)
 	tok->next = NULL;
 	tok->str = NULL;
 	tok->type = 0;
-	tok->is_operator = NULL;
+	tok->is_operator = false;
 	tok->is_delimited = false;
+	tok->is_single_quoted = false;
+	tok->is_double_quoted = false;
 	return (tok);
 }
 
@@ -37,9 +39,12 @@ static int	ft_process_prompt(char *prompt, int i, t_token **tok)
 {
 	if (ft_previous_char_is_undelimited_operator(*tok))
 		return (ft_continue_operator_token(prompt, i, tok));
-	else if (ft_is_operator_character(prompt[i]))
+	else if (ft_is_quote_character(prompt[i]))
+		return (ft_mark_token_as_quoted(prompt, i, tok));
+	// Missing expansion (rule 5 POSIX) ? => do tests first while looking at requirements
+	else if (ft_is_operator_character(prompt[i]) && !ft_is_quoted(*tok))
 		return (ft_new_operator_token(prompt, i, tok));
-	else if (ft_is_blank(prompt[i]))
+	else if (ft_is_blank(prompt[i]) && !ft_is_quoted(*tok))
 		return (ft_tokenize_blank(tok));
 	else if (ft_previous_char_part_of_word(*tok))
 		return (ft_append_char_to_word(tok, prompt[i]));
