@@ -6,7 +6,7 @@
 /*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/07 14:36:43 by francis           #+#    #+#             */
-/*   Updated: 2024/12/11 14:04:24 by fallan           ###   ########.fr       */
+/*   Updated: 2024/12/12 17:53:07 by fallan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,21 +20,25 @@ int	main(int argc, char **argv, char **envp)
 	t_token			*token_list;
 
 	ft_initialize(argc, argv, &shell_state, envp);
-	prompt = ft_prompt();
+	prompt = ft_prompt(0);
 	while (prompt != NULL)
 	{
 		if (*prompt)
 			add_history(prompt);
-		//ft_tokenization_checker(ft_parse_operators(ft_tokenize(prompt)));
 		token_list = ft_tokenize(prompt);
+		// ft_print_token_types(token_list);
+		ft_print_token_types(ft_parse_operators(token_list));
 		cmd_list = ft_parse(token_list, &shell_state);
+		ft_fill_heredocs(cmd_list);
+		ft_execute_heredocs(cmd_list);
+		
 		expand_command_variables(cmd_list, &shell_state);
-		// ft_exit_bug_print_debugger(cmd_list); // prevents the "exit bug"
-		// ft_print_command_sequences(cmd_list);
+		// // ft_exit_bug_print_debugger(cmd_list); // prevents the "exit bug"
+		// // ft_print_command_sequences(cmd_list);
 		execute_cmd(cmd_list, &shell_state);
-		ft_free_cmd_list(cmd_list);
+		(void)cmd_list; // ft_free_cmd_list(cmd_list);
 		free(prompt);
-		prompt = ft_prompt();
+		prompt = ft_prompt(0);
 	}
 	return (0);
 }

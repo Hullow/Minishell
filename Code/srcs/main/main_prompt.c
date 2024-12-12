@@ -6,7 +6,7 @@
 /*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/22 18:40:16 by cmegret           #+#    #+#             */
-/*   Updated: 2024/12/11 14:10:36 by fallan           ###   ########.fr       */
+/*   Updated: 2024/12/12 17:32:55 by fallan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,9 +74,14 @@ char	*ft_create_message_prompt(char *last_folder)
  * @note On memory allocation error, the function prints an error message and
  *       terminates the program.
  */
-char	*ft_prompt(void)
+char	*ft_prompt(int type)
 {
 	char	*prompt;
+
+	if (type == REDIR_HEREDOC)
+		prompt = readline(">");
+	else
+		prompt = readline("Minishell : ");
 	// char	*message;
 	// char	cwd[1024];
 	// char	*last_folder;
@@ -98,7 +103,6 @@ char	*ft_prompt(void)
 	// else
 	// {
 	// 	perror("getcwd");
-		prompt = readline("Minishell : ");
 	// }
 	return (prompt);
 }

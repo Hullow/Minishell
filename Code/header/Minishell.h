@@ -61,6 +61,18 @@
 
 extern int	g_signal;
 
+// linked list of tokens
+typedef struct s_token
+{
+	char			*str;
+	int				type;
+	bool			is_delimited;
+	bool			is_operator;
+	bool			is_single_quoted;
+	bool			is_double_quoted;
+	struct s_token	*next;
+}	t_token;
+
 // linked list of redirections
 typedef struct s_redir
 {
@@ -70,6 +82,14 @@ typedef struct s_redir
 	struct s_redir	*next;
 }	t_redir;
 
+// linked list of heredocs
+typedef struct s_heredoc
+{
+	char				*delimiter;
+	bool				is_delimiter_quoted;
+	struct s_heredoc	*next;
+}	t_heredoc;
+
 // linked list of our command arguments
 typedef struct s_cmd_args
 {
@@ -77,18 +97,6 @@ typedef struct s_cmd_args
 	struct s_cmd_args	*next;
 }	t_cmd_args;
 
-// linked list of tokens
-typedef struct s_token
-{
-	char			*str;
-	int				type;
-	bool			is_delimited;
-	bool			is_quoted;
-	// bool			is_double_quoted;
-	// bool			is_single_quoted;
-	bool			is_operator;
-	struct s_token	*next;
-}	t_token;
 
 // linked list of commands (pipes)
 // n.b.: **args is the array of arguments used by execve,
@@ -101,6 +109,7 @@ typedef struct s_command
 	int					saved_input; // file descriptor for input (stdin or redirection)
 	int					saved_output; // file descriptor for output (stdout or redirection)
 	t_redir				*redir_list; // redirection list
+	t_heredoc			*heredoc_list; // heredoc list
 	struct s_command	*next;
 }	t_command;
 
@@ -126,7 +135,7 @@ void		error_and_exit(const char *message, int last_exit_status);
 void		check_arguments(int argc, char **argv);
 
 // Prompt
-char		*ft_prompt(void);
+char		*ft_prompt(int type);
 
 // Utils
 void		ft_free_cmd_list(t_command *head_cmd);

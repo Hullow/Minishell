@@ -1086,6 +1086,8 @@ cmegret@c1r2s2:~$ cat << EOF | cat << EOF2 | grep b
 
 cmegret@c1r2s2:~$ cat << EOF | cat | grep b
 
+ls > 1 << EOF | echo hello > 2 | cat << EOF2 | cat << EOF3
+
 
 ## QUotes
 
