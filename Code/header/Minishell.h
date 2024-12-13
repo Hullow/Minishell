@@ -80,7 +80,7 @@ typedef struct s_token
 // => each list stores the entire contents of one heredoc
 typedef struct s_heredoc
 {
-	char				**contents;
+	t_token				*contents;
 	struct s_heredoc	*next;
 }	t_heredoc;
 

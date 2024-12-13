@@ -6,7 +6,7 @@
 /*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/06 17:21:26 by cmegret           #+#    #+#             */
-/*   Updated: 2024/12/11 11:26:51 by fallan           ###   ########.fr       */
+/*   Updated: 2024/12/13 16:54:28 by fallan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,6 +87,8 @@ int	ft_append_char_to_word(t_token **tok, char c)
 	character[0] = c;
 	character[1] = '\0';
 	(*tok)->str = ft_strjoin(temp, character);
+	if (!(*tok)->str)
+		return (-1);
 	free(temp);
 	return (1);
 }
