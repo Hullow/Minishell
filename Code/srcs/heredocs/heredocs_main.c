@@ -6,7 +6,7 @@
 /*   By: francis <francis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/12 17:27:25 by fallan            #+#    #+#             */
-/*   Updated: 2024/12/13 18:09:54 by francis          ###   ########.fr       */
+/*   Updated: 2024/12/13 18:12:50 by francis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,8 +45,6 @@ bool	ft_match_heredoc_delimiter(t_token *heredoc_contents, char *delimiter)
 		else
 			second_str = NULL;
 	}
-	else
-		(void)heredoc_contents;
 	if (!ft_strncmp(first_str, delimiter, ft_strlen(first_str + 1))) // very basic version, for testing
 	{
 		if (!second_str)
