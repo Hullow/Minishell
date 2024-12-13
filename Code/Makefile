@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: cmegret <cmegret@student.42lausanne.ch>    +#+  +:+       +#+         #
+#    By: francis <francis@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/07/19 14:53:36 by cmegret           #+#    #+#              #
-#    Updated: 2024/12/13 19:02:36 by cmegret          ###   ########.fr        #
+#    Updated: 2024/12/13 20:20:58 by francis          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -68,7 +68,6 @@ SRCS = main/main.c \
 	  parsing/parse_utils.c \
 	  parsing/parse_debug.c \
 	  heredocs/heredocs_main.c \
-	  heredocs/heredocs_tokenization.c \
 	  expansion/expansion_variable.c \
 	  expansion/string_utils.c \
 	  expansion/variable_count_utils.c \

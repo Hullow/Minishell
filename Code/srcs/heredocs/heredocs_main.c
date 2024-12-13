@@ -6,7 +6,7 @@
 /*   By: francis <francis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/12 17:27:25 by fallan            #+#    #+#             */
-/*   Updated: 2024/12/13 20:13:04 by francis          ###   ########.fr       */
+/*   Updated: 2024/12/13 20:20:38 by francis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,9 +115,9 @@ void	ft_handle_heredoc_input(t_redir *redir_list)
 void	ft_open_heredocs(t_command *cmd_list)
 {
 	t_redir		*redir_list;
-	t_command	*cmd_list_head;
+	// t_command	*cmd_list_head;
 
-	cmd_list_head = cmd_list; // Save the head of the command list
+	// cmd_list_head = cmd_list; // Save the head of the command list
 	while (cmd_list)
 	{
 		redir_list = cmd_list->redir_list;
@@ -129,7 +129,7 @@ void	ft_open_heredocs(t_command *cmd_list)
 		}
 		cmd_list = cmd_list->next;
 	}
-	ft_print_heredocs(cmd_list_head); // Appel de la fonction pour imprimer le contenu des heredocs
+	// ft_print_heredocs(cmd_list_head); // Appel de la fonction pour imprimer le contenu des heredocs
 }
 
 // prints all heredocs in all redirection lists for all commands
@@ -137,7 +137,6 @@ void	ft_print_heredocs(t_command *cmd_list)
 {
 	t_redir		*redir_list;
 	t_heredoc	*heredoc;
-	t_token		*content;
 
 	if (!cmd_list)
 		return ;
@@ -158,7 +157,7 @@ void	ft_print_heredocs(t_command *cmd_list)
 				while (heredoc)
 				{
 					printf("{%s}", heredoc->line);
-					heredoc = content->next;
+					heredoc = heredoc->next;
 				}
 				printf("\n");
 				}
