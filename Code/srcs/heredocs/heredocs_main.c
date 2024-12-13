@@ -92,16 +92,36 @@ void	ft_handle_heredoc_input(t_redir *redir_list)
 	t_heredoc	*heredoc_line;
 	char		*prompt;
 
+	if (!redir_list || !redir_list->str)
+		return ;
 	heredoc_line = ft_init_heredoc();
+	if (!heredoc_line)
+		return ;
 	redir_list->heredoc = heredoc_line;
-	prompt = ft_prompt(REDIR_HEREDOC);
-	while (prompt != NULL)
+	while (1)
 	{
-		ft_tokenize_heredoc_line(prompt, heredoc_line);
-		if (ft_match_heredoc_delimiter(heredoc_line->contents, redir_list->str))
-			break;
-		heredoc_line = ft_malloc_new_heredoc_line(heredoc_line);
 		prompt = ft_prompt(REDIR_HEREDOC);
+		if (!prompt) // EOF (Ctrl+D)
+		{
+			printf("\n");
+			break ;
+		}
+		if (*prompt)
+		{
+			ft_tokenize_heredoc_line(prompt, heredoc_line);
+			if (ft_match_heredoc_delimiter(heredoc_line->contents, redir_list->str))
+			{
+				free(prompt);
+				break ;
+			}
+			heredoc_line = ft_malloc_new_heredoc_line(heredoc_line);
+			if (!heredoc_line)
+			{
+				free(prompt);
+				break ;
+			}
+		}
+		free(prompt);
 	}
 }
 
