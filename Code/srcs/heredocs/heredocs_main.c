@@ -6,7 +6,7 @@
 /*   By: francis <francis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/12 17:27:25 by fallan            #+#    #+#             */
-/*   Updated: 2024/12/13 19:30:44 by francis          ###   ########.fr       */
+/*   Updated: 2024/12/13 20:13:04 by francis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,26 +30,10 @@
 
 // matches a heredoc line (linked list of tokens, with strings inside)
 // with the heredoc delimiter (string)
-bool	ft_match_heredoc_delimiter(t_token *heredoc_contents, char *delimiter)
+bool	ft_match_heredoc_delimiter(char *heredoc_line, char *delimiter)
 {
-	char	*first_str;
-	char	*second_str;
-
-	first_str = NULL;
-	second_str = NULL;
-	if (heredoc_contents)
-	{
-		first_str = heredoc_contents->str;
-		if (heredoc_contents->next)
-			second_str = heredoc_contents->next->str;
-		else
-			second_str = NULL;
-	}
-	if (!ft_strncmp(first_str, delimiter, ft_strlen(first_str + 1))) // very basic version, for testing
-	{
-		if (!second_str)
-			return (true);
-	}
+	if (!ft_strncmp(heredoc_line, delimiter, ft_strlen(heredoc_line + 1))) // very basic version, for testing
+		return (true);
 	return (false);
 }
 
@@ -62,7 +46,7 @@ t_heredoc	*ft_init_heredoc(void)
 	heredoc_line = malloc(sizeof(t_heredoc));
 	if (!heredoc_line)
 		return (NULL);
-	heredoc_line->contents = NULL;
+	heredoc_line->line = NULL;
 	heredoc_line->next = NULL;
 	return (heredoc_line);
 }
@@ -74,7 +58,7 @@ t_heredoc	*ft_malloc_new_heredoc_line(t_heredoc *heredoc_line)
 	heredoc_line = heredoc_line->next;
 	if (!heredoc_line)
 		return (NULL);
-	heredoc_line->contents = NULL;
+	heredoc_line->line = NULL;
 	heredoc_line->next = NULL;
 	return (heredoc_line);
 }
@@ -108,8 +92,8 @@ void	ft_handle_heredoc_input(t_redir *redir_list)
 		}
 		if (*prompt)
 		{
-			ft_tokenize_heredoc_line(prompt, heredoc_line);
-			if (ft_match_heredoc_delimiter(heredoc_line->contents, redir_list->str))
+			heredoc_line->line = ft_strdup(prompt);
+			if (ft_match_heredoc_delimiter(heredoc_line->line, redir_list->str))
 			{
 				free(prompt);
 				break ;
@@ -152,7 +136,7 @@ void	ft_open_heredocs(t_command *cmd_list)
 void	ft_print_heredocs(t_command *cmd_list)
 {
 	t_redir		*redir_list;
-	t_heredoc	*heredoc_line;
+	t_heredoc	*heredoc;
 	t_token		*content;
 
 	if (!cmd_list)
@@ -164,27 +148,22 @@ void	ft_print_heredocs(t_command *cmd_list)
 		{
 			if (redir_list->type == REDIR_HEREDOC && redir_list->str_type == WORD)
 			{
-				heredoc_line = redir_list->heredoc;
-				if (!heredoc_line)
+				heredoc = redir_list->heredoc;
+				if (!heredoc)
 				{
 					redir_list = redir_list->next;
 					continue ;
 				}
 				printf("Contenu du heredoc pour %s:\n", redir_list->str);
-				while (heredoc_line)
+				while (heredoc)
 				{
-					content = heredoc_line->contents;
-					while (content)
-					{
-						printf("{%s}", content->str);
-						content = content->next;
-					}
-					printf("\n");
-					heredoc_line = heredoc_line->next;
+					printf("{%s}", heredoc->line);
+					heredoc = content->next;
+				}
+				printf("\n");
 				}
 			}
 			redir_list = redir_list->next;
 		}
 		cmd_list = cmd_list->next;
-	}
 }

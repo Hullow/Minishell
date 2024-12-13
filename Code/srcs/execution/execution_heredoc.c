@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution_heredoc.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cmegret <cmegret@student.42lausanne.ch>    +#+  +:+       +#+        */
+/*   By: francis <francis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/13 19:01:29 by cmegret           #+#    #+#             */
-/*   Updated: 2024/12/13 19:02:01 by cmegret          ###   ########.fr       */
+/*   Updated: 2024/12/13 20:06:05 by francis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,22 +40,48 @@ bool	has_heredoc(t_command *cmd)
  */
 int	setup_heredoc_input(t_command *cmd)
 {
-	t_redir	*redir;
-	int		pipe_fd[2];
-	t_token	*content;
+	t_redir		*redir;
+	int			pipe_fd[2];
+	t_heredoc	*heredoc;
+	size_t		total_len;
+	char		*buffer;
+	int			pos;
 
 	redir = cmd->redir_list;
 	while (redir && redir->type != REDIR_HEREDOC)
 		redir = redir->next;
 	if (!redir || pipe(pipe_fd) == -1)
 		return (-1);
-	content = redir->heredoc->contents;
-	while (content)
+
+	// Calculer la taille totale
+	total_len = 0;
+	heredoc = redir->heredoc;
+	while (heredoc)
 	{
-		write(pipe_fd[1], content->str, ft_strlen(content->str));
-		write(pipe_fd[1], "\n", 1);
-		content = content->next;
+		total_len += ft_strlen(heredoc->line) + 1;
+		heredoc = heredoc->next;
 	}
+
+	// Allouer un buffer pour le contenu du heredoc
+	buffer = (char *)malloc(total_len + 1);
+	if (!buffer)
+		return (-1);
+
+	// Copier le contenu du heredoc dans le buffer
+	pos = 0;
+	heredoc = redir->heredoc;
+	while (heredoc)
+	{
+		ft_strlcpy(buffer + pos, heredoc->line, total_len - pos);
+		pos += ft_strlen(heredoc->line);
+		buffer[pos++] = '\n';
+		heredoc = heredoc->next;
+	}
+	buffer[pos] = '\0';
+
+	// Écrire et nettoyer
+	write(pipe_fd[1], buffer, pos);
+	free(buffer);
 	close(pipe_fd[1]);
 	dup2(pipe_fd[0], STDIN_FILENO);
 	close(pipe_fd[0]);

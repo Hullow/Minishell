@@ -6,7 +6,7 @@
 /*   By: francis <francis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/12 17:27:25 by fallan            #+#    #+#             */
-/*   Updated: 2024/12/13 19:42:18 by francis          ###   ########.fr       */
+/*   Updated: 2024/12/13 20:10:00 by francis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,9 +20,9 @@
 	//     (*tok)->str, (*tok)->is_delimited);
 int	ft_process_heredoc_line(char *prompt, int i, t_token **tok)
 {
-	if (ft_is_blank(prompt[i]))
-		return(ft_tokenize_blank(tok));
-	else if (ft_previous_char_part_of_word(*tok))
+	// if (ft_is_blank(prompt[i]))
+	// 	return(ft_tokenize_blank(tok));
+	if (ft_previous_char_part_of_word(*tok))
 		return(ft_append_char_to_word(tok, prompt[i]));
 	else
 		return(ft_new_word(tok, prompt[i]));
@@ -34,6 +34,8 @@ int	ft_process_heredoc_line(char *prompt, int i, t_token **tok)
 // Returns a linked list of tokens
 void	ft_tokenize_heredoc_line(char *prompt, t_heredoc *heredoc_line)
 {
+
+	ft_strlcpy(prompt, heredoc_line, ft_strlen)
 	t_token	*tok;
 	t_token	*head;
 	int		i;
