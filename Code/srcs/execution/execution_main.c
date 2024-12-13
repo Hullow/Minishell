@@ -6,7 +6,7 @@
 /*   By: cmegret <cmegret@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/07 14:37:18 by francis           #+#    #+#             */
-/*   Updated: 2024/12/10 17:31:56 by cmegret          ###   ########.fr       */
+/*   Updated: 2024/12/13 19:01:56 by cmegret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,6 +103,9 @@ void	execute_child(t_command *cmd_list,
 {
 	setup_file_descriptors(cmd_list, in_fd, fd);
 	shell_state->last_exit_status = 0;
+	// Pour chaque commande avec un heredoc, rediriger son entrée standard
+	if (has_heredoc(cmd_list))
+		setup_heredoc_input(cmd_list); // Configure le pipe pour le heredoc
 	configure_redirections(cmd_list, shell_state);
 	if (shell_state->last_exit_status != 0)
 	{
