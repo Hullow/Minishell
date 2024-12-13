@@ -6,7 +6,7 @@
 /*   By: francis <francis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/12 17:27:25 by fallan            #+#    #+#             */
-/*   Updated: 2024/12/13 18:30:58 by francis          ###   ########.fr       */
+/*   Updated: 2024/12/13 18:53:26 by francis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,42 +128,42 @@ void	ft_open_heredocs(t_command *cmd_list)
 	ft_print_heredocs(cmd_list_head); // Appel de la fonction pour imprimer le contenu des heredocs
 }
 
-// prints the contents of all heredocs
+// prints all heredocs in all redirection lists for all commands
 void	ft_print_heredocs(t_command *cmd_list)
 {
 	t_redir		*redir_list;
-	t_redir		*anchor_redir;
 	t_heredoc	*heredoc_line;
-	t_heredoc	*anchor_heredoc;
+	t_token		*content;
 
+	if (!cmd_list)
+		return ;
 	while (cmd_list)
 	{
 		redir_list = cmd_list->redir_list;
-		anchor_redir = cmd_list->redir_list;
 		while (redir_list)
 		{
 			if (redir_list->type == REDIR_HEREDOC && redir_list->str_type == WORD)
 			{
 				heredoc_line = redir_list->heredoc;
-				anchor_heredoc = redir_list->heredoc;
+				if (!heredoc_line)
+				{
+					redir_list = redir_list->next;
+					continue ;
+				}
 				printf("Contenu du heredoc pour %s:\n", redir_list->str);
 				while (heredoc_line)
 				{
-					if (heredoc_line->contents)
+					content = heredoc_line->contents;
+					while (content)
 					{
-						while (heredoc_line->contents != NULL)
-						{
-							printf("%s\n", heredoc_line->contents->str);
-							heredoc_line->contents = heredoc_line->contents->next;
-						}
+						printf("%s\n", content->str);
+						content = content->next;
 					}
 					heredoc_line = heredoc_line->next;
 				}
 			}
-			redir_list->heredoc = anchor_heredoc;
 			redir_list = redir_list->next;
 		}
-		cmd_list->redir_list = anchor_redir;
 		cmd_list = cmd_list->next;
 	}
 }
