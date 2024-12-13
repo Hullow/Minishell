@@ -6,7 +6,7 @@
 /*   By: francis <francis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/12 17:27:25 by fallan            #+#    #+#             */
-/*   Updated: 2024/12/13 18:53:26 by francis          ###   ########.fr       */
+/*   Updated: 2024/12/13 19:30:44 by francis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -156,9 +156,10 @@ void	ft_print_heredocs(t_command *cmd_list)
 					content = heredoc_line->contents;
 					while (content)
 					{
-						printf("%s\n", content->str);
+						printf("{%s}", content->str);
 						content = content->next;
 					}
+					printf("\n");
 					heredoc_line = heredoc_line->next;
 				}
 			}
