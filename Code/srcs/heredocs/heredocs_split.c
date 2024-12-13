@@ -12,39 +12,6 @@
 
 #include "../../header/Minishell.h"
 
-// Need to fix, segfaults
-void	ft_print_heredocs(t_command *cmd_list)
-{
-	t_redir		*redir;
-	t_heredoc 	*heredoc_line;
-	int			i = 0;
-	int			j = -1;
-
-	while (cmd_list)
-	{
-		redir = cmd_list->redir_list;
-		while (redir)
-		{
-			heredoc_line = redir->heredoc;
-			if (heredoc_line)
-			{
-				while (heredoc_line)
-				{
-					printf("heredoc line %d:\n", ++i);
-					while (ft_strncmp((heredoc_line->contents)[++j], "", 1))
-						printf("{%s}  ", (heredoc_line->contents)[j]);
-					printf("\n");
-					j = -1;
-					heredoc_line = heredoc_line->next;
-				}
-			}
-			i = 0;
-			redir = redir->next;
-		}
-		cmd_list = cmd_list->next;
-	}
-}
-
 // counts the number of strings our split should contain
 int	ft_calc_heredoc_line_size(char const *s)
 {
