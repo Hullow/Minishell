@@ -6,7 +6,7 @@
 /*   By: francis <francis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/12 17:27:25 by fallan            #+#    #+#             */
-/*   Updated: 2024/12/13 18:12:50 by francis          ###   ########.fr       */
+/*   Updated: 2024/12/13 18:30:58 by francis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,16 +132,20 @@ void	ft_open_heredocs(t_command *cmd_list)
 void	ft_print_heredocs(t_command *cmd_list)
 {
 	t_redir		*redir_list;
+	t_redir		*anchor_redir;
 	t_heredoc	*heredoc_line;
+	t_heredoc	*anchor_heredoc;
 
 	while (cmd_list)
 	{
 		redir_list = cmd_list->redir_list;
+		anchor_redir = cmd_list->redir_list;
 		while (redir_list)
 		{
 			if (redir_list->type == REDIR_HEREDOC && redir_list->str_type == WORD)
 			{
 				heredoc_line = redir_list->heredoc;
+				anchor_heredoc = redir_list->heredoc;
 				printf("Contenu du heredoc pour %s:\n", redir_list->str);
 				while (heredoc_line)
 				{
@@ -156,9 +160,10 @@ void	ft_print_heredocs(t_command *cmd_list)
 					heredoc_line = heredoc_line->next;
 				}
 			}
+			redir_list->heredoc = anchor_heredoc;
 			redir_list = redir_list->next;
 		}
-		
+		cmd_list->redir_list = anchor_redir;
 		cmd_list = cmd_list->next;
 	}
 }
