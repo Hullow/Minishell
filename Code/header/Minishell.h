@@ -40,10 +40,11 @@
 
 # include "Builtin.h"
 # include "Execution.h"
-# include "Signal.h"
 # include "Expansion.h"
-# include "Tokenizer.h"
+# include "Heredocs.h"
 # include "Parser.h"
+# include "Signal.h"
+# include "Tokenizer.h"
 
 // Token types
 # define WORD 1
@@ -70,28 +71,28 @@ typedef struct s_token
 	bool			is_operator;
 	bool			is_single_quoted;
 	bool			is_double_quoted;
+	bool			is_quoted;
 	struct s_token	*next;
 }	t_token;
+
+// a linked list storing the contents of one heredoc
+// each node of the list is a line of a heredoc
+// => each list stores the entire contents of one heredoc
+typedef struct s_heredoc
+{
+	char				**contents;
+	struct s_heredoc	*next;
+}	t_heredoc;
 
 // linked list of redirections
 typedef struct s_redir
 {
 	int				type; // REDIR_INPUT, REDIR_OUTPUT, REDIR_APPEND, REDIR_HEREDOC
 	char			*str; // either file (for input, output, append) or delimiter (for Heredoc)
-	int				str_type; // the type of redirection after
+	int				str_type; // the type of token that follows the redirection (WORD, REDIR_*, ...)
+	t_heredoc		*heredoc; // contents of the heredoc, if the redirection is a heredoc
 	struct s_redir	*next;
 }	t_redir;
-
-// linked list of heredocs
-typedef struct s_heredoc
-{
-	char				*delimiter;
-	bool				is_delimiter_quoted;
-	char				***contents; // array of array of strings
-	// alternative: liste chainee separant les nodes par '\n' => probablement plus simple a implementer
-	
-	struct s_heredoc	*next;
-}	t_heredoc;
 
 // linked list of our command arguments
 typedef struct s_cmd_args
@@ -99,7 +100,6 @@ typedef struct s_cmd_args
 	char				*arg_string;
 	struct s_cmd_args	*next;
 }	t_cmd_args;
-
 
 // linked list of commands (pipes)
 // n.b.: **args is the array of arguments used by execve,
@@ -112,7 +112,6 @@ typedef struct s_command
 	int					saved_input; // file descriptor for input (stdin or redirection)
 	int					saved_output; // file descriptor for output (stdout or redirection)
 	t_redir				*redir_list; // redirection list
-	t_heredoc			*heredoc_list; // heredoc list
 	struct s_command	*next;
 }	t_command;
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_redir.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: francis <francis@student.42.fr>            +#+  +:+       +#+        */
+/*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/01 17:28:03 by fallan            #+#    #+#             */
-/*   Updated: 2024/12/10 18:53:46 by francis          ###   ########.fr       */
+/*   Updated: 2024/12/13 01:16:10 by fallan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,8 @@ t_redir	*ft_last_redir(t_redir **redir_list)
 // copies the string from our token to the redirection node
 // advances by one token in the token linked list
 // returns the token
+// n.b.: redir_list->str_type is the type of the string that follows
+// the actual redirection, not the type of redirection
 t_token	**ft_assign_redir_str(t_token **tok, t_redir *redir_list)
 {
 	*tok = (*tok)->next;

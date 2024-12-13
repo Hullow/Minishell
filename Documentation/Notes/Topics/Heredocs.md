@@ -3,7 +3,21 @@
 <br>From subject:
 	> should be given a delimiter, then read the input until a line containing the delimiter is seen. However, it doesn’t have to update the history!
 
-##
+## POSIX 2024 (Shell Command Language)
+### 2.7 Redirection
+> Redirection is used to open and close files for the current shell execution environment or for any command.
+
+#### 2.7.4 Here-Document
+> The redirection operators "<<" allows redirection  of subsequent lines read by the shell to the input of a command.
+
+> The redirected lines are known as a "here-document".<br>
+> The here-document:<br>
+&emsp;	- shall be treated as a single word that:<br>
+&emsp;&emsp;	- begins after the next NEWLINE token,<br>
+&emsp;&emsp;	- and continues until there is a line containing only:<br>
+		&emsp;&emsp;&emsp;	- the delimiter<br>
+		&emsp;&emsp;&emsp;	- and a \<newline\>,<br>
+		&emsp;&emsp;&emsp;	- with no \<blank\> characters in between.<br>
 
 ### 2.2. Token classification
 #### 2.2.1. Here-documents processing
