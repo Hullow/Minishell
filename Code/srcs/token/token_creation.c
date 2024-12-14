@@ -6,13 +6,15 @@
 /*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/06 17:21:26 by cmegret           #+#    #+#             */
-/*   Updated: 2024/12/12 15:45:22 by fallan           ###   ########.fr       */
+/*   Updated: 2024/12/14 16:20:55 by fallan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../header/Minishell.h"
 
 // function to create (malloc) a new token and add it to the linked list
+// quotes: if previous token was quoted, mark token as quoted too
+// else, mark as unquoted
 t_token	*ft_create_new_token(t_token *tok)
 {
 	t_token	*newtoken;
@@ -26,8 +28,14 @@ t_token	*ft_create_new_token(t_token *tok)
 		newtoken->type = 0;
 		newtoken->is_operator = false;
 		newtoken->is_delimited = false;
-		newtoken->is_single_quoted = false;
-		newtoken->is_double_quoted = false;
+		if (tok->is_single_quoted)
+			newtoken->is_single_quoted = true;
+		else
+			newtoken->is_single_quoted = false;
+		if (tok->is_double_quoted)
+			newtoken->is_double_quoted = true;
+		else
+			newtoken->is_double_quoted = false;
 		newtoken->next = NULL;
 		tok->is_delimited = true;
 		tok->next = newtoken;
