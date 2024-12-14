@@ -83,7 +83,7 @@ typedef struct s_token
 	char			*str;
 	int				type;
 	bool			is_delimited;
-	bool			is_quoted;
+	bool			quote_open;
 	bool			is_double_quoted;
 	bool			is_single_quoted;
 	bool			is_operator;

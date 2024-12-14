@@ -6,7 +6,7 @@
 /*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/06 17:19:58 by cmegret           #+#    #+#             */
-/*   Updated: 2024/12/14 15:47:14 by fallan           ###   ########.fr       */
+/*   Updated: 2024/12/14 17:48:06 by fallan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ t_token	*ft_init_token(void)
 	tok->is_delimited = false;
 	tok->is_single_quoted = false;
 	tok->is_double_quoted = false;
+	tok->quote_open = false;
 	return (tok);
 }
 
@@ -52,6 +53,8 @@ static int	ft_process_prompt(char *prompt, int i, t_token **tok)
 	else if (ft_is_quote_character(prompt[i]))
 		return (ft_mark_token_as_quoted(prompt, i, tok));
 	// Missing expansion (rule 5 POSIX) ? => do tests first while looking at requirements
+	// else if (ft_is_dollar_sign(prompt[i]) && !ft_is_quoted(*tok))
+		
 	else if (ft_is_operator_character(prompt[i]) && !(ft_is_quoted(*tok)))
 		return (ft_new_operator_token(prompt, i, tok));
 	else if (ft_is_blank(prompt[i]) && !(ft_is_quoted(*tok)))

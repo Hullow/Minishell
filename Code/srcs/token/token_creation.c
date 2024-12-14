@@ -6,7 +6,7 @@
 /*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/06 17:21:26 by cmegret           #+#    #+#             */
-/*   Updated: 2024/12/14 16:20:55 by fallan           ###   ########.fr       */
+/*   Updated: 2024/12/14 18:08:57 by fallan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ t_token	*ft_create_new_token(t_token *tok)
 			newtoken->is_double_quoted = true;
 		else
 			newtoken->is_double_quoted = false;
+		newtoken->quote_open = false;
 		newtoken->next = NULL;
 		tok->is_delimited = true;
 		tok->next = newtoken;
@@ -48,7 +49,7 @@ t_token	*ft_create_new_token(t_token *tok)
 t_token	*ft_tokenize_end_of_input(t_token *tok)
 {
 	if (tok)
-		tok->is_delimited = 1;
+		tok->is_delimited = true;
 	else
 	{
 		tok = malloc (1 * sizeof(t_token));
@@ -91,12 +92,16 @@ int	ft_append_char_to_word(t_token **tok, char c)
 	char	*temp;
 	char	character[2];
 
-	temp = ft_strdup((*tok)->str);
-	if ((*tok)->str)
-		free((*tok)->str);
 	character[0] = c;
 	character[1] = '\0';
-	(*tok)->str = ft_strjoin(temp, character);
-	free(temp);
+	if (!(*tok)->str)
+		(*tok)->str = ft_strdup(character);
+	else
+	{
+		temp = ft_strdup((*tok)->str);
+		free((*tok)->str);
+		(*tok)->str = ft_strjoin(temp, character);
+		free(temp);
+	}
 	return (1);
 }
