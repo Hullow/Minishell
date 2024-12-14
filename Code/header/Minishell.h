@@ -62,19 +62,6 @@
 
 extern int	g_signal;
 
-// linked list of tokens
-typedef struct s_token
-{
-	char			*str;
-	int				type;
-	bool			is_delimited;
-	bool			is_operator;
-	bool			is_single_quoted;
-	bool			is_double_quoted;
-	bool			is_quoted;
-	struct s_token	*next;
-}	t_token;
-
 // a linked list storing the contents of one heredoc
 // each node of the list is a line of a heredoc
 // => each list stores the entire contents of one heredoc
