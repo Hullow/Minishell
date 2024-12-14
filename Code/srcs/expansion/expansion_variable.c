@@ -6,7 +6,7 @@
 /*   By: cmegret <cmegret@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/09 10:41:17 by cmegret           #+#    #+#             */
-/*   Updated: 2024/12/14 11:26:09 by cmegret          ###   ########.fr       */
+/*   Updated: 2024/12/14 15:36:05 by cmegret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,12 +85,7 @@ size_t	calculate_total_length(char **subtokens)
 	total_length = 0;
 	i = 0;
 	while (subtokens[i])
-	{
-		total_length += ft_strlen(subtokens[i]);
-		if (subtokens[i + 1])
-			total_length += 1; // Space between words
-		i++;
-	}
+		total_length += ft_strlen(subtokens[i++]);
 	return (total_length);
 }
 
@@ -121,12 +116,6 @@ char	*perform_join(char **subtokens, size_t total_length)
 		temp = ft_strjoin(joined, subtokens[i]);
 		free(joined);
 		joined = temp;
-		if (subtokens[i + 1])
-		{
-			temp = ft_strjoin(joined, " ");
-			free(joined);
-			joined = temp;
-		}
 		i++;
 	}
 	return (joined);
@@ -150,24 +139,56 @@ char	*join_subtokens(char **subtokens)
 	return (joined);
 }
 
-/**
- * @brief Processes a single command argument by expanding environment variables.
- *
- * Splits the argument into subtokens, replaces environment
- * variables with their values,
- * and joins the subtokens back into a single string.
- *
- * @param current_arg The current command argument to process.
- * @param shell_state The current state of the shell,
- * containing environment variables.
- */
+char	**split_with_quotes(const char *str)
+{
+	char	**result;
+	char	*temp;
+	int		i;
+	int		j;
+	int		count;
+
+	count = 0;
+	temp = malloc(ft_strlen(str) + 1);
+	result = malloc(sizeof(char *) * ((ft_strlen(str) * 2) + 1));
+	i = 0;
+	while (str[i])
+	{
+		if (str[i] == '\'' || str[i] == '\"')
+		{
+			temp[0] = str[i];
+			temp[1] = '\0';
+			result[count++] = ft_strdup(temp);
+			i++;
+		}
+		else if (str[i] == ' ')
+		{
+			temp[0] = str[i];
+			temp[1] = '\0';
+			result[count++] = ft_strdup(temp);
+			i++;
+		}
+		else
+		{
+			j = 0;
+			while (str[i] && str[i] != ' ' && str[i] != '\'' && str[i] != '\"')
+				temp[j++] = str[i++];
+			temp[j] = '\0';
+			if (j > 0)
+				result[count++] = ft_strdup(temp);
+		}
+	}
+	result[count] = NULL;
+	free(temp);
+	return (result);
+}
+
 void	process_argument(t_cmd_args *current_arg, t_shell_state *shell_state)
 {
 	char	**subtokens;
 	int		i;
 	char	*env_value;
 
-	subtokens = ft_split(current_arg->arg_string, ' ');
+	subtokens = split_with_quotes(current_arg->arg_string);
 	i = 0;
 	while (subtokens[i])
 	{
