@@ -6,13 +6,15 @@
 /*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/06 17:21:26 by cmegret           #+#    #+#             */
-/*   Updated: 2024/12/13 16:54:28 by fallan           ###   ########.fr       */
+/*   Updated: 2024/12/14 20:51:11 by fallan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../header/Minishell.h"
 
 // function to create (malloc) a new token and add it to the linked list
+// quotes: if previous token was quoted, mark token as quoted too
+// else, mark as unquoted
 t_token	*ft_create_new_token(t_token *tok)
 {
 	t_token	*newtoken;
@@ -21,12 +23,21 @@ t_token	*ft_create_new_token(t_token *tok)
 	{
 		newtoken = malloc(sizeof(t_token));
 		if (!newtoken)
-			return (0);
+			return (NULL);
 		newtoken->str = NULL;
 		newtoken->type = 0;
-		newtoken->is_operator = NULL;
-		newtoken->next = NULL;
+		newtoken->is_operator = false;
 		newtoken->is_delimited = false;
+		if (tok->is_single_quoted)
+			newtoken->is_single_quoted = true;
+		else
+			newtoken->is_single_quoted = false;
+		if (tok->is_double_quoted)
+			newtoken->is_double_quoted = true;
+		else
+			newtoken->is_double_quoted = false;
+		newtoken->to_expand = NULL;
+		newtoken->next = NULL;
 		tok->is_delimited = true;
 		tok->next = newtoken;
 		tok = tok->next;
@@ -38,7 +49,7 @@ t_token	*ft_create_new_token(t_token *tok)
 t_token	*ft_tokenize_end_of_input(t_token *tok)
 {
 	if (tok)
-		tok->is_delimited = 1;
+		tok->is_delimited = true;
 	else
 	{
 		tok = malloc (1 * sizeof(t_token));
@@ -48,7 +59,8 @@ t_token	*ft_tokenize_end_of_input(t_token *tok)
 		tok->type = END_OF_INPUT;
 		tok->is_delimited = true;
 		tok->is_operator = false;
-		tok->is_quoted = false;
+		tok->is_single_quoted = false;
+		tok->is_double_quoted = false;
 	}
 	return (tok);
 }
@@ -71,7 +83,6 @@ int	ft_new_word(t_token **tok, char c)
 	(*tok)->type = WORD;
 	(*tok)->is_operator = false;
 	(*tok)->str = ft_strdup(character);
-	(*tok)->is_delimited = false;
 	return (1);
 }
 
@@ -81,14 +92,16 @@ int	ft_append_char_to_word(t_token **tok, char c)
 	char	*temp;
 	char	character[2];
 
-	temp = ft_strdup((*tok)->str);
-	if ((*tok)->str)
-		free((*tok)->str);
 	character[0] = c;
 	character[1] = '\0';
-	(*tok)->str = ft_strjoin(temp, character);
 	if (!(*tok)->str)
-		return (-1);
-	free(temp);
+		(*tok)->str = ft_strdup(character);
+	else
+	{
+		temp = ft_strdup((*tok)->str);
+		free((*tok)->str);
+		(*tok)->str = ft_strjoin(temp, character);
+		free(temp);
+	}
 	return (1);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cmegret <cmegret@student.42lausanne.ch>    +#+  +:+       +#+        */
+/*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/11 13:59:44 by fallan            #+#    #+#             */
-/*   Updated: 2024/12/14 11:27:09 by cmegret          ###   ########.fr       */
+/*   Updated: 2024/12/14 20:51:22 by fallan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,10 +25,13 @@ void	ft_free_cmd_list(t_command *head_cmd)
 	{
 		temp = head_cmd;
 		head_cmd = head_cmd->next;
-		while (temp->args[i])
+		if (temp->args)
 		{
-			free(temp->args[i]);
-			i++;
+			while (temp->args[i])
+			{
+				free(temp->args[i]);
+				i++;
+			}
 		}
 		free(temp->args);
 		free(temp);

@@ -101,6 +101,25 @@ typedef struct s_cmd_args
 	struct s_cmd_args	*next;
 }	t_cmd_args;
 
+typedef struct s_expand
+{
+	bool			check; // true, false
+	struct s_expand	*next;
+}	t_expand;
+
+// linked list of tokens
+typedef struct s_token
+{
+	char			*str;
+	int				type;
+	bool			is_delimited;
+	t_expand		*to_expand;
+	bool			is_double_quoted;
+	bool			is_single_quoted;
+	bool			is_operator;
+	struct s_token	*next;
+}	t_token;
+
 // linked list of commands (pipes)
 // n.b.: **args is the array of arguments used by execve,
 //		 while *arg_list is the list of arguments filled by our parser

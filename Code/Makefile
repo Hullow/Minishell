@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: cmegret <cmegret@student.42lausanne.ch>    +#+  +:+       +#+         #
+#    By: fallan <fallan@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/07/19 14:53:36 by cmegret           #+#    #+#              #
-#    Updated: 2024/12/14 00:20:18 by cmegret          ###   ########.fr        #
+#    Updated: 2024/12/14 20:50:10 by fallan           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -48,8 +48,14 @@ CC = gcc
 
 # -g3 -fsanitize=address
 # Flags de compilation
-CFLAGS = -Wall -Wextra -Werror -I/opt/homebrew/opt/readline/include
-LIBFLAGS = -L./lib -lft -lftprintf -L/opt/homebrew/opt/readline/lib -lreadline
+# CFLAGS:
+
+# NORMAL:
+ CFLAGS = -Wall -Wextra -Werror -I/opt/homebrew/opt/readline/include
+ LIBFLAGS = -L./lib -lft -lftprintf -L/opt/homebrew/opt/readline/lib -lreadline
+# 42 OS X:
+# CFLAGS = -Wall -Wextra -Werror -I/Library/Developer/CommandLineTools/SDKs/MacOSX10.15.sdk/usr/include/
+# LIBFLAGS = -L./lib -lft -lftprintf -L/Library/Developer/CommandLineTools/SDKs/MacOSX10.15.sdk/usr/lib -lreadline
 
 # Fichiers sources et objets
 SRCS = main/main.c \
@@ -58,10 +64,12 @@ SRCS = main/main.c \
       main/main_prompt.c \
       token/token_main.c \
       token/token_checks.c \
-      token/token_debug.c \
-      token/token_utils.c \
+      token/token_char_checks.c \
       token/token_creation.c \
+      token/token_debug.c \
       token/token_operator.c \
+      token/token_quotes.c \
+      token/token_utils.c \
 	  parsing/parse_main.c \
 	  parsing/parse_redir.c \
 	  parsing/parse_command_args.c \

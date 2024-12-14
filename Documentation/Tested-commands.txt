@@ -1103,4 +1103,45 @@ rm '|'
 touch '>'
 rm '>'
 
+VAR=a'b'c        
+echo $VAR
+export VAR2=$VAR
+'unset VAR2'
+unset 'VAR2'
+
+
+echo '> hello'ababa
+VAR='/'
+echo $VAR
+ls $VARbin
+ls /bin
+ls $VARbin
+echo "$USER"$SHELL
+./a.out echo "$USER"$SHELL
+echo '$USER'
+echo "$USER"
+echo "$USER '$USER'"
+./a.out echo "$USER '$USER'"
+./a.out echo "$USER '$USER'"ababab
+./a.out echo "$USER '$USER'"a"b"a'bab'
+echo "'$USER'"
+echo '"$USER"'
+echo "''"
+echo '""'
+
+echo $'USER
+echo $'USER'
+echo $
+echo $ 'USER'
+echo $USER'$SHELL
+echo $USER'$SHELL'
+
+echo '$USER'$SHELL
+echo '$USER"
+echo $USER$SHELL
+echo USERSHELL
+
+echo "'$USER' $SHELL"
+===> bug
+
 <tabs>
