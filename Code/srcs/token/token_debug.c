@@ -6,7 +6,7 @@
 /*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 19:01:55 by francis           #+#    #+#             */
-/*   Updated: 2024/12/14 15:47:54 by fallan           ###   ########.fr       */
+/*   Updated: 2024/12/14 19:59:08 by fallan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,5 +78,29 @@ void	ft_print_token_types(t_token *head)
 				printf("nor iterator->str nor iterator-type found\n");
 		}
 		iterator = iterator->next;
+	}
+}
+
+void	ft_print_required_expansions(t_token *tok)
+{
+	t_expand	*expand;
+	
+	printf("Parameters to expand:");
+	while (tok)
+	{
+		if (!(tok->str))
+			return ;
+		expand = tok->to_expand;
+		printf("\nToken {%s}: ", tok->str);
+		while (expand)
+		{
+			if (expand->check == true)
+				printf("expand - ");
+			else
+				printf("don't - ");
+			expand = expand->next;
+		}
+		printf("\n");
+		tok = tok->next;
 	}
 }

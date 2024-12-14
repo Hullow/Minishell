@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expansion_variable.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cmegret <cmegret@student.42lausanne.ch>    +#+  +:+       +#+        */
+/*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/09 10:41:17 by cmegret           #+#    #+#             */
-/*   Updated: 2024/12/10 18:05:59 by cmegret          ###   ########.fr       */
+/*   Updated: 2024/12/14 20:01:52 by fallan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,6 +99,8 @@ void	fill_table(t_command *cmd_list, t_shell_state *shell_state)
 void	expand_command_variables(t_command *cmd_list,
 	t_shell_state *shell_state)
 {
+	if (!cmd_list)
+		return ;
 	if (!cmd_list->args || !cmd_list->args[0])
 		return ;
 	fill_table(cmd_list, shell_state);

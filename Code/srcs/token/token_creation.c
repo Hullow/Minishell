@@ -6,7 +6,7 @@
 /*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/06 17:21:26 by cmegret           #+#    #+#             */
-/*   Updated: 2024/12/14 18:08:57 by fallan           ###   ########.fr       */
+/*   Updated: 2024/12/14 18:36:50 by fallan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ t_token	*ft_create_new_token(t_token *tok)
 			newtoken->is_double_quoted = true;
 		else
 			newtoken->is_double_quoted = false;
-		newtoken->quote_open = false;
+		newtoken->to_expand = NULL;
 		newtoken->next = NULL;
 		tok->is_delimited = true;
 		tok->next = newtoken;

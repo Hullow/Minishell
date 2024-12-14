@@ -6,7 +6,7 @@
 /*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/12 15:26:48 by fallan            #+#    #+#             */
-/*   Updated: 2024/12/12 16:08:45 by fallan           ###   ########.fr       */
+/*   Updated: 2024/12/14 18:25:02 by fallan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,10 +18,8 @@
 // returns 0 otherwise
 int	ft_is_quote_character(char c)
 {
-	if (c == '\'')
+	if (c == '\'' || c == '\"')
 		return (1);
-	else if (c == '\"')
-		return (2);
 	else
 		return (0);
 }
@@ -44,4 +42,13 @@ int	ft_is_blank(char c)
 	if (c == ' ' || c == '\t')
 		return (1);
 	return (0);
+}
+
+// checks if character is dollar sign, returns true, else returns false
+bool	ft_is_dollar_sign(char c)
+{
+	if (c == '$')
+		return (true);
+	else
+		return (false);
 }

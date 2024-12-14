@@ -6,7 +6,7 @@
 /*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/07 14:36:43 by francis           #+#    #+#             */
-/*   Updated: 2024/12/14 16:13:00 by fallan           ###   ########.fr       */
+/*   Updated: 2024/12/14 20:06:39 by fallan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ int	main(int argc, char **argv, char **envp)
 		// token_list = ft_parse_operators(ft_tokenize(prompt));
 		// ft_print_all_token_strings(&token_list);
 		token_list = ft_tokenize(prompt);
+		// ft_print_required_expansions(token_list);
 		cmd_list = ft_parse(token_list, &shell_state);
 		expand_command_variables(cmd_list, &shell_state);
 		// ft_exit_bug_print_debugger(cmd_list); // prevents the "exit bug"

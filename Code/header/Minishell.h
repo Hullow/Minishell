@@ -77,13 +77,19 @@ typedef struct s_cmd_args
 	struct s_cmd_args	*next;
 }	t_cmd_args;
 
+typedef struct s_expand
+{
+	bool			check; // true, false
+	struct s_expand	*next;
+}	t_expand;
+
 // linked list of tokens
 typedef struct s_token
 {
 	char			*str;
 	int				type;
 	bool			is_delimited;
-	bool			quote_open;
+	t_expand		*to_expand;
 	bool			is_double_quoted;
 	bool			is_single_quoted;
 	bool			is_operator;

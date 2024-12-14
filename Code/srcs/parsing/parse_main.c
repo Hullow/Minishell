@@ -6,7 +6,7 @@
 /*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/07 14:36:57 by francis           #+#    #+#             */
-/*   Updated: 2024/12/12 17:52:20 by fallan           ###   ########.fr       */
+/*   Updated: 2024/12/14 20:07:44 by fallan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,22 @@ t_command	*ft_add_pipe(t_command *cmd_list)
 	return (cmd_list);
 }
 
+// checks if our token list ends with open quotes
+// if
+int	ft_check_open_quote(t_token *tok)
+{
+	while (tok->next)
+		tok = tok->next;
+	if (ft_is_quoted(tok))
+	{
+		printf("open quote !\n");
+		ft_free_token_list(tok);
+		return (1);
+	}
+	else
+		return (0);
+}
+
 // Parses our linked list of tokens, starting from left (head)
 // Extracts the command and the arguments 
 // Outputs a struct command with the command name and the arguments
@@ -102,8 +118,11 @@ t_command	*ft_parse(t_token *tok, t_shell_state *shell_state)
 			cmd_list = ft_add_pipe(cmd_list);
 		tok = tok->next;
 	}
+	if (ft_check_open_quote(head_tok) == 1)
+		return (NULL);
 	ft_free_token_list(head_tok);
 	if (ft_allocate_cmd_args_to_array(head_cmd) == -1)
 		return (NULL);
+	tok = head_tok;
 	return (head_cmd);
 }

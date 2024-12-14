@@ -6,7 +6,7 @@
 /*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 19:48:46 by fallan            #+#    #+#             */
-/*   Updated: 2024/12/12 16:11:57 by fallan           ###   ########.fr       */
+/*   Updated: 2024/12/14 19:19:55 by fallan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,8 +44,10 @@ int			ft_mark_token_as_quoted(char *prompt, int i, t_token **tok);
 int			ft_is_operator_character(char c);
 int			ft_is_blank(char c);
 int			ft_is_quote_character(char c);
+bool		ft_is_dollar_sign(char c);
+
 	// Tokens
-bool		ft_is_quoted(t_token *tok);
+int			ft_is_quoted(t_token *tok);
 int			ft_previous_char_is_undelimited_operator(t_token *tok);
 int			ft_previous_char_part_of_word(t_token *tok);
 
@@ -57,5 +59,6 @@ t_token		*ft_last_token(t_token *tok);
 int			ft_count_tokens(t_token *tok);
 void		ft_print_all_token_strings(t_token **head);
 void		ft_print_token_types(t_token *head);
+void		ft_print_required_expansions(t_token *tok);
 
 #endif

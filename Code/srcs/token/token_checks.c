@@ -6,17 +6,19 @@
 /*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/22 16:35:11 by francis           #+#    #+#             */
-/*   Updated: 2024/12/14 15:12:48 by fallan           ###   ########.fr       */
+/*   Updated: 2024/12/14 19:59:46 by fallan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../header/Minishell.h"
 
 // checks if token is between quotes : single quotes and/or double quotes
-bool	ft_is_quoted(t_token *tok)
+int	ft_is_quoted(t_token *tok)
 {
-	if (tok->is_single_quoted || tok->is_double_quoted)
-		return (true);
+	if (tok->is_single_quoted)
+		return (1);
+	else if (tok->is_double_quoted)
+		return (2);
 	else
 		return (false);
 }
