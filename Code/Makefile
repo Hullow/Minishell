@@ -6,7 +6,7 @@
 #    By: fallan <fallan@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/07/19 14:53:36 by cmegret           #+#    #+#              #
-#    Updated: 2024/12/12 17:29:04 by fallan           ###   ########.fr        #
+#    Updated: 2024/12/14 15:51:35 by fallan           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -48,8 +48,14 @@ CC = gcc
 
 # -g3 -fsanitize=address
 # Flags de compilation
-CFLAGS = -Wall -Wextra -Werror -I/opt/homebrew/opt/readline/include
-LIBFLAGS = -L./lib -lft -lftprintf -L/opt/homebrew/opt/readline/lib -lreadline
+# CFLAGS:
+
+# NORMAL:
+ CFLAGS = -Wall -Wextra -Werror -I/opt/homebrew/opt/readline/include
+ LIBFLAGS = -L./lib -lft -lftprintf -L/opt/homebrew/opt/readline/lib -lreadline
+# 42 OS X:
+# CFLAGS = -Wall -Wextra -Werror -I/Library/Developer/CommandLineTools/SDKs/MacOSX10.15.sdk/usr/include/
+# LIBFLAGS = -L./lib -lft -lftprintf -L/Library/Developer/CommandLineTools/SDKs/MacOSX10.15.sdk/usr/lib -lreadline
 
 # Fichiers sources et objets
 SRCS = main/main.c \
@@ -80,7 +86,6 @@ SRCS = main/main.c \
 	  execution/execution_external.c \
 	  execution/execution_redir.c \
 	  execution/execution_redir_utils.c \
-	  heredocs/
 	  builtin/cd.c \
 	  builtin/cd_utils.c \
       builtin/env.c \

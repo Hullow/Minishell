@@ -84,8 +84,8 @@ typedef struct s_token
 	int				type;
 	bool			is_delimited;
 	bool			is_quoted;
-	// bool			is_double_quoted;
-	// bool			is_single_quoted;
+	bool			is_double_quoted;
+	bool			is_single_quoted;
 	bool			is_operator;
 	struct s_token	*next;
 }	t_token;

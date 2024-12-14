@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   token_debug.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: francis <francis@student.42.fr>            +#+  +:+       +#+        */
+/*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 19:01:55 by francis           #+#    #+#             */
-/*   Updated: 2024/12/10 19:04:09 by francis          ###   ########.fr       */
+/*   Updated: 2024/12/14 15:47:54 by fallan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ void	ft_print_all_token_strings(t_token **head)
 	iterator = *head;
 	while (iterator != 0)
 	{
-		printf("token: %s\n", iterator->str);
+		printf("token: {%s}\n", iterator->str);
 		iterator = iterator->next;
 	}
 }

@@ -1101,4 +1101,10 @@ rm '|'
 touch '>'
 rm '>'
 
+VAR=a'b'c        
+echo $VAR
+export VAR2=$VAR
+'unset VAR2'
+unset 'VAR2'
+
 <tabs>

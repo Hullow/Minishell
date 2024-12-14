@@ -3,14 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   signal.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cmegret <cmegret@student.42lausanne.ch>    +#+  +:+       +#+        */
+/*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 14:40:07 by cmegret           #+#    #+#             */
-/*   Updated: 2024/12/11 10:26:01 by cmegret          ###   ########.fr       */
+/*   Updated: 2024/12/14 15:52:09 by fallan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../header/Minishell.h"
+#include <readline/readline.h>
 
 int	g_signal = 0;
 
@@ -21,7 +22,7 @@ void	handle_sigint(int sig)
 	{
 		write(STDOUT_FILENO, "\n", 1);
 		rl_on_new_line();
-		rl_replace_line("", 0);
+		rl_replace_line("", 0); // comment this out on 42 OS X computers
 		rl_redisplay();
 	}
 }

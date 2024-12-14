@@ -6,7 +6,7 @@
 /*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/22 16:35:11 by francis           #+#    #+#             */
-/*   Updated: 2024/12/12 15:30:29 by fallan           ###   ########.fr       */
+/*   Updated: 2024/12/14 15:12:48 by fallan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ bool	ft_is_quoted(t_token *tok)
 // checks if previous character was part of an undelimited operator token
 int	ft_previous_char_is_undelimited_operator(t_token *tok)
 {
-	if (tok && tok->is_operator && !tok->is_delimited)
+	if (tok && !ft_is_quoted(tok) && tok->is_operator && !tok->is_delimited)
 		return (1);
 	return (0);
 }
