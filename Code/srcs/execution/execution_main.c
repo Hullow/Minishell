@@ -6,7 +6,7 @@
 /*   By: cmegret <cmegret@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/07 14:37:18 by francis           #+#    #+#             */
-/*   Updated: 2024/12/13 20:55:18 by cmegret          ###   ########.fr       */
+/*   Updated: 2024/12/14 11:38:37 by cmegret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ void	run_command(t_command *cmd_list, t_shell_state *shell_state)
 		if (ft_is_builtin(cmd_list->cmd_name) == 0)
 			ft_execute_builtin(cmd_list, shell_state);
 		else
-			handle_child_process(cmd_list, shell_state->envp);
+			handle_child_process(cmd_list, shell_state);
 	}
 }
 
@@ -145,6 +145,6 @@ int	execute_cmd(t_command *cmd_list, t_shell_state *shell_state)
 			pid_count++;
 		cmd_list = cmd_list->next;
 	}
-	wait_for_pipeline(pipeline_pids, pid_count);
+	wait_for_pipeline(pipeline_pids, pid_count, shell_state);
 	return (0);
 }

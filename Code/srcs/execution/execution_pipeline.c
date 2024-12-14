@@ -20,8 +20,10 @@
  *
  * @param pipeline_pids An array of PIDs of the processes in the pipeline.
  * @param pid_count The number of processes in the pipeline.
+ * @param shell_state The current state of the shell to update last_exit_status.
  */
-void	wait_for_pipeline(pid_t *pipeline_pids, int pid_count)
+void	wait_for_pipeline(pid_t *pipeline_pids, int pid_count,
+	t_shell_state *shell_state)
 {
 	int	i;
 	int	status;
@@ -30,8 +32,15 @@ void	wait_for_pipeline(pid_t *pipeline_pids, int pid_count)
 	while (i < pid_count)
 	{
 		if (pipeline_pids[i] > 0)
+		{
 			if (waitpid(pipeline_pids[i], &status, 0) == -1)
 				perror("waitpid");
+			if (i == pid_count - 1)
+			{
+				if (WIFEXITED(status))
+					shell_state->last_exit_status = WEXITSTATUS(status);
+			}
+		}
 		i++;
 	}
 }

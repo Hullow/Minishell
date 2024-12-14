@@ -6,7 +6,7 @@
 /*   By: cmegret <cmegret@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/09 10:41:17 by cmegret           #+#    #+#             */
-/*   Updated: 2024/12/14 11:14:52 by cmegret          ###   ########.fr       */
+/*   Updated: 2024/12/14 11:26:09 by cmegret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -275,7 +275,8 @@ void	fill_table(t_command *cmd_list, t_shell_state *shell_state)
 		if (!table)
 		{
 			printf("Error: Memory allocation failed in fill_table\n");
-			exit(EXIT_FAILURE);
+			shell_state->last_exit_status = EXIT_FAILURE;
+			exit(shell_state->last_exit_status);
 		}
 		fill_table_values(table, current_cmd, shell_state);
 		ft_free_array(current_cmd->args);

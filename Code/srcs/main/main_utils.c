@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
+/*   By: cmegret <cmegret@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/11 13:59:44 by fallan            #+#    #+#             */
-/*   Updated: 2024/12/12 14:28:31 by fallan           ###   ########.fr       */
+/*   Updated: 2024/12/14 11:27:09 by cmegret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,12 +44,13 @@ void	ft_free_cmd_list(t_command *head_cmd)
  * @param argc The number of command-line arguments.
  * @param argv An array of command-line arguments.
  */
-void	check_arguments(int argc, char **argv)
+void	check_arguments(int argc, char **argv, t_shell_state *shell_state)
 {
 	if (argc > 1)
 	{
 		printf("Usage: %s\n", argv[0]);
 		printf("No arguments are allowed\n");
-		exit(EXIT_FAILURE);
+		shell_state->last_exit_status = EXIT_FAILURE;
+		exit(shell_state->last_exit_status);
 	}
 }
