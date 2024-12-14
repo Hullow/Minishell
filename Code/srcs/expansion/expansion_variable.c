@@ -6,34 +6,11 @@
 /*   By: cmegret <cmegret@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/09 10:41:17 by cmegret           #+#    #+#             */
-/*   Updated: 2024/12/14 00:22:50 by cmegret          ###   ########.fr       */
+/*   Updated: 2024/12/14 11:14:52 by cmegret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../header/Minishell.h"
-
-/**
- * @brief Frees a dynamically allocated array of strings.
- *
- * This function iterates through each string in the array, frees it,
- * and then frees the array itself.
- *
- * @param array The array of strings to be freed.
- */
-void	free_array(char **array)
-{
-	size_t	i;
-
-	if (!array)
-		return ;
-	i = 0;
-	while (array[i])
-	{
-		free(array[i]);
-		i++;
-	}
-	free(array);
-}
 
 /**
  * @brief Checks if the provided token is an environment variable.
@@ -205,7 +182,7 @@ void	process_argument(t_cmd_args *current_arg, t_shell_state *shell_state)
 	}
 	free(current_arg->arg_string);
 	current_arg->arg_string = join_subtokens(subtokens);
-	free_array(subtokens);
+	ft_free_array(subtokens);
 }
 
 /**
