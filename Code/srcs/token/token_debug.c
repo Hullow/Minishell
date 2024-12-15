@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   token_debug.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
+/*   By: francis <francis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 19:01:55 by francis           #+#    #+#             */
-/*   Updated: 2024/12/14 19:59:08 by fallan           ###   ########.fr       */
+/*   Updated: 2024/12/15 11:55:46 by francis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,34 +38,28 @@ struct	s_token	*ft_last_token(t_token *tok)
 	return (tok);
 }
 
-// prints each token's contents (tok->str)
-void	ft_print_all_token_strings(t_token **head)
-{
-	t_token	*iterator;
-
-	iterator = *head;
-	while (iterator != 0)
-	{
-		printf("token: {%s}\n", iterator->str);
-		iterator = iterator->next;
-	}
-}
-
-// Traverses the linked list of tokens and prints each token's type, if any
-void	ft_print_token_types(t_token *head)
+// Traverses the linked list of tokens and prints each token's string, type, and quote status (if any) 
+void	ft_print_token_types_and_quote_status(t_token *tok)
 {
 	t_token		*iterator;
 	const char	*token_type_strings[10] = {
-		"UNDEFINED TOKEN", "WORD", "REDIR_INPUT", "REDIR_OUTPUT",
+		"UNKNOWN TOKEN TYPE", "WORD", "REDIR_INPUT", "REDIR_OUTPUT",
 		"REDIR_APPEND", "REDIR_HEREDOC", "PIPE", "END_OF_INPUT"
 	};
 
-	iterator = head;
+	printf("***TOKENS***\n");
+	iterator = tok;
 	while (iterator)
 	{
-		if (iterator->str && iterator->type)
-			printf("string: {%s} – token type: %s (%d)\n", iterator->str,
+		if (iterator->str)
+		{
+			printf("string: {%s} – token type: %s (%d)", iterator->str,
 				token_type_strings[iterator->type], iterator->type);
+			if (iterator->is_between_quotes)
+				printf(" – (quoted)\n");
+			else
+				printf(" – (unquoted)\n");
+		}
 		else
 		{
 			printf("type or string not found: ");
@@ -79,6 +73,7 @@ void	ft_print_token_types(t_token *head)
 		}
 		iterator = iterator->next;
 	}
+	printf("******\n");
 }
 
 void	ft_print_required_expansions(t_token *tok)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   token_operator.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
+/*   By: francis <francis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/06 17:27:19 by cmegret           #+#    #+#             */
-/*   Updated: 2024/12/12 16:56:14 by fallan           ###   ########.fr       */
+/*   Updated: 2024/12/15 11:32:57 by francis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 // creates a redirection append ('>>') operator token
 static int	ft_tokenize_redir_append(char *prompt, int i, t_token **tok)
 {
-	if (prompt[i] == '>' && prompt[i - 1] == '>' && ft_is_quoted(*tok) == false)
+	if (prompt[i] == '>' && prompt[i - 1] == '>' && ft_token_has_open_quote(*tok) == false)
 	{
 		free((*tok)->str);
 		(*tok)->str = ft_strdup(">>");
@@ -29,7 +29,7 @@ static int	ft_tokenize_redir_append(char *prompt, int i, t_token **tok)
 // creates a here document ('<<') operator token
 static int	ft_tokenize_here_doc(char *prompt, int i, t_token **tok)
 {
-	if (prompt[i] == '<' && prompt[i - 1] == '<' && ft_is_quoted(*tok) == false)
+	if (prompt[i] == '<' && prompt[i - 1] == '<' && ft_token_has_open_quote(*tok) == false)
 	{
 		free((*tok)->str);
 		(*tok)->str = ft_strdup("<<");
@@ -97,33 +97,25 @@ int	ft_continue_operator_token(char *prompt, int i, t_token **tok)
 // - current character can be used as the first character of a new operator
 // => delimit the current token, if any
 // => use the current character as the beginning of the next (operator) token
-int	ft_new_operator_token(char *prompt, int i, t_token **tok)
-{
-	(*tok) = ft_create_new_token(*tok);
-	ft_set_operator_token(prompt[i], tok);
-	return (1);
-}
-
+//
 // Function 2 for rule 2.2.2.6. (see ft_new_operator_token)
 // checks if token starts with a '|', '>', or '<' character
 // if a pipe character is found, delimit the token and assign the type PIPE
 // otherwise, start a new, undelimited and uncategorized operator token
-void	ft_set_operator_token(char c, t_token **tok)
+int	ft_new_operator_token(char *prompt, int i, t_token **tok)
 {
-	if (c == '|')
+	(*tok) = ft_add_token_to_list(*tok, UNKNOWN_TYPE);
+	if (prompt[i] == '|') // previously ft_set_operator_token(prompt[i], tok);
 	{
 		(*tok)->str = ft_strdup("|");
 		(*tok)->is_delimited = true;
-		(*tok)->is_operator = true;
 		(*tok)->type = PIPE;
-		(*tok)->next = NULL;
-		return ;
 	}
-	else if (c == '>')
+	else if (prompt[i] == '>')
 		(*tok)->str = ft_strdup(">");
-	else if (c == '<')
+	else if (prompt[i] == '<')
 		(*tok)->str = ft_strdup("<");
 	(*tok)->is_operator = true;
-	(*tok)->is_delimited = false;
 	(*tok)->next = NULL;
+	return (1);
 }

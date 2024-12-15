@@ -47,6 +47,7 @@
 # include "Tokenizer.h"
 
 // Token types
+# define UNKNOWN_TYPE 0
 # define WORD 1
 # define REDIR_INPUT 2
 # define REDIR_OUTPUT 3
@@ -100,10 +101,11 @@ typedef struct s_token
 	char			*str;
 	int				type;
 	bool			is_delimited;
+	bool			is_operator;
 	t_expand		*to_expand;
 	bool			is_double_quoted;
 	bool			is_single_quoted;
-	bool			is_operator;
+	bool			is_between_quotes;
 	struct s_token	*next;
 }	t_token;
 
