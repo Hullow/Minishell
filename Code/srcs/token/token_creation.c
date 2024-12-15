@@ -6,7 +6,7 @@
 /*   By: francis <francis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/06 17:21:26 by cmegret           #+#    #+#             */
-/*   Updated: 2024/12/15 12:05:34 by francis          ###   ########.fr       */
+/*   Updated: 2024/12/15 17:29:24 by francis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,6 @@ t_token	*ft_create_token(int token_type)
 	tok->type = token_type;
 	tok->is_delimited = false;
 	tok->is_operator = false;
-	tok->to_expand = NULL;
 	tok->is_single_quoted = false;
 	tok->is_double_quoted = false;
 	tok->is_between_quotes = false;
