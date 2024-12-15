@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   token_quotes.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
+/*   By: francis <francis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/12 15:56:09 by fallan            #+#    #+#             */
-/*   Updated: 2024/12/14 18:11:22 by fallan           ###   ########.fr       */
+/*   Updated: 2024/12/15 11:36:04 by francis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,38 +18,30 @@
 //		else, mark as not single quoted (close quote)
 // same for double quote
 // returns 1
-int	ft_mark_token_as_quoted(char *prompt, int i, t_token **tok)
+int	ft_handle_quote_tokenization(char c,
+	bool single_quoted, bool double_quoted, t_token **tok)
 {
-	bool	single_quoted;
-	bool	double_quoted;
-	
-
-	single_quoted = (*tok)->is_single_quoted;
-	double_quoted = (*tok)->is_double_quoted;
-
 	if ((*tok)->is_delimited)
+		*tok = ft_add_token_to_list(*tok, WORD);
+	if (c == '\'')
 	{
-		*tok = ft_create_new_token(*tok);
-		(*tok)->type = WORD;
-		(*tok)->is_operator = false;
-	}
-	if (prompt[i] == '\'')
-	{
-		if (!single_quoted && !double_quoted)
+		if (!ft_token_has_open_quote(*tok))
 			(*tok)->is_single_quoted = true;
 		else if (single_quoted && !double_quoted)
 			(*tok)->is_single_quoted = false;
 		else
 			ft_append_char_to_word(tok, '\'');
 	}
-	else if (prompt[i] == '\"')
+	else if (c == '\"')
 	{
-		if (!double_quoted && !single_quoted)
+		if (!ft_token_has_open_quote(*tok))
 			(*tok)->is_double_quoted = true;
 		else if (double_quoted && !single_quoted)
 			(*tok)->is_double_quoted = false;
 		else
 			ft_append_char_to_word(tok, '\"');
 	}
+	if (ft_token_has_open_quote(*tok))
+		(*tok)->is_between_quotes = true;
 	return (1);
 }

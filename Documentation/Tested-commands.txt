@@ -1142,4 +1142,10 @@ echo USERSHELL
 echo "'$USER' $SHELL"
 ===> bug
 
+cat << "EOF stop"
+cat << "EOF stop"abab
+cat << EOF "stopabab"
+cat << EOFstopabab
+cat << "EOFstop"abab
+
 <tabs>

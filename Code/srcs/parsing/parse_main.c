@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_main.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
+/*   By: francis <francis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/07 14:36:57 by francis           #+#    #+#             */
-/*   Updated: 2024/12/14 20:07:44 by fallan           ###   ########.fr       */
+/*   Updated: 2024/12/15 11:14:11 by francis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ int	ft_check_open_quote(t_token *tok)
 {
 	while (tok->next)
 		tok = tok->next;
-	if (ft_is_quoted(tok))
+	if (ft_token_has_open_quote(tok))
 	{
 		printf("open quote !\n");
 		ft_free_token_list(tok);
