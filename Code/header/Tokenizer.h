@@ -6,7 +6,7 @@
 /*   By: francis <francis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 19:48:46 by fallan            #+#    #+#             */
-/*   Updated: 2024/12/15 11:48:13 by francis          ###   ########.fr       */
+/*   Updated: 2024/12/15 19:00:34 by francis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ int			ft_new_operator_token(char *prompt, int i, t_token **tok);
 void		ft_set_operator_token(char c, t_token **tok);
 
 	// Quotes
-int	ft_handle_quote_tokenization(char c,
+int			ft_handle_quote_tokenization(char c,
 	bool single_quoted, bool double_quoted, t_token **tok);
 
 // Checkers
@@ -46,7 +46,6 @@ int	ft_handle_quote_tokenization(char c,
 int			ft_is_operator_character(char c);
 int			ft_is_blank(char c);
 int			ft_is_quote_character(char c);
-bool		ft_is_dollar_sign(char c);
 
 	// Tokens
 int			ft_token_has_open_quote(t_token *tok);
@@ -60,6 +59,5 @@ void		ft_free_token_list(t_token *tok);
 t_token		*ft_last_token(t_token *tok);
 int			ft_count_tokens(t_token *tok);
 void		ft_print_token_types_and_quote_status(t_token *tok);
-void		ft_print_required_expansions(t_token *tok);
 
 #endif

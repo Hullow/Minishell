@@ -6,7 +6,7 @@
 /*   By: francis <francis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/07 14:36:43 by francis           #+#    #+#             */
-/*   Updated: 2024/12/14 20:06:39 by fallan           ###   ########.fr       */
+/*   Updated: 2024/12/15 19:10:35 by francis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,8 @@ int	main(int argc, char **argv, char **envp)
 		if (*prompt)
 			add_history(prompt);
 		token_list = ft_tokenize(prompt);
-		// ft_print_required_expansions(token_list);
-		cmd_list = ft_parse(token_list, &shell_state);
+		ft_print_token_types_and_quote_status(token_list);
+		cmd_list = ft_parse(token_list);
 		ft_open_heredocs(cmd_list);
 		// ft_execute_heredocs(cmd_list);
 		expand_command_variables(cmd_list, &shell_state);

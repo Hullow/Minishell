@@ -14,16 +14,26 @@
 
 // prints all command arguments 
 // from the array of arguments of a command sequence
-void	ft_print_args(t_command *cmd_list)
+void	ft_print_args(t_command *cmd)
 {
 	int	i;
 
 	i = -1;
 	printf("ft_print_args:\n");
-	if (cmd_list && cmd_list->args)
+	if (cmd && cmd->args)
 	{
-		while (cmd_list->args[++i])
-			printf(" – arg[%d]: {%s}", i, cmd_list->args[i]);
+		while (cmd->args[++i])
+		{
+			printf(" – arg[%d]: {%s} ", i, cmd->args[i]);
+			if (cmd->args_between_quotes[i] == 2)
+				printf("(double quoted)");
+			else if (cmd->args_between_quotes[i] == 1)
+				printf("(single quoted)");
+			else if (cmd->args_between_quotes[i] == 0)
+				printf("(not quoted)");
+			else
+				printf("(!!quote status error!!)");
+		}
 	}
 	return ;
 }
@@ -58,7 +68,7 @@ void	ft_print_redirs(t_redir *redir, char *cmd_name)
 		{
 			if (redir->expand_heredoc)
 				printf("(not quoted: expand in heredoc)\n");
-			else	
+			else
 				printf("(quoted: don't expand in heredoc)\n");
 		}
 		redir = redir->next;

@@ -6,7 +6,7 @@
 /*   By: francis <francis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/07 14:36:57 by francis           #+#    #+#             */
-/*   Updated: 2024/12/15 16:28:10 by francis          ###   ########.fr       */
+/*   Updated: 2024/12/15 18:15:23 by francis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,13 +94,12 @@ int	ft_check_open_quote(t_token *tok)
 // after the while() loop, copy command arguments from the list to the array
 // with ft_allocate_cmd_args_to_array (n.b.: for each command/pipe)
 // return the first node of our list of commands (t_command	*head_cmd)
-t_command	*ft_parse(t_token *tok, t_shell_state *shell_state)
+t_command	*ft_parse(t_token *tok)
 {
 	t_command	*cmd_list;
 	t_command	*head_cmd;
 	t_token		*head_tok;
 
-	(void)shell_state;
 	cmd_list = malloc(sizeof(t_command));
 	if (!cmd_list)
 		return (NULL);
@@ -113,16 +112,15 @@ t_command	*ft_parse(t_token *tok, t_shell_state *shell_state)
 		if (ft_token_is_redir(tok->type))
 			ft_add_redir(&tok, cmd_list, NULL);
 		else if (ft_token_is_word(tok->type))
-			ft_add_cmd_arg_to_list(tok->str, &(cmd_list->arg_list));
+			ft_add_cmd_arg_to_list(tok, &(cmd_list->arg_list));
 		else if (ft_token_is_pipe(tok->type))
 			cmd_list = ft_add_pipe(cmd_list);
 		tok = tok->next;
 	}
 	if (ft_check_open_quote(head_tok) == 1)
 		return (NULL);
-	ft_free_token_list(head_tok);
 	if (ft_allocate_cmd_args_to_array(head_cmd) == -1)
 		return (NULL);
-	tok = head_tok;
+	ft_free_token_list(head_tok);
 	return (head_cmd);
 }

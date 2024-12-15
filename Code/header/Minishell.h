@@ -87,16 +87,9 @@ typedef struct s_redir
 typedef struct s_cmd_args
 {
 	char				*arg_string;
+	int					quote_status_arg; //if 1, single quotes, if 2 double quotes, if 0, not quoted
 	struct s_cmd_args	*next;
 }	t_cmd_args;
-
-// if check == true, need to expand
-// else, no need to expand
-typedef struct s_expand
-{
-	bool			check;
-	struct s_expand	*next;
-}	t_expand;
 
 // linked list of tokens
 typedef struct s_token
@@ -105,10 +98,9 @@ typedef struct s_token
 	int				type;
 	bool			is_delimited;
 	bool			is_operator;
-	t_expand		*to_expand;
 	bool			is_double_quoted;
 	bool			is_single_quoted;
-	bool			is_between_quotes;
+	int				quote_status;
 	struct s_token	*next;
 }	t_token;
 
@@ -120,6 +112,7 @@ typedef struct s_command
 	char				*cmd_name;
 	t_cmd_args			*arg_list;
 	char				**args;
+	int					*args_between_quotes; //if 1, between single quotes, if 2 double, if 0, not between quotes. Index = arg position
 	int					saved_input; // file descriptor for input (stdin or redirection)
 	int					saved_output; // file descriptor for output (stdout or redirection)
 	t_redir				*redir_list; // redirection list

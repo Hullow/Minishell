@@ -43,12 +43,3 @@ int	ft_is_blank(char c)
 		return (1);
 	return (0);
 }
-
-// checks if character is dollar sign, returns true, else returns false
-bool	ft_is_dollar_sign(char c)
-{
-	if (c == '$')
-		return (true);
-	else
-		return (false);
-}

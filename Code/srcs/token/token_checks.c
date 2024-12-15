@@ -13,6 +13,9 @@
 #include "../../header/Minishell.h"
 
 // checks if token has an open quote (single or double)
+// returns 1 for single quote
+// returns 2 for double quote
+// returns 0 otherwise
 int	ft_token_has_open_quote(t_token *tok)
 {
 	if (tok->is_single_quoted)
@@ -20,7 +23,7 @@ int	ft_token_has_open_quote(t_token *tok)
 	else if (tok->is_double_quoted)
 		return (2);
 	else
-		return (false);
+		return (0);
 }
 
 // checks if previous character was part of an undelimited operator token

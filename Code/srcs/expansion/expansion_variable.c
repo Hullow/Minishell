@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expansion_variable.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cmegret <cmegret@student.42lausanne.ch>    +#+  +:+       +#+        */
+/*   By: francis <francis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/15 10:28:35 by cmegret           #+#    #+#             */
-/*   Updated: 2024/12/15 14:57:41 by cmegret          ###   ########.fr       */
+/*   Updated: 2024/12/15 19:07:40 by francis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,11 +113,14 @@ void	fill_table(t_command *cmd_list, t_shell_state *shell_state)
 	i = 0;
 	while (cmd_list->args[i])
 	{
-		new_arg = process_single_arg(cmd_list->args[i], shell_state);
-		free(cmd_list->args[i]);
-		cmd_list->args[i] = new_arg;
-		if (i == 0)
-			cmd_list->cmd_name = cmd_list->args[i];
+		if (cmd_list->args_between_quotes[i] != 1)
+		{
+			new_arg = process_single_arg(cmd_list->args[i], shell_state);
+			free(cmd_list->args[i]);
+			cmd_list->args[i] = new_arg;
+			if (i == 0)
+				cmd_list->cmd_name = cmd_list->args[i];
+		}
 		i++;
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: francis <francis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/06 17:21:26 by cmegret           #+#    #+#             */
-/*   Updated: 2024/12/14 20:51:11 by fallan           ###   ########.fr       */
+/*   Updated: 2024/12/15 18:53:42 by francis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,10 +25,9 @@ t_token	*ft_create_token(int token_type)
 	tok->type = token_type;
 	tok->is_delimited = false;
 	tok->is_operator = false;
-	tok->to_expand = NULL;
 	tok->is_single_quoted = false;
 	tok->is_double_quoted = false;
-	tok->is_between_quotes = false;
+	tok->quote_status = 0;
 	tok->next = NULL;
 	return (tok);
 }
@@ -48,12 +47,12 @@ t_token	*ft_add_token_to_list(t_token *tok, int token_type)
 		if (tok->is_single_quoted)
 		{
 			newtoken->is_single_quoted = true;
-			newtoken->is_between_quotes = true;
+			newtoken->quote_status = 1;
 		}
 		else if (tok->is_double_quoted)
 		{
 			newtoken->is_double_quoted = true;
-			newtoken->is_between_quotes = true;
+			newtoken->quote_status = 2;
 		}
 		tok->is_delimited = true;
 		tok->next = newtoken;
@@ -97,10 +96,14 @@ int	ft_new_word(t_token **tok, char c)
 
 	character[0] = c;
 	character[1] = '\0';
-	if ((*tok)->str)
+	// if (!(*tok)->str && (*tok)->is_delimited)
+	// 	(*tok)->str = ft_strdup("");
+	if ((*tok)->is_delimited)
 		*tok = ft_add_token_to_list(*tok, WORD);
-	else
+	else if (!(*tok)->str)
 		(*tok)->type = WORD;
+	else
+		printf("ft_new_word: error\n");
 	(*tok)->str = ft_strdup(character);
 	return (1);
 }

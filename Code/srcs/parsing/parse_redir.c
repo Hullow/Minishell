@@ -40,7 +40,7 @@ t_token	**ft_assign_redir_str(t_token **tok, t_redir *redir_list)
 	if (!redir_list->str)
 		return (NULL);
 	redir_list->str_type = (*tok)->type;
-	if ((*tok)->is_between_quotes)
+	if ((*tok)->quote_status)
 		redir_list->expand_heredoc = false;
 	else
 		redir_list->expand_heredoc = true;

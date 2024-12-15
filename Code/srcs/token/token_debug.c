@@ -55,10 +55,14 @@ void	ft_print_token_types_and_quote_status(t_token *tok)
 		{
 			printf("string: {%s} – token type: %s (%d)", iterator->str,
 				token_type_strings[iterator->type], iterator->type);
-			if (iterator->is_between_quotes)
-				printf(" – (quoted)\n");
-			else
+			if (iterator->quote_status == 1)
+				printf(" – (single quoted)\n");
+			else if (iterator->quote_status == 2)
+				printf(" – (double quoted)\n");
+			else if (iterator->quote_status == 0)
 				printf(" – (unquoted)\n");
+			else
+				printf(" – !! quote status unknown !!\n");
 		}
 		else
 		{
@@ -74,28 +78,4 @@ void	ft_print_token_types_and_quote_status(t_token *tok)
 		iterator = iterator->next;
 	}
 	printf("************\n");
-}
-
-void	ft_print_required_expansions(t_token *tok)
-{
-	t_expand	*expand;
-	
-	printf("Parameters to expand:");
-	while (tok)
-	{
-		if (!(tok->str))
-			return ;
-		expand = tok->to_expand;
-		printf("\nToken {%s}: ", tok->str);
-		while (expand)
-		{
-			if (expand->check == true)
-				printf("expand - ");
-			else
-				printf("don't - ");
-			expand = expand->next;
-		}
-		printf("\n");
-		tok = tok->next;
-	}
 }
