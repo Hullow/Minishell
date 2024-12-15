@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yourlogin <youremail@student.42lausanne.ch>    +#+  +:+       +#+        */
+/*   By: cmegret <cmegret@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/12/02 16:18:19 by yourlogin         #+#    #+#             */
-/*   Updated: 2024/12/02 16:18:19 by yourlogin        ###   ########.ch       */
+/*   Created: 2024/12/13 20:57:18 by cmegret           #+#    #+#             */
+/*   Updated: 2024/12/13 20:57:20 by cmegret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,7 @@ char				*ft_substr(char const *s, unsigned int start, size_t len);
 int					ft_tolower(int c);
 int					ft_toupper(int c);
 int					ft_isspace(int c);
+int					ft_strcmp(const char *s1, const char *s2);
 
 // partie bonus
 typedef struct s_list

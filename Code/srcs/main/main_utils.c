@@ -6,7 +6,7 @@
 /*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/11 13:59:44 by fallan            #+#    #+#             */
-/*   Updated: 2024/12/14 17:15:35 by fallan           ###   ########.fr       */
+/*   Updated: 2024/12/14 20:51:22 by fallan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,12 +47,13 @@ void	ft_free_cmd_list(t_command *head_cmd)
  * @param argc The number of command-line arguments.
  * @param argv An array of command-line arguments.
  */
-void	check_arguments(int argc, char **argv)
+void	check_arguments(int argc, char **argv, t_shell_state *shell_state)
 {
 	if (argc > 1)
 	{
 		printf("Usage: %s\n", argv[0]);
 		printf("No arguments are allowed\n");
-		exit(EXIT_FAILURE);
+		shell_state->last_exit_status = EXIT_FAILURE;
+		exit(shell_state->last_exit_status);
 	}
 }

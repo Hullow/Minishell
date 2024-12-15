@@ -40,10 +40,11 @@
 
 # include "Builtin.h"
 # include "Execution.h"
-# include "Signal.h"
 # include "Expansion.h"
-# include "Tokenizer.h"
+# include "Heredocs.h"
 # include "Parser.h"
+# include "Signal.h"
+# include "Tokenizer.h"
 
 // Token types
 # define UNKNOWN_TYPE 0
@@ -62,12 +63,22 @@
 
 extern int	g_signal;
 
+// a linked list storing the contents of one heredoc
+// each node of the list is a line of a heredoc
+// => each list stores the entire contents of one heredoc
+typedef struct s_heredoc
+{
+	char				*line;
+	struct s_heredoc	*next;
+}	t_heredoc;
+
 // linked list of redirections
 typedef struct s_redir
 {
 	int				type; // REDIR_INPUT, REDIR_OUTPUT, REDIR_APPEND, REDIR_HEREDOC
 	char			*str; // either file (for input, output, append) or delimiter (for Heredoc)
-	int				str_type; // the type of redirection after
+	int				str_type; // the type of token that follows the redirection (WORD, REDIR_*, ...)
+	t_heredoc		*heredoc; // contents of the heredoc, if the redirection is a heredoc
 	struct s_redir	*next;
 }	t_redir;
 
@@ -131,10 +142,10 @@ int			main(int argc, char **argv, char **envp);
 void		ft_initialize(int argc, char **argv,
 				t_shell_state *shell_state, char **envp);
 void		error_and_exit(const char *message, int last_exit_status);
-void		check_arguments(int argc, char **argv);
+void		check_arguments(int argc, char **argv, t_shell_state *shell_state);
 
 // Prompt
-char		*ft_prompt(void);
+char		*ft_prompt(int type);
 
 // Utils
 void		ft_free_cmd_list(t_command *head_cmd);

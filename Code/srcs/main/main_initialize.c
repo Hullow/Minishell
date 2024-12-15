@@ -6,7 +6,7 @@
 /*   By: cmegret <cmegret@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/07 14:36:57 by francis           #+#    #+#             */
-/*   Updated: 2024/12/10 17:15:14 by cmegret          ###   ########.fr       */
+/*   Updated: 2024/12/14 11:26:58 by cmegret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,7 +117,7 @@ void	ft_initialize(int argc, char **argv,
 {
 	signal(SIGINT, handle_sigint);
 	signal(SIGQUIT, handle_sigquit);
-	check_arguments(argc, argv);
+	check_arguments(argc, argv, shell_state);
 	initialize_shell_state(shell_state, envp);
 	setup_terminal();
 }

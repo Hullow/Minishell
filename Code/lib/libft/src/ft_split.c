@@ -6,12 +6,13 @@
 /*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/20 11:25:56 by tkashi            #+#    #+#             */
-/*   Updated: 2024/05/06 17:22:49 by fallan           ###   ########.fr       */
+/*   Updated: 2024/12/12 22:25:47 by fallan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
+// counts the number of strings our split should contain
 int	ft_calc_size(char const *s, char c)
 {
 	int	prev;
@@ -36,6 +37,7 @@ int	ft_calc_size(char const *s, char c)
 	return (count);
 }
 
+// copies a split string
 int	ft_add_splitted(char const *s, int start, int end, char **ret)
 {
 	*ret = ft_substr(s, start + 1, end - start - 1);
@@ -44,6 +46,8 @@ int	ft_add_splitted(char const *s, int start, int end, char **ret)
 	return (1);
 }
 
+// while over the whole string to split it, by calling ft_add_splitted, if we
+// encounter the splitting character c
 int	ft_apply_split(char const *s, char c, char **ret)
 {
 	int	prev;
@@ -73,6 +77,9 @@ int	ft_apply_split(char const *s, char c, char **ret)
 	return (1);
 }
 
+// the orchestrating function to split a string into an array of strings, when 
+// encountering a splitting character c
+// returns an array of strings
 char	**ft_split(char const *s, char c)
 {
 	char	**ret;

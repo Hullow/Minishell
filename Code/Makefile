@@ -6,7 +6,7 @@
 #    By: fallan <fallan@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/07/19 14:53:36 by cmegret           #+#    #+#              #
-#    Updated: 2024/12/14 15:51:35 by fallan           ###   ########.fr        #
+#    Updated: 2024/12/14 20:50:10 by fallan           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -75,11 +75,13 @@ SRCS = main/main.c \
 	  parsing/parse_command_args.c \
 	  parsing/parse_utils.c \
 	  parsing/parse_debug.c \
+	  heredocs/heredocs_main.c \
 	  expansion/expansion_variable.c \
 	  expansion/string_utils.c \
 	  expansion/variable_count_utils.c \
 	  expansion/variable_processing.c \
 	  execution/execution_main.c \
+	  execution/execution_heredoc.c \
 	  execution/execution_pipeline.c \
 	  execution/execution_env_path.c \
 	  execution/execution_builtin.c \
