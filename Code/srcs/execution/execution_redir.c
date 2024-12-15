@@ -6,7 +6,7 @@
 /*   By: cmegret <cmegret@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/07 14:37:29 by francis           #+#    #+#             */
-/*   Updated: 2024/12/10 17:28:03 by cmegret          ###   ########.fr       */
+/*   Updated: 2024/12/15 12:53:37 by cmegret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -143,17 +143,20 @@ void	configure_redirections(t_command *cmd, t_shell_state *shell_state)
 	redir = cmd->redir_list;
 	while (redir)
 	{
-		if (validate_redirection(redir, shell_state) == -1)
-			return ;
-		if (redir->type == REDIR_OUTPUT)
-			if (handle_redir_output(redir, shell_state) == -1)
+		if (redir->type != REDIR_HEREDOC)
+		{
+			if (validate_redirection(redir, shell_state) == -1)
 				return ;
-		if (redir->type == REDIR_APPEND)
-			if (handle_redir_append(redir, shell_state) == -1)
-				return ;
-		if (redir->type == REDIR_INPUT)
-			if (handle_redir_input(redir, shell_state) == -1)
-				return ;
+			if (redir->type == REDIR_OUTPUT)
+				if (handle_redir_output(redir, shell_state) == -1)
+					return ;
+			if (redir->type == REDIR_APPEND)
+				if (handle_redir_append(redir, shell_state) == -1)
+					return ;
+			if (redir->type == REDIR_INPUT)
+				if (handle_redir_input(redir, shell_state) == -1)
+					return ;
+		}
 		redir = redir->next;
 	}
 }

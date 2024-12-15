@@ -6,7 +6,7 @@
 /*   By: cmegret <cmegret@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/15 10:28:35 by cmegret           #+#    #+#             */
-/*   Updated: 2024/12/15 11:27:01 by cmegret          ###   ########.fr       */
+/*   Updated: 2024/12/15 12:48:15 by cmegret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,13 +125,9 @@ void	fill_table(t_command *cmd_list, t_shell_state *shell_state)
 void	expand_command_variables(t_command *cmd_list,
 	t_shell_state *shell_state)
 {
-/*  	for (int i = 0; cmd_list->args[i]; i++)
- 		printf("cmd_list->args[%d]: %s\n", i, cmd_list->args[i]); */
 	if (!cmd_list)
 		return ;
 	if (!cmd_list->args || !cmd_list->args[0])
 		return ;
 	fill_table(cmd_list, shell_state);
-/* 	for (int i = 0; cmd_list->args[i]; i++)
-		printf("cmd_list->args[%d]: %s\n", i, cmd_list->args[i]); */
 }
