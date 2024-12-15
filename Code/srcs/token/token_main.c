@@ -6,7 +6,7 @@
 /*   By: francis <francis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/06 17:19:58 by cmegret           #+#    #+#             */
-/*   Updated: 2024/12/15 16:59:52 by francis          ###   ########.fr       */
+/*   Updated: 2024/12/15 17:02:42 by francis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@
 // 2.2.2.8. Previous character part of a word
 // 2.2.2.10 New word
 // N.b.:
-//	- 2.2.2.5. Parameter expansion ($) is not handled here but after tokenisation.
+//	- 2.2.2.5. Parameter expansion ($) is not handled here but after tokenisation
 // 	- 2.2.2.9. Comment '#': not implemented at all
 static int	ft_process_prompt(char *prompt, int i, t_token **tok)
 {
@@ -60,7 +60,7 @@ t_token	*ft_tokenize(char *prompt)
 	i = 0;
 	while (prompt[i])
 		i += ft_process_prompt(prompt, i, &tok);
-	if (!prompt[i]) // probably unnecessary => HEREDOCS though ?
+	if (!prompt[i]) // probably unnecessary
 		tok = ft_tokenize_end_of_input(tok);
 	return (head);
 }
