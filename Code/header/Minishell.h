@@ -88,6 +88,7 @@ typedef struct s_cmd_args
 	struct s_cmd_args	*next;
 }	t_cmd_args;
 
+// within a token, linked list of booleans to say if we must expand variables (e.g. $USER'$SHELL'$SHLVL"$USER")
 typedef struct s_expand
 {
 	bool			check; // true, false
