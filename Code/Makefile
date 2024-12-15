@@ -77,9 +77,6 @@ SRCS = main/main.c \
 	  parsing/parse_debug.c \
 	  heredocs/heredocs_main.c \
 	  expansion/expansion_variable.c \
-	  expansion/string_utils.c \
-	  expansion/variable_count_utils.c \
-	  expansion/variable_processing.c \
 	  execution/execution_main.c \
 	  execution/execution_heredoc.c \
 	  execution/execution_pipeline.c \
