@@ -6,7 +6,7 @@
 /*   By: francis <francis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 19:44:40 by fallan            #+#    #+#             */
-/*   Updated: 2024/12/10 18:31:22 by francis          ###   ########.fr       */
+/*   Updated: 2024/12/15 16:26:26 by francis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,9 +58,9 @@ void		ft_free_arg_list(t_cmd_args *arg_list);
 
 // Debug
 void		ft_print_args(t_command *cmd_list);
-int			ft_print_redirs(t_redir *redir_list);
+void		ft_print_redirs(t_redir *redir, char *cmd_name);
+void		ft_print_all_redirs(t_command *cmd);
 char		*ft_return_redir_type(int redir_type);
 void		ft_print_command_sequences(t_command *head);
-void		ft_exit_bug_print_debugger(t_command *head);
 
 #endif
