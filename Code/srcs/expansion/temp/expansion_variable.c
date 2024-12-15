@@ -1,26 +1,6 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   expansion_variable.c                               :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/12/09 10:41:17 by cmegret           #+#    #+#             */
-/*   Updated: 2024/12/14 20:55:32 by fallan           ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
+/* 
 #include "../../header/Minishell.h"
 
-/**
- * @brief Checks if the provided token is an environment variable.
- *
- * Determines if the first character of the token is a '$', indicating
- * it's an environment variable.
- *
- * @param token The token to check.
- * @return true if the token is an environment variable, false otherwise.
- */
 bool	is_env_variable(const char *token)
 {
 	if (!token)
@@ -28,19 +8,6 @@ bool	is_env_variable(const char *token)
 	return (token[0] == '$');
 }
 
-/**
- * @brief Retrieves the value of an environment variable from the environment.
- *
- * This function searches for the environment variable key in the envp array
- * and returns its corresponding value. If the variable is not found, it returns
- * an empty string.
- *
- * @param token The token representing the environment variable (e.g., "$PATH").
- * @param envp The array of environment variables.
- * @return A newly allocated string containing
- * the value of the environment variable,
- *         or an empty string if not found.
- */
 char	*get_env_value(const char *token, char **envp)
 {
 	char	*env_key;
@@ -66,15 +33,6 @@ char	*get_env_value(const char *token, char **envp)
 	return (ft_strdup(""));
 }
 
-/**
- * @brief Calculates the total length required to join subtokens with spaces.
- *
- * This function sums the lengths of all subtokens and adds space for separators
- * between them.
- *
- * @param subtokens The array of subtokens to be joined.
- * @return The total length required for the joined string.
- */
 size_t	calculate_total_length(char **subtokens)
 {
 	size_t	i;
@@ -89,17 +47,6 @@ size_t	calculate_total_length(char **subtokens)
 	return (total_length);
 }
 
-/**
- * @brief Joins an array of subtokens into a single string separated by spaces.
- *
- * Allocates memory for the joined string and
- * concatenates each subtoken with a space.
- *
- * @param subtokens The array of substrings to join.
- * @param total_length The total length of the resulting string.
- * @return A newly allocated string containing all subtokens joined by spaces,
- *         or NULL if memory allocation fails.
- */
 char	*perform_join(char **subtokens, size_t total_length)
 {
 	size_t	i;
@@ -121,14 +68,6 @@ char	*perform_join(char **subtokens, size_t total_length)
 	return (joined);
 }
 
-/**
- * @brief Joins subtokens into a single argument string.
- *
- * Calculates the necessary length and performs the join operation.
- *
- * @param subtokens The array of substrings to join.
- * @return A newly allocated string with all subtokens joined by spaces.
- */
 char	*join_subtokens(char **subtokens)
 {
 	size_t	total_length;
@@ -206,14 +145,6 @@ void	process_argument(t_cmd_args *current_arg, t_shell_state *shell_state)
 	ft_free_array(subtokens);
 }
 
-/**
- * @brief Fills heredoc tables with expanded variables from the command list.
- *
- * Iterates through each command and its arguments to process heredoc entries.
- *
- * @param cmd_list The list of commands to process.
- * @param shell_state The current state of the shell.
- */
 void	fill_table_heredocs(t_command *cmd_list, t_shell_state *shell_state)
 {
 	t_command	*current_cmd;
@@ -232,16 +163,6 @@ void	fill_table_heredocs(t_command *cmd_list, t_shell_state *shell_state)
 	}
 }
 
-/**
- * @brief Fills the table with expanded values from the command list.
- *
- * Iterates over each word in the command arguments, expanding variables
- * and adding the resulting words to the table.
- *
- * @param table The table to fill with expanded values.
- * @param cmd_list The command list containing the arguments.
- * @param shell_state The current state of the shell.
- */
 void	fill_table_values(char **table, t_command *cmd_list,
 	t_shell_state *shell_state)
 {
@@ -271,17 +192,6 @@ void	fill_table_values(char **table, t_command *cmd_list,
 	table[word_count] = NULL;
 }
 
-/**
- * @brief Fills the command table with expanded values.
- *
- * This function iterates over the command list, counts the total number of words
- * for each command, allocates memory for the table,
- * fills the table with expanded
- * values, and updates the command arguments and command name.
- *
- * @param cmd_list The list of commands to process.
- * @param shell_state The current state of the shell.
- */
 void	fill_table(t_command *cmd_list, t_shell_state *shell_state)
 {
 	t_command	*current_cmd;
@@ -308,16 +218,6 @@ void	fill_table(t_command *cmd_list, t_shell_state *shell_state)
 	}
 }
 
-/**
- * @brief Expands the variables in the command list and updates the arguments.
- *
- * This function replaces the arguments in the command list with the expanded
- * values from the table and updates the command name.
- * It also handles heredoc expansions.
- *
- * @param cmd_list The command list containing the arguments.
- * @param shell_state The current state of the shell.
- */
 void	expand_command_variables(t_command *cmd_list,
 	t_shell_state *shell_state)
 {
@@ -330,3 +230,4 @@ void	expand_command_variables(t_command *cmd_list,
 	else
 		fill_table(cmd_list, shell_state);
 }
+ */

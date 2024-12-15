@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: fallan <fallan@student.42.fr>              +#+  +:+       +#+         #
+#    By: cmegret <cmegret@student.42lausanne.ch>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/07/19 14:53:36 by cmegret           #+#    #+#              #
-#    Updated: 2024/12/14 20:50:10 by fallan           ###   ########.fr        #
+#    Updated: 2024/12/15 14:43:24 by cmegret          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -77,6 +77,7 @@ SRCS = main/main.c \
 	  parsing/parse_debug.c \
 	  heredocs/heredocs_main.c \
 	  expansion/expansion_variable.c \
+	  expansion/expansion_heredocs.c \
 	  execution/execution_main.c \
 	  execution/execution_heredoc.c \
 	  execution/execution_pipeline.c \
