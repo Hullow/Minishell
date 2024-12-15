@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_redir.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
+/*   By: francis <francis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/01 17:28:03 by fallan            #+#    #+#             */
-/*   Updated: 2024/12/13 01:16:10 by fallan           ###   ########.fr       */
+/*   Updated: 2024/12/15 13:32:58 by francis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,10 @@ t_token	**ft_assign_redir_str(t_token **tok, t_redir *redir_list)
 	if (!redir_list->str)
 		return (NULL);
 	redir_list->str_type = (*tok)->type;
+	if ((*tok)->is_between_quotes)
+		redir_list->expand_heredoc = false;
+	else
+		redir_list->expand_heredoc = true;
 	return (tok);
 }
 

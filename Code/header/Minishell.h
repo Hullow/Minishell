@@ -79,6 +79,7 @@ typedef struct s_redir
 	char			*str; // either file (for input, output, append) or delimiter (for Heredoc)
 	int				str_type; // the type of token that follows the redirection (WORD, REDIR_*, ...)
 	t_heredoc		*heredoc; // contents of the heredoc, if the redirection is a heredoc
+	bool			expand_heredoc;
 	struct s_redir	*next;
 }	t_redir;
 
@@ -89,9 +90,11 @@ typedef struct s_cmd_args
 	struct s_cmd_args	*next;
 }	t_cmd_args;
 
+// if check == true, need to expand
+// else, no need to expand
 typedef struct s_expand
 {
-	bool			check; // true, false
+	bool			check;
 	struct s_expand	*next;
 }	t_expand;
 

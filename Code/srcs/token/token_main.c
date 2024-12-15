@@ -6,7 +6,7 @@
 /*   By: francis <francis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/06 17:19:58 by cmegret           #+#    #+#             */
-/*   Updated: 2024/12/15 11:48:54 by francis          ###   ########.fr       */
+/*   Updated: 2024/12/15 13:30:27 by francis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,14 +62,13 @@ void	ft_prepare_expansion(t_token *tok)
 // 	- 2.2.2.9. Comment '#': not implemented at all
 static int	ft_process_prompt(char *prompt, int i, t_token **tok)
 {
-	if (ft_is_dollar_sign(prompt[i]))
-		ft_prepare_expansion(*tok);
+	if (ft_is_dollar_sign(prompt[i])) /// REMOVE ???
+		ft_prepare_expansion(*tok); /// REMOVE ???
 	if (ft_previous_char_is_undelimited_operator(*tok))
 		return (ft_continue_operator_token(prompt, i, tok));
 	else if (ft_is_quote_character(prompt[i]))
 		return (ft_handle_quote_tokenization(prompt[i], 
 			(*tok)->is_single_quoted, (*tok)->is_double_quoted, tok));
-	// Missing expansion (rule 5 POSIX) ? => do tests first while looking at requirements
 	else if (ft_is_operator_character(prompt[i]) && !(ft_token_has_open_quote(*tok)))
 		return (ft_new_operator_token(prompt, i, tok));
 	else if (ft_is_blank(prompt[i]) && !(ft_token_has_open_quote(*tok)))

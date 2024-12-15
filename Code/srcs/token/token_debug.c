@@ -6,7 +6,7 @@
 /*   By: francis <francis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 19:01:55 by francis           #+#    #+#             */
-/*   Updated: 2024/12/15 11:55:46 by francis          ###   ########.fr       */
+/*   Updated: 2024/12/15 13:39:46 by francis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ void	ft_print_token_types_and_quote_status(t_token *tok)
 		}
 		iterator = iterator->next;
 	}
-	printf("******\n");
+	printf("************\n");
 }
 
 void	ft_print_required_expansions(t_token *tok)
