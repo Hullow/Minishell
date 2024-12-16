@@ -5,10 +5,11 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: francis <francis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/09/06 17:21:26 by cmegret           #+#    #+#             */
-/*   Updated: 2024/12/16 13:48:05 by francis          ###   ########.fr       */
+/*   Created: Invalid date        by                   #+#    #+#             */
+/*   Updated: 2024/12/16 15:28:20 by francis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 
 #include "../../header/Minishell.h"
 
@@ -37,15 +38,18 @@ t_token	*ft_create_token(int token_type)
 // quotes: if previous token was quoted, mark token as quoted too
 // else, mark as unquoted
 t_token	*ft_add_token_to_list(t_token *tok, int token_type)
+t_token	*ft_add_token_to_list(t_token *tok, int token_type)
 {
 	t_token	*newtoken;
 
 	if (tok && tok->str)
 	{
 		newtoken = ft_create_token(token_type);
+		newtoken = ft_create_token(token_type);
 		if (!newtoken)
 			return (NULL);
 		if (tok->is_single_quoted)
+		{
 		{
 			newtoken->is_single_quoted = true;
 			newtoken->is_between_quotes = true;
@@ -66,12 +70,16 @@ t_token	*ft_add_token_to_list(t_token *tok, int token_type)
 // If there is a token, we delimit it
 // Else, we create a token with an empty string
 // Returns the token
+// If there is a token, we delimit it
+// Else, we create a token with an empty string
+// Returns the token
 t_token	*ft_tokenize_end_of_input(t_token *tok)
 {
 	if (tok)
 		tok->is_delimited = true;
 	else
 	{
+		tok = ft_create_token(END_OF_INPUT);
 		tok = ft_create_token(END_OF_INPUT);
 		if (!tok)
 			return (NULL);
@@ -97,10 +105,14 @@ int	ft_new_word(t_token **tok, char c)
 
 	character[0] = c;
 	character[1] = '\0';
-	if ((*tok)->str)
+	// if (!(*tok)->str && (*tok)->is_delimited)
+	// 	(*tok)->str = ft_strdup("");
+	if ((*tok)->is_delimited)
 		*tok = ft_add_token_to_list(*tok, WORD);
-	else
+	else if (!(*tok)->str)
 		(*tok)->type = WORD;
+	else
+		printf("ft_new_word: error\n");
 	(*tok)->str = ft_strdup(character);
 	return (1);
 }

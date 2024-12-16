@@ -6,7 +6,7 @@
 /*   By: francis <francis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 19:48:46 by fallan            #+#    #+#             */
-/*   Updated: 2024/12/16 13:42:52 by francis          ###   ########.fr       */
+/*   Updated: 2024/12/16 15:23:31 by francis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,9 @@ typedef struct s_shell_state	t_shell_state;
 // Tokenization
 	// General
 t_token		*ft_tokenize(char *prompt);
+t_token		*ft_create_token(int token_type);
+t_token		*ft_add_token_to_list(t_token *tok, int token_type);
+
 t_token		*ft_create_token(int token_type);
 t_token		*ft_add_token_to_list(t_token *tok, int token_type);
 
@@ -46,9 +49,9 @@ int	ft_handle_quote_tokenization(char c,
 int			ft_is_operator_character(char c);
 int			ft_is_blank(char c);
 int			ft_is_quote_character(char c);
-bool		ft_is_dollar_sign(char c);
 
 	// Tokens
+int			ft_token_has_open_quote(t_token *tok);
 int			ft_token_has_open_quote(t_token *tok);
 int			ft_previous_char_is_undelimited_operator(t_token *tok);
 int			ft_previous_char_part_of_word(t_token *tok);

@@ -6,7 +6,7 @@
 /*   By: francis <francis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/01 17:26:12 by fallan            #+#    #+#             */
-/*   Updated: 2024/12/07 15:13:33 by francis          ###   ########.fr       */
+/*   Updated: 2024/12/15 18:16:27 by francis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ void	ft_free_arg_list(t_cmd_args	*arg_list)
 // 		- malloc a new argument list node
 //		- copy the string from our tokenized input to our argument list node
 // N.b.: head is initialized to NULL by the calling function
-int	ft_add_cmd_arg_to_list(char *tok_str, t_cmd_args **arg_list)
+int	ft_add_cmd_arg_to_list(t_token *tok, t_cmd_args **arg_list)
 {
 	t_cmd_args	*head;
 
@@ -72,7 +72,8 @@ int	ft_add_cmd_arg_to_list(char *tok_str, t_cmd_args **arg_list)
 	}
 	if (!((*arg_list)))
 		return (-1);
-	(*arg_list)->arg_string = ft_strdup(tok_str);
+	(*arg_list)->arg_string = ft_strdup(tok->str);
+	(*arg_list)->quote_status_arg = tok->quote_status;
 	if (!((*arg_list)->arg_string))
 		return (-1);
 	(*arg_list)->next = NULL;
@@ -81,24 +82,26 @@ int	ft_add_cmd_arg_to_list(char *tok_str, t_cmd_args **arg_list)
 }
 
 // copies arguments from:
-// 		- the argument linked list (t_cmd_args *: cmd_list->arg_list)
+// 		- the argument linked list (t_cmd_args *: cmd->arg_list)
 // to:
-// 		- the argument array (char **: cmd_list->args)
-int	ft_copy_command_args(t_command *cmd_list, int arg_count)
+// 		- the argument array (char **: cmd->args)
+int	ft_copy_command_args(t_command *cmd, int arg_count)
 {
 	int			i;
 	t_cmd_args	*arg_iterator;
 
 	i = 0;
-	arg_iterator = cmd_list->arg_list;
+	arg_iterator = cmd->arg_list;
 	while (arg_iterator && i < arg_count)
 	{
-		cmd_list->args[i] = ft_strdup(arg_iterator->arg_string);
-		if (cmd_list->args[i] == NULL)
+		cmd->args[i] = ft_strdup(arg_iterator->arg_string);
+		if (cmd->args[i] == NULL)
 			return (-1);
+		cmd->args_between_quotes[i] = arg_iterator->quote_status_arg;
 		arg_iterator = arg_iterator->next;
 		i++;
 	}
+	cmd->args_between_quotes[i] = -1;
 	return (i);
 }
 
@@ -109,24 +112,25 @@ int	ft_copy_command_args(t_command *cmd_list, int arg_count)
 // 		the argument linked list to the argument array it just created
 // - calls ft_free_arg_list to free the linked list of command arguments
 // - does this for each command (each pipe)
-int	ft_allocate_cmd_args_to_array(t_command *cmd_list)
+int	ft_allocate_cmd_args_to_array(t_command *cmd)
 {
 	int			arg_count;
 	int			i;
 
-	while (cmd_list)
+	while (cmd)
 	{
-		if (!(cmd_list->arg_list))
+		if (!(cmd->arg_list))
 			return (1);
-		arg_count = ft_count_args(cmd_list->arg_list);
-		cmd_list->args = malloc((arg_count + 1) * sizeof(char *));
-		if (!cmd_list->args)
+		arg_count = ft_count_args(cmd->arg_list);
+		cmd->args = malloc((arg_count + 1) * sizeof(char *));
+		cmd->args_between_quotes = malloc((arg_count + 1) * sizeof(int));
+		if (!cmd->args || !cmd->args_between_quotes)
 			return (-1);
-		i = ft_copy_command_args(cmd_list, arg_count);
-		cmd_list->args[i] = NULL;
-		cmd_list->cmd_name = cmd_list->args[0];
-		ft_free_arg_list(cmd_list->arg_list);
-		cmd_list = cmd_list->next;
+		i = ft_copy_command_args(cmd, arg_count);
+		cmd->args[i] = NULL;
+		cmd->cmd_name = cmd->args[0];
+		ft_free_arg_list(cmd->arg_list);
+		cmd = cmd->next;
 	}
 	return (0);
 }

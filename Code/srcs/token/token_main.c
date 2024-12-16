@@ -6,7 +6,7 @@
 /*   By: francis <francis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/06 17:19:58 by cmegret           #+#    #+#             */
-/*   Updated: 2024/12/16 13:48:36 by francis          ###   ########.fr       */
+/*   Updated: 2024/12/16 15:29:00 by francis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,8 +62,6 @@ void    ft_prepare_expansion(t_token *tok)
 // 	- 2.2.2.9. Comment '#': not implemented at all
 static int	ft_process_prompt(char *prompt, int i, t_token **tok)
 {
-	if (ft_is_dollar_sign(prompt[i]))
-		ft_prepare_expansion(*tok);
 	if (ft_previous_char_is_undelimited_operator(*tok))
 		return (ft_continue_operator_token(prompt, i, tok));
 	else if (ft_is_quote_character(prompt[i]))
@@ -77,6 +75,18 @@ static int	ft_process_prompt(char *prompt, int i, t_token **tok)
 		return (ft_append_char_to_word(tok, prompt[i]));
 	else
 		return (ft_new_word(tok, prompt[i]));
+}
+
+void	ft_set_empty_token_strings(t_token *tok)
+{
+	while (tok)
+	{
+		if (!(tok->str) && tok->is_delimited)
+			tok->str = ft_strdup("");
+		if (!(tok->str))
+			return ; // MALLOC ERROR
+		tok = tok->next;
+	}
 }
 
 // Breaks the input (prompt) into tokens by calling each tokenization function
@@ -97,5 +107,6 @@ t_token	*ft_tokenize(char *prompt)
 		i += ft_process_prompt(prompt, i, &tok);
 	if (!prompt[i]) // probably unnecessary
 		tok = ft_tokenize_end_of_input(tok);
+	ft_set_empty_token_strings(tok);
 	return (head);
 }

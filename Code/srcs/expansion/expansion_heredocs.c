@@ -12,22 +12,32 @@
 
 #include "../../header/Minishell.h"
 
-void	fill_table_heredocs(t_command *cmd_list, t_shell_state *shell_state)
+void	fill_table_heredocs(t_command *cmd_list,
+	t_shell_state *shell_state)
 {
+	t_redir		*redir;
 	t_heredoc	*current;
-	t_heredoc	*next;
 	char		*new_line;
 
-	current = cmd_list->redir_list->heredoc;
-	while (current && current->line)
+	redir = cmd_list->redir_list;
+	while (redir)
 	{
-		next = current->next;
-		if (next && next->line)
+		if (redir->type == REDIR_HEREDOC)
 		{
-			new_line = process_single_arg(current->line, shell_state);
-			free(current->line);
-			current->line = new_line;
+			current = redir->heredoc;
+			while (current && current->line)
+			{
+				if (current->next == NULL)
+					break ;
+				if (redir->expand_heredoc)
+				{
+					new_line = process_single_arg(current->line, shell_state);
+					free(current->line);
+					current->line = new_line;
+				}
+				current = current->next;
+			}
 		}
-		current = next;
+		redir = redir->next;
 	}
 }
