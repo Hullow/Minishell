@@ -6,7 +6,7 @@
 /*   By: francis <francis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/15 10:28:35 by cmegret           #+#    #+#             */
-/*   Updated: 2024/12/16 16:11:03 by francis          ###   ########.fr       */
+/*   Updated: 2024/12/16 17:24:48 by francis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,12 +91,18 @@ char	*process_single_arg(t_cmd_args *arg_node,  t_shell_state *shell_state)
 	expand_iter = arg_node->to_expand;
 	while (arg_node->arg_string[j])
 	{
-		if (arg_node->arg_string[j] == '$' && expand_iter)
+		if (expand_iter && arg_node->arg_string[j] == '$')
 		{
 			if (expand_iter->check)
 			{
 				extract_var_name(arg_node->arg_string, &j, var_name);
 				new_arg = expand_variable(new_arg, shell_state, var_name);
+			}
+			else
+			{
+				tmp[0] = arg_node->arg_string[j];
+				tmp[1] = '\0';
+				new_arg = ft_strjoin_free(new_arg, tmp);
 			}
 			expand_iter = expand_iter->next;
 		}
@@ -137,12 +143,15 @@ void	fill_table(t_command *cmd_list, t_shell_state *shell_state)
 	}
 }
 
+// arg_string=$USER => "hello, world !" => args[7]="hello, world !"
+// => args[7]="hello,", args[8]="world", args[9]="!"
+
 void	expand_command_variables(t_command *cmd_list,
 	t_shell_state *shell_state)
 {
 	if (!cmd_list)
 		return ;
-	if (!cmd_list->args || !cmd_list->args[0])
+	if (!cmd_list->arg_list || !cmd_list->arg_list->arg_string)
 		return ;
 /* 	if (cmd_list->redir_list && cmd_list->redir_list->heredoc)
 		fill_table_heredocs(cmd_list, shell_state); */

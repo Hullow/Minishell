@@ -6,7 +6,7 @@
 /*   By: francis <francis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/11 13:59:44 by fallan            #+#    #+#             */
-/*   Updated: 2024/12/16 16:12:40 by francis          ###   ########.fr       */
+/*   Updated: 2024/12/16 16:56:25 by francis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,8 @@ void	ft_free_token_and_cmd_list(t_token *token_list, t_command *head_cmd)
 	while (head_cmd)
 	{
 		temp_cmd = head_cmd;
-		head_cmd = head_cmd->next;
+		ft_free_arg_list(head_cmd->arg_list);
+		// ft_free_arg_list_to_expand => TO ADD !
 		if (temp_cmd->args)
 		{
 			while (temp_cmd->args[i])
@@ -47,6 +48,7 @@ void	ft_free_token_and_cmd_list(t_token *token_list, t_command *head_cmd)
 		}
 		free(temp_cmd->args);
 		free(temp_cmd);
+		head_cmd = head_cmd->next;
 	}
 }
 

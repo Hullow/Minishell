@@ -6,7 +6,7 @@
 /*   By: francis <francis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/01 17:26:12 by fallan            #+#    #+#             */
-/*   Updated: 2024/12/16 16:06:29 by francis          ###   ########.fr       */
+/*   Updated: 2024/12/16 16:48:14 by francis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,7 +125,6 @@ int	ft_allocate_cmd_args_to_array(t_command *cmd)
 		i = ft_copy_command_args(cmd, arg_count);
 		cmd->args[i] = NULL;
 		cmd->cmd_name = cmd->args[0];
-		ft_free_arg_list(cmd->arg_list);
 		cmd = cmd->next;
 	}
 	return (0);

@@ -6,7 +6,7 @@
 /*   By: francis <francis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2024/12/16 16:16:39 by francis          ###   ########.fr       */
+/*   Updated: 2024/12/16 17:00:07 by francis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,6 @@ int	main(int argc, char **argv, char **envp)
 		token_list = ft_tokenize(prompt);
 		cmd_list = ft_parse(token_list);
 		ft_open_heredocs(cmd_list);
-		// ft_execute_heredocs(cmd_list);
 		expand_command_variables(cmd_list, &shell_state);
 		execute_cmd(cmd_list, &shell_state);
 		ft_free_token_and_cmd_list(token_list, cmd_list);

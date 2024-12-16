@@ -6,7 +6,7 @@
 /*   By: francis <francis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 19:48:46 by fallan            #+#    #+#             */
-/*   Updated: 2024/12/16 16:11:39 by francis          ###   ########.fr       */
+/*   Updated: 2024/12/16 16:39:10 by francis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,9 +26,7 @@ typedef struct s_shell_state	t_shell_state;
 t_token		*ft_tokenize(char *prompt);
 t_token		*ft_create_token(int token_type);
 t_token		*ft_add_token_to_list(t_token *tok, int token_type);
-
-t_token		*ft_create_token(int token_type);
-t_token		*ft_add_token_to_list(t_token *tok, int token_type);
+void		ft_prepare_expansion(t_token **tok);
 
 	// Various
 t_token		*ft_tokenize_end_of_input(t_token *tok);

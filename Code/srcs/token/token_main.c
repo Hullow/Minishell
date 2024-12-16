@@ -6,7 +6,7 @@
 /*   By: francis <francis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/06 17:19:58 by cmegret           #+#    #+#             */
-/*   Updated: 2024/12/16 15:34:52 by francis          ###   ########.fr       */
+/*   Updated: 2024/12/16 17:25:08 by francis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,33 +16,35 @@
 // for each token, each '$' is marked as needing an expansion
 // with t_expand = true or false
 // no return value
-void	ft_prepare_expansion(t_token *tok)
+void	ft_prepare_expansion(t_token **tok)
 {
 	t_expand	*new_expand;
 	t_expand	*head;
 
 	new_expand = NULL;
-	if (!(tok->to_expand))
+	if ((*tok)->is_delimited)
+		*tok = ft_add_token_to_list(*tok, WORD);
+	if (!((*tok)->to_expand))
 	{
-		tok->to_expand = malloc(sizeof(t_expand));
-		tok->to_expand->next = NULL;
-		head = tok->to_expand;
+		(*tok)->to_expand = malloc(sizeof(t_expand));
+		(*tok)->to_expand->next = NULL;
+		head = (*tok)->to_expand;
 	}
 	else
 	{
-		head = tok->to_expand;
-		while (tok->to_expand->next)
-			tok->to_expand = tok->to_expand->next;
+		head = (*tok)->to_expand;
+		while ((*tok)->to_expand->next)
+			(*tok)->to_expand = (*tok)->to_expand->next;
 		new_expand = malloc(sizeof(t_expand));
 		new_expand->next = NULL;
-		tok->to_expand->next = new_expand;
-		tok->to_expand = tok->to_expand->next;
+		(*tok)->to_expand->next = new_expand;
+		(*tok)->to_expand = (*tok)->to_expand->next;
 	}
-	if (tok->is_single_quoted)
-		tok->to_expand->check = false;
+	if ((*tok)->is_single_quoted)
+		(*tok)->to_expand->check = false;
 	else
-		tok->to_expand->check = true;
-	tok->to_expand = head;
+		(*tok)->to_expand->check = true;
+	(*tok)->to_expand = head;
 }
 
 // Processes the prompt, applying tokenization rules in order
@@ -63,7 +65,7 @@ void	ft_prepare_expansion(t_token *tok)
 static int	ft_process_prompt(char *prompt, int i, t_token **tok)
 {
 	if (ft_is_dollar_sign(prompt[i]))
-		ft_prepare_expansion((*tok));
+		ft_prepare_expansion((tok));
 	if (ft_previous_char_is_undelimited_operator(*tok))
 		return (ft_continue_operator_token(prompt, i, tok));
 	else if (ft_is_quote_character(prompt[i]))
@@ -84,11 +86,13 @@ void	ft_set_empty_token_strings(t_token *tok)
 	while (tok)
 	{
 		if (!(tok->str) && tok->is_delimited)
+
 			tok->str = ft_strdup("");
 		if (!(tok->str))
 			return ; // MALLOC ERROR
 		tok = tok->next;
 	}
+	printf("ft_set_empty_token_strings: no token found");
 }
 
 // Breaks the input (prompt) into tokens by calling each tokenization function
@@ -109,6 +113,6 @@ t_token	*ft_tokenize(char *prompt)
 		i += ft_process_prompt(prompt, i, &tok);
 	if (!prompt[i]) // probably unnecessary
 		tok = ft_tokenize_end_of_input(tok);
-	ft_set_empty_token_strings(tok);
+	ft_set_empty_token_strings(head);
 	return (head);
 }

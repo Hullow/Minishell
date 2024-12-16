@@ -6,7 +6,7 @@
 /*   By: francis <francis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2024/12/16 15:49:48 by francis          ###   ########.fr       */
+/*   Updated: 2024/12/16 17:16:41 by francis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,9 +41,8 @@ t_token	*ft_add_token_to_list(t_token *tok, int token_type)
 {
 	t_token	*newtoken;
 
-	if (tok && tok->str)
+	if (tok)
 	{
-		newtoken = ft_create_token(token_type);
 		newtoken = ft_create_token(token_type);
 		if (!newtoken)
 			return (NULL);
@@ -78,7 +77,6 @@ t_token	*ft_tokenize_end_of_input(t_token *tok)
 	else
 	{
 		tok = ft_create_token(END_OF_INPUT);
-		tok = ft_create_token(END_OF_INPUT);
 		if (!tok)
 			return (NULL);
 		tok->str = ft_strdup("");
@@ -103,8 +101,6 @@ int	ft_new_word(t_token **tok, char c)
 
 	character[0] = c;
 	character[1] = '\0';
-	// if (!(*tok)->str && (*tok)->is_delimited)
-	// 	(*tok)->str = ft_strdup("");
 	if ((*tok)->is_delimited)
 		*tok = ft_add_token_to_list(*tok, WORD);
 	else if (!(*tok)->str)

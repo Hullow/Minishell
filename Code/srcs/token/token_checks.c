@@ -6,7 +6,7 @@
 /*   By: francis <francis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2024/12/16 15:26:16 by francis          ###   ########.fr       */
+/*   Updated: 2024/12/16 16:41:49 by francis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ int	ft_previous_char_is_undelimited_operator(t_token *tok)
 // and that that word was not delimited
 int	ft_previous_char_part_of_word(t_token *tok)
 {
-	if (tok && tok->type == WORD && !(tok->is_delimited))
+	if (tok && tok->str && tok->type == WORD && !(tok->is_delimited))
 		return (1);
 	return (0);
 }

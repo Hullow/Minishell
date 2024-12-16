@@ -382,7 +382,7 @@ echo '"'"'"'"$VAR'""'"'"
 echo '"'"'"'"$VAR'""'"'"'" => "'"$VAR"'
 echo '"'"'
 echo '"'"'"
-
+echo -n "hello world" "" -n
 
 
 'VAR=FOO'
