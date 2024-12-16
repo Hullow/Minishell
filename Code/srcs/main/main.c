@@ -26,7 +26,7 @@ int	main(int argc, char **argv, char **envp)
 		if (*prompt)
 			add_history(prompt);
 		token_list = ft_tokenize(prompt);
-		ft_print_token_types_and_quote_status(token_list);
+		// ft_print_token_types_and_quote_status(token_list);
 		cmd_list = ft_parse(token_list);
 		ft_open_heredocs(cmd_list);
 		// ft_execute_heredocs(cmd_list);

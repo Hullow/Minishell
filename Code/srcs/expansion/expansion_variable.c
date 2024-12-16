@@ -78,28 +78,32 @@ char	*expand_variable(char *new_arg,
 	return (new_arg);
 }
 
-char	*process_single_arg(char *arg, t_shell_state *shell_state)
+char	*process_single_arg(t_cmd_args *arg_node, t_shell_state *shell_state)
 {
-	char	*new_arg;
-	char	var_name[256];
-	char	tmp[2];
-	int		j;
+	char		*new_arg;
+	char		var_name[256];
+	char		tmp[2];
+	int			j;
+	t_expand	*expand_iter;
 
 	new_arg = ft_strdup("");
 	j = 0;
-	while (arg[j])
+	expand_iter = arg_node->to_expand;
+	while (arg_node->arg_string[j])
 	{
-		if (arg[j] == '$')
+		if (arg_node->arg_string[j] == '$' && expand_iter && expand_iter->check)
 		{
-			extract_var_name(arg, &j, var_name);
+			extract_var_name(arg_node->arg_string, &j, var_name);
 			new_arg = expand_variable(new_arg, shell_state, var_name);
 		}
 		else
 		{
-			tmp[0] = arg[j];
+			tmp[0] = arg_node->arg_string[j];
 			tmp[1] = '\0';
 			new_arg = ft_strjoin_free(new_arg, tmp);
 		}
+		if (arg_node->arg_string[j] == '$' && expand_iter)
+			expand_iter = expand_iter->next;
 		j++;
 	}
 	return (new_arg);
@@ -107,21 +111,27 @@ char	*process_single_arg(char *arg, t_shell_state *shell_state)
 
 void	fill_table(t_command *cmd_list, t_shell_state *shell_state)
 {
-	int		i;
-	char	*new_arg;
+	int			i;
+	char		*new_arg;
+	t_cmd_args	*current;
+	t_command	*cmd;
 
-	i = 0;
-	while (cmd_list->args[i])
+	cmd = cmd_list;
+	while (cmd)
 	{
-		if (cmd_list->args_between_quotes[i] != 1)
+		i = 0;
+		current = cmd->arg_list;
+		while (current)
 		{
-			new_arg = process_single_arg(cmd_list->args[i], shell_state);
-			free(cmd_list->args[i]);
-			cmd_list->args[i] = new_arg;
+			new_arg = process_single_arg(current, shell_state);
+			free(current->arg_string);
+			current->arg_string = new_arg;
 			if (i == 0)
-				cmd_list->cmd_name = cmd_list->args[i];
+				cmd->cmd_name = current->arg_string;
+			current = current->next;
+			i++;
 		}
-		i++;
+		cmd = cmd->next;
 	}
 }
 
