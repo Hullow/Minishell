@@ -83,10 +83,19 @@ typedef struct s_redir
 	struct s_redir	*next;
 }	t_redir;
 
+// if check == true, need to expand
+// else, no need to expand
+typedef struct s_expand
+{
+	bool			check;
+	struct s_expand	*next;
+}	t_expand;
+
 // linked list of our command arguments
 typedef struct s_cmd_args
 {
 	char				*arg_string;
+	t_expand			*to_expand;
 	struct s_cmd_args	*next;
 }	t_cmd_args;
 
@@ -97,6 +106,7 @@ typedef struct s_token
 	int				type;
 	bool			is_delimited;
 	bool			is_operator;
+	t_expand		*to_expand;
 	bool			is_double_quoted;
 	bool			is_single_quoted;
 	bool			is_between_quotes;
