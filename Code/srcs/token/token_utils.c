@@ -16,7 +16,6 @@
 void	ft_free_token_list(t_token *tok)
 {
 	t_token		*temp;
-	t_expand	*temp_expand;
 
 	if (!tok)
 		return ;
@@ -26,12 +25,6 @@ void	ft_free_token_list(t_token *tok)
 		tok = tok->next;
 		if (temp->str)
 			free(temp->str);
-		while (temp->to_expand)
-		{
-			temp_expand = temp->to_expand;
-			temp->to_expand = temp->to_expand->next;
-			free(temp_expand);
-		}
 		free(temp);
 	}
 }

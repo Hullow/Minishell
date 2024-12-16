@@ -47,6 +47,7 @@
 # include "Tokenizer.h"
 
 // Token types
+# define UNKNOWN_TYPE 0
 # define WORD 1
 # define REDIR_INPUT 2
 # define REDIR_OUTPUT 3
@@ -78,6 +79,7 @@ typedef struct s_redir
 	char			*str; // either file (for input, output, append) or delimiter (for Heredoc)
 	int				str_type; // the type of token that follows the redirection (WORD, REDIR_*, ...)
 	t_heredoc		*heredoc; // contents of the heredoc, if the redirection is a heredoc
+	bool			expand_heredoc;
 	struct s_redir	*next;
 }	t_redir;
 
@@ -85,6 +87,7 @@ typedef struct s_redir
 typedef struct s_cmd_args
 {
 	char				*arg_string;
+	int					quote_status_arg; //if 1, single quotes, if 2 double quotes, if 0, not quoted
 	struct s_cmd_args	*next;
 }	t_cmd_args;
 
@@ -101,10 +104,10 @@ typedef struct s_token
 	char			*str;
 	int				type;
 	bool			is_delimited;
-	t_expand		*to_expand;
+	bool			is_operator;
 	bool			is_double_quoted;
 	bool			is_single_quoted;
-	bool			is_operator;
+	int				quote_status;
 	struct s_token	*next;
 }	t_token;
 
@@ -116,6 +119,7 @@ typedef struct s_command
 	char				*cmd_name;
 	t_cmd_args			*arg_list;
 	char				**args;
+	int					*args_between_quotes; //if 1, between single quotes, if 2 double, if 0, not between quotes. Index = arg position
 	int					saved_input; // file descriptor for input (stdin or redirection)
 	int					saved_output; // file descriptor for output (stdout or redirection)
 	t_redir				*redir_list; // redirection list

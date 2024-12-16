@@ -34,7 +34,7 @@ struct token
 	char 			*str;
 	int 			type;
 	bool			is_delimited;
-	bool			is_quoted;
+	bool			quote_status_arg;
 	bool			is_operator;
 	struct token	*next;
 };
@@ -252,7 +252,7 @@ struct token	*ft_tokenize_end_of_input(struct token *tok)
 		tok->type = END_OF_INPUT;
 		tok->is_delimited = 1;
 		tok->is_operator = 0;
-		tok->is_quoted = 0;
+		tok->quote_status_arg = 0;
 	}
 	return (tok);
 }
@@ -281,7 +281,7 @@ int	ft_continue_operator_token(char *prompt, int i, struct token **tok)
 {
 	if (ft_strlen((*tok)->str) != 1) // if token was of length > 1, the current character cannot be used with the previous characters to form an operator, because or only multi-character operators are '>>' and '<<'
 		(*tok)->is_delimited = true; // therefore: apply rule 2.2.2.3. and delimit operator containing previous token
-	else if (prompt[i] == '>' && prompt[i - 1] == '>') // && tok->is_quoted == false)
+	else if (prompt[i] == '>' && prompt[i - 1] == '>') // && tok->quote_status_arg == false)
 	// there is only '>' in the operator token => we can form a '>>' with it
 	{
 		free((*tok)->str);
@@ -292,7 +292,7 @@ int	ft_continue_operator_token(char *prompt, int i, struct token **tok)
 		// => bash: syntax error near unexpected token `>'
 		return (1); // because we assigned the character to a token
 	}
-	else if (prompt[i] == '<' && prompt[i - 1] == '<' && (*tok)->is_quoted == false) // only '>' in the operator token, we can form a '>>' with it
+	else if (prompt[i] == '<' && prompt[i - 1] == '<' && (*tok)->quote_status_arg == false) // only '>' in the operator token, we can form a '>>' with it
 	{
 		free((*tok)->str);
 		(*tok)->str = ft_strdup("<<");
@@ -419,7 +419,7 @@ void	ft_tokenize(char *prompt)
 		{
 			i += ft_continue_operator_token(prompt, i, &tok);
 		}
-		else if (ft_is_redir_character(prompt[i])) // && tok->is_quoted == false => handle quotes later
+		else if (ft_is_redir_character(prompt[i])) // && tok->quote_status_arg == false => handle quotes later
 		{
 			i += ft_new_operator_token(prompt, i, &tok);
 		}

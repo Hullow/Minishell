@@ -6,7 +6,7 @@
 /*   By: francis <francis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/21 19:06:55 by francis           #+#    #+#             */
-/*   Updated: 2024/12/10 19:27:28 by francis          ###   ########.fr       */
+/*   Updated: 2024/12/15 16:28:01 by francis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,16 +14,26 @@
 
 // prints all command arguments 
 // from the array of arguments of a command sequence
-void	ft_print_args(t_command *cmd_list)
+void	ft_print_args(t_command *cmd)
 {
 	int	i;
 
 	i = -1;
 	printf("ft_print_args:\n");
-	if (cmd_list && cmd_list->args)
+	if (cmd && cmd->args)
 	{
-		while (cmd_list->args[++i])
-			printf(" – arg[%d]: {%s}", i, cmd_list->args[i]);
+		while (cmd->args[++i])
+		{
+			printf(" – arg[%d]: {%s} ", i, cmd->args[i]);
+			if (cmd->args_between_quotes[i] == 2)
+				printf("(double quoted)");
+			else if (cmd->args_between_quotes[i] == 1)
+				printf("(single quoted)");
+			else if (cmd->args_between_quotes[i] == 0)
+				printf("(not quoted)");
+			else
+				printf("(!!quote status error!!)");
+		}
 	}
 	return ;
 }
@@ -43,32 +53,65 @@ char	*ft_return_redir_type(int redir_type)
 		return (NULL);
 }
 
-// prints redirection number, type, and destination/origin/delimiter
-int	ft_print_redirs(t_redir *redir_list)
+// prints all redirections in a redirection linked list (i.e. for a single command/pipe) 
+void	ft_print_redirs(t_redir *redir, char *cmd_name)
 {
-	t_redir	*head;
-	int		i;
+	int	i;
 
-	printf("ft_print_redirs:\n");
-	if (!redir_list)
+	i = 0;
+	printf("redirections for the command {%s}\n", cmd_name);
+	while (redir)
 	{
-		printf("\tno redirections\n");
-		return (0);
-	}
-	head = redir_list;
-	i = 1;
-	while (redir_list)
-	{
-		printf("\t- redirection %d is of type: {%s} to/from/delimiter {%s}\n", \
-			i, ft_return_redir_type(redir_list->type), redir_list->str);
-		redir_list = redir_list->next;
+		printf("\t- redirection %d is of type: {%s} to/from/delimiter {%s} ", \
+			i, ft_return_redir_type(redir->type), redir->str);
+		if (redir->type == REDIR_HEREDOC)
+		{
+			if (redir->expand_heredoc)
+				printf("(not quoted: expand in heredoc)\n");
+			else
+				printf("(quoted: don't expand in heredoc)\n");
+		}
+		redir = redir->next;
 		i++;
 	}
-	redir_list = head;
-	return (i);
 }
 
-// derived from ft_print_command_sequences: 
+// prints redirection number, type, and destination/origin/delimiter
+void	ft_print_all_redirs(t_command *cmd)
+{
+	t_redir	*redir;
+
+	printf("ft_print_all_redirs:\n");
+	while (cmd)
+	{
+		if (!(cmd->redir_list))
+		{
+			printf("\tno redirections\n");
+			return ;
+		}
+		redir = cmd->redir_list;
+		printf("redirections for cmd {%s}\n", cmd->cmd_name);
+		ft_print_redirs(redir, cmd->cmd_name);
+		cmd = cmd->next;
+	}
+}
+
+// prints the command in each pipe, its arguments and redirections
+void	ft_print_command_sequences(t_command *cmd)
+{
+	printf("command sequences:\n");
+	while (cmd)
+	{
+		printf("*****\n - command: {%s}\n", cmd->cmd_name);
+		printf(" – arguments:\n");
+		ft_print_args(cmd);
+		printf("\n – redirections:\n");
+		cmd = cmd->next;
+		ft_print_redirs(cmd->redir_list, cmd->cmd_name);
+	}
+}
+
+/* // derived from ft_print_command_sequences: 
 // stops the "exit bug" from happening on (ARM) OS X
 // How it works:
 //		printf("%s", head->cmd_name);
@@ -93,60 +136,5 @@ void	ft_exit_bug_print_debugger(t_command *head)
 		i = -1;
 		head = head->next;
 	}
-}
-
-// prints the command in each pipe, its arguments and redirections
-void	ft_print_command_sequences(t_command *head)
-{
-	printf("command sequences:\n");
-	while (head)
-	{
-		printf("*****\n - command: {%s}\n", head->cmd_name);
-		printf(" – arguments:\n");
-		ft_print_args(head);
-		printf("\n – redirections:\n");
-		ft_print_redirs(head->redir_list);
-		head = head->next;
-	}
-}
-
-// Used to debug "exit bug" 
-/* t_command *ft_debug_parsing(t_token *tok)
-{
-	t_command	*cmd_list;
-	int			i;
-
-	cmd_list = malloc (sizeof(t_command));
-	if (!cmd_list)
-		return (NULL);
-	if (tok && tok->type == END_OF_INPUT)
-		printf("end of input token tokenized\n");
-	cmd_list->args = malloc (2 * sizeof(char *));
-	if (tok && tok->str)
-	{
-		cmd_list->cmd_name = ft_strdup(tok->str);
-		cmd_list->args[0] = ft_strdup(tok->str);
-		tok = tok->next;
-	}
-	if (cmd_list->cmd_name == NULL || ft_strlen(cmd_list->cmd_name) == 0) 
-		return (NULL);
-	i = 1;
-	while (tok)
-	{	
-		cmd_list->args = realloc (cmd_list->args, (i + 2) * sizeof(char *));
-		if (tok->str)
-			cmd_list->args[i] = ft_strdup(tok->str);
-		else
-		{
-			printf("ft_debug – tok: {%p}, no tok->str\n", tok);
-			cmd_list->args[i] = NULL;
-			return (cmd_list);
-		}
-		i++;
-		tok = tok->next;
-	}
-	cmd_list->args[i] = NULL;
-	ft_print_command_sequences(cmd_list);
-	return (cmd_list);
 }
  */
