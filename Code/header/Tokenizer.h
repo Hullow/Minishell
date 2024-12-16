@@ -6,7 +6,7 @@
 /*   By: francis <francis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 19:48:46 by fallan            #+#    #+#             */
-/*   Updated: 2024/12/16 15:23:31 by francis          ###   ########.fr       */
+/*   Updated: 2024/12/16 16:11:39 by francis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,15 +49,12 @@ int	ft_handle_quote_tokenization(char c,
 int			ft_is_operator_character(char c);
 int			ft_is_blank(char c);
 int			ft_is_quote_character(char c);
+bool		ft_is_dollar_sign(char c);
 
 	// Tokens
 int			ft_token_has_open_quote(t_token *tok);
-int			ft_token_has_open_quote(t_token *tok);
 int			ft_previous_char_is_undelimited_operator(t_token *tok);
 int			ft_previous_char_part_of_word(t_token *tok);
-
-// Utils
-void		ft_free_token_list(t_token *tok);
 
 // Debugging
 t_token		*ft_last_token(t_token *tok);

@@ -6,7 +6,7 @@
 /*   By: francis <francis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2024/12/16 15:28:20 by francis          ###   ########.fr       */
+/*   Updated: 2024/12/16 15:49:48 by francis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,6 @@ t_token	*ft_create_token(int token_type)
 // quotes: if previous token was quoted, mark token as quoted too
 // else, mark as unquoted
 t_token	*ft_add_token_to_list(t_token *tok, int token_type)
-t_token	*ft_add_token_to_list(t_token *tok, int token_type)
 {
 	t_token	*newtoken;
 
@@ -49,7 +48,6 @@ t_token	*ft_add_token_to_list(t_token *tok, int token_type)
 		if (!newtoken)
 			return (NULL);
 		if (tok->is_single_quoted)
-		{
 		{
 			newtoken->is_single_quoted = true;
 			newtoken->is_between_quotes = true;

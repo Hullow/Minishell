@@ -3,15 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   expansion_heredocs.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cmegret <cmegret@student.42lausanne.ch>    +#+  +:+       +#+        */
+/*   By: francis <francis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/15 14:43:04 by cmegret           #+#    #+#             */
-/*   Updated: 2024/12/15 15:04:18 by cmegret          ###   ########.fr       */
+/*   Updated: 2024/12/16 16:10:54 by francis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../header/Minishell.h"
-
+/* 
 void	fill_table_heredocs(t_command *cmd_list,
 	t_shell_state *shell_state)
 {
@@ -41,3 +41,4 @@ void	fill_table_heredocs(t_command *cmd_list,
 		redir = redir->next;
 	}
 }
+ */

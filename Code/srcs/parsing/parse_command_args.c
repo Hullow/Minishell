@@ -6,7 +6,7 @@
 /*   By: francis <francis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/01 17:26:12 by fallan            #+#    #+#             */
-/*   Updated: 2024/12/15 18:16:27 by francis          ###   ########.fr       */
+/*   Updated: 2024/12/16 16:06:29 by francis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,8 @@ int	ft_add_cmd_arg_to_list(t_token *tok, t_cmd_args **arg_list)
 	if (!((*arg_list)))
 		return (-1);
 	(*arg_list)->arg_string = ft_strdup(tok->str);
-	(*arg_list)->quote_status_arg = tok->quote_status;
+	if (tok->to_expand)
+		(*arg_list)->to_expand = tok->to_expand;
 	if (!((*arg_list)->arg_string))
 		return (-1);
 	(*arg_list)->next = NULL;
@@ -97,11 +98,9 @@ int	ft_copy_command_args(t_command *cmd, int arg_count)
 		cmd->args[i] = ft_strdup(arg_iterator->arg_string);
 		if (cmd->args[i] == NULL)
 			return (-1);
-		cmd->args_between_quotes[i] = arg_iterator->quote_status_arg;
 		arg_iterator = arg_iterator->next;
 		i++;
 	}
-	cmd->args_between_quotes[i] = -1;
 	return (i);
 }
 
@@ -123,9 +122,6 @@ int	ft_allocate_cmd_args_to_array(t_command *cmd)
 			return (1);
 		arg_count = ft_count_args(cmd->arg_list);
 		cmd->args = malloc((arg_count + 1) * sizeof(char *));
-		cmd->args_between_quotes = malloc((arg_count + 1) * sizeof(int));
-		if (!cmd->args || !cmd->args_between_quotes)
-			return (-1);
 		i = ft_copy_command_args(cmd, arg_count);
 		cmd->args[i] = NULL;
 		cmd->cmd_name = cmd->args[0];

@@ -6,7 +6,7 @@
 /*   By: francis <francis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/01 17:28:03 by fallan            #+#    #+#             */
-/*   Updated: 2024/12/16 15:25:47 by francis          ###   ########.fr       */
+/*   Updated: 2024/12/16 16:04:14 by francis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,12 +40,8 @@ t_token	**ft_assign_redir_str(t_token **tok, t_redir *redir_list)
 	if (!redir_list->str)
 		return (NULL);
 	redir_list->str_type = (*tok)->type;
-	if ((*tok)->is_between_quotes)
-		redir_list->expand_heredoc = false;
-	else
-		redir_list->expand_heredoc = true;
-	if ((*tok)->quote_status)
-		redir_list->expand_heredoc = false;
+	if ((*tok)->is_between_quotes) // is_between_quotes is true if any part of the heredoc is between quotes
+		redir_list->expand_heredoc = false;// if any part of the heredoc is between quotes, no expansion
 	else
 		redir_list->expand_heredoc = true;
 	return (tok);

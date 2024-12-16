@@ -6,7 +6,7 @@
 /*   By: francis <francis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2024/12/16 15:25:20 by francis          ###   ########.fr       */
+/*   Updated: 2024/12/16 16:14:23 by francis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,14 +66,14 @@ t_command	*ft_add_pipe(t_command *cmd_list)
 
 // checks if our token list ends with open quotes
 // if
-int	ft_check_open_quote(t_token *tok)
+int	ft_check_open_quote(t_token *tok, t_command *cmd_list)
 {
 	while (tok->next)
 		tok = tok->next;
 	if (ft_token_has_open_quote(tok))
 	{
 		printf("open quote !\n");
-		ft_free_token_list(tok);
+		ft_free_token_and_cmd_list(tok, cmd_list);
 		return (1);
 	}
 	else
@@ -118,10 +118,7 @@ t_command	*ft_parse(t_token *tok)
 			cmd_list = ft_add_pipe(cmd_list);
 		tok = tok->next;
 	}
-	if (ft_check_open_quote(head_tok) == 1)
+	if (ft_check_open_quote(head_tok, head_cmd) == 1)
 		return (NULL);
-	if (ft_allocate_cmd_args_to_array(head_cmd) == -1)
-		return (NULL);
-	ft_free_token_list(head_tok);
 	return (head_cmd);
 }

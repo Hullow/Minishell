@@ -3,38 +3,50 @@
 /*                                                        :::      ::::::::   */
 /*   main_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
+/*   By: francis <francis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/11 13:59:44 by fallan            #+#    #+#             */
-/*   Updated: 2024/12/14 20:51:22 by fallan           ###   ########.fr       */
+/*   Updated: 2024/12/16 16:12:40 by francis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../header/Minishell.h"
 
+// frees our linked list of tokens, and when it exists, each token string
 // frees our linked list of commands
 // n.b.: the list of redirections in the command list is freed previously
 // by ft_allocate_cmd_args_to_array (called by ft_parse in parse_main.c)
-void	ft_free_cmd_list(t_command *head_cmd)
+void	ft_free_token_and_cmd_list(t_token *token_list, t_command *head_cmd)
 {
-	t_command	*temp;
+	t_command	*temp_cmd;
+	t_token		*temp_tok;
 	int			i;
 
+	if (!token_list)
+		return ;
+	while (token_list)
+	{
+		temp_tok = token_list;
+		token_list = token_list->next;
+		if (temp_tok->str)
+			free(temp_tok->str);
+		free(temp_tok);
+	}
 	i = 0;
 	while (head_cmd)
 	{
-		temp = head_cmd;
+		temp_cmd = head_cmd;
 		head_cmd = head_cmd->next;
-		if (temp->args)
+		if (temp_cmd->args)
 		{
-			while (temp->args[i])
+			while (temp_cmd->args[i])
 			{
-				free(temp->args[i]);
+				free(temp_cmd->args[i]);
 				i++;
 			}
 		}
-		free(temp->args);
-		free(temp);
+		free(temp_cmd->args);
+		free(temp_cmd);
 	}
 }
 

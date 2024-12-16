@@ -6,7 +6,7 @@
 /*   By: francis <francis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/21 19:06:55 by francis           #+#    #+#             */
-/*   Updated: 2024/12/16 15:24:54 by francis          ###   ########.fr       */
+/*   Updated: 2024/12/16 16:07:18 by francis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,17 +23,7 @@ void	ft_print_args(t_command *cmd)
 	if (cmd && cmd->args)
 	{
 		while (cmd->args[++i])
-		{
 			printf(" – arg[%d]: {%s} ", i, cmd->args[i]);
-			if (cmd->args_between_quotes[i] == 2)
-				printf("(double quoted)");
-			else if (cmd->args_between_quotes[i] == 1)
-				printf("(single quoted)");
-			else if (cmd->args_between_quotes[i] == 0)
-				printf("(not quoted)");
-			else
-				printf("(!!quote status error!!)");
-		}
 	}
 	return ;
 }

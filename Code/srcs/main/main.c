@@ -6,11 +6,9 @@
 /*   By: francis <francis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2024/12/16 15:24:21 by francis          ###   ########.fr       */
+/*   Updated: 2024/12/16 16:16:39 by francis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
-
 
 #include "../../header/Minishell.h"
 
@@ -33,7 +31,7 @@ int	main(int argc, char **argv, char **envp)
 		// ft_execute_heredocs(cmd_list);
 		expand_command_variables(cmd_list, &shell_state);
 		execute_cmd(cmd_list, &shell_state);
-		ft_free_cmd_list(cmd_list);
+		ft_free_token_and_cmd_list(token_list, cmd_list);
 		free(prompt);
 		prompt = ft_prompt(0);
 	}

@@ -6,7 +6,7 @@
 /*   By: francis <francis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 19:01:55 by francis           #+#    #+#             */
-/*   Updated: 2024/12/16 15:28:45 by francis          ###   ########.fr       */
+/*   Updated: 2024/12/16 16:05:26 by francis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,11 +55,9 @@ void	ft_print_token_types_and_quote_status(t_token *tok)
 		{
 			printf("string: {%s} – token type: %s (%d)", iterator->str,
 				token_type_strings[iterator->type], iterator->type);
-			if (iterator->quote_status == 1)
-				printf(" – (single quoted)\n");
-			else if (iterator->quote_status == 2)
-				printf(" – (double quoted)\n");
-			else if (iterator->quote_status == 0)
+			if (iterator->is_between_quotes == true)
+				printf(" – (is quoted)\n");
+			else if (iterator->is_between_quotes == false)
 				printf(" – (unquoted)\n");
 			else
 				printf(" – !! quote status unknown !!\n");

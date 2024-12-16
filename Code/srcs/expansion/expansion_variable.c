@@ -6,7 +6,7 @@
 /*   By: francis <francis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/15 10:28:35 by cmegret           #+#    #+#             */
-/*   Updated: 2024/12/15 19:07:40 by francis          ###   ########.fr       */
+/*   Updated: 2024/12/16 16:11:03 by francis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ char	*expand_variable(char *new_arg,
 	return (new_arg);
 }
 
-char	*process_single_arg(t_cmd_args *arg_node, t_shell_state *shell_state)
+char	*process_single_arg(t_cmd_args *arg_node,  t_shell_state *shell_state)
 {
 	char		*new_arg;
 	char		var_name[256];
@@ -91,10 +91,14 @@ char	*process_single_arg(t_cmd_args *arg_node, t_shell_state *shell_state)
 	expand_iter = arg_node->to_expand;
 	while (arg_node->arg_string[j])
 	{
-		if (arg_node->arg_string[j] == '$' && expand_iter && expand_iter->check)
+		if (arg_node->arg_string[j] == '$' && expand_iter)
 		{
-			extract_var_name(arg_node->arg_string, &j, var_name);
-			new_arg = expand_variable(new_arg, shell_state, var_name);
+			if (expand_iter->check)
+			{
+				extract_var_name(arg_node->arg_string, &j, var_name);
+				new_arg = expand_variable(new_arg, shell_state, var_name);
+			}
+			expand_iter = expand_iter->next;
 		}
 		else
 		{
@@ -102,8 +106,6 @@ char	*process_single_arg(t_cmd_args *arg_node, t_shell_state *shell_state)
 			tmp[1] = '\0';
 			new_arg = ft_strjoin_free(new_arg, tmp);
 		}
-		if (arg_node->arg_string[j] == '$' && expand_iter)
-			expand_iter = expand_iter->next;
 		j++;
 	}
 	return (new_arg);
@@ -142,7 +144,8 @@ void	expand_command_variables(t_command *cmd_list,
 		return ;
 	if (!cmd_list->args || !cmd_list->args[0])
 		return ;
-	if (cmd_list->redir_list && cmd_list->redir_list->heredoc)
-		fill_table_heredocs(cmd_list, shell_state);
+/* 	if (cmd_list->redir_list && cmd_list->redir_list->heredoc)
+		fill_table_heredocs(cmd_list, shell_state); */
 	fill_table(cmd_list, shell_state);
+	ft_allocate_cmd_args_to_array(cmd_list); // fonction à réviser
 }

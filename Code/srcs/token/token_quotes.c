@@ -6,7 +6,7 @@
 /*   By: francis <francis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/12 15:56:09 by fallan            #+#    #+#             */
-/*   Updated: 2024/12/16 15:30:06 by francis          ###   ########.fr       */
+/*   Updated: 2024/12/16 16:04:45 by francis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,8 @@ int	ft_handle_quote_tokenization(char c,
 {
 	if ((*tok)->is_delimited)
 		*tok = ft_add_token_to_list(*tok, WORD);
-	(*tok)->quote_status = ft_token_has_open_quote(*tok); // first quote: set to false. second quote: set to true
+	if (ft_token_has_open_quote(*tok))
+		(*tok)->is_between_quotes = true; // is_between_quotes is true if any part of the heredoc is between quotes. e.g `cat << 'EOF'AA` => no expansion even though only part of the delimiter token is quoted
 	if (c == '\'')
 	{
 		if (!ft_token_has_open_quote(*tok))
@@ -42,7 +43,5 @@ int	ft_handle_quote_tokenization(char c,
 		else
 			ft_append_char_to_word(tok, '\"');
 	}
-	if (ft_token_has_open_quote(*tok))
-		(*tok)->is_between_quotes = true;
 	return (1);
 }

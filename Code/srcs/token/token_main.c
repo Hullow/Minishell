@@ -6,7 +6,7 @@
 /*   By: francis <francis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/06 17:19:58 by cmegret           #+#    #+#             */
-/*   Updated: 2024/12/16 15:29:00 by francis          ###   ########.fr       */
+/*   Updated: 2024/12/16 15:34:52 by francis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,33 +16,33 @@
 // for each token, each '$' is marked as needing an expansion
 // with t_expand = true or false
 // no return value
-void    ft_prepare_expansion(t_token *tok)
+void	ft_prepare_expansion(t_token *tok)
 {
-    t_expand    *new_expand;
-    t_expand    *head;
+	t_expand	*new_expand;
+	t_expand	*head;
 
-    new_expand = NULL;
-    if (!(tok->to_expand))
-    {
-        tok->to_expand = malloc(sizeof(t_expand));
-        tok->to_expand->next = NULL;
-        head = tok->to_expand;
-    }
-    else
-    {
-        head = tok->to_expand;
-        while (tok->to_expand->next)
-            tok->to_expand = tok->to_expand->next;
-        new_expand = malloc(sizeof(t_expand));
-        new_expand->next = NULL;
-        tok->to_expand->next = new_expand;
-        tok->to_expand = tok->to_expand->next;
-    }
-    if (tok->is_single_quoted)
-        tok->to_expand->check = false;
-    else
-        tok->to_expand->check = true;
-    tok->to_expand = head;
+	new_expand = NULL;
+	if (!(tok->to_expand))
+	{
+		tok->to_expand = malloc(sizeof(t_expand));
+		tok->to_expand->next = NULL;
+		head = tok->to_expand;
+	}
+	else
+	{
+		head = tok->to_expand;
+		while (tok->to_expand->next)
+			tok->to_expand = tok->to_expand->next;
+		new_expand = malloc(sizeof(t_expand));
+		new_expand->next = NULL;
+		tok->to_expand->next = new_expand;
+		tok->to_expand = tok->to_expand->next;
+	}
+	if (tok->is_single_quoted)
+		tok->to_expand->check = false;
+	else
+		tok->to_expand->check = true;
+	tok->to_expand = head;
 }
 
 // Processes the prompt, applying tokenization rules in order
@@ -62,6 +62,8 @@ void    ft_prepare_expansion(t_token *tok)
 // 	- 2.2.2.9. Comment '#': not implemented at all
 static int	ft_process_prompt(char *prompt, int i, t_token **tok)
 {
+	if (ft_is_dollar_sign(prompt[i]))
+		ft_prepare_expansion((*tok));
 	if (ft_previous_char_is_undelimited_operator(*tok))
 		return (ft_continue_operator_token(prompt, i, tok));
 	else if (ft_is_quote_character(prompt[i]))
