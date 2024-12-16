@@ -6,7 +6,7 @@
 /*   By: francis <francis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/06 17:19:58 by cmegret           #+#    #+#             */
-/*   Updated: 2024/12/16 17:25:08 by francis          ###   ########.fr       */
+/*   Updated: 2024/12/16 17:44:56 by francis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,13 +86,11 @@ void	ft_set_empty_token_strings(t_token *tok)
 	while (tok)
 	{
 		if (!(tok->str) && tok->is_delimited)
-
 			tok->str = ft_strdup("");
 		if (!(tok->str))
 			return ; // MALLOC ERROR
 		tok = tok->next;
 	}
-	printf("ft_set_empty_token_strings: no token found");
 }
 
 // Breaks the input (prompt) into tokens by calling each tokenization function
