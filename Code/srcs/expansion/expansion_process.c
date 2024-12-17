@@ -6,7 +6,7 @@
 /*   By: cmegret <cmegret@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/17 12:41:45 by cmegret           #+#    #+#             */
-/*   Updated: 2024/12/17 12:44:36 by cmegret          ###   ########.fr       */
+/*   Updated: 2024/12/17 15:54:47 by cmegret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,38 +15,26 @@
 char	*process_single_arg(t_cmd_args *arg_node, t_shell_state *shell_state)
 {
 	char		*new_arg;
-	char		var_name[256];
-	char		tmp[2];
-	int			j;
+	int			i;
 	t_expand	*expand_iter;
 
 	new_arg = ft_strdup("");
-	j = 0;
+	i = 0;
 	expand_iter = arg_node->to_expand;
-	while (arg_node->arg_string[j])
+	while (arg_node->arg_string[i])
 	{
-		if (expand_iter && arg_node->arg_string[j] == '$')
+		if (arg_node->arg_string[i] == '$' && expand_iter)
 		{
 			if (expand_iter->check)
-			{
-				extract_var_name(arg_node->arg_string, &j, var_name);
-				new_arg = expand_variable(new_arg, shell_state, var_name);
-			}
+				new_arg = handle_variable_expansion(new_arg, shell_state,
+						arg_node->arg_string, &i);
 			else
-			{
-				tmp[0] = arg_node->arg_string[j];
-				tmp[1] = '\0';
-				new_arg = ft_strjoin_free(new_arg, tmp);
-			}
+				new_arg = append_single_char(new_arg, arg_node->arg_string[i]);
 			expand_iter = expand_iter->next;
 		}
 		else
-		{
-			tmp[0] = arg_node->arg_string[j];
-			tmp[1] = '\0';
-			new_arg = ft_strjoin_free(new_arg, tmp);
-		}
-		j++;
+			new_arg = append_single_char(new_arg, arg_node->arg_string[i]);
+		i++;
 	}
 	return (new_arg);
 }
