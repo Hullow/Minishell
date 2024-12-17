@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Parser.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: francis <francis@student.42.fr>            +#+  +:+       +#+        */
+/*   By: cmegret <cmegret@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 19:44:40 by fallan            #+#    #+#             */
-/*   Updated: 2024/12/16 15:23:08 by francis          ###   ########.fr       */
+/*   Updated: 2024/12/17 12:48:49 by cmegret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,12 +23,12 @@ typedef struct s_shell_state	t_shell_state;
 
 
 // OLD
-int	ft_process_args(t_token *tkn, t_command *cmd_list);
-int	ft_allocate_multiple_args(t_token *tkn,
-	t_command *cmd_list, int arg_count);
-int	ft_allocate_single_arg(t_token *tkn,
-	t_command *cmd_list);
-int	ft_count_token_list_args(t_token *tok);
+int			ft_process_args(t_token *tkn, t_command *cmd_list);
+int			ft_allocate_multiple_args(t_token *tkn,
+				t_command *cmd_list, int arg_count);
+int			ft_allocate_single_arg(t_token *tkn,
+				t_command *cmd_list);
+int			ft_count_token_list_args(t_token *tok);
 // OLD
 
 // Orchestration
@@ -36,7 +36,8 @@ t_command	*ft_parse(t_token *tok);
 t_token		*ft_parse_operators(t_token *head);
 
 // Redirections
-int			ft_add_redir(t_token **tok, t_command *cmd_list, t_redir *head_redir);
+int			ft_add_redir(t_token **tok, t_command *cmd_list,
+				t_redir *head_redir);
 t_token		**ft_assign_redir_str(t_token **tok, t_redir *redir_list);
 t_redir		*ft_last_redir(t_redir **redir_list);
 

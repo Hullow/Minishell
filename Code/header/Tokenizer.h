@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Tokenizer.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: francis <francis@student.42.fr>            +#+  +:+       +#+        */
+/*   By: cmegret <cmegret@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 19:48:46 by fallan            #+#    #+#             */
-/*   Updated: 2024/12/16 16:39:10 by francis          ###   ########.fr       */
+/*   Updated: 2024/12/17 12:47:49 by cmegret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,8 +39,8 @@ int			ft_new_operator_token(char *prompt, int i, t_token **tok);
 void		ft_set_operator_token(char c, t_token **tok);
 
 	// Quotes
-int	ft_handle_quote_tokenization(char c,
-	bool single_quoted, bool double_quoted, t_token **tok);
+int			ft_handle_quote_tokenization(char c,
+				bool single_quoted, bool double_quoted, t_token **tok);
 
 // Checkers
 	// Simple characters

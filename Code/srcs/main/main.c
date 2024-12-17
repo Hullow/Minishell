@@ -3,14 +3,38 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: francis <francis@student.42.fr>            +#+  +:+       +#+        */
+/*   By: cmegret <cmegret@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2024/12/16 17:00:07 by francis          ###   ########.fr       */
+/*   Updated: 2024/12/17 12:49:56 by cmegret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../header/Minishell.h"
+
+/**
+ * @brief Prints an error message and exits the program with the specified
+ * status.
+ *
+ * This function uses perror to print the provided error message, followed by
+ * a description of the current error condition. It then exits the program
+ * with the given exit status.
+ *
+ * @param message A pointer to a string containing the error message to be
+ * printed.
+ * @param last_exit_status The exit status to use when terminating the program.
+ *
+ * @note This function is designed to be called when a critical error occurs
+ *       that prevents the program from continuing.
+ */
+void	error_and_exit(const char *message, int last_exit_status)
+{
+	if (message != NULL)
+		perror(message);
+	else
+		write(STDERR_FILENO, "Unknown error\n", 14);
+	exit(last_exit_status);
+}
 
 int	main(int argc, char **argv, char **envp)
 {
@@ -35,28 +59,4 @@ int	main(int argc, char **argv, char **envp)
 		prompt = ft_prompt(0);
 	}
 	return (0);
-}
-
-/**
- * @brief Prints an error message and exits the program with the specified
- * status.
- *
- * This function uses perror to print the provided error message, followed by
- * a description of the current error condition. It then exits the program
- * with the given exit status.
- *
- * @param message A pointer to a string containing the error message to be
- * printed.
- * @param last_exit_status The exit status to use when terminating the program.
- *
- * @note This function is designed to be called when a critical error occurs
- *       that prevents the program from continuing.
- */
-void	error_and_exit(const char *message, int last_exit_status)
-{
-	if (message != NULL)
-		perror(message);
-	else
-		write(STDERR_FILENO, "Unknown error\n", 14);
-	exit(last_exit_status);
 }
