@@ -5,11 +5,10 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: francis <francis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2024/12/16 16:41:49 by francis          ###   ########.fr       */
+/*   Created: 2024/12/17 16:18:25 by francis           #+#    #+#             */
+/*   Updated: 2024/12/17 16:51:48 by francis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 
 #include "../../header/Minishell.h"
 
@@ -30,8 +29,6 @@ int	ft_token_has_open_quote(t_token *tok)
 // checks if previous character was part of an undelimited operator token
 int	ft_previous_char_is_undelimited_operator(t_token *tok)
 {
-	if (tok && !ft_token_has_open_quote(tok)
-		&& tok->is_operator && !tok->is_delimited)
 	if (tok && !ft_token_has_open_quote(tok)
 		&& tok->is_operator && !tok->is_delimited)
 		return (1);

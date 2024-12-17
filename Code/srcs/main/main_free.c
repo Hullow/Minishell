@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main_utils.c                                       :+:      :+:    :+:   */
+/*   main_free.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: francis <francis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/11 13:59:44 by fallan            #+#    #+#             */
-/*   Updated: 2024/12/17 17:24:31 by francis          ###   ########.fr       */
+/*   Updated: 2024/12/17 17:24:21 by francis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,25 +18,30 @@
 // by ft_allocate_cmd_args_to_array (called by ft_parse in parse_main.c)
 void	ft_free_token_and_cmd_list(t_token *token_list, t_command *head_cmd)
 {
-	t_command	*temp_cmd;
-	t_token		*temp_tok;
-	int			i;
 
-	if (!token_list)
-		return ;
-	while (token_list)
-	{
-		temp_tok = token_list;
-		token_list = token_list->next;
-		if (temp_tok->str)
-			free(temp_tok->str);
-		free(temp_tok);
-	}
-	i = 0;
+	ft_free_token_list(token_list);
 	while (head_cmd)
 	{
-		temp_cmd = head_cmd;
-		ft_free_arg_list(head_cmd->arg_list);
+		ft_free_redir_list(&(head_cmd->redir_list)); // already done ???
+		ft_free_arg_list(&(head_cmd->arg_list));
+		ft_free_cmd_args(&(head_cmd->args));
+		ft_free_cmd_list(head_cmd->);
+		ft_free_cmd_list(head_cmd);
+	}
+}
+
+ft_free_cmd_list(t_command *cmd)
+{
+	t_command	*temp_cmd;
+	int			i;
+
+	i = 0;
+	if (!cmd)
+		return ;
+	while (cmd)
+	{
+		temp_cmd = cmd;
+		ft_free_arg_list(cmd->arg_list);
 		// ft_free_arg_list_to_expand => TO ADD !
 		if (temp_cmd->args)
 		{
@@ -48,24 +53,25 @@ void	ft_free_token_and_cmd_list(t_token *token_list, t_command *head_cmd)
 		}
 		free(temp_cmd->args);
 		free(temp_cmd);
-		head_cmd = head_cmd->next;
+		cmd = cmd->next;
 	}
 }
 
-// frees our linked list of arguments
-void	ft_free_arg_list(t_cmd_args	*arg_list)
+void	ft_free_token_list(t_token *token_list)
 {
-	t_cmd_args	*temp;
+	t_token	*temp_tok;
 
-	temp = NULL;
-	while (arg_list)
+	if (!token_list)
+		return ;
+	while (token_list)
 	{
-		temp = arg_list;
-		if (arg_list->arg_string)
-			free(arg_list->arg_string);
-		arg_list = arg_list->next;
-		free(temp);
-	}
+		temp_tok = token_list;
+		token_list = token_list->next;
+		if (temp_tok->str)
+			free(temp_tok->str);
+		free(temp_tok);
+		// SET TO NULL TO PREVENT DOUBLE FREE!
+	}	
 }
 
 /**

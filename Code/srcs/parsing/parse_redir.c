@@ -6,7 +6,7 @@
 /*   By: francis <francis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/01 17:28:03 by fallan            #+#    #+#             */
-/*   Updated: 2024/12/16 16:04:14 by francis          ###   ########.fr       */
+/*   Updated: 2024/12/17 16:17:53 by francis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,10 +28,16 @@ t_redir	*ft_last_redir(t_redir **redir_list)
 	return (head_redir);
 }
 
-// copies the string from our token to the redirection node
-// advances by one token in the token linked list
-// returns the token
-// n.b.: redir_list->str_type is the type of the string that follows
+// Function to examine the token following the redirection
+// - copies the string from our token to the redirection node,
+// - assigns a type for the copied string based on its underlying token type,
+// used later for error checking: e.g. two consecutive redirection tokens "> <"
+// - checks the quoted status of the token to prepare heredoc processing:
+//	if any part of the string of the token following the redirection operator
+//  is quoted, the function sets the marker for heredocs to "not expand"
+// - returns the token
+//
+// n.b.: redir_list->str_type is the type of the token that **follows**
 // the actual redirection, not the type of redirection
 t_token	**ft_assign_redir_str(t_token **tok, t_redir *redir_list)
 {
@@ -40,8 +46,8 @@ t_token	**ft_assign_redir_str(t_token **tok, t_redir *redir_list)
 	if (!redir_list->str)
 		return (NULL);
 	redir_list->str_type = (*tok)->type;
-	if ((*tok)->is_between_quotes) // is_between_quotes is true if any part of the heredoc is between quotes
-		redir_list->expand_heredoc = false;// if any part of the heredoc is between quotes, no expansion
+	if ((*tok)->is_between_quotes)
+		redir_list->expand_heredoc = false;
 	else
 		redir_list->expand_heredoc = true;
 	return (tok);

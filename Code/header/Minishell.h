@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   execution_main.c                                   :+:      :+:    :+:   */
+/*   Minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yourlogin <youremail@student.42lausanne.ch>    +#+  +:+       +#+        */
+/*   By: francis <francis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/07 13:55:06 by yourlogin         #+#    #+#             */
-/*   Updated: 2024/12/07 13:55:06 by yourlogin        ###   ########.ch       */
+/*   Updated: 2024/12/17 17:26:38 by francis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,11 +76,11 @@ typedef struct s_heredoc
 // linked list of redirections
 typedef struct s_redir
 {
-	int				type; // REDIR_INPUT, REDIR_OUTPUT, REDIR_APPEND, REDIR_HEREDOC
-	char			*str; // either file (for input, output, append) or delimiter (for Heredoc)
-	int				str_type; // the type of token that follows the redirection (WORD, REDIR_*, ...)
-	t_heredoc		*heredoc; // contents of the heredoc, if the redirection is a heredoc
-	bool			expand_heredoc;
+	int				type; // REDIR_: INPUT, OUTPUT, APPEND, HEREDOC (#define)
+	char			*str; //file (input, output, append) or delimiter (Heredoc)
+	int				str_type; // type of the token following the redirection
+	t_heredoc		*heredoc; // heredoc contents, if redirection is a heredoc
+	bool			expand_heredoc; // false if delimiter is quoted, else true
 	struct s_redir	*next;
 }	t_redir;
 
@@ -122,8 +122,8 @@ typedef struct s_command
 	char				*cmd_name;
 	t_cmd_args			*arg_list;
 	char				**args;
-	int					saved_input; // file descriptor for input (stdin or redirection)
-	int					saved_output; // file descriptor for output (stdout or redirection)
+	int					saved_input; // fd for input (stdin or redirection)
+	int					saved_output; // fd for output (stdout or redirection)
 	t_redir				*redir_list; // redirection list
 	struct s_command	*next;
 }	t_command;
@@ -155,5 +155,6 @@ char		*ft_prompt(int type);
 void		check_arguments(int argc, char **argv, t_shell_state *shell_state);
 void		ft_free_token_and_cmd_list(t_token *token_list,
 				t_command *head_cmd);
+void		ft_free_arg_list(t_cmd_args	*arg_list);
 
 #endif

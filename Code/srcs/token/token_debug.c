@@ -6,7 +6,7 @@
 /*   By: francis <francis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 19:01:55 by francis           #+#    #+#             */
-/*   Updated: 2024/12/16 16:05:26 by francis          ###   ########.fr       */
+/*   Updated: 2024/12/17 16:37:50 by francis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,15 +38,17 @@ struct	s_token	*ft_last_token(t_token *tok)
 	return (tok);
 }
 
-// Traverses the linked list of tokens and prints each token's string, type, and quote status (if any) 
+/* 
+// Traverses the linked list of tokens 
+// and prints each token's string, type, and quote status (if any)
 void	ft_print_token_types_and_quote_status(t_token *tok)
 {
 	t_token		*iterator;
+
 	const char	*token_type_strings[10] = {
 		"UNKNOWN TOKEN TYPE", "WORD", "REDIR_INPUT", "REDIR_OUTPUT",
 		"REDIR_APPEND", "REDIR_HEREDOC", "PIPE", "END_OF_INPUT"
 	};
-
 	printf("***TOKENS***\n");
 	iterator = tok;
 	while (iterator)
@@ -77,3 +79,4 @@ void	ft_print_token_types_and_quote_status(t_token *tok)
 	}
 	printf("************\n");
 }
+ */

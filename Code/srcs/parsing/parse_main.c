@@ -5,11 +5,10 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: francis <francis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2024/12/16 16:14:23 by francis          ###   ########.fr       */
+/*   Created: 2024/12/17 15:35:01 by francis           #+#    #+#             */
+/*   Updated: 2024/12/17 17:20:09 by francis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 
 #include "../../header/Minishell.h"
 
@@ -64,61 +63,54 @@ t_command	*ft_add_pipe(t_command *cmd_list)
 	return (cmd_list);
 }
 
-// checks if our token list ends with open quotes
-// if
-int	ft_check_open_quote(t_token *tok, t_command *cmd_list)
-{
-	while (tok->next)
-		tok = tok->next;
-	if (ft_token_has_open_quote(tok))
-	{
-		printf("open quote !\n");
-		ft_free_token_and_cmd_list(tok, cmd_list);
-		return (1);
-	}
-	else
-		return (0);
-}
-
+// MAIN PARSING FUNCTION
+// Mallocs and returns a linked list of commands t_command *
+// 
+// Each node of t_command * corresponds to a pipe
+// Each node contains:
+//  - Command name (char *cmd_name)
+//  - Command arguments (t_cmd_args* arg_list)
+//   (n.b.: parsing stores argument in the list t_cmd_args* arg_list;
+//   after parsing, arguments are expanded, and finally, copied in char **args
+//   which is actually used to execute the command using execve()
+//  - Redirections (t_redir *redir_list), which include heredocs
+//	 (n.b.: heredocs are opened and filled right after parsing)
+//  - File descriptors to save stdin and stdout before redirections/pipes
+//
+// HOW IT WORKS:
 // Parses our linked list of tokens, starting from left (head)
-// Extracts the command and the arguments 
-// Outputs a struct command with the command name and the arguments
-// NEED TO ADD ERROR HANDLING !
-// shell_state: for envp and variables (exit status: $?, other variables)
+// Extracts the command, its arguments, redirections, and pipes(other commands)
+//
+// STEP BY STEP:
+// ft_parse_operators assigns the correct token type to operator tokens
 // while() loop:
-// 	- goes over each token of our token list
+// 	- goes over each token of our tokenized prompt (t_token *tok: linked list)
 //	- checks token type
 //	- then, depending on type:
 //		- adds a redirection to our redirection list
-//		- adds a command argument to our command arguments list
-//		- adds a new command (/pipe) to our list of commands
-// after the while() loop, copy command arguments from the list to the array
-// with ft_allocate_cmd_args_to_array (n.b.: for each command/pipe)
-// return the first node of our list of commands (t_command	*head_cmd)
+//		- adds a command name/arguments to our command arguments list
+//		- adds a new command (pipe) to our list of commands
+// return: the first node of our list of commands (t_command *head_cmd)
 t_command	*ft_parse(t_token *tok)
 {
 	t_command	*cmd_list;
 	t_command	*head_cmd;
-	t_token		*head_tok;
 
 	cmd_list = malloc(sizeof(t_command));
 	if (!cmd_list)
 		return (NULL);
 	ft_initialize_cmd_list(cmd_list);
-	ft_parse_operators(tok); // not removable so far (see ft_print_token_types)
 	head_cmd = cmd_list;
-	head_tok = tok;
+	ft_parse_operators(tok);
 	while (tok)
 	{
 		if (ft_token_is_redir(tok->type))
 			ft_add_redir(&tok, cmd_list, NULL);
 		else if (ft_token_is_word(tok->type))
-			ft_add_cmd_arg_to_list(tok, &(cmd_list->arg_list));
+			ft_add_cmd_arg_to_list(tok, &(cmd_list->arg_list), NULL);
 		else if (ft_token_is_pipe(tok->type))
 			cmd_list = ft_add_pipe(cmd_list);
 		tok = tok->next;
 	}
-	if (ft_check_open_quote(head_tok, head_cmd) == 1)
-		return (NULL);
 	return (head_cmd);
 }

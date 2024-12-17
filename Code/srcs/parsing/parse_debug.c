@@ -6,7 +6,7 @@
 /*   By: francis <francis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/21 19:06:55 by francis           #+#    #+#             */
-/*   Updated: 2024/12/16 16:07:18 by francis          ###   ########.fr       */
+/*   Updated: 2024/12/17 15:34:39 by francis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,8 @@ char	*ft_return_redir_type(int redir_type)
 		return (NULL);
 }
 
-// prints all redirections in a redirection linked list (i.e. for a single command/pipe) 
+// prints all redirections in a redirection linked list
+// (i.e. for a single command/pipe)
 void	ft_print_redirs(t_redir *redir, char *cmd_name)
 {
 	int	i;
