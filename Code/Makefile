@@ -6,7 +6,7 @@
 #    By: francis <francis@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/07/19 14:53:36 by cmegret           #+#    #+#              #
-#    Updated: 2024/12/17 17:23:38 by francis          ###   ########.fr        #
+#    Updated: 2024/12/17 18:16:50 by francis          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -76,6 +76,8 @@ SRCS = main/main.c \
 	  parsing/parse_utils.c \
 	  parsing/parse_debug.c \
 	  heredocs/heredocs_main.c \
+	  heredocs/heredocs_read.c \
+	  heredocs/heredocs_utils.c \
 	  expansion/expansion_main.c \
 	  expansion/expansion_process.c \
 	  expansion/expansion_variable.c \

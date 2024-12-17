@@ -6,7 +6,7 @@
 /*   By: cmegret <cmegret@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/01 18:44:38 by cmegret           #+#    #+#             */
-/*   Updated: 2024/12/17 12:47:13 by cmegret          ###   ########.fr       */
+/*   Updated: 2024/12/17 15:55:01 by cmegret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,9 @@ typedef struct s_cmd_args	t_cmd_args;
 char	*ft_strjoin_free(char *s1, char *s2);
 void	extract_var_name(char *arg, int *j, char *var_name);
 char	*convert_exit_status(int status);
+char	*append_single_char(char *str, char c);
+char	*handle_variable_expansion(char *new_arg, t_shell_state *shell_state,
+			char *arg_string, int *i);
 
 // Variable expansion
 char	*expand_variable(char *new_arg,
