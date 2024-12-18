@@ -6,7 +6,7 @@
 /*   By: francis <francis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/17 16:54:34 by francis           #+#    #+#             */
-/*   Updated: 2024/12/17 16:54:35 by francis          ###   ########.fr       */
+/*   Updated: 2024/12/18 11:58:52 by francis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,26 @@ void	error_and_exit(const char *message, int last_exit_status)
 	exit(last_exit_status);
 }
 
+/**
+ * @brief Checks the command-line arguments.
+ *
+ * This function checks if any command-line arguments are provided.
+ * If arguments are provided, it prints a usage message and exits the program.
+ *
+ * @param argc The number of command-line arguments.
+ * @param argv An array of command-line arguments.
+ */
+void	check_arguments(int argc, char **argv, t_shell_state *shell_state)
+{
+	if (argc > 1)
+	{
+		printf("Usage: %s\n", argv[0]);
+		printf("No arguments are allowed\n");
+		shell_state->last_exit_status = EXIT_FAILURE;
+		exit(shell_state->last_exit_status);
+	}
+}
+
 int	main(int argc, char **argv, char **envp)
 {
 	char			*prompt;
@@ -54,8 +74,7 @@ int	main(int argc, char **argv, char **envp)
 		ft_open_heredocs(cmd_list);
 		expand_command_variables(cmd_list, &shell_state);
 		execute_cmd(cmd_list, &shell_state);
-		ft_free_token_and_cmd_list(token_list, cmd_list);
-		free(prompt);
+		ft_free_all(prompt, token_list, cmd_list);
 		prompt = ft_prompt(0);
 	}
 	return (0);

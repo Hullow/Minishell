@@ -1150,4 +1150,12 @@ cat << EOF "stopabab"
 cat << EOFstopabab
 cat << "EOFstop"abab
 
+Bug:
+Minishell : << EOF << EOF2
+>EOF2
+>EOF
+>EOF
+Minishell :
+
+
 <tabs>

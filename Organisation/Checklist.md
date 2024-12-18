@@ -9,6 +9,8 @@ Minishell : << EOF << EOF2
 >EOF
 Minishell :
 ```
+- Exit status: do tests
+- Signals: do tests
 
 # If time
 - Reintroduce colored prompt and check leaks/crashes

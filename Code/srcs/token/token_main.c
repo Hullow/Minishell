@@ -6,11 +6,27 @@
 /*   By: francis <francis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/06 17:19:58 by cmegret           #+#    #+#             */
-/*   Updated: 2024/12/17 16:49:22 by francis          ###   ########.fr       */
+/*   Updated: 2024/12/18 12:08:45 by francis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../header/Minishell.h"
+
+// frees the linked list of tokens
+// and the strings therein
+void	ft_free_token_list(t_token *token_list)
+{
+	t_token	*temp_tok;
+
+	while (token_list)
+	{
+		temp_tok = token_list;
+		token_list = token_list->next;
+		if (temp_tok->str)
+			free(temp_tok->str);
+		free(temp_tok);
+	}
+}
 
 // Function called with NULL for new_expand
 // adds a t_expand to our linked list of expansion checks
@@ -62,7 +78,7 @@ void	ft_prepare_expansion(t_token **tok)
 // N.b.:
 // -2.2.2.5. Parameter expansion ($) is not handled here but after tokenisation
 // -2.2.2.9. Comment '#': not implemented at all
-static int	ft_process_prompt(char *prompt, int i, t_token **tok)
+int	ft_process_prompt(char *prompt, int i, t_token **tok)
 {
 	if (ft_is_dollar_sign(prompt[i]))
 	{
@@ -105,7 +121,7 @@ t_token	*ft_tokenize(char *prompt)
 	if (!prompt[i])
 		tok = ft_tokenize_end_of_input(tok);
 	ft_set_empty_token_strings(head);
-	if (ft_check_open_quote(head) == 1)
+	if (ft_check_open_quote(head))
 		return (NULL);
 	return (head);
 }

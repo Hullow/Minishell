@@ -6,7 +6,7 @@
 /*   By: francis <francis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/01 13:49:30 by fallan            #+#    #+#             */
-/*   Updated: 2024/11/21 19:12:51 by francis          ###   ########.fr       */
+/*   Updated: 2024/12/17 17:46:14 by francis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,8 @@ bool	ft_token_is_redir(int token_type)
 		return (0);
 }
 
-// checks if token is of type WORD 
+// checks if token is of type WORD
+// returns 1 if yes, 0 otherwise
 bool	ft_token_is_word(int token_type)
 {
 	if (token_type == WORD)
@@ -35,7 +36,8 @@ bool	ft_token_is_word(int token_type)
 		return (0);
 }
 
-// checks if token is of type WORD 
+// checks if token is of type WORD
+// returns 1 if yes, 0 otherwise
 bool	ft_token_is_pipe(int token_type)
 {
 	if (token_type == PIPE)

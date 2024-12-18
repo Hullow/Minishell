@@ -6,7 +6,7 @@
 /*   By: francis <francis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/12 15:56:09 by fallan            #+#    #+#             */
-/*   Updated: 2024/12/17 17:18:04 by francis          ###   ########.fr       */
+/*   Updated: 2024/12/18 12:08:24 by francis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,8 @@ int	ft_handle_quote_tokenization(char c,
 }
 
 // checks if our token list ends with open quotes
-// if true, prints "open quote!"
+// if true, prints "open quote!", frees the token list, and returns 1
+// else, returns 0
 int	ft_check_open_quote(t_token *tok)
 {
 	while (tok->next)
@@ -59,7 +60,7 @@ int	ft_check_open_quote(t_token *tok)
 	if (ft_token_has_open_quote(tok))
 	{
 		printf("open quote !\n");
-		ft_free_token_and_cmd_list(tok, NULL);
+		ft_free_token_list(tok);
 		return (1);
 	}
 	else

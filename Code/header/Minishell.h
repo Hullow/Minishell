@@ -6,7 +6,7 @@
 /*   By: francis <francis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/07 13:55:06 by yourlogin         #+#    #+#             */
-/*   Updated: 2024/12/17 17:26:38 by francis          ###   ########.fr       */
+/*   Updated: 2024/12/18 12:02:46 by francis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -147,14 +147,16 @@ int			main(int argc, char **argv, char **envp);
 void		ft_initialize(int argc, char **argv,
 				t_shell_state *shell_state, char **envp);
 void		error_and_exit(const char *message, int last_exit_status);
+void		check_arguments(int argc, char **argv, t_shell_state *shell_state);
 
 // Prompt
 char		*ft_prompt(int type);
 
-// Utils
-void		check_arguments(int argc, char **argv, t_shell_state *shell_state);
-void		ft_free_token_and_cmd_list(t_token *token_list,
-				t_command *head_cmd);
+// Freee
+void		ft_free_all(char *prompt, t_token *token_list, t_command *cmd);
+void		ft_free_cmd_list(t_command *cmd);
+void		ft_free_cmd_args(char **args);
 void		ft_free_arg_list(t_cmd_args	*arg_list);
+void		ft_free_redir_list(t_redir *redir_list);
 
 #endif
