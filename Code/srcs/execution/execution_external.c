@@ -6,7 +6,7 @@
 /*   By: cmegret <cmegret@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/03 08:36:16 by cmegret           #+#    #+#             */
-/*   Updated: 2024/12/14 11:35:07 by cmegret          ###   ########.fr       */
+/*   Updated: 2024/12/18 12:21:04 by cmegret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,5 +92,5 @@ void	handle_child_process(t_command *cmd_list, t_shell_state *shell_state)
 		free(cmd_path);
 		error_and_exit("minishell", 1);
 	}
-	free(cmd_path); // CHECK THIS
+	free(cmd_path);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main_prompt.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
+/*   By: cmegret <cmegret@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/22 18:40:16 by cmegret           #+#    #+#             */
-/*   Updated: 2024/12/12 17:32:55 by fallan           ###   ########.fr       */
+/*   Updated: 2024/12/18 12:23:51 by cmegret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,50 +59,31 @@ char	*ft_create_message_prompt(char *last_folder)
 	return (message);
 }
 
-/**
- * @brief Generates a custom command prompt for the shell.
- *
- * This function creates a command prompt using the last folder
- * of the current working directory (CWD). If the CWD cannot be obtained,
- * it uses a default prompt "Minishell : ".
- *
- * @return A pointer to a string containing the command prompt.
- *         The string must be freed by the caller to avoid memory leaks.
- *
- * @note Uses the getcwd function to obtain the CWD.
- * @note Uses the readline function to read user input.
- * @note On memory allocation error, the function prints an error message and
- *       terminates the program.
- */
 char	*ft_prompt(int type)
 {
 	char	*prompt;
+	char	cwd[1024];
+	char	*last_folder;
+	char	*message;
 
 	if (type == REDIR_HEREDOC)
-		prompt = readline(">");
-	else
-		prompt = readline("Minishell : ");
-	// char	*message;
-	// char	cwd[1024];
-	// char	*last_folder;
-
-	// if (getcwd(cwd, sizeof(cwd)) != NULL)
-	// {
-	// 	last_folder = ft_strrchr(cwd, '/');
-	// 	if (last_folder != NULL)
-	// 		last_folder++;
-	// 	message = ft_create_message_prompt(last_folder);
-	// 	if (message == NULL)
-	// 	{
-	// 		perror("malloc");
-	// 		exit(EXIT_FAILURE);
-	// 	}
-	// 	prompt = readline(message);
-	// 	free(message);
-	// }
-	// else
-	// {
-	// 	perror("getcwd");
-	// }
+		return (readline("> "));
+	if (getcwd(cwd, sizeof(cwd)) == NULL)
+	{
+		perror("getcwd");
+		return (readline("Minishell : "));
+	}
+	last_folder = ft_strrchr(cwd, '/');
+	if (last_folder == NULL)
+		return (readline("Minishell : "));
+	last_folder++;
+	message = ft_create_message_prompt(last_folder);
+	if (message == NULL)
+	{
+		perror("malloc");
+		exit(EXIT_FAILURE);
+	}
+	prompt = readline(message);
+	free(message);
 	return (prompt);
 }
