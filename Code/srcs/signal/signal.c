@@ -6,12 +6,11 @@
 /*   By: cmegret <cmegret@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 14:40:07 by cmegret           #+#    #+#             */
-/*   Updated: 2024/12/17 13:16:54 by cmegret          ###   ########.fr       */
+/*   Updated: 2024/12/18 15:47:32 by cmegret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../header/Minishell.h"
-#include <readline/readline.h>
 
 int	g_signal = 0;
 
@@ -31,4 +30,12 @@ void	handle_sigint(int sig)
 void	handle_sigquit(int sig)
 {
 	(void)sig;
+}
+
+void	handle_sigint_heredoc(int sig)
+{
+	printf("[DEBUG] Signal SIGINT reçu pendant heredoc, g_signal set à 1\n");
+	(void)sig;
+	g_signal = 1;
+	write(STDOUT_FILENO, "\n", 1);
 }

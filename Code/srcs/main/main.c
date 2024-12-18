@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: francis <francis@student.42.fr>            +#+  +:+       +#+        */
+/*   By: cmegret <cmegret@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/17 16:54:34 by francis           #+#    #+#             */
-/*   Updated: 2024/12/18 11:58:52 by francis          ###   ########.fr       */
+/*   Updated: 2024/12/18 15:22:42 by cmegret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,13 @@ int	main(int argc, char **argv, char **envp)
 		token_list = ft_tokenize(prompt);
 		cmd_list = ft_parse(token_list);
 		ft_open_heredocs(cmd_list);
+		if (g_signal)
+		{
+			g_signal = 0;
+			ft_free_all(prompt, token_list, cmd_list);
+			prompt = ft_prompt(0);
+			continue ;
+		}
 		expand_command_variables(cmd_list, &shell_state);
 		execute_cmd(cmd_list, &shell_state);
 		ft_free_all(prompt, token_list, cmd_list);

@@ -6,7 +6,7 @@
 /*   By: cmegret <cmegret@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/17 15:59:00 by cmegret           #+#    #+#             */
-/*   Updated: 2024/12/17 15:59:27 by cmegret          ###   ########.fr       */
+/*   Updated: 2024/12/18 15:12:41 by cmegret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,10 +43,7 @@ bool	read_and_process_line(t_heredoc **heredoc_line, t_redir *redir_list)
 
 	prompt = ft_prompt(REDIR_HEREDOC);
 	if (!prompt)
-	{
-		printf("\n");
 		return (true);
-	}
 	if (*prompt)
 	{
 		(*heredoc_line)->line = ft_strdup(prompt);
