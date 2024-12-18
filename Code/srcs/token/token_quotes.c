@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   token_quotes.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: francis <francis@student.42.fr>            +#+  +:+       +#+        */
+/*   By: cmegret <cmegret@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/12 15:56:09 by fallan            #+#    #+#             */
-/*   Updated: 2024/12/18 12:08:24 by francis          ###   ########.fr       */
+/*   Updated: 2024/12/18 16:34:30 by cmegret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,12 +55,15 @@ int	ft_handle_quote_tokenization(char c,
 // else, returns 0
 int	ft_check_open_quote(t_token *tok)
 {
+	t_token	*head;
+
+	head = tok;
 	while (tok->next)
 		tok = tok->next;
 	if (ft_token_has_open_quote(tok))
 	{
 		printf("open quote !\n");
-		ft_free_token_list(tok);
+		ft_free_token_list(head);
 		return (1);
 	}
 	else

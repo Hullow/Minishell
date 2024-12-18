@@ -6,7 +6,7 @@
 /*   By: cmegret <cmegret@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/11 13:59:44 by fallan            #+#    #+#             */
-/*   Updated: 2024/12/18 16:10:11 by cmegret          ###   ########.fr       */
+/*   Updated: 2024/12/18 16:26:20 by cmegret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,6 +118,7 @@ void	ft_free_redir_list(t_redir *redir_list)
 		{
 			temp_heredoc = redir_list->heredoc;
 			redir_list->heredoc = redir_list->heredoc->next;
+			free(temp_heredoc->line);
 			free(temp_heredoc);
 		}
 		redir_list = redir_list->next;
