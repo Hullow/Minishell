@@ -6,12 +6,22 @@
 /*   By: cmegret <cmegret@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/17 12:41:47 by cmegret           #+#    #+#             */
-/*   Updated: 2024/12/17 12:49:23 by cmegret          ###   ########.fr       */
+/*   Updated: 2024/12/18 12:53:25 by cmegret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../header/Minishell.h"
 
+/**
+ * @brief Processes and expands variables in heredoc content
+ *
+ * Iterates through all heredoc redirections in a command.
+ * For each heredoc marked for expansion, processes its content line by line
+ * replacing variables with their values from the shell environment.
+ *
+ * @param cmd_list Command structure containing heredoc redirections
+ * @param shell_state Current shell state with environment variables
+ */
 void	fill_table_heredocs(t_command *cmd_list, t_shell_state *shell_state)
 {
 	t_redir		*redir;
@@ -41,6 +51,16 @@ void	fill_table_heredocs(t_command *cmd_list, t_shell_state *shell_state)
 	}
 }
 
+/**
+ * @brief Expands variables in command arguments
+ *
+ * Processes each argument in every command of the command list.
+ * Replaces variables with their values from the shell environment
+ * based on expansion markers.
+ *
+ * @param cmd_list List of commands to process
+ * @param shell_state Current shell state with environment variables
+ */
 void	fill_table(t_command *cmd_list, t_shell_state *shell_state)
 {
 	char		*new_arg;
@@ -62,6 +82,19 @@ void	fill_table(t_command *cmd_list, t_shell_state *shell_state)
 	}
 }
 
+/**
+ * @brief Main function for variable expansion in commands
+ *
+ * Coordinates the expansion process for both heredocs and command arguments.
+ * Steps:
+ * 1. Validate input command list
+ * 2. Process heredocs if present
+ * 3. Expand variables in command arguments
+ * 4. Convert argument lists to arrays
+ *
+ * @param cmd_list List of commands to process
+ * @param shell_state Current shell state with environment variables
+ */
 void	expand_command_variables(t_command *cmd_list,
 	t_shell_state *shell_state)
 {

@@ -6,13 +6,24 @@
 /*   By: cmegret <cmegret@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/11 13:59:44 by fallan            #+#    #+#             */
-/*   Updated: 2024/12/18 12:27:48 by cmegret          ###   ########.fr       */
+/*   Updated: 2024/12/18 12:46:37 by cmegret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../header/Minishell.h"
 
-// Frees the prompt, the token list, and the command list
+/**
+ * @brief Frees all allocated memory used by the shell
+ *
+ * Deallocates memory for:
+ * - The prompt string
+ * - The token list
+ * - The command list and all its components
+ *
+ * @param prompt The prompt string to free
+ * @param token_list The list of tokens to free
+ * @param cmd The command list to free
+ */
 void	ft_free_all(char *prompt, t_token *token_list, t_command *cmd)
 {
 	free(prompt);
@@ -20,9 +31,17 @@ void	ft_free_all(char *prompt, t_token *token_list, t_command *cmd)
 	ft_free_cmd_list(cmd);
 }
 
-// frees the whole list of commands
-// calls the required functions to free the contents within each node
-// (redirections, arguments list, arguments array)
+/**
+ * @brief Frees an entire command list structure
+ *
+ * Recursively frees all components of each command node:
+ * - Redirection list
+ * - Argument list
+ * - Arguments array
+ * - Command node itself
+ *
+ * @param cmd Pointer to the first command node
+ */
 void	ft_free_cmd_list(t_command *cmd)
 {
 	t_command	*temp_cmd;
@@ -38,7 +57,15 @@ void	ft_free_cmd_list(t_command *cmd)
 	}
 }
 
-// free the array of command arguments (char **args) of a command list node
+/**
+ * @brief Frees an array of command arguments
+ *
+ * Deallocates memory for:
+ * - Each individual argument string
+ * - The array itself
+ *
+ * @param args NULL-terminated array of argument strings
+ */
 void	ft_free_cmd_args(char **args)
 {
 	int			i;
@@ -56,10 +83,16 @@ void	ft_free_cmd_args(char **args)
 	free(args);
 }
 
-// frees the linked list of command arguments
-// within each node:
-//	- frees the string, if present
-//  - frees the expansion marker t_expand linked list, if present
+/**
+ * @brief Frees a linked list of command arguments
+ *
+ * For each argument node, deallocates:
+ * - The argument string
+ * - The expansion markers list
+ * - The node itself
+ *
+ * @param arg_list Pointer to the first argument node
+ */
 void	ft_free_arg_list(t_cmd_args	*arg_list)
 {
 	t_cmd_args	*temp;
@@ -83,8 +116,15 @@ void	ft_free_arg_list(t_cmd_args	*arg_list)
 	}
 }
 
-// frees a redirection linked list
-// and for each node, frees the heredoc linked list inside (if present)
+/**
+ * @brief Frees a redirection list structure
+ *
+ * For each redirection node, deallocates:
+ * - The heredoc linked list if present
+ * - The redirection node itself
+ *
+ * @param redir_list Pointer to the first redirection node
+ */
 void	ft_free_redir_list(t_redir *redir_list)
 {
 	t_redir		*temp_redir;

@@ -6,20 +6,20 @@
 /*   By: cmegret <cmegret@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/13 19:01:29 by cmegret           #+#    #+#             */
-/*   Updated: 2024/12/13 21:03:11 by cmegret          ###   ########.fr       */
+/*   Updated: 2024/12/18 12:59:46 by cmegret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../header/Minishell.h"
 
 /**
- * @brief Vérifie si une commande contient un heredoc.
+ * @brief Checks if a command contains a heredoc.
  *
- * Cette fonction parcourt la liste des redirections d'une commande pour
- * déterminer si l'une d'elles est un heredoc.
+ * This function traverses the command's redirection list to determine
+ * if any of them is a heredoc.
  *
- * @param cmd La commande à vérifier.
- * @return true si un heredoc est trouvé, false sinon.
+ * @param cmd The command to check
+ * @return true if a heredoc is found, false otherwise
  */
 bool	has_heredoc(t_command *cmd)
 {
@@ -38,14 +38,13 @@ bool	has_heredoc(t_command *cmd)
 }
 
 /**
- * @brief Trouve la première redirection de type heredoc dans une commande.
+ * @brief Finds the first heredoc redirection in a command.
  *
- * Cette fonction parcourt la liste des redirections d'une commande et retourne
- * la première redirection qui est un heredoc.
+ * This function traverses the command's redirection list and returns
+ * the first heredoc redirection found.
  *
- * @param cmd La commande contenant les redirections.
- * @return Un pointeur vers la redirection heredoc trouvée,
- * ou NULL si aucune n'est trouvée.
+ * @param cmd The command containing the redirections
+ * @return Pointer to the found heredoc redirection, NULL if none found
  */
 t_redir	*find_heredoc(t_command *cmd)
 {
@@ -58,15 +57,14 @@ t_redir	*find_heredoc(t_command *cmd)
 }
 
 /**
- * @brief Calcule la taille totale des contenus d'un heredoc
- * en excluant le délimiteur.
+ * @brief Calculates total size of heredoc content excluding delimiter
  *
- * Cette fonction parcourt la liste des lignes d'un heredoc et calcule la
- * taille totale nécessaire pour stocker toutes les lignes sauf le délimiteur.
+ * This function traverses the heredoc line list and calculates
+ * the total size needed to store all lines except the delimiter.
  *
- * @param heredoc La liste des lignes du heredoc.
- * @param delim Le délimiteur du heredoc.
- * @return La taille totale en octets.
+ * @param heredoc The list of heredoc lines
+ * @param delim The heredoc delimiter
+ * @return Total size in bytes
  */
 size_t	calculate_heredoc_size(t_heredoc *heredoc, char *delim)
 {
@@ -83,18 +81,15 @@ size_t	calculate_heredoc_size(t_heredoc *heredoc, char *delim)
 }
 
 /**
- * @brief Prépare un buffer contenant toutes les lignes
- * du heredoc sauf le délimiteur.
+ * @brief Prepares a buffer containing all heredoc lines except delimiter
  *
- * Cette fonction alloue un buffer et copie chaque
- * ligne du heredoc dans ce buffer,
- * en ajoutant une nouvelle ligne après chaque commande.
+ * This function allocates a buffer and copies each heredoc line into it,
+ * adding a newline after each command.
  *
- * @param heredoc La liste des lignes du heredoc.
- * @param delim Le délimiteur du heredoc.
- * @param size La taille totale du buffer.
- * @return Un pointeur vers le buffer préparé,
- * ou NULL en cas d'erreur d'allocation.
+ * @param heredoc The list of heredoc lines
+ * @param delim The heredoc delimiter
+ * @param size Total buffer size
+ * @return Pointer to the prepared buffer, NULL if allocation fails
  */
 char	*prepare_heredoc_buffer(t_heredoc *heredoc, char *delim, size_t size)
 {
@@ -120,15 +115,18 @@ char	*prepare_heredoc_buffer(t_heredoc *heredoc, char *delim, size_t size)
 }
 
 /**
- * @brief Configure l'entrée standard d'une commande à partir d'un heredoc.
+ * @brief Sets up standard input for a command from a heredoc
  *
- * Cette fonction crée un pipe, prépare le buffer contenant
- * les lignes du heredoc,
- * écrit ce buffer dans le pipe, et redirige l'entrée standard
- * de la commande vers le pipe.
+ * This function:
+ * 1. Finds the first heredoc redirection
+ * 2. Creates a pipe
+ * 3. Calculates total content size
+ * 4. Prepares and writes buffer to pipe
+ * 5. Sets up standard input from pipe
  *
- * @param cmd La commande dont l'entrée standard doit être redirigée.
- * @return 0 en cas de succès, -1 en cas d'erreur.
+ * @param cmd Command whose standard input needs to be redirected
+ * @return 0 on success, -1 on error (redirection not found,
+ *         pipe error, or allocation failure)
  */
 int	setup_heredoc_input(t_command *cmd)
 {

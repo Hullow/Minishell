@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: francis <francis@student.42.fr>            +#+  +:+       +#+        */
+/*   By: cmegret <cmegret@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/07 13:55:06 by yourlogin         #+#    #+#             */
-/*   Updated: 2024/12/18 12:02:46 by francis          ###   ########.fr       */
+/*   Updated: 2024/12/18 12:39:43 by cmegret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -151,6 +151,10 @@ void		check_arguments(int argc, char **argv, t_shell_state *shell_state);
 
 // Prompt
 char		*ft_prompt(int type);
+char		*ft_create_message_prompt(char *last_folder);
+char		*create_shell_name(void);
+char		*create_prefix(char *last_folder);
+char		*ft_colorize_message(char *message, char *color);
 
 // Freee
 void		ft_free_all(char *prompt, t_token *token_list, t_command *cmd);

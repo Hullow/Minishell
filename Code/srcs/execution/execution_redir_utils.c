@@ -6,7 +6,7 @@
 /*   By: cmegret <cmegret@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/07 14:37:29 by francis           #+#    #+#             */
-/*   Updated: 2024/12/10 17:25:51 by cmegret          ###   ########.fr       */
+/*   Updated: 2024/12/18 12:55:56 by cmegret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,12 +54,15 @@ int	is_valid_filename(const char *filename)
 }
 
 /**
- * @brief Restores the original file descriptors.
+ * @brief Restores the original file descriptors
  *
- * This function restores the original file descriptors for stdin and stdout
- * that were saved in the command structure.
+ * This function:
+ * 1. Restores stdin and stdout to their original state
+ * 2. Duplicates saved descriptors back to standard streams
+ * 3. Closes the saved descriptors to prevent leaks
  *
- * @param cmd_list The command list containing the saved file descriptors.
+ * @param cmd_list The command list containing the saved file descriptors
+ * @note Both saved descriptors are closed after restoration
  */
 void	restore_redirections(t_command *cmd_list)
 {

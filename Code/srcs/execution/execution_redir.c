@@ -6,7 +6,7 @@
 /*   By: cmegret <cmegret@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/07 14:37:29 by francis           #+#    #+#             */
-/*   Updated: 2024/12/15 12:53:37 by cmegret          ###   ########.fr       */
+/*   Updated: 2024/12/18 12:55:03 by cmegret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,13 +126,18 @@ static int	validate_redirection(t_redir *redir, t_shell_state *shell_state)
 }
 
 /**
- * @brief Configures redirections for a command.
+ * @brief Configures redirections for a command
  * 
- * This function sets up input and output redirections for a command
- * by validating and handling each redirection in the command's redirection list.
+ * This function:
+ * 1. Saves original stdin and stdout file descriptors
+ * 2. Processes each redirection in the command's redirection list
+ * 3. Validates redirection syntax and filenames
+ * 4. Sets up input/output according to redirection type
+ * 5. Handles errors by setting appropriate exit status
  * 
- * @param cmd The command structure containing the redirections.
- * @param shell_state The current state of the shell.
+ * @param cmd The command structure containing the redirections
+ * @param shell_state The current state of the shell
+ * @note Original file descriptors are saved for later restoration
  */
 void	configure_redirections(t_command *cmd, t_shell_state *shell_state)
 {

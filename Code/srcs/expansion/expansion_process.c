@@ -6,12 +6,23 @@
 /*   By: cmegret <cmegret@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/17 12:41:45 by cmegret           #+#    #+#             */
-/*   Updated: 2024/12/17 15:54:47 by cmegret          ###   ########.fr       */
+/*   Updated: 2024/12/18 12:52:18 by cmegret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../header/Minishell.h"
 
+/**
+ * @brief Processes variable expansion for a single command argument
+ *
+ * Iterates through the argument string and expands variables based on
+ * expansion markers. Variables are only expanded if their corresponding
+ * marker indicates they should be expanded.
+ *
+ * @param arg_node Argument node containing string and expansion markers
+ * @param shell_state Current shell state with environment variables
+ * @return New string with variables expanded as needed
+ */
 char	*process_single_arg(t_cmd_args *arg_node, t_shell_state *shell_state)
 {
 	char		*new_arg;
@@ -39,6 +50,17 @@ char	*process_single_arg(t_cmd_args *arg_node, t_shell_state *shell_state)
 	return (new_arg);
 }
 
+/**
+ * @brief Processes a heredoc line for variable expansion
+ *
+ * Scans the input line for variables (starting with $) and expands them
+ * using values from the shell state. Non-variable content is copied
+ * directly to the output.
+ *
+ * @param line Input line from heredoc
+ * @param shell_state Current shell state with environment variables
+ * @return New string with all variables expanded
+ */
 char	*process_heredoc_line(char *line, t_shell_state *shell_state)
 {
 	char	*new_line;

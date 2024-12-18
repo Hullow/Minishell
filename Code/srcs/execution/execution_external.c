@@ -6,14 +6,14 @@
 /*   By: cmegret <cmegret@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/03 08:36:16 by cmegret           #+#    #+#             */
-/*   Updated: 2024/12/18 12:21:04 by cmegret          ###   ########.fr       */
+/*   Updated: 2024/12/18 13:00:12 by cmegret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../header/Minishell.h"
 
 /**
- * @brief Checks the access rights for a command path.
+ * @brief Checks the access rights for a command path
  *
  * This function checks if the command path exists and if it is executable.
  * If the command path does not exist,
@@ -21,8 +21,9 @@
  * If the command path is not executable,
  * it prints an error message and exits with status 126.
  *
- * @param cmd_path The path of the command to check.
- * @param cmd_name The name of the command.
+ * @param cmd_path The path of the command to check
+ * @param cmd_name The name of the command
+ * @param shell_state Current shell state for error handling
  */
 void	check_access_rights(char *cmd_path, char *cmd_name,
 	t_shell_state *shell_state)

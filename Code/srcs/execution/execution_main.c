@@ -6,7 +6,7 @@
 /*   By: cmegret <cmegret@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/07 14:37:18 by francis           #+#    #+#             */
-/*   Updated: 2024/12/18 12:20:48 by cmegret          ###   ########.fr       */
+/*   Updated: 2024/12/18 12:57:08 by cmegret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,14 +67,17 @@ void	setup_file_descriptors(t_command *cmd_list, int in_fd, int *fd)
 }
 
 /**
-* @brief Runs the specified command.
-*
-* This function checks if the command is a builtin command and executes it.
-* If it is not a builtin command, it handles the child process execution.
-*
-* @param cmd_list The list of commands to execute.
-* @param shell_state The current state of the shell.
-*/
+ * @brief Runs the specified command.
+ *
+ * This function:
+ * 1. Checks if command name exists and is not empty
+ * 2. Determines if command is builtin
+ * 3. Executes either builtin or external command
+ *
+ * @param cmd_list The command to execute
+ * @param shell_state The current state of the shell
+ * @note Function assumes command struct is properly initialized
+ */
 void	run_command(t_command *cmd_list, t_shell_state *shell_state)
 {
 	if (cmd_list->cmd_name != NULL || ft_strlen(cmd_list->cmd_name) != 0)
@@ -117,14 +120,17 @@ void	execute_child(t_command *cmd_list,
 }
 
 /**
- * @brief Executes a list of commands.
+ * @brief Executes a list of commands in a pipeline
  *
- * This function iterates through the list of commands, executes each pipeline
- * of commands, and handles builtin commands.
+ * This function:
+ * 1. Handles special case of parent builtin commands
+ * 2. Creates pipeline for multiple commands
+ * 3. Tracks child processes with PID array
+ * 4. Waits for all processes to complete
  *
- * @param cmd_list The list of commands to execute.
- * @param shell_state The current state of the shell.
- * @return 0 on success.
+ * @param cmd_list The list of commands to execute
+ * @param shell_state The current state of the shell
+ * @return 0 on success, appropriate error code on failure
  */
 int	execute_cmd(t_command *cmd_list, t_shell_state *shell_state)
 {

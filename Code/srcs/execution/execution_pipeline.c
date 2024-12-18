@@ -46,15 +46,18 @@ void	wait_for_pipeline(pid_t *pipeline_pids, int pid_count,
 }
 
 /**
- * @brief Executes a pipeline of commands.
+ * @brief Executes a pipeline of commands
  *
- * This function creates a pipe if necessary, forks a child process,
- * and handles the parent and child processes accordingly.
+ * This function:
+ * 1. Creates a pipe if there are more commands in the pipeline
+ * 2. Forks a child process to execute the command
+ * 3. Handles input/output redirection between pipeline stages
  *
- * @param cmd_list The list of commands to execute.
- * @param shell_state The current state of the shell.
- * @param in_fd The input file descriptor.
- * @return The output file descriptor of the pipe or 0.
+ * @param cmd_list The current command to execute
+ * @param shell_state The current state of the shell
+ * @param in_fd Input file descriptor from previous command
+ * @param next_in_fd Pointer to store next command's input fd
+ * @return pid_t Process ID of the forked child, -1 on error
  */
 pid_t	execute_pipeline(t_command *cmd_list,
 	t_shell_state *shell_state, int in_fd, int *next_in_fd)

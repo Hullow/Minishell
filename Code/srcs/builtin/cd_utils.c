@@ -6,7 +6,7 @@
 /*   By: cmegret <cmegret@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/22 18:40:16 by cmegret           #+#    #+#             */
-/*   Updated: 2024/12/10 18:17:14 by cmegret          ###   ########.fr       */
+/*   Updated: 2024/12/18 13:02:51 by cmegret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,9 +40,10 @@ char	*get_env_var(char **envp, char *key)
  * This function updates the value of an existing environment variable.
  * If the variable does not exist, it adds a new variable.
  *
- * @param envp The environment variables array.
- * @param name The name of the variable to update.
- * @param value The new value of the variable.
+ * @param envp The environment variables array (triple pointer)
+ * @param name The name of the variable to update
+ * @param value The new value of the variable
+ * @note The function handles memory allocation and frees old value
  */
 void	update_env_var(char ***envp, char *name, const char *value)
 {

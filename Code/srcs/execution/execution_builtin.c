@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution_builtin.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: francis <francis@student.42.fr>            +#+  +:+       +#+        */
+/*   By: cmegret <cmegret@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/07 14:36:57 by francis           #+#    #+#             */
-/*   Updated: 2024/12/07 14:37:48 by francis          ###   ########.fr       */
+/*   Updated: 2024/12/18 13:01:13 by cmegret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,13 +43,19 @@ int	ft_is_builtin(char *cmd_name)
 }
 
 /**
- * @brief Executes a builtin command.
+ * @brief Executes a builtin command
  *
- * This function executes the appropriate builtin command
- * based on the command name.
+ * This function executes one of the following builtin commands:
+ * - echo: Display text with optional -n flag
+ * - unset: Remove environment variables
+ * - export: Set or modify environment variables
+ * - pwd: Print working directory
+ * - cd: Change directory
+ * - exit: Exit the shell
+ * - env: Display environment variables
  *
- * @param cmd The command to execute.
- * @param shell_state The current state of the shell.
+ * @param cmd The command structure containing name and arguments
+ * @param shell_state The current state of the shell
  */
 void	ft_execute_builtin(t_command *cmd, t_shell_state *shell_state)
 {
