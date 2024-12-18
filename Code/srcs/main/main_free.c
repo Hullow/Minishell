@@ -6,30 +6,11 @@
 /*   By: cmegret <cmegret@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/11 13:59:44 by fallan            #+#    #+#             */
-/*   Updated: 2024/12/18 12:46:37 by cmegret          ###   ########.fr       */
+/*   Updated: 2024/12/18 16:10:11 by cmegret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../header/Minishell.h"
-
-/**
- * @brief Frees all allocated memory used by the shell
- *
- * Deallocates memory for:
- * - The prompt string
- * - The token list
- * - The command list and all its components
- *
- * @param prompt The prompt string to free
- * @param token_list The list of tokens to free
- * @param cmd The command list to free
- */
-void	ft_free_all(char *prompt, t_token *token_list, t_command *cmd)
-{
-	free(prompt);
-	ft_free_token_list(token_list);
-	ft_free_cmd_list(cmd);
-}
 
 /**
  * @brief Frees an entire command list structure
@@ -141,5 +122,23 @@ void	ft_free_redir_list(t_redir *redir_list)
 		}
 		redir_list = redir_list->next;
 		free(temp_redir);
+	}
+}
+
+void	ft_free_shell_state(t_shell_state *shell_state)
+{
+	int	i;
+
+	if (!shell_state)
+		return ;
+	i = 0;
+	if (shell_state->envp)
+	{
+		while (shell_state->envp[i])
+		{
+			free(shell_state->envp[i]);
+			i++;
+		}
+		free(shell_state->envp);
 	}
 }
