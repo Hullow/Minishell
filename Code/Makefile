@@ -6,7 +6,7 @@
 #    By: francis <francis@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/07/19 14:53:36 by cmegret           #+#    #+#              #
-#    Updated: 2024/12/17 18:16:50 by francis          ###   ########.fr        #
+#    Updated: 2024/12/18 12:12:52 by francis          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -59,7 +59,7 @@ CC = gcc
 
 # Fichiers sources et objets
 SRCS = main/main.c \
-      main/main_utils.c \
+      main/main_free.c \
 	  main/main_initialize.c \
       main/main_prompt.c \
       token/token_main.c \
