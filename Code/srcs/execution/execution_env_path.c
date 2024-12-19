@@ -6,7 +6,7 @@
 /*   By: cmegret <cmegret@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/07 19:02:56 by cmegret           #+#    #+#             */
-/*   Updated: 2024/12/18 13:00:48 by cmegret          ###   ########.fr       */
+/*   Updated: 2024/12/19 10:51:19 by cmegret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,10 @@ char	*get_cmd_path(char *cmd, char **envp)
 		error_and_exit("cmd or envp is NULL", 1);
 	paths = get_env_paths(envp);
 	if (!paths)
+	{
+		free(paths);
 		error_and_exit("get_env_paths failed", 1);
+	}
 	i = 0;
 	while (paths[i])
 	{
