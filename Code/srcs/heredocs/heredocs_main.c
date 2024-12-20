@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredocs_main.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: francis <francis@student.42.fr>            +#+  +:+       +#+        */
+/*   By: cmegret <cmegret@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/12 17:27:25 by fallan            #+#    #+#             */
-/*   Updated: 2024/12/20 12:48:19 by francis          ###   ########.fr       */
+/*   Updated: 2024/12/20 13:08:10 by cmegret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@
  *
  * @param redir_list La redirection heredoc à traiter.
  */
-void	ft_handle_heredoc_input(t_redir *redir_list)
+void	ft_handle_heredoc_input(t_redir *redir_list, t_shell_state *shell_state)
 {
 	t_heredoc	*heredoc_line;
 	bool		delimiter_found;
@@ -40,7 +40,7 @@ void	ft_handle_heredoc_input(t_redir *redir_list)
 	g_signal = 0;
 	while (!g_signal)
 	{
-		delimiter_found = read_and_process_line(&heredoc_line, redir_list);
+		delimiter_found = read_and_process_line(&heredoc_line, redir_list, shell_state);
 		if (delimiter_found || g_signal)
 			break ;
 	}
@@ -54,7 +54,7 @@ void	ft_handle_heredoc_input(t_redir *redir_list)
  *
  * @param cmd_list La liste des commandes à traiter.
  */
-void	ft_open_heredocs(t_command *cmd_list)
+void	ft_open_heredocs(t_command *cmd_list, t_shell_state *shell_state)
 {
 	t_redir		*redir_list;
 
@@ -65,7 +65,7 @@ void	ft_open_heredocs(t_command *cmd_list)
 		{
 			if (redir_list->type == REDIR_HEREDOC
 				&& redir_list->str_type == WORD)
-				ft_handle_heredoc_input(redir_list);
+				ft_handle_heredoc_input(redir_list, shell_state);
 			redir_list = redir_list->next;
 		}
 		cmd_list = cmd_list->next;

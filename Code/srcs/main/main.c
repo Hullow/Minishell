@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: francis <francis@student.42.fr>            +#+  +:+       +#+        */
+/*   By: cmegret <cmegret@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/17 16:54:34 by francis           #+#    #+#             */
-/*   Updated: 2024/12/19 22:20:19 by francis          ###   ########.fr       */
+/*   Updated: 2024/12/20 13:07:28 by cmegret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ int	main(int argc, char **argv, char **envp)
 			add_history(prompt);
 		token_list = ft_tokenize(prompt);
 		cmd_list = ft_parse(token_list);
-		ft_open_heredocs(cmd_list);
+		ft_open_heredocs(cmd_list, &shell_state);
 		if (g_signal)
 		{
 			g_signal = 0;

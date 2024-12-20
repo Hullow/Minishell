@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredocs_read.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: francis <francis@student.42.fr>            +#+  +:+       +#+        */
+/*   By: cmegret <cmegret@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/17 15:59:00 by cmegret           #+#    #+#             */
-/*   Updated: 2024/12/20 12:49:07 by francis          ###   ########.fr       */
+/*   Updated: 2024/12/20 13:10:11 by cmegret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,17 +37,17 @@ t_heredoc	*ft_malloc_new_heredoc_line(t_heredoc *heredoc_line)
  * @param redir_list La redirection heredoc à traiter.
  * @return true si le délimiteur a été trouvé, false sinon.
  */
-bool	read_and_process_line(t_heredoc **heredoc_line, t_redir *redir_list)
+bool	read_and_process_line(t_heredoc **heredoc_line, t_redir *redir_list, t_shell_state *shell_state)
 {
 	char	*prompt;
 
 	prompt = ft_prompt(REDIR_HEREDOC);
+	if (g_signal) // où mettre ?
+		shell_state->last_exit_status = g_signal;
 	if (!prompt)
 		return (true);
 	if (*prompt)
 	{
-		if (g_signal) // probablement enlevable
-			return (false);
 		(*heredoc_line)->line = ft_strdup(prompt);
 		if (ft_match_heredoc_delimiter((*heredoc_line)->line, redir_list->str))
 		{
@@ -60,8 +60,6 @@ bool	read_and_process_line(t_heredoc **heredoc_line, t_redir *redir_list)
 			free(prompt);
 			return (true);
 		}
-		if (g_signal) // où mettre ?
-			return (false);
 	}
 	free(prompt);
 	return (false);

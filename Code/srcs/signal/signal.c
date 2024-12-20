@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signal.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: francis <francis@student.42.fr>            +#+  +:+       +#+        */
+/*   By: cmegret <cmegret@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 14:40:07 by cmegret           #+#    #+#             */
-/*   Updated: 2024/12/20 12:50:58 by francis          ###   ########.fr       */
+/*   Updated: 2024/12/20 13:06:46 by cmegret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void	process_signals(void)
 		g_signal = SIGNAL_NONE;
 }
 
-int event(void)
+int	event(void)
 {
 	return (0);
 }
@@ -28,7 +28,7 @@ int event(void)
 // Gestionnaire pour SIGINT (CTRL+C)
 void	handle_sigint(int sig)
 {
-	extern int rl_done;
+	extern int	rl_done;
 
 	if (sig == SIGINT)
 	{
@@ -37,6 +37,7 @@ void	handle_sigint(int sig)
 		rl_replace_line("", 0);
 		if (!rl_done)
 			rl_redisplay();
+		g_signal = SIGNAL_INT;
 	}
 }
 
@@ -48,7 +49,7 @@ void	handle_sigquit(int sig)
 
 void	handle_sigint_heredoc(int sig)
 {
-	extern int rl_done;
+	extern int	rl_done;
 
 	(void)sig;
 	g_signal = SIGNAL_HEREDOC;
