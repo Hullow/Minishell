@@ -6,13 +6,13 @@
 /*   By: cmegret <cmegret@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 14:40:07 by cmegret           #+#    #+#             */
-/*   Updated: 2024/12/20 15:15:26 by cmegret          ###   ########.fr       */
+/*   Updated: 2024/12/20 15:17:35 by cmegret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../header/Minishell.h"
 
-int	g_signal = 0;
+int	g_signal = SIGNAL_NONE;
 
 void	process_signals(void)
 {

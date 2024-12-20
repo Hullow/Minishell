@@ -6,7 +6,7 @@
 /*   By: cmegret <cmegret@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/17 16:54:34 by francis           #+#    #+#             */
-/*   Updated: 2024/12/20 13:07:28 by cmegret          ###   ########.fr       */
+/*   Updated: 2024/12/20 15:17:30 by cmegret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ int	main(int argc, char **argv, char **envp)
 		ft_open_heredocs(cmd_list, &shell_state);
 		if (g_signal)
 		{
-			g_signal = 0;
+			g_signal = SIGNAL_NONE;
 			ft_free_all(prompt, token_list, cmd_list);
 			prompt = ft_prompt(0);
 			continue ;

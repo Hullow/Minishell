@@ -6,7 +6,7 @@
 /*   By: cmegret <cmegret@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/12 17:27:25 by fallan            #+#    #+#             */
-/*   Updated: 2024/12/20 13:08:10 by cmegret          ###   ########.fr       */
+/*   Updated: 2024/12/20 15:17:25 by cmegret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ void	ft_handle_heredoc_input(t_redir *redir_list, t_shell_state *shell_state)
 		signal(SIGINT, handle_sigint);
 		return ;
 	}
-	g_signal = 0;
+	g_signal = SIGNAL_NONE;
 	while (!g_signal)
 	{
 		delimiter_found = read_and_process_line(&heredoc_line, redir_list, shell_state);
