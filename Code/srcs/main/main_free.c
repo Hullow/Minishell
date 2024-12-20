@@ -6,7 +6,7 @@
 /*   By: francis <francis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/11 13:59:44 by fallan            #+#    #+#             */
-/*   Updated: 2024/12/20 13:10:06 by francis          ###   ########.fr       */
+/*   Updated: 2024/12/20 17:49:13 by francis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,23 +80,14 @@ void	ft_free_cmd_args(char **args)
 void	ft_free_arg_list(t_cmd_args	*arg_list)
 {
 	t_cmd_args	*temp;
-	t_expand	*temp_expand;
 
 	temp = NULL;
-	temp_expand = NULL;
 	while (arg_list)
 	{
 		temp = arg_list;
 		if (arg_list->arg_string)
 			free(arg_list->arg_string);
 		arg_list->arg_string = NULL;
-		while (arg_list->to_expand)
-		{
-			temp_expand = arg_list->to_expand;
-			arg_list->to_expand = arg_list->to_expand->next;
-			free(temp_expand);
-			temp_expand = NULL;
-		}
 		arg_list = arg_list->next;
 		free(temp);
 		temp = NULL;

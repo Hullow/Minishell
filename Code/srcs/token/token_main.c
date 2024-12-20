@@ -6,7 +6,7 @@
 /*   By: francis <francis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/06 17:19:58 by cmegret           #+#    #+#             */
-/*   Updated: 2024/12/20 17:28:09 by francis          ###   ########.fr       */
+/*   Updated: 2024/12/20 17:48:21 by francis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 void	ft_free_token_list(t_token *token_list)
 {
 	t_token	*temp_tok;
+	t_expand	*temp_expand;
 
 	while (token_list)
 	{
@@ -26,7 +27,7 @@ void	ft_free_token_list(t_token *token_list)
 			free(temp_tok->str);
 			temp_tok->str = NULL;
 		}
-		if (temp_tok->to_expand)
+		while (token_list->to_expand)
 		{
 			temp_expand = token_list->to_expand;
 			token_list->to_expand = token_list->to_expand->next;
@@ -81,7 +82,7 @@ int	ft_check_parameter_start(char c1, char c2)
 {
 	if (c1 != '$' || c2 == '\0')
 		return (0);
-	if (!ft_isalnum(c2) && c2 != '_')
+	if (!ft_isalnum(c2) && c2 != '_' && c2 != '?')
 		return (0);
 	else
 		return (1);

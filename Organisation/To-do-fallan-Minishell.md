@@ -1,4 +1,11 @@
-# Research
+# To do list - fallan
+## Testing
+- Find way to test pipes in Linux
+- Make Python tester
+
+
+## Mostly done (to check if time)
+### Research
 - Simple tokenizer:
 	- Check if behavior is correct !!!
 	- test it with various sequences, check if behavior is adequate
@@ -16,8 +23,8 @@
 	- man fork
 - Re-read cmegret's pipex
 
-# Other
+### Other
 - Environment set up: bash5.1.16 via macports/brew, UTM, ..
 
-# Organisation
+### Organisation
 - Github: learngitbranching + Github projects

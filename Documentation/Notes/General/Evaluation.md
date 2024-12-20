@@ -6,9 +6,10 @@ Eval de SBaumann et fsan-vic:
 
 ## Bugs dans notre shell:
 ### Expansions
-- `echo $"PATH"`
-- `echo $'PATH'`
-- `echo echo "$PATH"`
+- `echo $"USER"`
+- `echo $"$USER"`
+- `echo $'USER'`
+- `echo echo "$USER"`
 (autrement, `echo echo '$PATH'`, `"ls"` marchent)
 
 ### Export/env
@@ -17,9 +18,22 @@ Eval de SBaumann et fsan-vic:
 
 ### Pipes
 - Gestion des pipes ouvertes différente de bash, par `cat |` puis \<enter\>
-- `ls | lsss` => Segmentation fault: 11
 
-### Exit
+## Autres bugs
+- `$a` => permission denied (nothing in bash)
+- `$'a'` => $a: command not found (bash: a: command not found)
+
+## Bugs réglés
+### Pipes
+- `ls | lsss` => Segmentation fault: 11 => fixed on its own
+
+### Expansions
+- `echo $` => réglé (if `prompt[i + 1]`)
+- `echo $o_` : segfault => réglé (ft_free_token_list fixed)
+- `c$a`
+- `echo $_`
+
+### Free
 ```bash
 Minishell : lsls
 lsls: command not found
@@ -29,6 +43,7 @@ minishell(40802,0x1f610cc00) malloc: Double free of object 0x134605e90
 minishell(40802,0x1f610cc00) malloc: *** set a breakpoint in malloc_error_break to debug
 Abort trap: 6
 ```
+=> fixed on its own
 
 ```bash
 Minishell : ./minishell
@@ -44,16 +59,8 @@ minishell(12605,0x1f610cc00) malloc: Double free of object 0x136607c90
 minishell(12605,0x1f610cc00) malloc: *** set a breakpoint in malloc_error_break to debug
 Abort trap: 6
 ```
+=> fixed on its own
 
-## Autres bugs
-- `$a` => permission denied (nothing in bash)
-- `$'a'` => $a: command not found (bash: a: command not found)
-
-## Bugs réglés
-- `echo $` => réglé (if `prompt[i + 1]`)
-- `echo $o_` : segfault => réglé (ft_free_token_list fixed)
-- `c$a`
-- `echo $_`
 
 ## Notes d'eval
 - SBaumann: "Faire l'eval sur Mac plutôt que Linux parce que ... (signaux ?)"
