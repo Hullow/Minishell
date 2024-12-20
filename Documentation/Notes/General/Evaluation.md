@@ -45,6 +45,16 @@ minishell(12605,0x1f610cc00) malloc: *** set a breakpoint in malloc_error_break 
 Abort trap: 6
 ```
 
+## Autres bugs
+- `$a` => permission denied (nothing in bash)
+- `$'a'` => $a: command not found (bash: a: command not found)
+
+## Bugs réglés
+- `echo $` => réglé (if `prompt[i + 1]`)
+- `echo $o_` : segfault => réglé (ft_free_token_list fixed)
+- `c$a`
+- `echo $_`
+
 ## Notes d'eval
 - SBaumann: "Faire l'eval sur Mac plutôt que Linux parce que ... (signaux ?)"
 - Dans la fiche d'eval il est dit: "Verifiez la variable globale: ne peut contenir aucune information autre que la valeur du signal reçu"
