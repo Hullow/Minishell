@@ -6,7 +6,7 @@
 /*   By: francis <francis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/12 15:26:48 by fallan            #+#    #+#             */
-/*   Updated: 2024/12/17 16:50:43 by francis          ###   ########.fr       */
+/*   Updated: 2024/12/20 17:38:49 by francis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,13 +42,4 @@ int	ft_is_blank(char c)
 	if (c == ' ' || c == '\t')
 		return (1);
 	return (0);
-}
-
-// checks if character is dollar sign, returns true, else returns false
-bool	ft_is_dollar_sign(char c)
-{
-	if (c == '$')
-		return (true);
-	else
-		return (false);
 }

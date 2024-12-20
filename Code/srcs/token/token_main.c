@@ -6,7 +6,7 @@
 /*   By: francis <francis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/06 17:19:58 by cmegret           #+#    #+#             */
-/*   Updated: 2024/12/20 12:21:34 by francis          ###   ########.fr       */
+/*   Updated: 2024/12/20 17:28:09 by francis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,6 @@ void	ft_free_token_list(t_token *token_list)
 	while (token_list)
 	{
 		temp_tok = token_list;
-		token_list = token_list->next;
 		if (temp_tok->str)
 		{
 			free(temp_tok->str);
@@ -29,9 +28,12 @@ void	ft_free_token_list(t_token *token_list)
 		}
 		if (temp_tok->to_expand)
 		{
-			free(temp_tok->to_expand);
-			temp_tok->to_expand = NULL;
+			temp_expand = token_list->to_expand;
+			token_list->to_expand = token_list->to_expand->next;
+			free(temp_expand);
+			temp_expand = NULL;
 		}
+		token_list = token_list->next;
 		free(temp_tok);
 		temp_tok = NULL;
 	}
@@ -71,6 +73,20 @@ void	ft_prepare_expansion(t_token **tok)
 	(*tok)->to_expand = head;
 }
 
+// Checks start of possible expansion (two first characters):
+// - must start with $ and be followed by another character
+// - second character must be alphanumerical or '_'
+// n.b. c2 == '\0': if no characters after '$', we must tokenize '$' as a regular word
+int	ft_check_parameter_start(char c1, char c2)
+{
+	if (c1 != '$' || c2 == '\0')
+		return (0);
+	if (!ft_isalnum(c2) && c2 != '_')
+		return (0);
+	else
+		return (1);
+}
+
 // Processes the prompt, applying tokenization rules in order
 // For debugging:
 	// if (*tok && (*tok)->str)
@@ -89,7 +105,7 @@ void	ft_prepare_expansion(t_token **tok)
 // -2.2.2.9. Comment '#': not implemented at all
 int	ft_process_prompt(char *prompt, int i, t_token **tok)
 {
-	if (ft_is_dollar_sign(prompt[i]))
+	if (ft_check_parameter_start(prompt[i], prompt[i + 1]))
 	{
 		if ((*tok)->is_delimited)
 			*tok = ft_add_token_to_list(*tok, WORD);
