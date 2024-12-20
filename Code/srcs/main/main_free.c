@@ -6,7 +6,7 @@
 /*   By: francis <francis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/11 13:59:44 by fallan            #+#    #+#             */
-/*   Updated: 2024/12/20 12:35:52 by francis          ###   ########.fr       */
+/*   Updated: 2024/12/20 13:10:06 by francis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,6 +120,9 @@ void	ft_free_redir_list(t_redir *redir_list)
 	while (redir_list)
 	{
 		temp_redir = redir_list;
+		if (redir_list->str)
+			free(redir_list->str);
+		redir_list->str = NULL;
 		while (redir_list->heredoc)
 		{
 			temp_heredoc = redir_list->heredoc;

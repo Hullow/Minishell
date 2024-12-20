@@ -30,6 +30,21 @@ minishell(40802,0x1f610cc00) malloc: *** set a breakpoint in malloc_error_break 
 Abort trap: 6
 ```
 
+```bash
+Minishell : ./minishell
+Minishell : slsls
+slsls: command not found
+Minishell : echo $?
+127
+Minishell : exit
+exit
+Minishell : echo $?
+0
+minishell(12605,0x1f610cc00) malloc: Double free of object 0x136607c90
+minishell(12605,0x1f610cc00) malloc: *** set a breakpoint in malloc_error_break to debug
+Abort trap: 6
+```
+
 ## Notes d'eval
 - SBaumann: "Faire l'eval sur Mac plutôt que Linux parce que ... (signaux ?)"
 - Dans la fiche d'eval il est dit: "Verifiez la variable globale: ne peut contenir aucune information autre que la valeur du signal reçu"
