@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredocs_read.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cmegret <cmegret@student.42lausanne.ch>    +#+  +:+       +#+        */
+/*   By: francis <francis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/17 15:59:00 by cmegret           #+#    #+#             */
-/*   Updated: 2024/12/18 15:12:41 by cmegret          ###   ########.fr       */
+/*   Updated: 2024/12/20 12:49:07 by francis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,8 @@ bool	read_and_process_line(t_heredoc **heredoc_line, t_redir *redir_list)
 		return (true);
 	if (*prompt)
 	{
+		if (g_signal) // probablement enlevable
+			return (false);
 		(*heredoc_line)->line = ft_strdup(prompt);
 		if (ft_match_heredoc_delimiter((*heredoc_line)->line, redir_list->str))
 		{
@@ -58,6 +60,8 @@ bool	read_and_process_line(t_heredoc **heredoc_line, t_redir *redir_list)
 			free(prompt);
 			return (true);
 		}
+		if (g_signal) // où mettre ?
+			return (false);
 	}
 	free(prompt);
 	return (false);

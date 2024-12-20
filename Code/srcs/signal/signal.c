@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signal.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cmegret <cmegret@student.42lausanne.ch>    +#+  +:+       +#+        */
+/*   By: francis <francis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 14:40:07 by cmegret           #+#    #+#             */
-/*   Updated: 2024/12/18 15:47:32 by cmegret          ###   ########.fr       */
+/*   Updated: 2024/12/20 12:50:58 by francis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,15 +14,29 @@
 
 int	g_signal = 0;
 
+void	process_signals(void)
+{
+	if (g_signal == SIGNAL_HEREDOC)
+		g_signal = SIGNAL_NONE;
+}
+
+int event(void)
+{
+	return (0);
+}
+
 // Gestionnaire pour SIGINT (CTRL+C)
 void	handle_sigint(int sig)
 {
+	extern int rl_done;
+
 	if (sig == SIGINT)
 	{
 		write(STDOUT_FILENO, "\n", 1);
 		rl_on_new_line();
 		rl_replace_line("", 0);
-		rl_redisplay();
+		if (!rl_done)
+			rl_redisplay();
 	}
 }
 
@@ -34,8 +48,9 @@ void	handle_sigquit(int sig)
 
 void	handle_sigint_heredoc(int sig)
 {
-	printf("[DEBUG] Signal SIGINT reçu pendant heredoc, g_signal set à 1\n");
+	extern int rl_done;
+
 	(void)sig;
-	g_signal = 1;
-	write(STDOUT_FILENO, "\n", 1);
+	g_signal = SIGNAL_HEREDOC;
+	rl_done = 1;
 }

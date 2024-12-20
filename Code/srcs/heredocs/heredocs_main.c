@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredocs_main.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cmegret <cmegret@student.42lausanne.ch>    +#+  +:+       +#+        */
+/*   By: francis <francis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/12 17:27:25 by fallan            #+#    #+#             */
-/*   Updated: 2024/12/18 15:32:02 by cmegret          ###   ########.fr       */
+/*   Updated: 2024/12/20 12:48:19 by francis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,12 +28,9 @@ void	ft_handle_heredoc_input(t_redir *redir_list)
 	t_heredoc	*heredoc_line;
 	bool		delimiter_found;
 
-	signal(SIGINT, handle_sigint_heredoc);
-	if (!redir_list || !redir_list->str)
-	{
-		signal(SIGINT, handle_sigint);
+	if (!redir_list || !(redir_list->str))
 		return ;
-	}
+	signal(SIGINT, handle_sigint_heredoc);
 	heredoc_line = initialize_heredoc(redir_list);
 	if (!heredoc_line)
 	{
@@ -41,11 +38,9 @@ void	ft_handle_heredoc_input(t_redir *redir_list)
 		return ;
 	}
 	g_signal = 0;
-	while (1)
+	while (!g_signal)
 	{
 		delimiter_found = read_and_process_line(&heredoc_line, redir_list);
-		printf("[DEBUG] delimiter_found: %d\n", delimiter_found);
-		printf("[DEBUG] g_signal: %d\n", g_signal);
 		if (delimiter_found || g_signal)
 			break ;
 	}

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cmegret <cmegret@student.42lausanne.ch>    +#+  +:+       +#+        */
+/*   By: francis <francis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/07 13:55:06 by yourlogin         #+#    #+#             */
-/*   Updated: 2024/12/18 16:34:28 by cmegret          ###   ########.fr       */
+/*   Updated: 2024/12/20 12:16:27 by francis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,6 @@
 
 // Token types
 # define UNKNOWN_TYPE 0
-# define UNKNOWN_TYPE 0
 # define WORD 1
 # define REDIR_INPUT 2
 # define REDIR_OUTPUT 3
@@ -61,6 +60,9 @@
 // File descriptors
 # define STDIN 0
 # define STDOUT 1
+
+# define SIGNAL_HEREDOC 130
+# define SIGNAL_NONE 0
 
 extern int	g_signal;
 
@@ -152,7 +154,7 @@ void		check_arguments(int argc, char **argv, t_shell_state *shell_state);
 // Prompt
 char		*ft_prompt(int type);
 
-// Freee
+// Free
 void		ft_free_all(char *prompt, t_token *token_list, t_command *cmd);
 void		ft_free_cmd_list(t_command *cmd);
 void		ft_free_cmd_args(char **args);

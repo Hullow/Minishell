@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cmegret <cmegret@student.42lausanne.ch>    +#+  +:+       +#+        */
+/*   By: francis <francis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/17 16:54:34 by francis           #+#    #+#             */
-/*   Updated: 2024/12/18 16:10:40 by cmegret          ###   ########.fr       */
+/*   Updated: 2024/12/19 22:20:19 by francis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@ int	main(int argc, char **argv, char **envp)
 		ft_free_all(prompt, token_list, cmd_list);
 		prompt = ft_prompt(0);
 	}
+	rl_clear_history();
 	ft_free_shell_state(&shell_state);
 	return (0);
 }

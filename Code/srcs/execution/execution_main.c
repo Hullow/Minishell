@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution_main.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cmegret <cmegret@student.42lausanne.ch>    +#+  +:+       +#+        */
+/*   By: francis <francis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/07 14:37:18 by francis           #+#    #+#             */
-/*   Updated: 2024/12/18 13:21:51 by cmegret          ###   ########.fr       */
+/*   Updated: 2024/12/19 21:25:15 by francis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,6 +101,8 @@ void	run_command(t_command *cmd_list, t_shell_state *shell_state)
 void	execute_child(t_command *cmd_list,
 	t_shell_state *shell_state, int in_fd, int *fd)
 {
+	extern int rl_done;
+
 	setup_file_descriptors(cmd_list, in_fd, fd);
 	shell_state->last_exit_status = 0;
 	if (has_heredoc(cmd_list))
@@ -109,10 +111,12 @@ void	execute_child(t_command *cmd_list,
 	if (shell_state->last_exit_status != 0)
 	{
 		restore_redirections(cmd_list);
+		rl_done = 1;
 		exit(shell_state->last_exit_status);
 	}
 	run_command(cmd_list, shell_state);
 	restore_redirections(cmd_list);
+	rl_done = 1;
 	exit(shell_state->last_exit_status);
 }
 
