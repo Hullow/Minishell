@@ -6,7 +6,7 @@
 /*   By: francis <francis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/06 17:19:58 by cmegret           #+#    #+#             */
-/*   Updated: 2024/12/18 12:08:45 by francis          ###   ########.fr       */
+/*   Updated: 2024/12/20 12:21:34 by francis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,17 @@ void	ft_free_token_list(t_token *token_list)
 		temp_tok = token_list;
 		token_list = token_list->next;
 		if (temp_tok->str)
+		{
 			free(temp_tok->str);
+			temp_tok->str = NULL;
+		}
+		if (temp_tok->to_expand)
+		{
+			free(temp_tok->to_expand);
+			temp_tok->to_expand = NULL;
+		}
 		free(temp_tok);
+		temp_tok = NULL;
 	}
 }
 

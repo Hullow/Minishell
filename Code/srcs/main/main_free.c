@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main_free.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cmegret <cmegret@student.42lausanne.ch>    +#+  +:+       +#+        */
+/*   By: francis <francis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/11 13:59:44 by fallan            #+#    #+#             */
-/*   Updated: 2024/12/18 16:26:20 by cmegret          ###   ########.fr       */
+/*   Updated: 2024/12/20 12:35:52 by francis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ void	ft_free_cmd_list(t_command *cmd)
 		ft_free_cmd_args(cmd->args);
 		cmd = cmd->next;
 		free(temp_cmd);
+		temp_cmd = NULL;
 	}
 }
 
@@ -59,9 +60,11 @@ void	ft_free_cmd_args(char **args)
 	{
 		temp_arg = args[i];
 		free(temp_arg);
+		temp_arg = NULL;
 		i++;
 	}
 	free(args);
+	args = NULL;
 }
 
 /**
@@ -86,14 +89,17 @@ void	ft_free_arg_list(t_cmd_args	*arg_list)
 		temp = arg_list;
 		if (arg_list->arg_string)
 			free(arg_list->arg_string);
+		arg_list->arg_string = NULL;
 		while (arg_list->to_expand)
 		{
 			temp_expand = arg_list->to_expand;
 			arg_list->to_expand = arg_list->to_expand->next;
 			free(temp_expand);
+			temp_expand = NULL;
 		}
 		arg_list = arg_list->next;
 		free(temp);
+		temp = NULL;
 	}
 }
 
@@ -120,9 +126,12 @@ void	ft_free_redir_list(t_redir *redir_list)
 			redir_list->heredoc = redir_list->heredoc->next;
 			free(temp_heredoc->line);
 			free(temp_heredoc);
+			temp_heredoc->line = NULL;
+			temp_heredoc = NULL;
 		}
 		redir_list = redir_list->next;
 		free(temp_redir);
+		temp_redir = NULL;
 	}
 }
 
@@ -138,8 +147,10 @@ void	ft_free_shell_state(t_shell_state *shell_state)
 		while (shell_state->envp[i])
 		{
 			free(shell_state->envp[i]);
+			shell_state->envp[i] = NULL;
 			i++;
 		}
 		free(shell_state->envp);
+		shell_state->envp = NULL;
 	}
 }
