@@ -6,7 +6,7 @@
 /*   By: cmegret <cmegret@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 14:40:07 by cmegret           #+#    #+#             */
-/*   Updated: 2024/12/20 18:15:00 by cmegret          ###   ########.fr       */
+/*   Updated: 2024/12/20 18:24:44 by cmegret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ void	handle_sigint(int sig)
 {
 	extern int	rl_done;
 
-	if (sig == SIGINT && getpid() == tcgetpgrp(STDIN_FILENO))
+	if (sig == SIGINT)
 	{
 		write(STDOUT_FILENO, "\n", 1);
 		rl_on_new_line();
