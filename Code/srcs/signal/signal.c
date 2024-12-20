@@ -6,7 +6,7 @@
 /*   By: cmegret <cmegret@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 14:40:07 by cmegret           #+#    #+#             */
-/*   Updated: 2024/12/20 13:06:46 by cmegret          ###   ########.fr       */
+/*   Updated: 2024/12/20 15:15:26 by cmegret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ void	handle_sigint(int sig)
 		rl_replace_line("", 0);
 		if (!rl_done)
 			rl_redisplay();
-		g_signal = SIGNAL_INT;
+		g_signal = SIGNAL_INT + sig;
 	}
 }
 
@@ -52,6 +52,6 @@ void	handle_sigint_heredoc(int sig)
 	extern int	rl_done;
 
 	(void)sig;
-	g_signal = SIGNAL_HEREDOC;
+	g_signal = SIGNAL_HEREDOC + sig;
 	rl_done = 1;
 }

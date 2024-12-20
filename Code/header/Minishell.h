@@ -6,7 +6,7 @@
 /*   By: cmegret <cmegret@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/07 13:55:06 by yourlogin         #+#    #+#             */
-/*   Updated: 2024/12/20 13:05:08 by cmegret          ###   ########.fr       */
+/*   Updated: 2024/12/20 15:15:08 by cmegret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,9 +61,9 @@
 # define STDIN 0
 # define STDOUT 1
 
-# define SIGNAL_HEREDOC 130
+# define SIGNAL_HEREDOC 128
 # define SIGNAL_NONE 0
-# define SIGNAL_INT 130
+# define SIGNAL_INT 128
 
 extern int	g_signal;
 
