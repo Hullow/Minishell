@@ -6,7 +6,7 @@
 /*   By: francis <francis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 19:48:46 by fallan            #+#    #+#             */
-/*   Updated: 2024/12/18 12:07:02 by francis          ###   ########.fr       */
+/*   Updated: 2024/12/20 16:18:24 by francis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,6 @@ t_token		*ft_tokenize(char *prompt);
 int			ft_process_prompt(char *prompt, int i, t_token **tok);
 t_token		*ft_create_token(int token_type);
 t_token		*ft_add_token_to_list(t_token *tok, int token_type);
-void		ft_prepare_expansion(t_token **tok);
 void		ft_set_empty_token_strings(t_token *tok);
 
 	// Words and strings
@@ -43,6 +42,9 @@ void		ft_set_operator_token(char c, t_token **tok);
 	// Quotes
 int			ft_handle_quote_tokenization(char c,
 				bool single_quoted, bool double_quoted, t_token **tok);
+	// Expansions
+int			ft_check_parameter_start(char c1, char c2);
+void		ft_prepare_expansion(t_token **tok);
 
 // Checkers
 	// Simple characters

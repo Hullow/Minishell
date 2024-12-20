@@ -6,7 +6,7 @@
 /*   By: francis <francis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/06 17:19:58 by cmegret           #+#    #+#             */
-/*   Updated: 2024/12/20 12:21:34 by francis          ###   ########.fr       */
+/*   Updated: 2024/12/20 17:07:36 by francis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,8 @@
 // and the strings therein
 void	ft_free_token_list(t_token *token_list)
 {
-	t_token	*temp_tok;
+	t_token		*temp_tok;
+	t_expand	*temp_expand;
 
 	while (token_list)
 	{
@@ -27,10 +28,12 @@ void	ft_free_token_list(t_token *token_list)
 			free(temp_tok->str);
 			temp_tok->str = NULL;
 		}
-		if (temp_tok->to_expand)
+		while (token_list->to_expand)
 		{
-			free(temp_tok->to_expand);
-			temp_tok->to_expand = NULL;
+			temp_expand = token_list->to_expand;
+			token_list->to_expand = token_list->to_expand->next;
+			free(temp_expand);
+			temp_expand = NULL;
 		}
 		free(temp_tok);
 		temp_tok = NULL;
@@ -71,11 +74,21 @@ void	ft_prepare_expansion(t_token **tok)
 	(*tok)->to_expand = head;
 }
 
+// Checks start of possible expansion (two first characters):
+// - must start with $ and be followed by another character
+// - second character must be alphanumerical or '_'
+int	ft_check_parameter_start(char c1, char c2)
+{
+	if (c1 != '$' || c2 == '\0')
+		return (0);
+	if (!ft_isalnum(c2) && c2 != '_')
+		return (0);
+	else
+		return (1);
+}
+
 // Processes the prompt, applying tokenization rules in order
-// For debugging:
-	// if (*tok && (*tok)->str)
-	// 	printf("tok->str: %s; tok->is_delimited: %d\n",
-	//     (*tok)->str, (*tok)->is_delimited);
+// First check possible expansions
 // Order of rules:
 // 2.2.2.2. + 2.2.2.3.:
 //  Continued operator token and current character usable + not usable
@@ -89,7 +102,7 @@ void	ft_prepare_expansion(t_token **tok)
 // -2.2.2.9. Comment '#': not implemented at all
 int	ft_process_prompt(char *prompt, int i, t_token **tok)
 {
-	if (ft_is_dollar_sign(prompt[i]))
+	if (ft_check_parameter_start(prompt[i], prompt[i + 1])) // if prompt[i + 1]: if no characters after '$', we must tokenize '$' as a regular word
 	{
 		if ((*tok)->is_delimited)
 			*tok = ft_add_token_to_list(*tok, WORD);
