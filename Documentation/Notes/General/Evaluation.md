@@ -13,8 +13,8 @@ Eval de SBaumann et fsan-vic:
 (autrement, `echo echo '$PATH'`, `"ls"` marchent)
 
 ### Export/env
-- `export 6go=bl`
-- `export koko` && `env | grep koko`
+- `export 6go=bl` ✅
+- `export koko` && `env | grep koko` ✅
 
 ### Pipes
 - Gestion des pipes ouvertes différente de bash, par `cat |` puis \<enter\>
