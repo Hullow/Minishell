@@ -6,7 +6,7 @@
 /*   By: francis <francis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 19:48:46 by fallan            #+#    #+#             */
-/*   Updated: 2024/12/21 15:48:35 by francis          ###   ########.fr       */
+/*   Updated: 2024/12/21 15:55:58 by francis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,8 @@ int			ft_handle_quote_tokenization(char c,
 				bool single_quoted, bool double_quoted, t_token **tok);
 	// Expansions
 void		ft_prepare_expansion(char *prompt, int i, t_token **tok);
-int			ft_check_parameter_start(char c1, char c2);
+t_expand	*ft_add_expansion_value(t_token **tok);
+int			ft_count_size_to_expand(char *prompt, int i);
 
 // Checkers
 	// Simple characters
