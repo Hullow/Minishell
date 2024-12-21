@@ -1180,6 +1180,11 @@ echo $
 
 echo $|
 
+export U=file
+export V=.txt
+echo $U$V
+echo > $U$V
+
 cat << "EOF stop"
 cat << "EOF stop"abab
 cat << EOF "stopabab"

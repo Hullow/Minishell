@@ -6,7 +6,7 @@
 /*   By: francis <francis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/17 15:35:01 by francis           #+#    #+#             */
-/*   Updated: 2024/12/17 17:20:09 by francis          ###   ########.fr       */
+/*   Updated: 2024/12/21 16:57:23 by francis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,7 +105,7 @@ t_command	*ft_parse(t_token *tok)
 	while (tok)
 	{
 		if (ft_token_is_redir(tok->type))
-			ft_add_redir(&tok, cmd_list, NULL);
+			ft_add_redir(&tok, cmd_list);
 		else if (ft_token_is_word(tok->type))
 			ft_add_cmd_arg_to_list(tok, &(cmd_list->arg_list), NULL);
 		else if (ft_token_is_pipe(tok->type))

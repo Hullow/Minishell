@@ -6,7 +6,7 @@
 /*   By: francis <francis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/01 17:28:03 by fallan            #+#    #+#             */
-/*   Updated: 2024/12/17 16:17:53 by francis          ###   ########.fr       */
+/*   Updated: 2024/12/21 16:53:37 by francis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,16 +16,13 @@
 // if redir_list or its "->next" is NULL, returns it
 // else, set head to start of the list, then traverses it
 // in order to change the heap address of redir_list
-t_redir	*ft_last_redir(t_redir **redir_list)
+t_redir	*ft_last_redir(t_redir *redir_list)
 {
-	t_redir	*head_redir;
-
-	if (!(*redir_list) || !(*redir_list)->next)
-		return (*redir_list);
-	head_redir = *redir_list;
-	while ((*redir_list)->next)
-		(*redir_list) = (*redir_list)->next;
-	return (head_redir);
+	if (!redir_list || !(redir_list)->next)
+		return (redir_list);
+	while (redir_list->next)
+		(redir_list) = (redir_list)->next;
+	return (redir_list);
 }
 
 // Function to examine the token following the redirection
@@ -53,6 +50,31 @@ t_token	**ft_assign_redir_str(t_token **tok, t_redir *redir_list)
 	return (tok);
 }
 
+// create a new redirection in the redirection list
+// if no redirection list, starts one
+// else, goes to the last redirection and adds a new node
+// returns the first redirection (head)
+t_redir	*ft_create_redir(t_command *cmd_list)
+{
+	t_redir	*redir;
+
+	redir = cmd_list->redir_list;
+	if (redir)
+	{
+		redir = ft_last_redir(redir);
+		redir->next = malloc (sizeof(t_redir));
+		redir = redir->next;
+	}
+	else
+		redir = malloc (sizeof(t_redir));
+	if (!redir)
+		return (NULL);
+	redir->str = NULL;
+	redir->to_expand = NULL;
+	redir->next = NULL;
+	return (redir);
+}
+
 // if we have redirections, goes to last redirection
 // mallocs a new redirection
 // sets the type of the redirection
@@ -60,31 +82,22 @@ t_token	**ft_assign_redir_str(t_token **tok, t_redir *redir_list)
 // call ft_assign_redir_str to assign a string and string type to redirection,
 // and advance one token (ft_assign_redir does this)
 // N.b.: head_redir is initialized to NULL by the calling function
-int	ft_add_redir(t_token **tok, t_command *cmd_list, t_redir *head_redir)
+int	ft_add_redir(t_token **tok, t_command *cmd_list)
 {
-	if (cmd_list->redir_list)
-	{
-		head_redir = ft_last_redir(&(cmd_list->redir_list));
-		cmd_list->redir_list->next = malloc (sizeof(t_redir));
-		if (!(cmd_list->redir_list->next))
-			return (-1);
-		cmd_list->redir_list = cmd_list->redir_list->next;
-	}
-	else
-	{
-		cmd_list->redir_list = malloc (sizeof(t_redir));
-		head_redir = cmd_list->redir_list;
-	}
-	if (!cmd_list->redir_list)
-		return (-1);
-	cmd_list->redir_list->type = (*tok)->type;
-	cmd_list->redir_list->next = NULL;
+	t_redir	*new_redir;
+	t_redir	*head_redir;
+
+	head_redir = cmd_list->redir_list;
+	new_redir = ft_create_redir(cmd_list);
+	new_redir->type = (*tok)->type;
+	new_redir->next = NULL;
 	if ((*tok)->next)
-		tok = ft_assign_redir_str(tok, cmd_list->redir_list);
-	else
-		cmd_list->redir_list->str = NULL;
+		tok = ft_assign_redir_str(tok, new_redir);
 	if (!tok)
 		return (-1);
-	cmd_list->redir_list = head_redir;
+	if ((*tok)->to_expand)
+		new_redir->to_expand = (*tok)->to_expand;
+	if (head_redir)
+		new_redir = head_redir;
 	return (0);
 }

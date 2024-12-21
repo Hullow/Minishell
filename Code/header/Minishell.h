@@ -6,7 +6,7 @@
 /*   By: francis <francis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/07 13:55:06 by yourlogin         #+#    #+#             */
-/*   Updated: 2024/12/20 19:18:50 by francis          ###   ########.fr       */
+/*   Updated: 2024/12/21 16:51:13 by francis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,6 +82,7 @@ typedef struct s_redir
 	int				type; // REDIR_: INPUT, OUTPUT, APPEND, HEREDOC (#define)
 	char			*str; //file (input, output, append) or delimiter (Heredoc)
 	int				str_type; // type of the token following the redirection
+	t_expand		*to_expand; // expansion of redirection string
 	t_heredoc		*heredoc; // heredoc contents, if redirection is a heredoc
 	bool			expand_heredoc; // false if delimiter is quoted, else true
 	struct s_redir	*next;

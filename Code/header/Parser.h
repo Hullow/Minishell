@@ -6,7 +6,7 @@
 /*   By: francis <francis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 19:44:40 by fallan            #+#    #+#             */
-/*   Updated: 2024/12/17 17:26:11 by francis          ###   ########.fr       */
+/*   Updated: 2024/12/21 16:53:02 by francis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,10 +26,10 @@ t_command	*ft_parse(t_token *tok);
 t_token		*ft_parse_operators(t_token *head);
 
 // Redirections
-int			ft_add_redir(t_token **tok, t_command *cmd_list,
-				t_redir *head_redir);
+int			ft_add_redir(t_token **tok, t_command *cmd_list);
+t_redir		*ft_create_redir(t_command *cmd_list);
 t_token		**ft_assign_redir_str(t_token **tok, t_redir *redir_list);
-t_redir		*ft_last_redir(t_redir **redir_list);
+t_redir		*ft_last_redir(t_redir *redir_list);
 
 // Command arguments allocation
 int			ft_add_cmd_arg_to_list(t_token *tok, t_cmd_args **arg_list,
@@ -44,7 +44,6 @@ int			ft_count_args(t_cmd_args *arg_list);
 bool		ft_token_is_redir(int token_type);
 bool		ft_token_is_word(int token_type);
 bool		ft_token_is_pipe(int token_type);
-t_redir		*ft_last_redir(t_redir **redir_list);
 
 // Debug
 void		ft_print_args(t_command *cmd_list);
