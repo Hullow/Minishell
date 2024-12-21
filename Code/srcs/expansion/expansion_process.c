@@ -15,7 +15,9 @@
 char	*process_single_arg(char *str, t_expand *to_expand, t_shell_state *shell_state)
 {
 	char	*new_arg;
+	char	var_name[256];
 	int		i;
+	int		k;
 
 	new_arg = ft_strdup("");
 	i = 0;
@@ -24,7 +26,23 @@ char	*process_single_arg(char *str, t_expand *to_expand, t_shell_state *shell_st
 		if (str[i] == '$' && to_expand)
 		{
 			if (to_expand->check)
-				new_arg = handle_variable_expansion(new_arg, shell_state, str, &i);
+			{
+				k = 0;
+				i++; // Skip '$'
+				if (to_expand->size_to_expand > 1 && str[i])
+				{
+					// Copie size_to_expand - 1 caractères (car on a déjà skip le $)
+					while (k < to_expand->size_to_expand - 1 && str[i])
+					{
+						var_name[k++] = str[i++];
+					}
+					var_name[k] = '\0';
+					new_arg = expand_variable(new_arg, shell_state, var_name);
+					i--; // Ajustement pour le i++ de la boucle principale
+				}
+				else
+					i--; // Retour sur '$' si pas d'expansion
+			}
 			else
 				new_arg = append_single_char(new_arg, str[i]);
 			to_expand = to_expand->next;
