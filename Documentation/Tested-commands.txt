@@ -1144,6 +1144,42 @@ echo USERSHELL
 echo "'$USER' $SHELL"
 ===> bug
 
+echo $>1
+===> ok
+
+echo $"">1
+===> bug
+
+echo "$"
+==> ok
+
+echo "$"""
+==> ok
+
+echo "$USE'R"
+
+> "$VAR"
+
+echo '$USER""'
+
+echo "$USER''"
+
+echo "$U"SER
+
+echo "$'a'"
+
+echo "$''"
+
+echo "hello $ world"
+
+echo 'hello $ world'
+
+echo "$"
+
+echo $
+
+echo $|
+
 cat << "EOF stop"
 cat << "EOF stop"abab
 cat << EOF "stopabab"

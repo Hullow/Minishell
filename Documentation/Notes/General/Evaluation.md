@@ -6,6 +6,7 @@ Eval de SBaumann et fsan-vic:
 
 ## Bugs dans notre shell:
 ### Expansions
+$ "vide":
 - `echo $"USER"`
 - `echo $"$USER"`
 - `echo $'USER'`
@@ -17,7 +18,7 @@ Eval de SBaumann et fsan-vic:
 - `export koko` && `env | grep koko`
 
 ### Pipes
-- Gestion des pipes ouvertes différente de bash, par `cat |` puis \<enter\>
+- Gestion des pipes ouvertes différente de bash, par `cat |` puis \<enter\> (autre exemple: `echo $ |`, suivi de `cat`)
 
 ## Autres bugs
 - `$a` => permission denied (nothing in bash)

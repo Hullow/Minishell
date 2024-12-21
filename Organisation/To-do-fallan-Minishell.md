@@ -1,4 +1,12 @@
 # To do list - fallan
+## Features
+- expansions: $" (empty $)
+- expansions: redirections strings (more cmegret)
+- expansions preparations: in heredocs too
+
+## Bugs
+- Signals: ctrl+c + exit bug
+
 ## Testing
 - Find way to test pipes in Linux
 - Make Python tester
