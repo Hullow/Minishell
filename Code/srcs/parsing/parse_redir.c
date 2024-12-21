@@ -6,16 +6,13 @@
 /*   By: francis <francis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/01 17:28:03 by fallan            #+#    #+#             */
-/*   Updated: 2024/12/21 16:53:37 by francis          ###   ########.fr       */
+/*   Updated: 2024/12/21 17:29:32 by francis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../header/Minishell.h"
 
-// traverses the linked list of tokens and returns the head token
-// if redir_list or its "->next" is NULL, returns it
-// else, set head to start of the list, then traverses it
-// in order to change the heap address of redir_list
+// traverses the redirection linked list and returns the last node
 t_redir	*ft_last_redir(t_redir *redir_list)
 {
 	if (!redir_list || !(redir_list)->next)
@@ -90,14 +87,13 @@ int	ft_add_redir(t_token **tok, t_command *cmd_list)
 	head_redir = cmd_list->redir_list;
 	new_redir = ft_create_redir(cmd_list);
 	new_redir->type = (*tok)->type;
-	new_redir->next = NULL;
 	if ((*tok)->next)
 		tok = ft_assign_redir_str(tok, new_redir);
 	if (!tok)
 		return (-1);
 	if ((*tok)->to_expand)
 		new_redir->to_expand = (*tok)->to_expand;
-	if (head_redir)
-		new_redir = head_redir;
+	if (!head_redir)
+		cmd_list->redir_list = new_redir;
 	return (0);
 }

@@ -56,6 +56,7 @@ void	fill_table(t_command *cmd_list, t_shell_state *shell_state)
 	char		*new_arg;
 	t_cmd_args	*current;
 	t_command	*cmd;
+	t_redir		*redir;
 
 	cmd = cmd_list;
 	while (cmd)
@@ -68,17 +69,17 @@ void	fill_table(t_command *cmd_list, t_shell_state *shell_state)
 			current->arg_string = new_arg;
 			current = current->next;
 		}
-		/* redir = cmd->redir_list;
+		redir = cmd->redir_list;
 		while (redir)
 		{
 			if (redir->type != REDIR_HEREDOC)
 			{
-				new_arg = process_single_arg(
+				new_arg = process_single_arg(redir->str, redir->to_expand, shell_state);
 				free(redir->str);
 				redir->str = new_arg;
 			}
 			redir = redir->next;
-		} */
+		}
 		cmd = cmd->next;
 	}
 }
