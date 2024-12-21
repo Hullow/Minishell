@@ -6,7 +6,7 @@
 /*   By: cmegret <cmegret@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/17 12:41:47 by cmegret           #+#    #+#             */
-/*   Updated: 2024/12/18 12:53:25 by cmegret          ###   ########.fr       */
+/*   Updated: 2024/12/21 10:09:54 by cmegret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,16 +51,6 @@ void	fill_table_heredocs(t_command *cmd_list, t_shell_state *shell_state)
 	}
 }
 
-/**
- * @brief Expands variables in command arguments
- *
- * Processes each argument in every command of the command list.
- * Replaces variables with their values from the shell environment
- * based on expansion markers.
- *
- * @param cmd_list List of commands to process
- * @param shell_state Current shell state with environment variables
- */
 void	fill_table(t_command *cmd_list, t_shell_state *shell_state)
 {
 	char		*new_arg;
@@ -73,11 +63,22 @@ void	fill_table(t_command *cmd_list, t_shell_state *shell_state)
 		current = cmd->arg_list;
 		while (current)
 		{
-			new_arg = process_single_arg(current, shell_state);
+			new_arg = process_single_arg(current->arg_string, current->to_expand, shell_state);
 			free(current->arg_string);
 			current->arg_string = new_arg;
 			current = current->next;
 		}
+		/* redir = cmd->redir_list;
+		while (redir)
+		{
+			if (redir->type != REDIR_HEREDOC)
+			{
+				new_arg = process_single_arg(
+				free(redir->str);
+				redir->str = new_arg;
+			}
+			redir = redir->next;
+		} */
 		cmd = cmd->next;
 	}
 }

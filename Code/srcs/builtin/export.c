@@ -6,26 +6,21 @@
 /*   By: cmegret <cmegret@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/22 18:40:16 by cmegret           #+#    #+#             */
-/*   Updated: 2024/12/03 08:41:36 by cmegret          ###   ########.fr       */
+/*   Updated: 2024/12/20 15:43:52 by cmegret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../header/Minishell.h"
 
-/**
- * @brief Checks if a variable name is valid.
- *
- * This function checks if the given variable name contains only alphanumeric
- * characters or underscores.
- *
- * @param name The name of the variable to check.
- * @return 1 if the name is valid, 0 otherwise.
- */
 int	is_valid_name(const char *name)
 {
 	int	i;
 
-	i = 0;
+	if (!name || !*name)
+		return (0);
+	if (!ft_isalpha(name[0]) && name[0] != '_')
+		return (0);
+	i = 1;
 	while (name[i])
 	{
 		if (!ft_isalnum(name[i]) && name[i] != '_')
@@ -76,19 +71,22 @@ void	ft_export(t_shell_state *shell_state, char **args)
 	i = 1;
 	while (args[i])
 	{
-		name = get_var_name(args[i]);
-		if (!is_valid_name(name))
+		if (ft_strchr(args[i], '='))
 		{
-			printf("export: '%s': not a valid identifier\n", args[i]);
-			shell_state->last_exit_status = 1;
+			name = get_var_name(args[i]);
+			if (!is_valid_name(name))
+			{
+				printf("export: '%s': not a valid identifier\n", args[i]);
+				shell_state->last_exit_status = 1;
+			}
+			else
+			{
+				if (!update_existing_var(&shell_state->envp, name, args[i]))
+					add_new_env_var(&shell_state->envp, ft_strdup(args[i]));
+				shell_state->last_exit_status = 0;
+			}
+			free(name);
 		}
-		else
-		{
-			if (!update_existing_var(&shell_state->envp, name, args[i]))
-				add_new_env_var(&shell_state->envp, ft_strdup(args[i]));
-			shell_state->last_exit_status = 0;
-		}
-		free(name);
 		i++;
 	}
 }
