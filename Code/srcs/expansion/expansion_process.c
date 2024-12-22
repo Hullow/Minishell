@@ -28,20 +28,21 @@ char	*process_single_arg(char *str, t_expand *to_expand, t_shell_state *shell_st
 			if (to_expand->check)
 			{
 				k = 0;
-				i++; // Skip '$'
+				i++;  // Skip '$' directement
 				if (to_expand->size_to_expand >= 1 && str[i])
 				{
-					// Copie size_to_expand - 1 caractères (car on a déjà skip le $)
 					while (k < to_expand->size_to_expand - 1 && str[i])
 						var_name[k++] = str[i++];
 					var_name[k] = '\0';
 					new_arg = expand_variable(new_arg, shell_state, var_name);
-					i--; // Ajustement pour le i++ de la boucle principale
+					i--;  // Ajustement pour le i++ de la boucle principale
 				}
 				else
 				{
-					i--; // Retour sur '$' si pas d'expansion
-					new_arg = append_single_char(new_arg, str[i]);
+					if (!str[i - 1])  // Si c'était le dernier caractère
+						new_arg = append_single_char(new_arg, '$');
+					else
+						i--;  // Retour sur '$'
 				}
 			}
 			else
