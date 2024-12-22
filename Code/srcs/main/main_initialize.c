@@ -6,7 +6,7 @@
 /*   By: francis <francis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/07 14:36:57 by francis           #+#    #+#             */
-/*   Updated: 2024/12/20 12:36:27 by francis          ###   ########.fr       */
+/*   Updated: 2024/12/22 16:28:38 by francis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,9 +118,9 @@ void	ft_initialize(int argc, char **argv,
 	extern rl_hook_func_t	*rl_event_hook;
 
 	rl_event_hook = event;
-	signal(SIGINT, handle_sigint);
-	signal(SIGQUIT, handle_sigquit);
 	check_arguments(argc, argv, shell_state);
 	initialize_shell_state(shell_state, envp);
 	setup_terminal();
+	signal(SIGINT, handle_sigint);
+	signal(SIGQUIT, handle_sigquit);
 }

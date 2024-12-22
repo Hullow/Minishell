@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signal.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cmegret <cmegret@student.42lausanne.ch>    +#+  +:+       +#+        */
+/*   By: francis <francis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 14:40:07 by cmegret           #+#    #+#             */
-/*   Updated: 2024/12/20 18:24:44 by cmegret          ###   ########.fr       */
+/*   Updated: 2024/12/22 16:29:01 by francis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,11 +32,9 @@ void	handle_sigint(int sig)
 
 	if (sig == SIGINT)
 	{
-		write(STDOUT_FILENO, "\n", 1);
 		rl_on_new_line();
 		rl_replace_line("", 0);
-		if (!rl_done)
-			rl_redisplay();
+		rl_done = 1;
 		g_signal = SIGNAL_INT + sig;
 	}
 }
