@@ -3,6 +3,7 @@
 - expansions: $" (empty $)
 - expansions: redirections strings (more cmegret)
 - expansions preparations: in heredocs too
+- Signals : sigint
 
 ## Bugs
 - Signals: ctrl+c + exit bug

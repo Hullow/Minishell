@@ -29,7 +29,7 @@ char	*process_single_arg(char *str, t_expand *to_expand, t_shell_state *shell_st
 			{
 				k = 0;
 				i++; // Skip '$'
-				if (to_expand->size_to_expand > 1 && str[i])
+				if (to_expand->size_to_expand >= 1 && str[i])
 				{
 					// Copie size_to_expand - 1 caractères (car on a déjà skip le $)
 					while (k < to_expand->size_to_expand - 1 && str[i])
