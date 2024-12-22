@@ -3,6 +3,7 @@ Eval de SBaumann et fsan-vic:
 
 ## TO DO
 - REMETTRE RL_CLEAR_HISTORY
+- Errors: Write to stderr (2)
 
 ## Bugs dans notre shell:
 ### Expansions
