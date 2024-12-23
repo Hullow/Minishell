@@ -6,7 +6,7 @@
 #    By: ahanzi <ahanzi@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/07/19 14:53:36 by cmegret           #+#    #+#              #
-#    Updated: 2024/12/23 20:29:16 by ahanzi           ###   ########.fr        #
+#    Updated: 2024/12/23 21:15:47 by ahanzi           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -177,7 +177,7 @@ norm:
 	@rm norminette_output.txt
 	@echo " "
 
-sanitize: CFLAGS += -fsanitize=address
+sanitize: CFLAGS += -g -fsanitize=address
 sanitize: re
 
 debug: CFLAGS += -g
