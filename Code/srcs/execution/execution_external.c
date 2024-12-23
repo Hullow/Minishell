@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution_external.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cmegret <cmegret@student.42lausanne.ch>    +#+  +:+       +#+        */
+/*   By: ahanzi <ahanzi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/03 08:36:16 by cmegret           #+#    #+#             */
-/*   Updated: 2024/12/18 13:00:12 by cmegret          ###   ########.fr       */
+/*   Updated: 2024/12/23 18:52:08 by ahanzi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ char	*resolve_cmd_path(char *cmd_name, t_shell_state *shell_state)
 
 	if (ft_strchr(cmd_name, '/') != NULL)
 		return (cmd_name);
-	cmd_path = get_cmd_path(cmd_name, shell_state->envp);
+	cmd_path = get_cmd_path(cmd_name, shell_state->envp, -1, NULL);
 	if (cmd_path == NULL)
 	{
 		printf("%s: command not found\n", cmd_name);

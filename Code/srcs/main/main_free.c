@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main_free.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: francis <francis@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ahanzi <ahanzi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/11 13:59:44 by fallan            #+#    #+#             */
-/*   Updated: 2024/12/20 17:49:13 by francis          ###   ########.fr       */
+/*   Updated: 2024/12/23 18:47:14 by ahanzi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,23 +32,22 @@ void	ft_free_cmd_list(t_command *cmd)
 		temp_cmd = cmd;
 		ft_free_redir_list(cmd->redir_list);
 		ft_free_arg_list(cmd->arg_list);
-		ft_free_cmd_args(cmd->args);
+		ft_free_array_of_strings(cmd->args);
 		cmd = cmd->next;
 		free(temp_cmd);
-		temp_cmd = NULL;
 	}
 }
 
 /**
- * @brief Frees an array of command arguments
+ * @brief Frees an array of string
  *
  * Deallocates memory for:
- * - Each individual argument string
+ * - Each individual string in the array
  * - The array itself
  *
- * @param args NULL-terminated array of argument strings
+ * @param args NULL-terminated array of strings
  */
-void	ft_free_cmd_args(char **args)
+void	ft_free_array_of_strings(char **args)
 {
 	int			i;
 	char		*temp_arg;
@@ -60,11 +59,9 @@ void	ft_free_cmd_args(char **args)
 	{
 		temp_arg = args[i];
 		free(temp_arg);
-		temp_arg = NULL;
 		i++;
 	}
 	free(args);
-	args = NULL;
 }
 
 /**
@@ -90,7 +87,6 @@ void	ft_free_arg_list(t_cmd_args	*arg_list)
 		arg_list->arg_string = NULL;
 		arg_list = arg_list->next;
 		free(temp);
-		temp = NULL;
 	}
 }
 
@@ -113,19 +109,15 @@ void	ft_free_redir_list(t_redir *redir_list)
 		temp_redir = redir_list;
 		if (redir_list->str)
 			free(redir_list->str);
-		redir_list->str = NULL;
 		while (redir_list->heredoc)
 		{
 			temp_heredoc = redir_list->heredoc;
 			redir_list->heredoc = redir_list->heredoc->next;
 			free(temp_heredoc->line);
 			free(temp_heredoc);
-			temp_heredoc->line = NULL;
-			temp_heredoc = NULL;
 		}
 		redir_list = redir_list->next;
 		free(temp_redir);
-		temp_redir = NULL;
 	}
 }
 
@@ -141,10 +133,8 @@ void	ft_free_shell_state(t_shell_state *shell_state)
 		while (shell_state->envp[i])
 		{
 			free(shell_state->envp[i]);
-			shell_state->envp[i] = NULL;
 			i++;
 		}
 		free(shell_state->envp);
-		shell_state->envp = NULL;
 	}
 }

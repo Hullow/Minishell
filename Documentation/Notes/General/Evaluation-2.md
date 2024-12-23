@@ -21,7 +21,18 @@ sh << out
 => this executes ls; it should not!
 
 ### Bugs réglés en principe
-#### Expansions
+### Exit
+exit 777777777777777777777777			OK
+exit -12345678945134678945615			OK
+exit: 78948561245367867897922			OK
+exit -0									OK
+exit -1									OK
+exit 256								OK
+=> modulo 255 if scope LONG_INT_MIN/MAX
+
+exit text: 2 sur Linux, 255 OS X
+
+### Expansions
 $ "vide":
 - `echo $"USER"`
 - `echo $"$USER"`
@@ -33,8 +44,21 @@ $ "vide":
 - `export 6go=bl` ✅
 - `export koko` && `env | grep koko` ✅
 
+- export zz: cree
+- export zz=abc: assigne
+- export zz: rien
+- export zz= : vide
+- export zz="" : vide
+
+
+- export zzz > doesnt update var			OK
+
 ### Pipes
 - Gestion des pipes ouvertes différente de bash, par `cat |` puis \<enter\> (autre exemple: `echo $ |`, suivi de `cat`)
+- 
+ lsss <in | caast | ls -la
+ ls | caast | ls -la <in
+=> manque "caast: command not found" dans les deux cas
 
 ## Autres bugs
 - `$a` => permission denied (nothing in bash)
@@ -101,6 +125,61 @@ Questions:
 - UNEXPECTED EOF define => ?
 - nosleep.c : `int main(){ while(1){} }`
 - qu'est-ce qui l'a fait crasher ? => pas de réponse
+
+
+
+## Other errors to check (ahanzi)
+# Minishell
+A 42 project about creating a simple shell.  
+[Subject requirements](https://github.com/angelahanzi/minishell/blob/main/en.subject.pdf) 
+
+First evaluation bugs:
+mettre bash par défaut
+
+Empty command:
+minishell > ""							OK
+echo "" -n 								OK
+
+< test.txt cat -e | cat -e 				OK
+
+exit 777777777777777777777777			OK
+exit -12345678945134678945615			OK
+exit: 78948561245367867897922			OK
+exit -0									OK
+exit -1									OK
+exit 256								OK
+
+echo $?+$?								OK
+espace expansion code erreur
+
+cat -e | cat -e | cat -e 				OK
+\n en trop apres signal
+
+code exit ctrl-d 						OK
+
+ls "" commande vide						OK
+
+ctrlD heredoc							OK
+warning msg on ctrlD					OK
+expansion on delimiter					OK
+
+ctrl\ print quit						OK
+
+ft_strcmp - Len							OK
+envv									OK
+
+"" >out | <out cat -e 					OK
+exit ""									OK
+export zzz > doesnt update var			OK
+cmd | | cmd 							OK
+
+Outputs order (error msg and cmd)		OK
+>> errors on STDERR when encountered
++ stdout and stderr are different streams
+
+ls | ls | lsss > ec 141 (sigpipe)		
+
+Savoir expliquer les signaux!			
 
 ### Remarques sur notre shell
 
