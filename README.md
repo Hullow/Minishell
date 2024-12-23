@@ -1,4 +1,18 @@
 # Minishell
-cmegret, fallan's Minishell project @Ecole 42 Lausanne (2024)
+Minishell project at Ecole 42 Lausanne (2024)
 
-A simple shell in C emulating the behavior of bash, with pipelines, redirections (input, output, append), here-documents,environmental variables, some builtins (echo, cd, pwd, export, unset, env, exit), exit status, signal handling (SIGINT, SIGQUIT), and a history. The shell interprets single and double quotes, but not parentheses, wildcards, semicolons and backslashes. The prompt is managed by the Readline library.
+Authors: cmegret (@C0X23), fallan (@Hullow)
+
+A simple shell in C emulating the behavior of bash, featuring:
+- pipelines
+- redirections (input, output, append)
+- here-documents
+- environmental variables
+- some builtins (echo, cd, pwd, export, unset, env, exit)
+- exit status of commands
+- signal handling (SIGINT, SIGQUIT)
+- history
+
+The shell interprets single and double quotes, but not parentheses, wildcards, semicolons and backslashes.
+
+The prompt is managed by the Readline library.
