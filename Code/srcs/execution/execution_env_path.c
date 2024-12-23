@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution_env_path.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: francis <francis@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ahanzi <ahanzi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/07 19:02:56 by cmegret           #+#    #+#             */
-/*   Updated: 2024/12/22 17:23:12 by francis          ###   ########.fr       */
+/*   Updated: 2024/12/23 18:51:38 by ahanzi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,31 +62,31 @@ char	**get_env_paths(char **envp)
  *       - Memory allocation fails
  *       - PATH retrieval fails
  */
-char	*get_cmd_path(char *cmd, char **envp)
+char	*get_cmd_path(char *cmd, char **envp, int i, char *temp)
 {
 	char	**paths;
 	char	*full_path;
-	int		i;
 
 	if (cmd == NULL || envp == NULL)
 		error_and_exit("cmd or envp is NULL", 1);
 	paths = get_env_paths(envp);
 	if (!paths)
 		error_and_exit("get_env_paths failed", 1);
-	i = 0;
-	while (paths[i])
+	while (paths[++i])
 	{
-		full_path = ft_strjoin(ft_strjoin(paths[i], "/"), cmd);
+		temp = ft_strjoin(paths[i], "/");
+		full_path = ft_strjoin(temp, cmd);
 		if (!full_path)
 			error_and_exit("ft_strjoin failed", 1);
 		if (access(full_path, F_OK) == 0)
 		{
-			free(paths);
+			ft_free_array_of_strings(paths);
+			free(temp);
 			return (full_path);
 		}
+		free(temp);
 		free(full_path);
-		i++;
 	}
-	free(paths);
+	ft_free_array_of_strings(paths);
 	return (NULL);
 }

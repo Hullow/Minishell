@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Execution.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: francis <francis@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ahanzi <ahanzi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/07 14:36:57 by francis           #+#    #+#             */
-/*   Updated: 2024/12/17 17:07:39 by francis          ###   ########.fr       */
+/*   Updated: 2024/12/23 18:51:56 by ahanzi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ int		handle_parent_builtin(t_command *cmd_list, t_shell_state *shell_state);
 void	ft_execute_builtin(t_command *cmd, t_shell_state *shell_state);
 int		ft_is_builtin(char *cmd_name);
 char	**get_env_paths(char **envp);
-char	*get_cmd_path(char *cmd, char **envp);
+char	*get_cmd_path(char *cmd, char **envp, int i, char *temp);
 void	handle_child_process(t_command *cmd_list, t_shell_state *shell_state);
 char	*resolve_cmd_path(char *cmd_name, t_shell_state *shell_state);
 void	check_access_rights(char *cmd_path, char *cmd_name,
