@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_redir.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: francis <francis@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ahanzi <ahanzi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/01 17:28:03 by fallan            #+#    #+#             */
-/*   Updated: 2024/12/21 17:29:32 by francis          ###   ########.fr       */
+/*   Updated: 2024/12/23 17:14:41 by ahanzi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,7 @@ t_redir	*ft_create_redir(t_command *cmd_list)
 		return (NULL);
 	redir->str = NULL;
 	redir->to_expand = NULL;
+	redir->heredoc = NULL;
 	redir->next = NULL;
 	return (redir);
 }

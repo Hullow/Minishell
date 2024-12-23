@@ -6,6 +6,17 @@ Eval de SBaumann et fsan-vic:
 - Errors: Write to stderr (2)
 
 ## Bugs dans notre shell:
+## Exit
+exit 777777777777777777777777			OK
+exit -12345678945134678945615			OK
+exit: 78948561245367867897922			OK
+exit -0									OK
+exit -1									OK
+exit 256								OK
+=> modulo 255 if scope LONG_INT_MIN/MAX
+
+exit text: 2 sur Linux, 255 OS X
+
 ### Expansions
 $ "vide":
 - `echo $"USER"`
@@ -18,8 +29,21 @@ $ "vide":
 - `export 6go=bl` ✅
 - `export koko` && `env | grep koko` ✅
 
+- export zz: cree
+- export zz=abc: assigne
+- export zz: rien
+- export zz= : vide
+- export zz="" : vide
+
+
+- export zzz > doesnt update var			OK
+
 ### Pipes
 - Gestion des pipes ouvertes différente de bash, par `cat |` puis \<enter\> (autre exemple: `echo $ |`, suivi de `cat`)
+- 
+ lsss <in | caast | ls -la
+ ls | caast | ls -la <in
+=> manque "caast: command not found" dans les deux cas
 
 ## Autres bugs
 - `$a` => permission denied (nothing in bash)
