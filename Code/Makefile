@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: ahanzi <ahanzi@student.42.fr>              +#+  +:+       +#+         #
+#    By: francis <francis@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/07/19 14:53:36 by cmegret           #+#    #+#              #
-#    Updated: 2024/12/23 22:42:02 by ahanzi           ###   ########.fr        #
+#    Updated: 2024/12/23 23:11:33 by francis          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -50,20 +50,20 @@ CC = gcc
 # Flags de compilation
 # CFLAGS:
 
-# NORMAL:
-#  CFLAGS = -Wall -Wextra -Werror -I/opt/homebrew/opt/readline/include
-#  LIBFLAGS = -L./lib -lft -lftprintf -L/opt/homebrew/opt/readline/lib -lreadline
+# MacBook flags:
+ CFLAGS = -Wall -Wextra -Werror -I/opt/homebrew/opt/readline/include
+ LIBFLAGS = -L./lib -lft -lftprintf -L/opt/homebrew/opt/readline/lib -lreadline
+
+# 42 iMac OS X flags: to fix missing type rl_hook_func_t
+# CFLAGS = -Wall -Wextra -Werror -I/Users/ahanzi/.brew/Cellar/readline/8.2.13/include
+# LIBFLAGS = -L./lib -lft -lftprintf  -L/Users/ahanzi/.brew/Cellar/readline/8.2.13/lib -lreadline
 
 # 42 OS X old:
 # CFLAGS = -Wall -Wextra -Werror -I/Library/Developer/CommandLineTools/SDKs/MacOSX10.15.sdk/usr/include/
 # LIBFLAGS = -L./lib -lft -lftprintf -L/Library/Developer/CommandLineTools/SDKs/MacOSX10.15.sdk/usr/lib -lreadline
 
-# 42 OS X: to fix missing type rl_hook_func_t
-CFLAGS = -Wall -Wextra -Werror -I/Users/ahanzi/.brew/Cellar/readline/8.2.13/include
-LIBFLAGS = -L./lib -lft -lftprintf  -L/Users/ahanzi/.brew/Cellar/readline/8.2.13/lib -lreadline
-
-SRCDIR = 	srcs
-OBJDIR = 	objs
+SRCDIR = srcs
+OBJDIR = objs
 
 # Fichiers sources et objets
 SRCS =	\
