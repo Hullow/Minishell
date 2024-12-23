@@ -2,11 +2,26 @@
 Eval de SBaumann et fsan-vic: 
 
 ## TO DO
-- REMETTRE RL_CLEAR_HISTORY
+- Preparing expansions in heredocs
 - Errors: Write to stderr (2)
+- Makefile: objects folder
+- Rl_clear_history: au bon endroit ?
+- Python tester (+ Valgrind ?)
 
 ## Bugs dans notre shell:
-### Expansions
+### Bugs restants
+- expansions: redirections strings (more cmegret): export VAR=2800 puis echo > $VAR
+
+### Heredocs
+```bash
+sh << out
+> ls
+(ctrl+c/SIGINT)
+```
+=> this executes ls; it should not!
+
+### Bugs réglés en principe
+#### Expansions
 $ "vide":
 - `echo $"USER"`
 - `echo $"$USER"`
@@ -14,7 +29,7 @@ $ "vide":
 - `echo echo "$USER"`
 (autrement, `echo echo '$PATH'`, `"ls"` marchent)
 
-### Export/env
+#### Export/env
 - `export 6go=bl` ✅
 - `export koko` && `env | grep koko` ✅
 
@@ -77,7 +92,7 @@ Abort trap: 6
 	- `gcc nosleep.c` puis `./a.out | cat test.txt` et aussi `./a.out | cat test.txt | echo hey`
 	- `echo cat lol.c | cat > lol.c`
 
-## Mes remarques
+## Mes remarques sur l'eval
 - POSIX: version de bash
 => oui, mais techniquement c'est surtout un standard pour les Shell (sh, bash, ksh)
 - git **/*.o
@@ -86,3 +101,38 @@ Questions:
 - UNEXPECTED EOF define => ?
 - nosleep.c : `int main(){ while(1){} }`
 - qu'est-ce qui l'a fait crasher ? => pas de réponse
+
+### Remarques sur notre shell
+
+
+
+#### Bash exit status "bug"
+`/bin/ls/filethatdoesntexist` ; `echo $?`
+/bin/ls/filethatdoesntexist ; echo $?
+=> bash, sh: 126
+=> zsh, our Minishell: 127
+
+POSIX:
+- 126 is for command found but not executable
+- 127 for command not found
+
+=> Bash is wrong !
+
+
+### Fonctions utilisées
+Readline functions
+
+Variable: int rl_done
+Setting this to a non-zero value causes Readline to return the current line immediately. Readline will set this variable when it has read a key sequence bound to accept-line and is about to return the line to the caller.
+
+Function: void rl_redisplay (void)
+Change what’s displayed on the screen to reflect the current contents of rl_line_buffer.
+
+Variable: rl_hook_func_t * rl_event_hook
+If non-zero, this is the address of a function to call periodically when Readline is waiting for terminal input. By default, this will be called at most ten times a second if there is no keyboard input.
+
+Function: int rl_on_new_line (void)
+Tell the update functions that we have moved onto a new (empty) line, usually after outputting a newline.
+
+Function: void rl_replace_line (const char *text, int clear_undo)
+Replace the contents of rl_line_buffer with text. The point and mark are preserved, if possible. If clear_undo is non-zero, the undo list associated with the current line is cleared.

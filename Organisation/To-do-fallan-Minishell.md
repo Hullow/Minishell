@@ -1,9 +1,11 @@
 # To do list - fallan
 ## Features
+- expansions preparations: in heredocs too
+- 42 Mac testing (Linux and/or OS X)
+
+
 - expansions: $" (empty $)
 - expansions: redirections strings (more cmegret)
-- expansions preparations: in heredocs too
-- Signals : sigint
 
 ## Bugs
 - Signals: ctrl+c + exit bug
