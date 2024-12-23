@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: francis <francis@student.42.fr>            +#+  +:+       +#+         #
+#    By: ahanzi <ahanzi@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/07/19 14:53:36 by cmegret           #+#    #+#              #
-#    Updated: 2024/12/21 15:55:04 by francis          ###   ########.fr        #
+#    Updated: 2024/12/23 20:29:16 by ahanzi           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -51,11 +51,16 @@ CC = gcc
 # CFLAGS:
 
 # NORMAL:
- CFLAGS = -Wall -Wextra -Werror -I/opt/homebrew/opt/readline/include
- LIBFLAGS = -L./lib -lft -lftprintf -L/opt/homebrew/opt/readline/lib -lreadline
-# 42 OS X:
+#  CFLAGS = -Wall -Wextra -Werror -I/opt/homebrew/opt/readline/include
+#  LIBFLAGS = -L./lib -lft -lftprintf -L/opt/homebrew/opt/readline/lib -lreadline
+
+# 42 OS X old:
 # CFLAGS = -Wall -Wextra -Werror -I/Library/Developer/CommandLineTools/SDKs/MacOSX10.15.sdk/usr/include/
 # LIBFLAGS = -L./lib -lft -lftprintf -L/Library/Developer/CommandLineTools/SDKs/MacOSX10.15.sdk/usr/lib -lreadline
+
+# 42 OS X: to fix missing type rl_hook_func_t
+CFLAGS = -Wall -Wextra -Werror -I/Users/ahanzi/.brew/Cellar/readline/8.2.13/include
+LIBFLAGS = -L./lib -lft -lftprintf  -L/Users/ahanzi/.brew/Cellar/readline/8.2.13/lib -lreadline
 
 # Fichiers sources et objets
 SRCS = main/main.c \

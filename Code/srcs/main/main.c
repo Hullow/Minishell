@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: francis <francis@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ahanzi <ahanzi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/17 16:54:34 by francis           #+#    #+#             */
-/*   Updated: 2024/12/22 16:31:12 by francis          ###   ########.fr       */
+/*   Updated: 2024/12/23 20:30:53 by ahanzi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,8 @@ int	main(int argc, char **argv, char **envp)
 		ft_free_all(prompt, token_list, cmd_list);
 		prompt = ft_prompt(0);
 	}
-	rl_clear_history();
+	clear_history(); // on 42 OS X iMacs
+	// rl_clear_history();
 	ft_free_shell_state(&shell_state);
 	return (0);
 }
