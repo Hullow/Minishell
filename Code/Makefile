@@ -6,7 +6,7 @@
 #    By: francis <francis@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/07/19 14:53:36 by cmegret           #+#    #+#              #
-#    Updated: 2024/12/23 23:11:33 by francis          ###   ########.fr        #
+#    Updated: 2024/12/23 23:14:55 by francis          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -46,10 +46,7 @@ FT_PRINTF = ./lib/libftprintf.a
 # Compilateur
 CC = gcc
 
-# -g3 -fsanitize=address
 # Flags de compilation
-# CFLAGS:
-
 # MacBook flags:
  CFLAGS = -Wall -Wextra -Werror -I/opt/homebrew/opt/readline/include
  LIBFLAGS = -L./lib -lft -lftprintf -L/opt/homebrew/opt/readline/lib -lreadline
