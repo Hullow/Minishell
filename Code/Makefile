@@ -6,7 +6,7 @@
 #    By: ahanzi <ahanzi@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/07/19 14:53:36 by cmegret           #+#    #+#              #
-#    Updated: 2024/12/23 21:15:47 by ahanzi           ###   ########.fr        #
+#    Updated: 2024/12/23 22:42:02 by ahanzi           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -62,57 +62,57 @@ CC = gcc
 CFLAGS = -Wall -Wextra -Werror -I/Users/ahanzi/.brew/Cellar/readline/8.2.13/include
 LIBFLAGS = -L./lib -lft -lftprintf  -L/Users/ahanzi/.brew/Cellar/readline/8.2.13/lib -lreadline
 
+SRCDIR = 	srcs
+OBJDIR = 	objs
+
 # Fichiers sources et objets
-SRCS = main/main.c \
-      main/main_free.c \
-	  main/main_initialize.c \
-      main/main_prompt.c \
-	  main/main_utils.c \
-      token/token_main.c \
-      token/token_checks.c \
-      token/token_char_checks.c \
-      token/token_creation.c \
-      token/token_debug.c \
-      token/token_expansions.c \
-      token/token_operator.c \
-      token/token_quotes.c \
-      token/token_words.c \
-	  parsing/parse_main.c \
-	  parsing/parse_redir.c \
-	  parsing/parse_command_args.c \
-	  parsing/parse_utils.c \
-	  parsing/parse_debug.c \
-	  heredocs/heredocs_main.c \
-	  heredocs/heredocs_read.c \
-	  heredocs/heredocs_utils.c \
-	  expansion/expansion_main.c \
-	  expansion/expansion_process.c \
-	  expansion/expansion_variable.c \
-	  expansion/expansion_utils.c \
-	  execution/execution_main.c \
-	  execution/execution_heredoc.c \
-	  execution/execution_pipeline.c \
-	  execution/execution_env_path.c \
-	  execution/execution_builtin.c \
-	  execution/execution_external.c \
-	  execution/execution_redir.c \
-	  execution/execution_redir_utils.c \
-	  builtin/cd.c \
-	  builtin/cd_utils.c \
-      builtin/env.c \
-      builtin/export.c \
-      builtin/env_utils.c \
-      builtin/unset.c \
-      builtin/pwd.c \
-      builtin/echo.c \
-      builtin/exit.c \
-      signal/signal.c \
+SRCS =	\
+		srcs/main/main.c \
+		srcs/main/main_free.c \
+		srcs/main/main_initialize.c \
+		srcs/main/main_prompt.c \
+		srcs/main/main_utils.c \
+		srcs/token/token_main.c \
+		srcs/token/token_checks.c \
+		srcs/token/token_char_checks.c \
+		srcs/token/token_creation.c \
+		srcs/token/token_debug.c \
+		srcs/token/token_expansions.c \
+		srcs/token/token_operator.c \
+		srcs/token/token_quotes.c \
+		srcs/token/token_words.c \
+		srcs/parsing/parse_main.c \
+		srcs/parsing/parse_redir.c \
+		srcs/parsing/parse_command_args.c \
+		srcs/parsing/parse_utils.c \
+		srcs/parsing/parse_debug.c \
+		srcs/heredocs/heredocs_main.c \
+		srcs/heredocs/heredocs_read.c \
+		srcs/heredocs/heredocs_utils.c \
+		srcs/expansion/expansion_main.c \
+		srcs/expansion/expansion_process.c \
+		srcs/expansion/expansion_variable.c \
+		srcs/expansion/expansion_utils.c \
+		srcs/execution/execution_main.c \
+		srcs/execution/execution_heredoc.c \
+		srcs/execution/execution_pipeline.c \
+		srcs/execution/execution_env_path.c \
+		srcs/execution/execution_builtin.c \
+		srcs/execution/execution_external.c \
+		srcs/execution/execution_redir.c \
+		srcs/execution/execution_redir_utils.c \
+		srcs/builtin/cd.c \
+		srcs/builtin/cd_utils.c \
+		srcs/builtin/env.c \
+		srcs/builtin/export.c \
+		srcs/builtin/env_utils.c \
+		srcs/builtin/unset.c \
+		srcs/builtin/pwd.c \
+		srcs/builtin/echo.c \
+		srcs/builtin/exit.c \
+		srcs/signal/signal.c 
 
-# Add path prefix to SRCS files
-SRC = $(addprefix srcs/, $(SRCS))
-
-# Fichiers objets
-OBJ = $(SRC:.c=.o)
+OBJ = $(SRCS:$(SRCDIR)/%.c=$(OBJDIR)/%.o)
 
 # Règle pour tout compiler
 all: start norm $(NAME)
@@ -148,7 +148,7 @@ $(NAME): $(LIBFT) $(FT_PRINTF) $(OBJ)
 	@echo "$(GREEN)\nCompilation successful!\n$(RESET)"
 
 # Règle pour les fichiers objets
-%.o: %.c
+$(OBJDIR)/%.o: $(SRCDIR)/%.c
 	@echo "$(BLUE)Compiling: $<$(RESET)"
 	@$(CC) $(CFLAGS) -c $< -o $@
 
