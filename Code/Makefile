@@ -6,7 +6,7 @@
 #    By: francis <francis@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/07/19 14:53:36 by cmegret           #+#    #+#              #
-#    Updated: 2024/12/23 23:14:55 by francis          ###   ########.fr        #
+#    Updated: 2024/12/23 23:16:02 by francis          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -52,8 +52,8 @@ CC = gcc
  LIBFLAGS = -L./lib -lft -lftprintf -L/opt/homebrew/opt/readline/lib -lreadline
 
 # 42 iMac OS X flags: to fix missing type rl_hook_func_t
-# CFLAGS = -Wall -Wextra -Werror -I/Users/ahanzi/.brew/Cellar/readline/8.2.13/include
-# LIBFLAGS = -L./lib -lft -lftprintf  -L/Users/ahanzi/.brew/Cellar/readline/8.2.13/lib -lreadline
+# CFLAGS = -Wall -Wextra -Werror -I/Users/fallan/.brew/Cellar/readline/8.2.13/include
+# LIBFLAGS = -L./lib -lft -lftprintf  -L/Users/fallan/.brew/Cellar/readline/8.2.13/lib -lreadline
 
 # 42 OS X old:
 # CFLAGS = -Wall -Wextra -Werror -I/Library/Developer/CommandLineTools/SDKs/MacOSX10.15.sdk/usr/include/
