@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Builtin.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cmegret <cmegret@student.42lausanne.ch>    +#+  +:+       +#+        */
+/*   By: francis <francis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/22 18:40:16 by cmegret           #+#    #+#             */
-/*   Updated: 2024/12/03 08:57:03 by cmegret          ###   ########.fr       */
+/*   Updated: 2024/12/24 02:44:39 by francis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,10 @@
 # define BUILTIN_H
 
 # include "Minishell.h"
+
+// Errors for Exit
+# define NUMERIC_ARG_REQUIRED		0
+# define TOO_MANY_ARGUMENTS			1
 
 typedef struct s_command		t_command;
 typedef struct s_shell_state	t_shell_state;
@@ -38,7 +42,8 @@ int			find_var_index(char **envp, char *key, size_t key_len);
 void		add_new_var(char ***envp, const char *var);
 
 // Builtin EXIT
-void		ft_exit(t_shell_state *shell_state, char **args);
+void		ft_exit(t_shell_state *shell_state, char **args, int exit_stat, \
+				int i);
 
 // Builtin EXPORT
 void		ft_export(t_shell_state *shell_state, char **args);

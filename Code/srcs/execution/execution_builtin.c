@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution_builtin.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cmegret <cmegret@student.42lausanne.ch>    +#+  +:+       +#+        */
+/*   By: francis <francis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/07 14:36:57 by francis           #+#    #+#             */
-/*   Updated: 2024/12/18 13:01:13 by cmegret          ###   ########.fr       */
+/*   Updated: 2024/12/24 02:16:42 by francis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ void	ft_execute_builtin(t_command *cmd, t_shell_state *shell_state)
 	else if (ft_strncmp(cmd->cmd_name, "cd", 3) == 0)
 		ft_cd(cmd, shell_state);
 	else if (ft_strncmp(cmd->cmd_name, "exit", 5) == 0)
-		ft_exit(shell_state, cmd->args);
+		ft_exit(shell_state, cmd->args, shell_state->last_exit_status, 0);
 	else if (ft_strncmp(cmd->cmd_name, "env", 4) == 0)
 		ft_env(shell_state);
 }
