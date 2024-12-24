@@ -24,13 +24,8 @@ exit ""										❌
 - Bash: exit: : numeric argument required, exit code 255
 - Minishell: nothing, exit code 0
 
-exit -0										❌
-- bash: (nothing), exit status 0
-- Minishell: exit: -0: numeric argument required, exit status 255
-
-exit -1										❌
-- bash: (nothing), exit status 255
-- Minishell: exit: -1: numeric argument required, exit status 255
+exit -0										✅
+exit -1										✅
 
 exit 777777777777777777777777				❌
 - bash: exit: 777777777777777777777777: numeric argument required, exit code 255

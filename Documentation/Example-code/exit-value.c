@@ -18,8 +18,10 @@ int main(int argc, char **argv)
 		printf("Minishell: exit: %s: numeric argument required\n", argv[1]);
 		exit_status = 255;
 	}
-	else if (exit_status >= 0)
+	else if (exit_arg >= 0)
 		exit_status = exit_arg % 256;
+	else if (exit_arg == -2147483648)
+		exit_status = 0;
 	else
 		exit_status = 256 + (exit_arg % 256);
 	printf("exit_arg: %d\n", exit_arg);
