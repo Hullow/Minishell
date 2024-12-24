@@ -6,7 +6,7 @@
 /*   By: cmegret <cmegret@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/07 14:37:29 by francis           #+#    #+#             */
-/*   Updated: 2024/12/18 12:55:56 by cmegret          ###   ########.fr       */
+/*   Updated: 2024/12/24 13:35:16 by cmegret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,21 +53,18 @@ int	is_valid_filename(const char *filename)
 	return (1);
 }
 
-/**
- * @brief Restores the original file descriptors
- *
- * This function:
- * 1. Restores stdin and stdout to their original state
- * 2. Duplicates saved descriptors back to standard streams
- * 3. Closes the saved descriptors to prevent leaks
- *
- * @param cmd_list The command list containing the saved file descriptors
- * @note Both saved descriptors are closed after restoration
- */
 void	restore_redirections(t_command *cmd_list)
 {
-	dup2(cmd_list->saved_input, STDIN_FILENO);
-	dup2(cmd_list->saved_output, STDOUT_FILENO);
-	close(cmd_list->saved_input);
-	close(cmd_list->saved_output);
+	if (cmd_list->saved_input > 2)
+	{
+		if (dup2(cmd_list->saved_input, STDIN_FILENO) != -1)
+			close(cmd_list->saved_input);
+	}
+	if (cmd_list->saved_output > 2)
+	{
+		if (dup2(cmd_list->saved_output, STDOUT_FILENO) != -1)
+			close(cmd_list->saved_output);
+	}
+	cmd_list->saved_input = -1;
+	cmd_list->saved_output = -1;
 }

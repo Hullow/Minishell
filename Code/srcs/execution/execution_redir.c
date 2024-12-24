@@ -6,7 +6,7 @@
 /*   By: cmegret <cmegret@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/07 14:37:29 by francis           #+#    #+#             */
-/*   Updated: 2024/12/18 12:55:03 by cmegret          ###   ########.fr       */
+/*   Updated: 2024/12/24 13:34:01 by cmegret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -144,7 +144,14 @@ void	configure_redirections(t_command *cmd, t_shell_state *shell_state)
 	t_redir	*redir;
 
 	cmd->saved_input = dup(STDIN_FILENO);
+	if (cmd->saved_input == -1)
+		return ;
 	cmd->saved_output = dup(STDOUT_FILENO);
+	if (cmd->saved_output == -1)
+	{
+		close(cmd->saved_input);
+		return ;
+	}
 	redir = cmd->redir_list;
 	while (redir)
 	{

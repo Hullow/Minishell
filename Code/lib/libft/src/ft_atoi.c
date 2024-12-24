@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_atoi.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
+/*   By: cmegret <cmegret@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/31 21:15:23 by fallan            #+#    #+#             */
-/*   Updated: 2024/05/29 17:33:05 by fallan           ###   ########.fr       */
+/*   Updated: 2024/12/24 13:23:24 by cmegret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,9 +22,9 @@ static int	remove_whitespaces(const char *str, int i)
 
 int	ft_atoi(const char *str)
 {
-	int	nb;
-	int	i;
-	int	sign;
+	long	nb;
+	int		i;
+	int		sign;
 
 	nb = 0;
 	i = 0;
@@ -39,10 +39,11 @@ int	ft_atoi(const char *str)
 		i++;
 	if (str[i] < '0' || str[i] > '9')
 		return (0);
-	while (str[i] >= '0' && str[i] <= '9' && nb >= 0)
+	while (str[i] >= '0' && str[i] <= '9')
 	{
-		nb *= 10;
-		nb += str[i] - 48;
+		nb = nb * 10 + (str[i] - '0');
+		if ((sign == 1 && nb > INT_MAX) || (sign == -1 && (-nb) < INT_MIN))
+			return (-1);
 		i++;
 	}
 	return (sign * nb);

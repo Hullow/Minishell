@@ -6,7 +6,7 @@
 /*   By: cmegret <cmegret@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/13 20:57:18 by cmegret           #+#    #+#             */
-/*   Updated: 2024/12/13 20:57:20 by cmegret          ###   ########.fr       */
+/*   Updated: 2024/12/24 13:23:12 by cmegret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,14 @@
 
 # ifndef BUFFER_SIZE
 #  define BUFFER_SIZE 42
+# endif
+
+# ifndef INT_MAX
+#  define INT_MAX 32767
+# endif
+
+# ifndef INT_MIN
+#  define INT_MIN -32768
 # endif
 
 # include <stdio.h>
