@@ -6,7 +6,7 @@
 /*   By: cmegret <cmegret@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/01 18:44:38 by cmegret           #+#    #+#             */
-/*   Updated: 2024/12/21 10:09:22 by cmegret          ###   ########.fr       */
+/*   Updated: 2024/12/24 13:54:26 by cmegret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,8 +33,13 @@ char	*expand_variable(char *new_arg,
 			t_shell_state *shell_state, char *var_name);
 
 // Process
-char	*process_single_arg(char *str, t_expand *to_expand, t_shell_state *shell_state);
+char	*process_single_arg(char *str, t_expand *to_expand,
+			t_shell_state *shell_state);
 char	*process_heredoc_line(char *line, t_shell_state *shell_state);
+void	process_command_redirections(t_command *cmd,
+			t_shell_state *shell_state);
+void	process_command_args(t_command *cmd,
+			t_shell_state *shell_state);
 
 // Main expansion functions
 void	expand_command_variables(t_command *cmd_list,

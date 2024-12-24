@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   token_main.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yourlogin <youremail@student.42lausanne.ch>    +#+  +:+       +#+        */
+/*   By: cmegret <cmegret@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/12/24 09:41:45 by yourlogin         #+#    #+#             */
-/*   Updated: 2024/12/24 09:41:45 by yourlogin        ###   ########.ch       */
+/*   Created: 2024/12/10 19:01:55 by francis           #+#    #+#             */
+/*   Updated: 2024/12/24 15:25:39 by cmegret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 

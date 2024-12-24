@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: francis <francis@student.42.fr>            +#+  +:+       +#+        */
+/*   By: cmegret <cmegret@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/22 16:31:14 by cmegret           #+#    #+#             */
-/*   Updated: 2024/12/24 03:49:00 by francis          ###   ########.fr       */
+/*   Updated: 2024/12/24 14:06:42 by cmegret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,14 +67,14 @@ void	ft_exit(t_shell_state *shell_state, char **args, int exit_stat, int i)
 		}
 		if (args[2])
 			return (ft_no_exit_too_many_arguments(shell_state));
-		exit_input = ft_atoi(args[1]); // need ft_atoi that returns -1 if beyond bounds of PID_T values
+		exit_input = ft_atoi(args[1]);
 		exit_stat = exit_input % 256;
 		if (exit_input == -1 && ft_strcmp(args[1], "-1"))
 			exit_stat = print_exit_error(args[1], NUMERIC_ARG_REQUIRED, 255);
 		else if (exit_input < 0)
 			exit_stat += 256;
 	}
-	clear_history(); // on 42 OS X iMacs; else rl_clear_history();
+	clear_history();
 	ft_free_shell_state(shell_state);
 	ft_putstr_fd("exit\n", STDOUT_FILENO);
 	exit(exit_stat);

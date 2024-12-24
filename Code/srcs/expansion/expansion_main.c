@@ -6,7 +6,7 @@
 /*   By: cmegret <cmegret@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/17 12:41:47 by cmegret           #+#    #+#             */
-/*   Updated: 2024/12/21 10:09:54 by cmegret          ###   ########.fr       */
+/*   Updated: 2024/12/24 13:53:52 by cmegret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,35 +51,53 @@ void	fill_table_heredocs(t_command *cmd_list, t_shell_state *shell_state)
 	}
 }
 
+void	process_command_redirections(t_command *cmd,
+			t_shell_state *shell_state)
+{
+	t_redir	*redir;
+	char	*new_arg;
+
+	redir = cmd->redir_list;
+	while (redir)
+	{
+		if (redir->type != REDIR_HEREDOC)
+		{
+			new_arg = process_single_arg(redir->str,
+					redir->to_expand,
+					shell_state);
+			free(redir->str);
+			redir->str = new_arg;
+		}
+		redir = redir->next;
+	}
+}
+
+void	process_command_args(t_command *cmd, t_shell_state *shell_state)
+{
+	t_cmd_args	*current;
+	char		*new_arg;
+
+	current = cmd->arg_list;
+	while (current)
+	{
+		new_arg = process_single_arg(current->arg_string,
+				current->to_expand,
+				shell_state);
+		free(current->arg_string);
+		current->arg_string = new_arg;
+		current = current->next;
+	}
+}
+
 void	fill_table(t_command *cmd_list, t_shell_state *shell_state)
 {
-	char		*new_arg;
-	t_cmd_args	*current;
 	t_command	*cmd;
-	t_redir		*redir;
 
 	cmd = cmd_list;
 	while (cmd)
 	{
-		current = cmd->arg_list;
-		while (current)
-		{
-			new_arg = process_single_arg(current->arg_string, current->to_expand, shell_state);
-			free(current->arg_string);
-			current->arg_string = new_arg;
-			current = current->next;
-		}
-		redir = cmd->redir_list;
-		while (redir)
-		{
-			if (redir->type != REDIR_HEREDOC)
-			{
-				new_arg = process_single_arg(redir->str, redir->to_expand, shell_state);
-				free(redir->str);
-				redir->str = new_arg;
-			}
-			redir = redir->next;
-		}
+		process_command_args(cmd, shell_state);
+		process_command_redirections(cmd, shell_state);
 		cmd = cmd->next;
 	}
 }

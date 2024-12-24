@@ -6,7 +6,7 @@
 /*   By: cmegret <cmegret@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/07 14:37:29 by francis           #+#    #+#             */
-/*   Updated: 2024/12/24 13:35:16 by cmegret          ###   ########.fr       */
+/*   Updated: 2024/12/24 14:08:54 by cmegret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,4 +67,34 @@ void	restore_redirections(t_command *cmd_list)
 	}
 	cmd_list->saved_input = -1;
 	cmd_list->saved_output = -1;
+}
+
+int	save_standard_fds(t_command *cmd)
+{
+	cmd->saved_input = dup(STDIN_FILENO);
+	if (cmd->saved_input == -1)
+		return (-1);
+	cmd->saved_output = dup(STDOUT_FILENO);
+	if (cmd->saved_output == -1)
+	{
+		close(cmd->saved_input);
+		return (-1);
+	}
+	return (0);
+}
+
+int	process_single_redirection(t_redir *redir, t_shell_state *shell_state)
+{
+	if (validate_redirection(redir, shell_state) == -1)
+		return (-1);
+	if (redir->type == REDIR_OUTPUT
+		&& handle_redir_output(redir, shell_state) == -1)
+		return (-1);
+	if (redir->type == REDIR_APPEND
+		&& handle_redir_append(redir, shell_state) == -1)
+		return (-1);
+	if (redir->type == REDIR_INPUT
+		&& handle_redir_input(redir, shell_state) == -1)
+		return (-1);
+	return (0);
 }

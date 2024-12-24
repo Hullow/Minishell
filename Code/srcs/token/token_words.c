@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   token_words.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: francis <francis@student.42.fr>            +#+  +:+       +#+        */
+/*   By: cmegret <cmegret@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/17 16:40:36 by francis           #+#    #+#             */
-/*   Updated: 2024/12/17 16:45:04 by francis          ###   ########.fr       */
+/*   Updated: 2024/12/24 14:09:29 by cmegret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ void	ft_set_empty_token_strings(t_token *tok)
 		if (!(tok->str) && tok->is_delimited)
 			tok->str = ft_strdup("");
 		if (!(tok->str))
-			return ;// MALLOC ERROR
+			return ;
 		tok = tok->next;
 	}
 }

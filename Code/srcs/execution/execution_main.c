@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution_main.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: francis <francis@student.42.fr>            +#+  +:+       +#+        */
+/*   By: cmegret <cmegret@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/07 14:37:18 by francis           #+#    #+#             */
-/*   Updated: 2024/12/19 21:25:15 by francis          ###   ########.fr       */
+/*   Updated: 2024/12/24 14:09:15 by cmegret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,7 +101,7 @@ void	run_command(t_command *cmd_list, t_shell_state *shell_state)
 void	execute_child(t_command *cmd_list,
 	t_shell_state *shell_state, int in_fd, int *fd)
 {
-	extern int rl_done;
+	extern int	rl_done;
 
 	setup_file_descriptors(cmd_list, in_fd, fd);
 	shell_state->last_exit_status = 0;

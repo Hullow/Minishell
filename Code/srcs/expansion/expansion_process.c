@@ -6,13 +6,14 @@
 /*   By: cmegret <cmegret@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/17 12:41:45 by cmegret           #+#    #+#             */
-/*   Updated: 2024/12/21 10:07:46 by cmegret          ###   ########.fr       */
+/*   Updated: 2024/12/24 15:27:57 by cmegret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../header/Minishell.h"
 
-char	*process_single_arg(char *str, t_expand *to_expand, t_shell_state *shell_state)
+char	*process_single_arg(char *str, t_expand *to_expand,
+	t_shell_state *shell_state)
 {
 	char	*new_arg;
 	char	var_name[256];
@@ -28,21 +29,21 @@ char	*process_single_arg(char *str, t_expand *to_expand, t_shell_state *shell_st
 			if (to_expand->check)
 			{
 				k = 0;
-				i++;  // Skip '$' directement
+				i++;
 				if (to_expand->size_to_expand >= 1 && str[i])
 				{
 					while (k < to_expand->size_to_expand - 1 && str[i])
 						var_name[k++] = str[i++];
 					var_name[k] = '\0';
 					new_arg = expand_variable(new_arg, shell_state, var_name);
-					i--;  // Ajustement pour le i++ de la boucle principale
+					i--;
 				}
 				else
 				{
-					if (!str[i - 1])  // Si c'était le dernier caractère
+					if (!str[i - 1])
 						new_arg = append_single_char(new_arg, '$');
 					else
-						i--;  // Retour sur '$'
+						i--;
 				}
 			}
 			else
