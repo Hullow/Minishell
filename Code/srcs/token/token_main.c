@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   token_main.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: francis <francis@student.42.fr>            +#+  +:+       +#+        */
+/*   By: yourlogin <youremail@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/09/06 17:19:58 by cmegret           #+#    #+#             */
-/*   Updated: 2024/12/21 15:53:34 by francis          ###   ########.fr       */
+/*   Created: 2024/12/24 09:41:45 by yourlogin         #+#    #+#             */
+/*   Updated: 2024/12/24 09:41:45 by yourlogin        ###   ########.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 // and the strings therein
 void	ft_free_token_list(t_token *token_list)
 {
-	t_token	*temp_tok;
+	t_token		*temp_tok;
 	t_expand	*temp_expand;
 
 	while (token_list)

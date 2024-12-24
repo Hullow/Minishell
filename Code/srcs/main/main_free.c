@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main_free.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yourlogin <youremail@student.42lausanne.ch>    +#+  +:+       +#+        */
+/*   By: cmegret <cmegret@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/12/24 07:41:16 by yourlogin         #+#    #+#             */
-/*   Updated: 2024/12/24 07:52:50 by yourlogin        ###   ########.ch       */
+/*   Created: 2024/12/07 14:36:57 by francis           #+#    #+#             */
+/*   Updated: 2024/12/24 09:42:55 by cmegret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,8 +33,6 @@ void	ft_free_cmd_list(t_command *cmd)
 		ft_free_redir_list(cmd->redir_list);
 		ft_free_arg_list(cmd->arg_list);
 		ft_free_array_of_strings(cmd->args);
-		free(cmd->cmd_name);
-		cmd->cmd_name = NULL;
 		if (cmd->saved_input > 2)
 			close(cmd->saved_input);
 		if (cmd->saved_output > 2)
