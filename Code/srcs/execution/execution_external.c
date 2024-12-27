@@ -30,13 +30,13 @@ void	check_access_rights(char *cmd_path, char *cmd_name,
 {
 	if (access(cmd_path, F_OK) != 0)
 	{
-		printf("%s: No such file or directory\n", cmd_name);
+		ft_print_error(cmd_name, NULL, "No such file or directory");
 		shell_state->last_exit_status = 127;
 		exit(shell_state->last_exit_status);
 	}
 	else if (access(cmd_path, X_OK) != 0)
 	{
-		printf("minishell: %s: Permission denied\n", cmd_name);
+		ft_print_error(cmd_name, NULL, "Permission denied");
 		shell_state->last_exit_status = 126;
 		exit(shell_state->last_exit_status);
 	}
@@ -65,7 +65,7 @@ char	*resolve_cmd_path(char *cmd_name, t_shell_state *shell_state)
 	cmd_path = get_cmd_path(cmd_name, shell_state->envp, -1, NULL);
 	if (cmd_path == NULL)
 	{
-		printf("%s: command not found\n", cmd_name);
+		ft_print_error(cmd_name, NULL, "command not found");
 		shell_state->last_exit_status = 127;
 		exit(shell_state->last_exit_status);
 	}

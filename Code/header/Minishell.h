@@ -156,6 +156,7 @@ void		check_arguments(int argc, char **argv, t_shell_state *shell_state);
 
 // Prompt
 char		*ft_prompt(int type);
+void		ft_print_error(char *cmd, char *arg, char *message);
 
 // Free
 void		ft_free_all(char *prompt, t_token *token_list, t_command *cmd);

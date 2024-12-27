@@ -30,7 +30,7 @@ int	handle_redir_output(t_redir *redir, t_shell_state *shell_state)
 	fd = open(redir->str, O_WRONLY | O_CREAT | O_TRUNC, 0644);
 	if (fd == -1)
 	{
-		perror("open");
+		ft_print_error(redir->str, NULL, "No such file or directory");
 		shell_state->last_exit_status = 1;
 		return (-1);
 	}
@@ -57,7 +57,7 @@ int	handle_redir_append(t_redir *redir, t_shell_state *shell_state)
 	fd = open(redir->str, O_WRONLY | O_CREAT | O_APPEND, 0644);
 	if (fd == -1)
 	{
-		perror("open");
+		ft_print_error(redir->str, NULL, "No such file or directory");
 		shell_state->last_exit_status = 1;
 		return (-1);
 	}
@@ -83,7 +83,7 @@ int	handle_redir_input(t_redir *redir, t_shell_state *shell_state)
 	fd = open(redir->str, O_RDONLY);
 	if (fd == -1)
 	{
-		perror("open");
+		ft_print_error(redir->str, NULL, "No such file or directory");
 		shell_state->last_exit_status = 1;
 		return (-1);
 	}

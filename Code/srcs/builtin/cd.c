@@ -55,7 +55,7 @@ static int	change_directory(char *path, t_shell_state *shell_state)
 {
 	if (chdir(path) == -1)
 	{
-		perror("cd");
+		ft_print_error("cd", path, "No such file or directory");
 		shell_state->last_exit_status = 1;
 		return (-1);
 	}
