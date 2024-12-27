@@ -42,23 +42,72 @@ void	ft_print_error(char *cmd, char *arg, char *message)
 /**
  * @brief Generates the appropriate prompt based on context
  *
- * Creates either:
- * 1. A simple heredoc prompt ("> ")
- * 2. A full custom prompt with current directory and shell info
+ * @param last_folder Current working directory's last folder name
  *
- * Error handling:
- * - Returns simple "Minishell : " prompt if getcwd fails
- * - Exits with failure status on memory allocation errors
- * - Handles invalid path formats gracefully
+ * @details
+ * Builds a prompt string in the format:
+ * "➜  {last_folder} (Minishell) : "
+ *
+ * @note Memory management:
+ * - Returns newly allocated string
+ * - Caller must free the returned string
+ * - Handles intermediate memory allocations internally
+ *
+ * @return Formatted prompt string, or NULL if allocation fails
+ */
+static char	*ft_create_message_prompt(char *last_folder)
+{
+	char	*message;
+	char	*tmp;
+
+	message = ft_strjoin("➜  ", last_folder);
+	tmp = ft_strjoin(message, " (");
+	free(message);
+	message = ft_strjoin(tmp, "Minishell");
+	free(tmp);
+	tmp = ft_strjoin(message, ") : ");
+	free(message);
+	return (tmp);
+}
+
+/**
+ * Generates the shell prompt based on context
  *
  * @param type REDIR_HEREDOC for heredoc prompt, 0 for normal prompt
- * @return A newly allocated string containing user input
- * @note The returned string must be freed by the caller
+ *
+ * @details
+ * Creates one of two prompts:
+ * 1. Simple heredoc prompt ("> ")
+ * 2. Full prompt with current directory: "➜  {folder} (Minishell) : "
+ *
+ * Error handling:
+ * - Returns "minishell: " if getcwd fails
+ * - Handles null/invalid paths gracefully
+ *
+ * @note Memory management:
+ * - Returns newly allocated string from readline
+ * - Caller must free the returned string
+ *
+ * @return User input string, or NULL on EOF
  */
 char	*ft_prompt(int type)
 {
+	char	*prompt;
+	char	*message;
+	char	cwd[1024];
+	char	*last_folder;
+
 	if (type == REDIR_HEREDOC)
 		return (readline("> "));
-	else
-		return (readline("Minishell : "));
+	if (getcwd(cwd, sizeof(cwd)) != NULL)
+	{
+		last_folder = ft_strrchr(cwd, '/');
+		if (last_folder != NULL)
+			last_folder++;
+		message = ft_create_message_prompt(last_folder);
+		prompt = readline(message);
+		free(message);
+		return (prompt);
+	}
+	return (readline("minishell: "));
 }

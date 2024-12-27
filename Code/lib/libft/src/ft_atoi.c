@@ -20,7 +20,7 @@ static int	remove_whitespaces(const char *str, int i)
 	return (i);
 }
 
-int	ft_atoi(const char *str)
+int	ft_atoi_adapted(const char *str)
 {
 	long	nb;
 	int		i;

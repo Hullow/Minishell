@@ -67,7 +67,7 @@ void	ft_exit(t_shell_state *shell_state, char **args, int exit_stat, int i)
 		}
 		if (args[2])
 			return (ft_no_exit_too_many_arguments(shell_state));
-		exit_input = ft_atoi(args[1]);
+		exit_input = ft_atoi_adapted(args[1]);
 		exit_stat = exit_input % 256;
 		if (exit_input == -1 && ft_strcmp(args[1], "-1"))
 			exit_stat = print_exit_error(args[1], NUMERIC_ARG_REQUIRED, 255);

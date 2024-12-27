@@ -30,7 +30,7 @@
 # include <unistd.h>
 
 // partie principale
-int					ft_atoi(const char *str);
+int					ft_atoi_adapted(const char *str);
 void				ft_bzero(void *s, unsigned int n);
 void				*ft_calloc(size_t count, size_t size);
 int					ft_isalnum(int c);

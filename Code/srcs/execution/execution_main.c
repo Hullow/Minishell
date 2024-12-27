@@ -139,6 +139,8 @@ int	execute_cmd(t_command *cmd_list, t_shell_state *shell_state)
 	pid_t	pipeline_pids[1024];
 	int		pid_count;
 
+	if (!cmd_list || !cmd_list->cmd_name || !cmd_list->cmd_name[0])
+		return (0);
 	in_fd = 0;
 	pid_count = 0;
 	while (cmd_list)
