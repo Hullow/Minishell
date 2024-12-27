@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cmegret <cmegret@student.42lausanne.ch>    +#+  +:+       +#+        */
+/*   By: francis <francis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/22 16:31:14 by cmegret           #+#    #+#             */
-/*   Updated: 2024/12/24 14:06:42 by cmegret          ###   ########.fr       */
+/*   Updated: 2024/12/27 17:19:12 by francis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,16 @@ static void	ft_no_exit_too_many_arguments(t_shell_state *shell_state)
 	shell_state->last_exit_status = 1;
 }
 
+// clears history, frees the shell_state struct, writes "exit" and exits
+void	ft_finalize_exit(t_shell_state *shell_state, int exit_stat)
+{
+	clear_history();
+	ft_free_array_of_strings(shell_state->envp);
+	if (exit_stat != 255)
+		ft_putstr_fd("exit\n", STDOUT_FILENO);
+	exit(exit_stat);
+}
+
 // see exit-value.c in Example-code for reference and testing
 //	if (exit_input == -1 && ft_strcmp(args[1], "-1"))
 //		=> if we have something else than -1 as input resulting in exit_input -1
@@ -57,6 +67,8 @@ void	ft_exit(t_shell_state *shell_state, char **args, int exit_stat, int i)
 
 	if (args[1])
 	{
+		if (args[1][0] == '\0')
+			ft_exit_non_digit_argument(args[1]);
 		if (args[1][0] == '-')
 			i++;
 		while (args[1][i])
@@ -74,8 +86,5 @@ void	ft_exit(t_shell_state *shell_state, char **args, int exit_stat, int i)
 		else if (exit_input < 0)
 			exit_stat += 256;
 	}
-	clear_history();
-	ft_free_shell_state(shell_state);
-	ft_putstr_fd("exit\n", STDOUT_FILENO);
-	exit(exit_stat);
+	ft_finalize_exit(shell_state, exit_stat);
 }

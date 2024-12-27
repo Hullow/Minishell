@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main_free.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cmegret <cmegret@student.42lausanne.ch>    +#+  +:+       +#+        */
+/*   By: francis <francis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/07 14:36:57 by francis           #+#    #+#             */
-/*   Updated: 2024/12/24 09:42:55 by cmegret          ###   ########.fr       */
+/*   Updated: 2024/12/27 17:17:58 by francis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,23 +122,5 @@ void	ft_free_redir_list(t_redir *redir_list)
 		}
 		redir_list = redir_list->next;
 		free(temp_redir);
-	}
-}
-
-void	ft_free_shell_state(t_shell_state *shell_state)
-{
-	int	i;
-
-	if (!shell_state)
-		return ;
-	i = 0;
-	if (shell_state->envp)
-	{
-		while (shell_state->envp[i])
-		{
-			free(shell_state->envp[i]);
-			i++;
-		}
-		free(shell_state->envp);
 	}
 }

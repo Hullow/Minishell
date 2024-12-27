@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cmegret <cmegret@student.42lausanne.ch>    +#+  +:+       +#+        */
+/*   By: francis <francis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/13 20:57:18 by cmegret           #+#    #+#             */
-/*   Updated: 2024/12/24 13:23:12 by cmegret          ###   ########.fr       */
+/*   Updated: 2024/12/27 17:20:12 by francis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,11 +18,11 @@
 # endif
 
 # ifndef INT_MAX
-#  define INT_MAX 32767
+#  define INT_MAX 2147483647
 # endif
 
 # ifndef INT_MIN
-#  define INT_MIN -32768
+#  define INT_MIN -2147483647
 # endif
 
 # include <stdio.h>

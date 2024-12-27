@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cmegret <cmegret@student.42lausanne.ch>    +#+  +:+       +#+        */
+/*   By: francis <francis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/07 13:55:06 by yourlogin         #+#    #+#             */
-/*   Updated: 2024/12/24 13:59:22 by cmegret          ###   ########.fr       */
+/*   Updated: 2024/12/27 17:17:59 by francis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -164,6 +164,5 @@ void		ft_free_cmd_list(t_command *cmd);
 void		ft_free_array_of_strings(char **args);
 void		ft_free_arg_list(t_cmd_args	*arg_list);
 void		ft_free_redir_list(t_redir *redir_list);
-void		ft_free_shell_state(t_shell_state *shell_state);
 
 #endif
