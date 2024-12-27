@@ -109,8 +109,8 @@ $ "vide":
 
 - ls | ls | lsss > ec 127					✅
 
-- `lsss <in | caast | ls -la`				❌	
-- `ls | caast | ls -la <in`					❌
+- `lsss <in | caast | ls -la`				✅	
+- `ls | caast | ls -la <in`					✅
 => manque "caast: command not found" dans les deux cas
 => manque aussi "**Minishell**: caast: commant not found"
 
@@ -134,7 +134,7 @@ sh << out
 -> Minishell: permission denied
 -> bash: (nothing)
 
-- `$'a'`									~OK
+- `$'a'`									✅
 => "$a: command not found"
 => "bash: a: command not found"
 
