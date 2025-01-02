@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main_prompt.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cmegret <cmegret@student.42lausanne.ch>    +#+  +:+       +#+        */
+/*   By: francis <francis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/22 18:40:16 by cmegret           #+#    #+#             */
-/*   Updated: 2024/12/18 16:34:18 by cmegret          ###   ########.fr       */
+/*   Updated: 2025/01/02 19:39:58 by francis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ void	ft_print_error(char *cmd, char *arg, char *message)
  *
  * @return Formatted prompt string, or NULL if allocation fails
  */
-static char	*ft_create_message_prompt(char *last_folder)
+char	*ft_create_message_prompt(char *last_folder)
 {
 	char	*message;
 	char	*tmp;
@@ -92,22 +92,22 @@ static char	*ft_create_message_prompt(char *last_folder)
  */
 char	*ft_prompt(int type)
 {
-	char	*prompt;
-	char	*message;
-	char	cwd[1024];
-	char	*last_folder;
+	// char	*prompt;
+	// char	*message;
+	// char	cwd[1024];
+	// char	*last_folder;
 
 	if (type == REDIR_HEREDOC)
 		return (readline("> "));
-	if (getcwd(cwd, sizeof(cwd)) != NULL)
-	{
-		last_folder = ft_strrchr(cwd, '/');
-		if (last_folder != NULL)
-			last_folder++;
-		message = ft_create_message_prompt(last_folder);
-		prompt = readline(message);
-		free(message);
-		return (prompt);
-	}
+	// if (getcwd(cwd, sizeof(cwd)) != NULL)
+	// {
+	// 	last_folder = ft_strrchr(cwd, '/');
+	// 	if (last_folder != NULL)
+	// 		last_folder++;
+	// 	message = ft_create_message_prompt(last_folder);
+	// 	prompt = readline(message);
+	// 	free(message);
+	// 	return (prompt);
+	// }
 	return (readline("minishell: "));
 }
