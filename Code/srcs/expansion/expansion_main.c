@@ -6,7 +6,7 @@
 /*   By: cmegret <cmegret@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/17 12:41:47 by cmegret           #+#    #+#             */
-/*   Updated: 2024/12/24 13:53:52 by cmegret          ###   ########.fr       */
+/*   Updated: 2025/01/02 19:06:35 by cmegret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,11 +62,14 @@ void	process_command_redirections(t_command *cmd,
 	{
 		if (redir->type != REDIR_HEREDOC)
 		{
-			new_arg = process_single_arg(redir->str,
-					redir->to_expand,
-					shell_state);
-			free(redir->str);
-			redir->str = new_arg;
+			if (redir->str)
+			{
+				new_arg = process_single_arg(redir->str,
+						redir->to_expand,
+						shell_state);
+				free(redir->str);
+				redir->str = new_arg;
+			}
 		}
 		redir = redir->next;
 	}
