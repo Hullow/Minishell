@@ -6,7 +6,7 @@
 /*   By: cmegret <cmegret@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/17 12:41:47 by cmegret           #+#    #+#             */
-/*   Updated: 2025/01/02 19:06:35 by cmegret          ###   ########.fr       */
+/*   Updated: 2025/01/02 23:44:32 by cmegret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,8 +79,10 @@ void	process_command_args(t_command *cmd, t_shell_state *shell_state)
 {
 	t_cmd_args	*current;
 	char		*new_arg;
+	int			i;
 
 	current = cmd->arg_list;
+	i = 0;
 	while (current)
 	{
 		new_arg = process_single_arg(current->arg_string,
@@ -89,6 +91,9 @@ void	process_command_args(t_command *cmd, t_shell_state *shell_state)
 		free(current->arg_string);
 		current->arg_string = new_arg;
 		current = current->next;
+		if (i == 0)
+			cmd->cmd_name = ft_strdup(new_arg);
+		i++;
 	}
 }
 
@@ -123,8 +128,8 @@ void	expand_command_variables(t_command *cmd_list,
 {
 	if (!cmd_list)
 		return ;
-	if (!cmd_list->arg_list || !cmd_list->arg_list->arg_string)
-		return ;
+	/* if (!cmd_list->arg_list || !cmd_list->arg_list->arg_string)
+		return ; */
 	if (cmd_list->redir_list && cmd_list->redir_list->heredoc)
 		fill_table_heredocs(cmd_list, shell_state);
 	fill_table(cmd_list, shell_state);

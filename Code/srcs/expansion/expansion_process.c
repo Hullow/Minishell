@@ -6,7 +6,7 @@
 /*   By: cmegret <cmegret@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/17 12:41:45 by cmegret           #+#    #+#             */
-/*   Updated: 2025/01/02 16:45:42 by cmegret          ###   ########.fr       */
+/*   Updated: 2025/01/02 19:40:58 by cmegret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ char	*handle_dollar_expansion(char *new_arg, const char *str,
 		new_arg = expand_variable(new_arg, args->shell_state, var_name);
 		(*i)--;
 	}
-	else if (!str[*i - 1])
+	else if (str[*i - 1])
 		new_arg = append_single_char(new_arg, '$');
 	else
 		(*i)--;
