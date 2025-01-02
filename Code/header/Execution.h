@@ -6,7 +6,7 @@
 /*   By: cmegret <cmegret@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/07 14:36:57 by francis           #+#    #+#             */
-/*   Updated: 2024/12/24 14:12:48 by cmegret          ###   ########.fr       */
+/*   Updated: 2025/01/02 16:39:33 by cmegret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,5 +59,6 @@ int		is_valid_filename(const char *filename);
 /* Gestion des heredocs */
 bool	has_heredoc(t_command *cmd);
 int		setup_heredoc_input(t_command *cmd);
+int		handle_heredoc(t_command *cmd_list);
 
 #endif

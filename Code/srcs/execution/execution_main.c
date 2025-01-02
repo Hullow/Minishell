@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution_main.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: francis <francis@student.42.fr>            +#+  +:+       +#+        */
+/*   By: cmegret <cmegret@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/07 14:37:18 by francis           #+#    #+#             */
-/*   Updated: 2024/12/27 17:08:25 by francis          ###   ########.fr       */
+/*   Updated: 2025/01/02 16:39:58 by cmegret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,16 +87,19 @@ void	run_command(t_command *cmd_list, t_shell_state *shell_state)
 }
 
 /**
- * @brief Executes the child process.
+ * @brief Executes a command in a child process with proper I/O handling
  *
- * This function redirects file descriptors for input and output,
- * closes unused file descriptors, and executes either a builtin command
- * or a child process.
+ * This function handles the execution of a command in a child process by:
+ * 1. Setting up file descriptors for input/output
+ * 2. Managing heredoc input if present
+ * 3. Configuring input/output redirections
+ * 4. Executing the command
+ * 5. Cleaning up and restoring file descriptors
  *
- * @param cmd_list The list of commands to execute.
- * @param shell_state The current state of the shell.
- * @param in_fd The input file descriptor.
- * @param fd The array of file descriptors for the pipe.
+ * @param cmd_list Pointer to the command structure to execute
+ * @param shell_state Current state of the shell environment
+ * @param in_fd Input file descriptor for the command
+ * @param fd Pipe file descriptors array for pipeline communication
  */
 void	execute_child(t_command *cmd_list,
 	t_shell_state *shell_state, int in_fd, int *fd)
@@ -105,8 +108,12 @@ void	execute_child(t_command *cmd_list,
 
 	setup_file_descriptors(cmd_list, in_fd, fd);
 	shell_state->last_exit_status = 0;
-	if (has_heredoc(cmd_list))
-		setup_heredoc_input(cmd_list);
+	if (handle_heredoc(cmd_list))
+	{
+		shell_state->last_exit_status = 1;
+		rl_done = 1;
+		exit(shell_state->last_exit_status);
+	}
 	configure_redirections(cmd_list, shell_state);
 	if (shell_state->last_exit_status != 0)
 	{

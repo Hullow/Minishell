@@ -138,6 +138,8 @@ int	setup_heredoc_input(t_command *cmd)
 	redir = find_heredoc(cmd);
 	if (!redir || !redir->heredoc || pipe(pipe_fd) == -1)
 		return (-1);
+	if (redir->heredoc_interrupted)
+		return (-1);
 	total_len = calculate_heredoc_size(redir->heredoc, redir->str);
 	buffer = prepare_heredoc_buffer(redir->heredoc, redir->str, total_len);
 	if (!buffer)
