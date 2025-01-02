@@ -1,3 +1,4 @@
+
 # Minishell Evaluation - preparation
 
 ## TO DO
@@ -7,6 +8,73 @@
 - Python tester (with Valgrind ?)
 
 ## Bugs dans notre shell:
+
+- `test.txt > b | echo "hello world" > a`	❌❌❌
+=> minishell: minishell: test.txt: command not found **+ bloque**
+=> bash: test.txt: command not found
+
+- `> newfile.txt | ls`						❌❌❌
+=> minishell: (rien et ne cree pas le fichier)
+=> bash: (cree le fichier et lance `ls`)
+
+- SIGQUIT dans commande bloquante	   		❌
+ (`cat` + `ctrl-\` ou `grep blabla` + `ctrl-\`)
+=> minishell: nouvelle ligne; `echo $?` => 127
+=> bash: Quit: 3; `echo $?` => 131
+
+- <tab> dans ligne vide						❌
+(n.b.: ctrl-v + tab pour inserer tab dans shell)
+
+- `echo "$"`								❌
+=> minishell: (newline)
+=> bash: $
+
+- `"echo $"`								❌
+=> minishell: echo : command not found
+=> bash: echo $: command not found
+
+- echo > $VAR 								❌
+=> minishell: syntax error near unexpected token `newline'
+=> bash: $VAR: ambiguous redirect
+
+- echo > > 									❌
+=> minishell: >: Invalid file name
+=> bash: syntax error near unexpected token `>'
+
+- echo > 									❌
+=> minishell:  syntax error near unexpected token `newline'
+=> bash: syntax error near unexpected token `>'
+
+- << 										❌
+=> minishell: (vide)
+=> bash: syntax error near unexpected token `newline'
+
+
+- Gestion des pipes ouvertes:				❌
+par ex. `cat |` puis \<enter\>
+(autre exemple: `echo $ |`, suivi de `cat`)
+
+- `echo -n "hello"` suivi de `echo "cat lol.c | cat > lol.c"` ou juste fleche_haut => re-ecrit sur le prompt, affiche des lettres a double
+
+- execution d'un script:				  	❌❌❌
+```bash
+echo "echo hello world" > script
+chmod +x script
+./script
+```
+=> minishell: Exec format error
+=> bash: hello world
+
+- creation d'un fichier dans un autre dossier: ❌
+`echo "echo goodbye world" > ../script`
+=> minishell: ../script: Invalid file name
+=> bash: (cree le fichier sans erreur)
+
+- valeur retour si il y a un argument		   ❌
+(`./minishell arg` + `echo $?`)
+=> minishell: No arguments are allowed \n Unknown error; `echo $?` => 1
+=> bash: arg: No such file or directory; `echo $?` => 127
+
 ## Other bugs to check (ahanzi)
 espace expansion code erreur				?
 warning msg on ctrlD						?
@@ -69,11 +137,6 @@ cmd | | cmd 								~(not OK)
 - bash: syntax error near unexpected token `|'
 - Minishell: "" (newline)
 
-### Redirections
-- echo > $VAR 								❌
-=> minishell: syntax error near unexpected token `newline'
-=> bash: $VAR: ambiguous redirect
-
 ### Expansions
 $ "vide":
 - `echo $"USER"`
@@ -114,20 +177,15 @@ $ "vide":
 => manque "caast: command not found" dans les deux cas
 => manque aussi "**Minishell**: caast: commant not found"
 
-- Gestion des pipes ouvertes:				❌
-par ex. `cat |` puis \<enter\>
-(autre exemple: `echo $ |`, suivi de `cat`)
-
-
 ### Heredocs
 expansion on delimiter						✅
 
-```bash									  ❌❌❌
+```bash									  	✅
 sh << out
 > ls
 (ctrl+c/SIGINT)
 ```
-=> this executes ls; it should not!
+=> this should not executes ls; it !
 
 ### Expansions
 - `$a`										✅
