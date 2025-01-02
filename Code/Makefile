@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: francis <francis@student.42.fr>            +#+  +:+       +#+         #
+#    By: cmegret <cmegret@student.42lausanne.ch>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/07/19 14:53:36 by cmegret           #+#    #+#              #
-#    Updated: 2024/12/23 23:16:02 by francis          ###   ########.fr        #
+#    Updated: 2025/01/02 16:32:09 by cmegret          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -48,8 +48,8 @@ CC = gcc
 
 # Flags de compilation
 # MacBook flags:
- CFLAGS = -Wall -Wextra -Werror -I/opt/homebrew/opt/readline/include
- LIBFLAGS = -L./lib -lft -lftprintf -L/opt/homebrew/opt/readline/lib -lreadline
+CFLAGS = -Wall -Wextra -Werror -I/opt/homebrew/opt/readline/include
+LIBFLAGS = -L./lib -lft -lftprintf -L/opt/homebrew/opt/readline/lib -lreadline
 
 # 42 iMac OS X flags: to fix missing type rl_hook_func_t
 # CFLAGS = -Wall -Wextra -Werror -I/Users/fallan/.brew/Cellar/readline/8.2.13/include
@@ -58,9 +58,6 @@ CC = gcc
 # 42 OS X old:
 # CFLAGS = -Wall -Wextra -Werror -I/Library/Developer/CommandLineTools/SDKs/MacOSX10.15.sdk/usr/include/
 # LIBFLAGS = -L./lib -lft -lftprintf -L/Library/Developer/CommandLineTools/SDKs/MacOSX10.15.sdk/usr/lib -lreadline
-
-SRCDIR = srcs
-OBJDIR = objs
 
 # Fichiers sources et objets
 SRCS =	\
@@ -98,6 +95,7 @@ SRCS =	\
 		srcs/execution/execution_external.c \
 		srcs/execution/execution_redir.c \
 		srcs/execution/execution_redir_utils.c \
+		srcs/execution/execution_utils.c \
 		srcs/builtin/cd.c \
 		srcs/builtin/cd_utils.c \
 		srcs/builtin/env.c \
@@ -109,7 +107,7 @@ SRCS =	\
 		srcs/builtin/exit.c \
 		srcs/signal/signal.c 
 
-OBJ = $(SRCS:$(SRCDIR)/%.c=$(OBJDIR)/%.o)
+OBJ = $(SRCS:.c=.o)
 
 # Règle pour tout compiler
 all: start norm $(NAME)
@@ -145,7 +143,7 @@ $(NAME): $(LIBFT) $(FT_PRINTF) $(OBJ)
 	@echo "$(GREEN)\nCompilation successful!\n$(RESET)"
 
 # Règle pour les fichiers objets
-$(OBJDIR)/%.o: $(SRCDIR)/%.c
+%.o: %.c
 	@echo "$(BLUE)Compiling: $<$(RESET)"
 	@$(CC) $(CFLAGS) -c $< -o $@
 
