@@ -24,6 +24,8 @@ typedef struct s_token		t_token;
 void		ft_open_heredocs(t_command *cmd_list, t_shell_state *shell_state);
 void		ft_handle_heredoc_input(t_redir *redir_list,
 				t_shell_state *shell_state);
+int			process_heredoc(t_heredoc **heredoc_line, t_redir *redir_list,
+				t_shell_state *shell_state);
 
 /*
 ** Heredoc Utils (heredocs_utils.c)

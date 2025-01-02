@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: francis <francis@student.42.fr>            +#+  +:+       +#+        */
+/*   By: cmegret <cmegret@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/07 13:55:06 by yourlogin         #+#    #+#             */
-/*   Updated: 2024/12/27 17:17:59 by francis          ###   ########.fr       */
+/*   Updated: 2025/01/02 16:35:08 by cmegret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,6 +85,7 @@ typedef struct s_redir
 	t_expand		*to_expand; // expansion of redirection string
 	t_heredoc		*heredoc; // heredoc contents, if redirection is a heredoc
 	bool			expand_heredoc; // false if delimiter is quoted, else true
+	bool			heredoc_interrupted;
 	struct s_redir	*next;
 }	t_redir;
 
@@ -146,6 +147,12 @@ typedef struct s_params
 	char	**table;
 	int		*word_count;
 }	t_params;
+
+typedef struct s_expansion_args
+{
+	t_expand		*to_expand;
+	t_shell_state	*shell_state;
+}	t_expansion_args;
 
 // Main
 int			main(int argc, char **argv, char **envp);

@@ -12,24 +12,36 @@
 
 #include "../../header/Minishell.h"
 
-/**
- * @brief Gère l'entrée d'un heredoc.
- *
- * Cette fonction :
- * - Initialise la structure de heredoc.
- * - Ouvre le prompt heredoc.
- * - Lit les lignes jusqu'au délimiteur.
- * - Stocke les lignes dans la liste de heredoc.
- *
- * @param redir_list La redirection heredoc à traiter.
- */
+int	process_heredoc(t_heredoc **heredoc_line, t_redir *redir_list,
+	t_shell_state *shell_state)
+{
+	int	delimiter_found;
+
+	g_signal = SIGNAL_NONE;
+	while (!g_signal)
+	{
+		delimiter_found
+			= read_and_process_line(heredoc_line, redir_list, shell_state);
+		if (delimiter_found || g_signal)
+		{
+			if (g_signal)
+			{
+				redir_list->heredoc_interrupted = true;
+				return (-1);
+			}
+			return (0);
+		}
+	}
+	return (1);
+}
+
 void	ft_handle_heredoc_input(t_redir *redir_list, t_shell_state *shell_state)
 {
 	t_heredoc	*heredoc_line;
-	bool		delimiter_found;
 
 	if (!redir_list || !(redir_list->str))
 		return ;
+	redir_list->heredoc_interrupted = false;
 	signal(SIGINT, handle_sigint_heredoc);
 	heredoc_line = initialize_heredoc(redir_list);
 	if (!heredoc_line)
@@ -37,14 +49,7 @@ void	ft_handle_heredoc_input(t_redir *redir_list, t_shell_state *shell_state)
 		signal(SIGINT, handle_sigint);
 		return ;
 	}
-	g_signal = SIGNAL_NONE;
-	while (!g_signal)
-	{
-		delimiter_found
-			= read_and_process_line(&heredoc_line, redir_list, shell_state);
-		if (delimiter_found || g_signal)
-			break ;
-	}
+	process_heredoc(&heredoc_line, redir_list, shell_state);
 	signal(SIGINT, handle_sigint);
 }
 
