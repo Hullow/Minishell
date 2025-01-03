@@ -6,7 +6,7 @@
 /*   By: cmegret <cmegret@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 19:44:40 by fallan            #+#    #+#             */
-/*   Updated: 2025/01/03 08:37:19 by cmegret          ###   ########.fr       */
+/*   Updated: 2025/01/03 17:54:43 by cmegret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,5 +50,12 @@ void		ft_print_redirs(t_redir *redir, char *cmd_name);
 void		ft_print_all_redirs(t_command *cmd);
 char		*ft_return_redir_type(int redir_type);
 void		ft_print_command_sequences(t_command *head);
+
+// Pipe validation
+int			is_redirection(t_token *token);
+int			check_consecutive_pipes(t_token *current);
+int			check_previous_token(t_token *prev);
+int			check_next_token(t_token *current);
+int			validate_pipes(t_token *tokens);
 
 #endif

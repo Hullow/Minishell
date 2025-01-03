@@ -6,7 +6,7 @@
 /*   By: cmegret <cmegret@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/17 15:35:01 by francis           #+#    #+#             */
-/*   Updated: 2025/01/03 09:00:36 by cmegret          ###   ########.fr       */
+/*   Updated: 2025/01/03 17:56:08 by cmegret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,11 +71,18 @@ int	validate_redirections(t_token *tokens)
 	current = tokens;
 	while (current)
 	{
-		if (current->type == REDIR_OUTPUT || current->type == REDIR_INPUT || current->type == REDIR_APPEND || current->type == REDIR_HEREDOC)
+		if (current->type == REDIR_OUTPUT
+			|| current->type == REDIR_INPUT
+			|| current->type == REDIR_APPEND
+			|| current->type == REDIR_HEREDOC)
 		{
-			if (current->next && (current->next->type == REDIR_OUTPUT || current->next->type == REDIR_INPUT || current->next->type == REDIR_APPEND || current->next->type == REDIR_HEREDOC))
+			if (current->next && (current->next->type == REDIR_OUTPUT
+					|| current->next->type == REDIR_INPUT
+					|| current->next->type == REDIR_APPEND
+					|| current->next->type == REDIR_HEREDOC))
 			{
-				ft_putstr_fd("minishell: syntax error near unexpected token `", 2);
+				ft_putstr_fd("minishell: syntax error ", 2);
+				ft_putstr_fd("unexpected token `", 2);
 				ft_putstr_fd(current->next->str, 2);
 				ft_putstr_fd("'\n", 2);
 				return (2);
@@ -125,7 +132,7 @@ t_command	*ft_parse(t_token *tok, t_shell_state *shell_state)
 	ft_initialize_cmd_list(cmd_list);
 	head_cmd = cmd_list;
 	ft_parse_operators(tok);
-	if (validate_redirections(tok) != 0)
+	if (validate_redirections(tok) != 0 || validate_pipes(tok->next) != 0)
 	{
 		shell_state->last_exit_status = 2;
 		return (NULL);
