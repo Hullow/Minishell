@@ -6,7 +6,7 @@
 /*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/17 15:35:01 by francis           #+#    #+#             */
-/*   Updated: 2025/01/03 18:58:19 by fallan           ###   ########.fr       */
+/*   Updated: 2025/01/03 21:48:49 by fallan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@ t_token	*ft_parse_operators(t_token *head)
 void	ft_initialize_cmd_list(t_command *cmd_list)
 {
 	cmd_list->cmd_name = NULL;
+	cmd_list->cmd_index = 1;
 	cmd_list->args = NULL;
 	cmd_list->arg_list = NULL;
 	cmd_list->saved_input = STDIN;
@@ -56,11 +57,16 @@ void	ft_initialize_cmd_list(t_command *cmd_list)
 // add a command sequence/pipe to our linked list of commands
 t_command	*ft_add_pipe(t_command *cmd_list)
 {
+	int	cmd_index;
+
+	cmd_index = cmd_list->cmd_index;
 	cmd_list->next = malloc(sizeof(t_command));
 	if (!(cmd_list->next))
 		return (NULL);
 	cmd_list = cmd_list->next;
 	ft_initialize_cmd_list(cmd_list);
+	cmd_list->cmd_index = cmd_index + 1;
+	// printf("initializing cmd #%d: {%s}\n", cmd_list->cmd_index, cmd_list->cmd_name);
 	return (cmd_list);
 }
 
@@ -132,7 +138,7 @@ t_command	*ft_parse(t_token *tok, t_shell_state *shell_state)
 	ft_initialize_cmd_list(cmd_list);
 	head_cmd = cmd_list;
 	ft_parse_operators(tok);
-	if (validate_redirections(tok) != 0 || validate_pipes(tok, 0) != 0)
+	if (validate_redirections(tok) != 0) // || validate_pipes(tok, 0) != 0)
 	{
 		shell_state->last_exit_status = 2;
 		return (NULL);

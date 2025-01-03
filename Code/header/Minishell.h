@@ -6,7 +6,7 @@
 /*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/07 13:55:06 by yourlogin         #+#    #+#             */
-/*   Updated: 2025/01/03 18:13:40 by fallan           ###   ########.fr       */
+/*   Updated: 2025/01/03 21:36:49 by fallan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -138,6 +138,7 @@ typedef struct s_token
 typedef struct s_command
 {
 	char				*cmd_name;
+	int					cmd_index;
 	t_cmd_args			*arg_list;
 	char				**args;
 	int					saved_input;
