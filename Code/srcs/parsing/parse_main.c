@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_main.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: francis <francis@student.42.fr>            +#+  +:+       +#+        */
+/*   By: cmegret <cmegret@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/17 15:35:01 by francis           #+#    #+#             */
-/*   Updated: 2024/12/21 16:57:23 by francis          ###   ########.fr       */
+/*   Updated: 2025/01/03 08:08:23 by cmegret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,7 @@ void	ft_initialize_cmd_list(t_command *cmd_list)
 	cmd_list->saved_input = STDIN;
 	cmd_list->saved_output = STDOUT;
 	cmd_list->redir_list = NULL;
+	cmd_list->skip_execution = 0;
 	cmd_list->next = NULL;
 }
 

@@ -6,7 +6,7 @@
 /*   By: cmegret <cmegret@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/07 13:55:06 by yourlogin         #+#    #+#             */
-/*   Updated: 2025/01/02 16:35:08 by cmegret          ###   ########.fr       */
+/*   Updated: 2025/01/03 08:07:01 by cmegret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,6 +131,7 @@ typedef struct s_command
 	int					saved_input; // fd for input (stdin or redirection)
 	int					saved_output; // fd for output (stdout or redirection)
 	t_redir				*redir_list; // redirection list
+	int					skip_execution;
 	struct s_command	*next;
 }	t_command;
 

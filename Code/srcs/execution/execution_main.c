@@ -6,7 +6,7 @@
 /*   By: cmegret <cmegret@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/07 14:37:18 by francis           #+#    #+#             */
-/*   Updated: 2025/01/02 23:48:34 by cmegret          ###   ########.fr       */
+/*   Updated: 2025/01/03 08:10:30 by cmegret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -150,6 +150,12 @@ int	execute_cmd(t_command *cmd_list, t_shell_state *shell_state)
 	pid_count = 0;
 	while (cmd_list)
 	{
+		if (cmd_list->skip_execution)
+		{
+			shell_state->last_exit_status = 1;
+			cmd_list = cmd_list->next;
+			continue ;
+		}
 		if (handle_parent_builtin(cmd_list, shell_state) == 0)
 			return (0);
 		pipeline_pids[pid_count] = execute_pipeline(cmd_list,

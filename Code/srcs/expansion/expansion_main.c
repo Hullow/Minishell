@@ -6,7 +6,7 @@
 /*   By: cmegret <cmegret@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/17 12:41:47 by cmegret           #+#    #+#             */
-/*   Updated: 2025/01/02 23:44:32 by cmegret          ###   ########.fr       */
+/*   Updated: 2025/01/03 08:12:40 by cmegret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,8 +51,7 @@ void	fill_table_heredocs(t_command *cmd_list, t_shell_state *shell_state)
 	}
 }
 
-void	process_command_redirections(t_command *cmd,
-			t_shell_state *shell_state)
+void	process_command_redirections(t_command *cmd, t_shell_state *shell_state)
 {
 	t_redir	*redir;
 	char	*new_arg;
@@ -65,8 +64,15 @@ void	process_command_redirections(t_command *cmd,
 			if (redir->str)
 			{
 				new_arg = process_single_arg(redir->str,
-						redir->to_expand,
-						shell_state);
+						redir->to_expand, shell_state);
+				if (new_arg && ft_strlen(new_arg) == 0)
+				{
+					ft_print_error(redir->str, NULL, "ambiguous redirect");
+					shell_state->last_exit_status = 1;
+					free(new_arg);
+					cmd->skip_execution = 1;
+					return ;
+				}
 				free(redir->str);
 				redir->str = new_arg;
 			}
@@ -86,8 +92,7 @@ void	process_command_args(t_command *cmd, t_shell_state *shell_state)
 	while (current)
 	{
 		new_arg = process_single_arg(current->arg_string,
-				current->to_expand,
-				shell_state);
+				current->to_expand, shell_state);
 		free(current->arg_string);
 		current->arg_string = new_arg;
 		current = current->next;
