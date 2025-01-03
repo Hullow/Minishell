@@ -6,11 +6,23 @@
 /*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/12 15:56:09 by fallan            #+#    #+#             */
-/*   Updated: 2025/01/03 17:09:47 by fallan           ###   ########.fr       */
+/*   Updated: 2025/01/03 18:22:56 by fallan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../header/Minishell.h"
+
+void	ft_handle_single_quote(t_token **tok, bool double_quoted)
+{
+	if (!ft_token_has_open_quote(*tok))
+		(*tok)->is_single_quoted = true;
+	else if (!double_quoted)
+		(*tok)->is_single_quoted = false;
+	else if ((*tok)->str)
+		ft_append_char_to_word(tok, '\'');
+	else
+		ft_new_word(tok, '\'');
+}
 
 // marks the token as quoted:
 // if character is a single quote:
@@ -30,16 +42,7 @@ int	ft_handle_quote_tokenization(char c,
 	if (ft_token_has_open_quote(*tok))
 		(*tok)->is_between_quotes = true;
 	if (c == '\'')
-	{
-		if (!ft_token_has_open_quote(*tok))
-			(*tok)->is_single_quoted = true;
-		else if (single_quoted && !double_quoted)
-			(*tok)->is_single_quoted = false;
-		else if ((*tok)->str)
-			ft_append_char_to_word(tok, '\'');
-		else
-			ft_new_word(tok, '\'');
-	}
+		ft_handle_single_quote(tok, double_quoted);
 	else if (c == '\"')
 	{
 		if (!ft_token_has_open_quote(*tok))

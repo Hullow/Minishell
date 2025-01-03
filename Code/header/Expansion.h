@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Expansion.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cmegret <cmegret@student.42lausanne.ch>    +#+  +:+       +#+        */
+/*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/01 18:44:38 by cmegret           #+#    #+#             */
-/*   Updated: 2025/01/02 16:46:14 by cmegret          ###   ########.fr       */
+/*   Updated: 2025/01/03 18:22:19 by fallan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,8 +39,7 @@ char	*process_single_arg(char *str, t_expand *to_expand,
 char	*handle_dollar_expansion(char *new_arg, const char *str,
 			int *i, t_expansion_args *args);
 char	*process_heredoc_line(char *line, t_shell_state *shell_state);
-void	process_command_redirections(t_command *cmd,
-			t_shell_state *shell_state);
+void	process_command_redirections(t_command *cmd, t_shell_state *sh);
 void	process_command_args(t_command *cmd,
 			t_shell_state *shell_state);
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Parser.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cmegret <cmegret@student.42lausanne.ch>    +#+  +:+       +#+        */
+/*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 19:44:40 by fallan            #+#    #+#             */
-/*   Updated: 2025/01/03 17:54:43 by cmegret          ###   ########.fr       */
+/*   Updated: 2025/01/03 18:58:31 by fallan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,6 @@ int			is_redirection(t_token *token);
 int			check_consecutive_pipes(t_token *current);
 int			check_previous_token(t_token *prev);
 int			check_next_token(t_token *current);
-int			validate_pipes(t_token *tokens);
+int			validate_pipes(t_token *tokens, int ret);
 
 #endif

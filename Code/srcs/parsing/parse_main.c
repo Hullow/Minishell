@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_main.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cmegret <cmegret@student.42lausanne.ch>    +#+  +:+       +#+        */
+/*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/17 15:35:01 by francis           #+#    #+#             */
-/*   Updated: 2025/01/03 17:56:08 by cmegret          ###   ########.fr       */
+/*   Updated: 2025/01/03 18:58:19 by fallan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,7 +132,7 @@ t_command	*ft_parse(t_token *tok, t_shell_state *shell_state)
 	ft_initialize_cmd_list(cmd_list);
 	head_cmd = cmd_list;
 	ft_parse_operators(tok);
-	if (validate_redirections(tok) != 0 || validate_pipes(tok->next) != 0)
+	if (validate_redirections(tok) != 0 || validate_pipes(tok, 0) != 0)
 	{
 		shell_state->last_exit_status = 2;
 		return (NULL);

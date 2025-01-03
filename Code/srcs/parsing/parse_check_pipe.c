@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_check_pipe.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cmegret <cmegret@student.42lausanne.ch>    +#+  +:+       +#+        */
+/*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/03 17:53:29 by cmegret           #+#    #+#             */
-/*   Updated: 2025/01/03 17:54:08 by cmegret          ###   ########.fr       */
+/*   Updated: 2025/01/03 18:57:58 by fallan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,13 +48,14 @@ int	check_next_token(t_token *current)
 	return (0);
 }
 
-int	validate_pipes(t_token *tokens)
+int	validate_pipes(t_token *tokens, int ret)
 {
 	t_token	*current;
 	t_token	*prev;
-	int		ret;
 
-	current = tokens;
+	if (!tokens || !(tokens->next))
+		return (-1);
+	current = tokens->next;
 	prev = NULL;
 	while (current)
 	{

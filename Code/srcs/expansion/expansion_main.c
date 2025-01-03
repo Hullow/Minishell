@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expansion_main.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cmegret <cmegret@student.42lausanne.ch>    +#+  +:+       +#+        */
+/*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/17 12:41:47 by cmegret           #+#    #+#             */
-/*   Updated: 2025/01/03 08:55:57 by cmegret          ###   ########.fr       */
+/*   Updated: 2025/01/03 18:22:03 by fallan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ void	fill_table_heredocs(t_command *cmd_list, t_shell_state *shell_state)
 	}
 }
 
-void	process_command_redirections(t_command *cmd, t_shell_state *shell_state)
+void	process_command_redirections(t_command *cmd, t_shell_state *sh)
 {
 	t_redir	*redir;
 	char	*new_arg;
@@ -63,12 +63,11 @@ void	process_command_redirections(t_command *cmd, t_shell_state *shell_state)
 		{
 			if (redir->str)
 			{
-				new_arg = process_single_arg(redir->str,
-						redir->to_expand, shell_state);
+				new_arg = process_single_arg(redir->str, redir->to_expand, sh);
 				if (new_arg && ft_strlen(new_arg) == 0)
 				{
 					ft_print_error(redir->str, NULL, "ambiguous redirect");
-					shell_state->last_exit_status = 1;
+					sh->last_exit_status = 1;
 					free(new_arg);
 					cmd->skip_execution = 1;
 					return ;
