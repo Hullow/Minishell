@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution_external.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: francis <francis@student.42.fr>            +#+  +:+       +#+        */
+/*   By: cmegret <cmegret@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/03 08:36:16 by cmegret           #+#    #+#             */
-/*   Updated: 2024/12/23 23:17:28 by francis          ###   ########.fr       */
+/*   Updated: 2025/01/03 00:18:58 by cmegret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,21 +25,22 @@
  * @param cmd_name The name of the command
  * @param shell_state Current shell state for error handling
  */
-void	check_access_rights(char *cmd_path, char *cmd_name,
+int	check_access_rights(char *cmd_path, char *cmd_name,
 	t_shell_state *shell_state)
 {
 	if (access(cmd_path, F_OK) != 0)
 	{
 		ft_print_error(cmd_name, NULL, "No such file or directory");
 		shell_state->last_exit_status = 127;
-		exit(shell_state->last_exit_status);
+		return (1);
 	}
 	else if (access(cmd_path, X_OK) != 0)
 	{
 		ft_print_error(cmd_name, NULL, "Permission denied");
 		shell_state->last_exit_status = 126;
-		exit(shell_state->last_exit_status);
+		return (1);
 	}
+	return (0);
 }
 
 /**
@@ -87,7 +88,11 @@ void	handle_child_process(t_command *cmd_list, t_shell_state *shell_state)
 	char	*cmd_path;
 
 	cmd_path = resolve_cmd_path(cmd_list->cmd_name, shell_state);
-	check_access_rights(cmd_path, cmd_list->cmd_name, shell_state);
+	if (check_access_rights(cmd_path, cmd_list->cmd_name, shell_state) != 0)
+	{
+		free(cmd_path);
+		exit(shell_state->last_exit_status);
+	}
 	if (execve(cmd_path, cmd_list->args, shell_state->envp) == -1)
 	{
 		free(cmd_path);

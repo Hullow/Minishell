@@ -6,7 +6,7 @@
 /*   By: cmegret <cmegret@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/07 14:36:57 by francis           #+#    #+#             */
-/*   Updated: 2025/01/02 16:39:33 by cmegret          ###   ########.fr       */
+/*   Updated: 2025/01/03 00:18:45 by cmegret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ void	setup_file_descriptors(t_command *cmd_list, int in_fd, int *fd);
 char	**get_env_paths(char **envp);
 char	*get_cmd_path(char *cmd, char **envp, int i, char *temp);
 char	*resolve_cmd_path(char *cmd_name, t_shell_state *shell_state);
-void	check_access_rights(char *cmd_path, char *cmd_name,
+int		check_access_rights(char *cmd_path, char *cmd_name,
 			t_shell_state *shell_state);
 
 /* Gestion des redirections */
