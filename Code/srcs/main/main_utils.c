@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: francis <francis@student.42.fr>            +#+  +:+       +#+        */
+/*   By: cmegret <cmegret@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/18 16:11:02 by cmegret           #+#    #+#             */
-/*   Updated: 2024/12/19 22:16:09 by francis          ###   ########.fr       */
+/*   Updated: 2025/01/03 11:00:25 by cmegret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ void	check_arguments(int argc, char **argv, t_shell_state *shell_state)
 	{
 		printf("Usage: %s\n", argv[0]);
 		printf("No arguments are allowed\n");
-		shell_state->last_exit_status = EXIT_FAILURE;
+		shell_state->last_exit_status = 127;
 		error_and_exit(NULL, shell_state->last_exit_status);
 	}
 }
