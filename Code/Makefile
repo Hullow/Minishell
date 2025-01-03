@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: cmegret <cmegret@student.42lausanne.ch>    +#+  +:+       +#+         #
+#    By: fallan <fallan@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/07/19 14:53:36 by cmegret           #+#    #+#              #
-#    Updated: 2025/01/02 16:32:09 by cmegret          ###   ########.fr        #
+#    Updated: 2025/01/03 18:00:36 by fallan           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -77,6 +77,7 @@ SRCS =	\
 		srcs/token/token_words.c \
 		srcs/parsing/parse_main.c \
 		srcs/parsing/parse_redir.c \
+		srcs/parsing/parse_check_pipe.c \
 		srcs/parsing/parse_command_args.c \
 		srcs/parsing/parse_utils.c \
 		srcs/parsing/parse_debug.c \
