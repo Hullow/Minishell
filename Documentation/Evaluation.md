@@ -13,7 +13,7 @@
 => minishell: minishell: test.txt: command not found **+ bloque**
 => bash: test.txt: command not found
 
-- `> newfile.txt | ls`						❌❌❌
+- `> newfile.txt | ls`						✅
 => minishell: (rien et ne cree pas le fichier)
 => bash: (cree le fichier et lance `ls`)
 
@@ -25,27 +25,27 @@
 - <tab> dans ligne vide						❌
 (n.b.: ctrl-v + tab pour inserer tab dans shell)
 
-- `echo "$"`								❌
+- `echo "$"`								✅
 => minishell: (newline)
 => bash: $
 
-- `"echo $"`								❌
+- `"echo $"`								✅
 => minishell: echo : command not found
 => bash: echo $: command not found
 
-- echo > $VAR 								❌
+- echo > $VAR 								✅
 => minishell: syntax error near unexpected token `newline'
 => bash: $VAR: ambiguous redirect
 
-- echo > > 									❌
+- echo > > 									✅
 => minishell: >: Invalid file name
 => bash: syntax error near unexpected token `>'
 
-- echo > 									❌
+- echo > 									✅
 => minishell:  syntax error near unexpected token `newline'
 => bash: syntax error near unexpected token `>'
 
-- << 										❌
+- << 										✅
 => minishell: (vide)
 => bash: syntax error near unexpected token `newline'
 
