@@ -6,7 +6,7 @@
 /*   By: cmegret <cmegret@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/14 14:22:59 by cmegret           #+#    #+#             */
-/*   Updated: 2024/12/03 08:35:49 by cmegret          ###   ########.fr       */
+/*   Updated: 2025/01/03 08:54:18 by cmegret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,7 @@ void	ft_pwd(t_shell_state *shell_state)
 	cwd = getcwd(NULL, 0);
 	if (cwd == NULL)
 	{
-		ft_print_error("pwd", NULL,
-			"getcwd: cannot access the current directory");
+		ft_print_error("pwd", NULL, GET_CWD_ERROR);
 		shell_state->last_exit_status = 1;
 		return ;
 	}

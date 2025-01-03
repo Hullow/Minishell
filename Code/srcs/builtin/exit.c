@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: francis <francis@student.42.fr>            +#+  +:+       +#+        */
+/*   By: cmegret <cmegret@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/22 16:31:14 by cmegret           #+#    #+#             */
-/*   Updated: 2024/12/27 17:19:12 by francis          ###   ########.fr       */
+/*   Updated: 2025/01/03 09:04:53 by cmegret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,6 @@ static void	ft_no_exit_too_many_arguments(t_shell_state *shell_state)
 	shell_state->last_exit_status = 1;
 }
 
-// clears history, frees the shell_state struct, writes "exit" and exits
 void	ft_finalize_exit(t_shell_state *shell_state, int exit_stat)
 {
 	clear_history();
@@ -50,17 +49,7 @@ void	ft_finalize_exit(t_shell_state *shell_state, int exit_stat)
 	exit(exit_stat);
 }
 
-// see exit-value.c in Example-code for reference and testing
-//	if (exit_input == -1 && ft_strcmp(args[1], "-1"))
-//		=> if we have something else than -1 as input resulting in exit_input -1
-// if first char is '-', it could be negative number => continue
-// if any other character is not a digit, we exit with an error message
-// if we have more than one argument, we print an error message and return
-// else, we atoi the argument to set the exit status value:
-//		- if atoi returns -1 and the argument was not -1,
-//			-> that is an error (number too large or small) -> exit status 255
-// 		- if atoi returns a positive number -> exit status is number module 256
-//		- if atoi returns a negative number -> (number modulo 256) + 256
+
 void	ft_exit(t_shell_state *shell_state, char **args, int exit_stat, int i)
 {
 	pid_t	exit_input;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Builtin.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: francis <francis@student.42.fr>            +#+  +:+       +#+        */
+/*   By: cmegret <cmegret@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/22 18:40:16 by cmegret           #+#    #+#             */
-/*   Updated: 2024/12/24 02:44:39 by francis          ###   ########.fr       */
+/*   Updated: 2025/01/03 09:04:45 by cmegret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@ void		add_new_var(char ***envp, const char *var);
 // Builtin EXIT
 void		ft_exit(t_shell_state *shell_state, char **args, int exit_stat, \
 				int i);
+void		ft_finalize_exit(t_shell_state *shell_state, int exit_stat);
 
 // Builtin EXPORT
 void		ft_export(t_shell_state *shell_state, char **args);

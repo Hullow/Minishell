@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Parser.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: francis <francis@student.42.fr>            +#+  +:+       +#+        */
+/*   By: cmegret <cmegret@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 19:44:40 by fallan            #+#    #+#             */
-/*   Updated: 2024/12/21 16:53:02 by francis          ###   ########.fr       */
+/*   Updated: 2025/01/03 08:37:19 by cmegret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ typedef struct s_command		t_command;
 typedef struct s_shell_state	t_shell_state;
 
 // Orchestration
-t_command	*ft_parse(t_token *tok);
+t_command	*ft_parse(t_token *tok, t_shell_state *shell_state);
 t_token		*ft_parse_operators(t_token *head);
 
 // Redirections
@@ -34,7 +34,6 @@ t_redir		*ft_last_redir(t_redir *redir_list);
 // Command arguments allocation
 int			ft_add_cmd_arg_to_list(t_token *tok, t_cmd_args **arg_list,
 				t_cmd_args *head);
-int			ft_new_cmd_arg_node(t_cmd_args *arg_list, char *arg_string);
 int			ft_allocate_cmd_args_to_array(t_command *cmd_list);
 int			ft_copy_command_args(t_command *cmd, int arg_count);
 int			ft_count_args(t_cmd_args *arg_list);

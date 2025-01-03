@@ -6,7 +6,7 @@
 /*   By: cmegret <cmegret@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/17 15:35:01 by francis           #+#    #+#             */
-/*   Updated: 2025/01/03 08:08:23 by cmegret          ###   ########.fr       */
+/*   Updated: 2025/01/03 09:00:36 by cmegret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,28 @@ t_command	*ft_add_pipe(t_command *cmd_list)
 	return (cmd_list);
 }
 
+int	validate_redirections(t_token *tokens)
+{
+	t_token	*current;
+
+	current = tokens;
+	while (current)
+	{
+		if (current->type == REDIR_OUTPUT || current->type == REDIR_INPUT || current->type == REDIR_APPEND || current->type == REDIR_HEREDOC)
+		{
+			if (current->next && (current->next->type == REDIR_OUTPUT || current->next->type == REDIR_INPUT || current->next->type == REDIR_APPEND || current->next->type == REDIR_HEREDOC))
+			{
+				ft_putstr_fd("minishell: syntax error near unexpected token `", 2);
+				ft_putstr_fd(current->next->str, 2);
+				ft_putstr_fd("'\n", 2);
+				return (2);
+			}
+		}
+		current = current->next;
+	}
+	return (0);
+}
+
 // MAIN PARSING FUNCTION
 // Mallocs and returns a linked list of commands t_command *
 // 
@@ -92,7 +114,7 @@ t_command	*ft_add_pipe(t_command *cmd_list)
 //		- adds a command name/arguments to our command arguments list
 //		- adds a new command (pipe) to our list of commands
 // return: the first node of our list of commands (t_command *head_cmd)
-t_command	*ft_parse(t_token *tok)
+t_command	*ft_parse(t_token *tok, t_shell_state *shell_state)
 {
 	t_command	*cmd_list;
 	t_command	*head_cmd;
@@ -103,6 +125,11 @@ t_command	*ft_parse(t_token *tok)
 	ft_initialize_cmd_list(cmd_list);
 	head_cmd = cmd_list;
 	ft_parse_operators(tok);
+	if (validate_redirections(tok) != 0)
+	{
+		shell_state->last_exit_status = 2;
+		return (NULL);
+	}
 	while (tok)
 	{
 		if (ft_token_is_redir(tok->type))

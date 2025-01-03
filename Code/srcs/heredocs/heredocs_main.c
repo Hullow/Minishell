@@ -6,7 +6,7 @@
 /*   By: cmegret <cmegret@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/12 17:27:25 by fallan            #+#    #+#             */
-/*   Updated: 2024/12/24 13:45:48 by cmegret          ###   ########.fr       */
+/*   Updated: 2025/01/03 09:02:53 by cmegret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,11 @@ void	ft_open_heredocs(t_command *cmd_list, t_shell_state *shell_state)
 			if (redir_list->type == REDIR_HEREDOC
 				&& redir_list->str_type == WORD)
 				ft_handle_heredoc_input(redir_list, shell_state);
+			else if (!redir_list->str)
+			{
+				ft_print_error(NULL, NULL, SYNTAX_ERR_NEW_LINE);
+				cmd_list->skip_execution = 1;
+			}
 			redir_list = redir_list->next;
 		}
 		cmd_list = cmd_list->next;

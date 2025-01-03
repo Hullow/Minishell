@@ -6,7 +6,7 @@
 /*   By: cmegret <cmegret@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/17 12:41:47 by cmegret           #+#    #+#             */
-/*   Updated: 2025/01/03 08:12:40 by cmegret          ###   ########.fr       */
+/*   Updated: 2025/01/03 08:55:57 by cmegret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -133,8 +133,6 @@ void	expand_command_variables(t_command *cmd_list,
 {
 	if (!cmd_list)
 		return ;
-	/* if (!cmd_list->arg_list || !cmd_list->arg_list->arg_string)
-		return ; */
 	if (cmd_list->redir_list && cmd_list->redir_list->heredoc)
 		fill_table_heredocs(cmd_list, shell_state);
 	fill_table(cmd_list, shell_state);

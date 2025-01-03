@@ -6,7 +6,7 @@
 /*   By: cmegret <cmegret@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/07 13:55:06 by yourlogin         #+#    #+#             */
-/*   Updated: 2025/01/03 08:07:01 by cmegret          ###   ########.fr       */
+/*   Updated: 2025/01/03 08:55:14 by cmegret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,9 @@
 # define SIGNAL_HEREDOC 128
 # define SIGNAL_NONE 0
 # define SIGNAL_INT 128
+
+# define SYNTAX_ERR_NEW_LINE "syntax error near unexpected token `newline'"
+# define GET_CWD_ERROR "getcwd: cannot access the current directory"
 
 extern int	g_signal;
 

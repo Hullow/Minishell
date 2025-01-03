@@ -6,7 +6,7 @@
 /*   By: cmegret <cmegret@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/07 14:37:29 by francis           #+#    #+#             */
-/*   Updated: 2025/01/02 18:59:59 by cmegret          ###   ########.fr       */
+/*   Updated: 2025/01/03 08:58:35 by cmegret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,7 +106,7 @@ int	validate_redirection(t_redir *redir, t_shell_state *shell_state)
 {
 	if (redir->str == NULL || redir->str[0] == '\0')
 	{
-		ft_putstr_fd("minishell: syntax error near unexpected token `newline'\n", 2);
+		ft_print_error(NULL, NULL, SYNTAX_ERR_NEW_LINE);
 		shell_state->last_exit_status = 1;
 		return (-1);
 	}
@@ -117,9 +117,7 @@ int	validate_redirection(t_redir *redir, t_shell_state *shell_state)
 	}
 	if (redir->str && redir->str_type != WORD)
 	{
-		ft_putstr_fd("minishell: syntax error near unexpected token", 2);
-		ft_putstr_fd(redir->str, 2);
-		ft_putstr_fd("\n", 2);
+		ft_print_error(NULL, redir->str, "syntax error near unexpected token");
 		shell_state->last_exit_status = 1;
 		return (-1);
 	}
