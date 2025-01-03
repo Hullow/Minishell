@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   token_words.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cmegret <cmegret@student.42lausanne.ch>    +#+  +:+       +#+        */
+/*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/17 16:40:36 by francis           #+#    #+#             */
-/*   Updated: 2024/12/24 14:09:29 by cmegret          ###   ########.fr       */
+/*   Updated: 2025/01/03 17:23:26 by fallan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,6 @@ int	ft_new_word(t_token **tok, char c)
 		*tok = ft_add_token_to_list(*tok, WORD);
 	else if (!(*tok)->str)
 		(*tok)->type = WORD;
-	else
-		printf("ft_new_word: error\n");
 	(*tok)->str = ft_strdup(character);
 	return (1);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_command_args.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cmegret <cmegret@student.42lausanne.ch>    +#+  +:+       +#+        */
+/*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/01 17:26:12 by fallan            #+#    #+#             */
-/*   Updated: 2025/01/03 08:13:57 by cmegret          ###   ########.fr       */
+/*   Updated: 2025/01/03 17:41:14 by fallan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,7 +114,8 @@ int	ft_allocate_cmd_args_to_array(t_command *cmd)
 		cmd->args = malloc((arg_count + 1) * sizeof(char *));
 		i = ft_copy_command_args(cmd, arg_count);
 		cmd->args[i] = NULL;
-		cmd->cmd_name = cmd->args[0];
+		if (!(cmd->cmd_name))
+			cmd->cmd_name = cmd->args[0];
 		cmd = cmd->next;
 	}
 	return (0);

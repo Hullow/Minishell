@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main_free.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: francis <francis@student.42.fr>            +#+  +:+       +#+        */
+/*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/07 14:36:57 by francis           #+#    #+#             */
-/*   Updated: 2024/12/27 17:17:58 by francis          ###   ########.fr       */
+/*   Updated: 2025/01/03 17:52:03 by fallan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,10 @@ void	ft_free_cmd_list(t_command *cmd)
 	while (cmd)
 	{
 		temp_cmd = cmd;
-		ft_free_redir_list(cmd->redir_list);
+		if (cmd->cmd_name)
+			free(cmd->cmd_name);
 		ft_free_arg_list(cmd->arg_list);
+		ft_free_redir_list(cmd->redir_list);
 		ft_free_array_of_strings(cmd->args);
 		if (cmd->saved_input > 2)
 			close(cmd->saved_input);

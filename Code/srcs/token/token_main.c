@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   token_main.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cmegret <cmegret@student.42lausanne.ch>    +#+  +:+       +#+        */
+/*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 19:01:55 by francis           #+#    #+#             */
-/*   Updated: 2024/12/24 15:25:39 by cmegret          ###   ########.fr       */
+/*   Updated: 2025/01/03 16:52:32 by fallan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,18 +25,15 @@ void	ft_free_token_list(t_token *token_list)
 		if (temp_tok->str)
 		{
 			free(temp_tok->str);
-			temp_tok->str = NULL;
 		}
 		while (token_list->to_expand)
 		{
 			temp_expand = token_list->to_expand;
 			token_list->to_expand = token_list->to_expand->next;
 			free(temp_expand);
-			temp_expand = NULL;
 		}
 		token_list = token_list->next;
 		free(temp_tok);
-		temp_tok = NULL;
 	}
 }
 

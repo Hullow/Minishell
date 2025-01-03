@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cmegret <cmegret@student.42lausanne.ch>    +#+  +:+       +#+        */
+/*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/18 16:11:02 by cmegret           #+#    #+#             */
-/*   Updated: 2025/01/03 11:00:25 by cmegret          ###   ########.fr       */
+/*   Updated: 2025/01/03 17:35:09 by fallan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,10 +50,13 @@ void	error_and_exit(const char *message, int last_exit_status)
  */
 void	ft_free_all(char *prompt, t_token *token_list, t_command *cmd)
 {
-	free(prompt);
+	if (prompt)
+		free(prompt);
 	prompt = NULL;
-	ft_free_token_list(token_list);
-	ft_free_cmd_list(cmd);
+	if (token_list)
+		ft_free_token_list(token_list);
+	if (cmd)
+		ft_free_cmd_list(cmd);
 }
 
 /**

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   token_quotes.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cmegret <cmegret@student.42lausanne.ch>    +#+  +:+       +#+        */
+/*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/12 15:56:09 by fallan            #+#    #+#             */
-/*   Updated: 2024/12/18 16:34:30 by cmegret          ###   ########.fr       */
+/*   Updated: 2025/01/03 17:09:47 by fallan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,8 +35,10 @@ int	ft_handle_quote_tokenization(char c,
 			(*tok)->is_single_quoted = true;
 		else if (single_quoted && !double_quoted)
 			(*tok)->is_single_quoted = false;
-		else
+		else if ((*tok)->str)
 			ft_append_char_to_word(tok, '\'');
+		else
+			ft_new_word(tok, '\'');
 	}
 	else if (c == '\"')
 	{
@@ -44,8 +46,10 @@ int	ft_handle_quote_tokenization(char c,
 			(*tok)->is_double_quoted = true;
 		else if (double_quoted && !single_quoted)
 			(*tok)->is_double_quoted = false;
-		else
+		else if ((*tok)->str)
 			ft_append_char_to_word(tok, '\"');
+		else
+			ft_new_word(tok, '\"');
 	}
 	return (1);
 }
