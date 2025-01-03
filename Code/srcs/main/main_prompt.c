@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main_prompt.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: francis <francis@student.42.fr>            +#+  +:+       +#+        */
+/*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/22 18:40:16 by cmegret           #+#    #+#             */
-/*   Updated: 2025/01/02 19:39:58 by francis          ###   ########.fr       */
+/*   Updated: 2025/01/03 18:11:57 by fallan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,22 +92,22 @@ char	*ft_create_message_prompt(char *last_folder)
  */
 char	*ft_prompt(int type)
 {
-	// char	*prompt;
-	// char	*message;
-	// char	cwd[1024];
-	// char	*last_folder;
+	char	*prompt;
+	char	*message;
+	char	cwd[1024];
+	char	*last_folder;
 
 	if (type == REDIR_HEREDOC)
 		return (readline("> "));
-	// if (getcwd(cwd, sizeof(cwd)) != NULL)
-	// {
-	// 	last_folder = ft_strrchr(cwd, '/');
-	// 	if (last_folder != NULL)
-	// 		last_folder++;
-	// 	message = ft_create_message_prompt(last_folder);
-	// 	prompt = readline(message);
-	// 	free(message);
-	// 	return (prompt);
-	// }
+	if (getcwd(cwd, sizeof(cwd)) != NULL)
+	{
+		last_folder = ft_strrchr(cwd, '/');
+		if (last_folder != NULL)
+			last_folder++;
+		message = ft_create_message_prompt(last_folder);
+		prompt = readline(message);
+		free(message);
+		return (prompt);
+	}
 	return (readline("minishell: "));
 }

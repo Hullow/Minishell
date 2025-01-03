@@ -6,7 +6,7 @@
 #    By: fallan <fallan@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/07/19 14:53:36 by cmegret           #+#    #+#              #
-#    Updated: 2025/01/03 18:07:11 by fallan           ###   ########.fr        #
+#    Updated: 2025/01/03 18:11:18 by fallan           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -48,12 +48,12 @@ CC = gcc
 
 # Flags de compilation
 # MacBook flags:
-CFLAGS = -Wall -Wextra -Werror -I/opt/homebrew/opt/readline/include
-LIBFLAGS = -L./lib -lft -lftprintf -L/opt/homebrew/opt/readline/lib -lreadline
+# CFLAGS = -Wall -Wextra -Werror -I/opt/homebrew/opt/readline/include
+# LIBFLAGS = -L./lib -lft -lftprintf -L/opt/homebrew/opt/readline/lib -lreadline
 
 # 42 iMac OS X flags: to fix missing type rl_hook_func_t
-# CFLAGS = -Wall -Wextra -Werror -I/Users/fallan/.brew/Cellar/readline/8.2.13/include
-# LIBFLAGS = -L./lib -lft -lftprintf  -L/Users/fallan/.brew/Cellar/readline/8.2.13/lib -lreadline
+CFLAGS = -Wall -Wextra -Werror -I/Users/fallan/.brew/Cellar/readline/8.2.13/include
+LIBFLAGS = -L./lib -lft -lftprintf  -L/Users/fallan/.brew/Cellar/readline/8.2.13/lib -lreadline
 
 # 42 OS X old:
 # CFLAGS = -Wall -Wextra -Werror -I/Library/Developer/CommandLineTools/SDKs/MacOSX10.15.sdk/usr/include/

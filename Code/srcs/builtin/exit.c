@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cmegret <cmegret@student.42lausanne.ch>    +#+  +:+       +#+        */
+/*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/22 16:31:14 by cmegret           #+#    #+#             */
-/*   Updated: 2025/01/03 09:04:53 by cmegret          ###   ########.fr       */
+/*   Updated: 2025/01/03 18:13:55 by fallan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,6 @@ void	ft_finalize_exit(t_shell_state *shell_state, int exit_stat)
 		ft_putstr_fd("exit\n", STDOUT_FILENO);
 	exit(exit_stat);
 }
-
 
 void	ft_exit(t_shell_state *shell_state, char **args, int exit_stat, int i)
 {

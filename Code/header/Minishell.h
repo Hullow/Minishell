@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cmegret <cmegret@student.42lausanne.ch>    +#+  +:+       +#+        */
+/*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/07 13:55:06 by yourlogin         #+#    #+#             */
-/*   Updated: 2025/01/03 08:55:14 by cmegret          ###   ########.fr       */
+/*   Updated: 2025/01/03 18:13:40 by fallan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,14 +80,20 @@ typedef struct s_heredoc
 }	t_heredoc;
 
 // linked list of redirections
+// int				type; // REDIR_: INPUT, OUTPUT, APPEND, HEREDOC (#define)
+// char			*str; //file (input, output, append) or delimiter (Heredoc)
+// int				str_type; // type of the token following the redirection
+// t_expand		*to_expand; // expansion of redirection string
+// t_heredoc		*heredoc; // heredoc contents, if redirection is a heredoc
+// bool			expand_heredoc; // false if delimiter is quoted, else true
 typedef struct s_redir
 {
-	int				type; // REDIR_: INPUT, OUTPUT, APPEND, HEREDOC (#define)
-	char			*str; //file (input, output, append) or delimiter (Heredoc)
-	int				str_type; // type of the token following the redirection
-	t_expand		*to_expand; // expansion of redirection string
-	t_heredoc		*heredoc; // heredoc contents, if redirection is a heredoc
-	bool			expand_heredoc; // false if delimiter is quoted, else true
+	int				type;
+	char			*str;
+	int				str_type;
+	t_expand		*to_expand;
+	t_heredoc		*heredoc;
+	bool			expand_heredoc;
 	bool			heredoc_interrupted;
 	struct s_redir	*next;
 }	t_redir;
@@ -126,14 +132,17 @@ typedef struct s_token
 // linked list of commands (pipes)
 // n.b.: **args is the array of arguments used by execve,
 //		 while *arg_list is the list of arguments filled by our parser
+// int					saved_input; // fd for input (stdin or redirection)
+// int					saved_output; // fd for output (stdout or redirection)
+// t_redir				*redir_list; // redirection list
 typedef struct s_command
 {
 	char				*cmd_name;
 	t_cmd_args			*arg_list;
 	char				**args;
-	int					saved_input; // fd for input (stdin or redirection)
-	int					saved_output; // fd for output (stdout or redirection)
-	t_redir				*redir_list; // redirection list
+	int					saved_input;
+	int					saved_output;
+	t_redir				*redir_list;
 	int					skip_execution;
 	struct s_command	*next;
 }	t_command;
