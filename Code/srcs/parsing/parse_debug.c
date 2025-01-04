@@ -3,17 +3,20 @@
 /*                                                        :::      ::::::::   */
 /*   parse_debug.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: francis <francis@student.42.fr>            +#+  +:+       +#+        */
+/*   By: cmegret <cmegret@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/21 19:06:55 by francis           #+#    #+#             */
-/*   Updated: 2024/12/17 15:34:39 by francis          ###   ########.fr       */
+/*   Updated: 2025/01/04 10:53:53 by cmegret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../header/Minishell.h"
 
-// prints all command arguments 
-// from the array of arguments of a command sequence
+/**
+ * @brief Prints all arguments of a command
+ *
+ * @param cmd Command structure containing arguments array
+ */
 void	ft_print_args(t_command *cmd)
 {
 	int	i;
@@ -28,7 +31,12 @@ void	ft_print_args(t_command *cmd)
 	return ;
 }
 
-// returns the type of redirection (int to string)
+/**
+ * @brief Converts redirection type to string representation
+ *
+ * @param redir_type Integer representing redirection type
+ * @return char* String representation of redirection type
+ */
 char	*ft_return_redir_type(int redir_type)
 {
 	if (redir_type == REDIR_APPEND)
@@ -43,8 +51,12 @@ char	*ft_return_redir_type(int redir_type)
 		return (NULL);
 }
 
-// prints all redirections in a redirection linked list
-// (i.e. for a single command/pipe)
+/**
+ * @brief Prints redirections for a specific command
+ *
+ * @param redir Redirection list to print
+ * @param cmd_name Name of command for context
+ */
 void	ft_print_redirs(t_redir *redir, char *cmd_name)
 {
 	int	i;
@@ -67,7 +79,11 @@ void	ft_print_redirs(t_redir *redir, char *cmd_name)
 	}
 }
 
-// prints redirection number, type, and destination/origin/delimiter
+/**
+ * @brief Prints all redirections for all commands
+ *
+ * @param cmd Command list containing redirections
+ */
 void	ft_print_all_redirs(t_command *cmd)
 {
 	t_redir	*redir;
@@ -87,7 +103,11 @@ void	ft_print_all_redirs(t_command *cmd)
 	}
 }
 
-// prints the command in each pipe, its arguments and redirections
+/**
+ * @brief Prints complete command sequences with args and redirections
+ *
+ * @param cmd Command list to print
+ */
 void	ft_print_command_sequences(t_command *cmd)
 {
 	printf("command sequences:\n");
@@ -101,31 +121,3 @@ void	ft_print_command_sequences(t_command *cmd)
 		ft_print_redirs(cmd->redir_list, cmd->cmd_name);
 	}
 }
-
-/* // derived from ft_print_command_sequences: 
-// stops the "exit bug" from happening on (ARM) OS X
-// How it works:
-//		printf("%s", head->cmd_name);
-//			=> print the cmd_name variable
-// 		while (++i < (int) ft_strlen(head->cmd_name))
-//			printf("\b");
-//			=> erase each printed character using printf("\b");
-//	N.b.: in some cases, this code at the end of the function
-// 	makes the bug reappear:
-		// printf("head address after: {%p}\n", head);
-		// this can make the bug reappear in some cases!
-void	ft_exit_bug_print_debugger(t_command *head)
-{
-	int	i;
-
-	i = -1;
-	while (head)
-	{
-		printf("%s", head->cmd_name);
-		while (++i < (int) ft_strlen(head->cmd_name))
-			printf("\b");
-		i = -1;
-		head = head->next;
-	}
-}
- */

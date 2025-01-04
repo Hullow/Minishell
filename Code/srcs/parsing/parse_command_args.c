@@ -3,16 +3,21 @@
 /*                                                        :::      ::::::::   */
 /*   parse_command_args.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
+/*   By: cmegret <cmegret@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/01 17:26:12 by fallan            #+#    #+#             */
-/*   Updated: 2025/01/03 17:41:14 by fallan           ###   ########.fr       */
+/*   Updated: 2025/01/04 10:52:54 by cmegret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../header/Minishell.h"
 
-// returns the number of arguments in our argument list
+/**
+ * @brief Counts the number of arguments in the argument list
+ *
+ * @param arg_list List of command arguments
+ * @return int Number of arguments
+ */
 int	ft_count_args(t_cmd_args *arg_list)
 {
 	int	i;
@@ -28,14 +33,14 @@ int	ft_count_args(t_cmd_args *arg_list)
 	return (i);
 }
 
-// Fills up our linked list of command arguments:
-// (t_cmd_args *: cmd_seq->arg_list)
-// - if no argument list, malloc one
-// - else:
-// 		- go to the last argument of the argument list
-// 		- malloc a new argument list node
-//		- copy the string from our tokenized input to our argument list node
-// N.b.: head is initialized to NULL by the calling function
+/**
+ * @brief Adds a new command argument to the argument list
+ *
+ * @param tok Token containing the argument
+ * @param arg_list Pointer to argument list
+ * @param head Head of argument list
+ * @return int 0 on success, -1 on failure
+ */
 int	ft_add_cmd_arg_to_list(t_token *tok, t_cmd_args **arg_list,
 	t_cmd_args *head)
 {
@@ -65,10 +70,13 @@ int	ft_add_cmd_arg_to_list(t_token *tok, t_cmd_args **arg_list,
 	return (0);
 }
 
-// copies arguments from:
-// 		- the argument linked list (t_cmd_args *: cmd->arg_list)
-// to:
-// 		- the argument array (char **: cmd->args)
+/**
+ * @brief Copies command arguments from linked list to array
+ *
+ * @param cmd Command structure containing arguments
+ * @param arg_count Number of arguments to copy
+ * @return int Number of arguments copied, -1 on error
+ */
 int	ft_copy_command_args(t_command *cmd, int arg_count)
 {
 	int			i;
@@ -87,17 +95,12 @@ int	ft_copy_command_args(t_command *cmd, int arg_count)
 	return (i);
 }
 
-// For each command (t_command *cmd),
-// fills the array of command arguments (char **args)
-// from the linked list of command arguments (t_cmd_args *(cmd->arg_list))
-//
-// HOW IT WORKS:
-// - for each a command (pipe),
-// - if there is a list of arguments (cmd->arg_list),
-// 	calls ft_count_args to count them (else: returns 1),
-// - mallocs an array of command arguments of that size,
-// - calls ft_copy_command_args to copies the arguments from 
-// 	the argument linked list to the argument array it just created
+/**
+ * @brief Allocates and fills argument arrays for all commands
+ *
+ * @param cmd Command list to process
+ * @return int 0 on success
+ */
 int	ft_allocate_cmd_args_to_array(t_command *cmd)
 {
 	int			arg_count;

@@ -6,18 +6,18 @@
 /*   By: cmegret <cmegret@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/17 15:58:08 by cmegret           #+#    #+#             */
-/*   Updated: 2024/12/17 15:58:49 by cmegret          ###   ########.fr       */
+/*   Updated: 2025/01/04 10:50:33 by cmegret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../header/Minishell.h"
 
 /**
- * @brief Compare une ligne de heredoc avec le délimiteur.
+ * @brief Compares a heredoc line with its delimiter
  *
- * @param heredoc_line La ligne du heredoc à comparer.
- * @param delimiter Le délimiteur du heredoc.
- * @return true si les deux chaînes sont égales, false sinon.
+ * @param heredoc_line The heredoc line to compare
+ * @param delimiter The heredoc delimiter
+ * @return true if strings match, false otherwise
  */
 bool	ft_match_heredoc_delimiter(char *heredoc_line, char *delimiter)
 {
@@ -32,10 +32,10 @@ bool	ft_match_heredoc_delimiter(char *heredoc_line, char *delimiter)
 }
 
 /**
- * @brief Initialise une nouvelle structure de heredoc.
+ * @brief Initializes a new heredoc structure
  *
- * @return Un pointeur vers la nouvelle structure heredoc,
- * ou NULL en cas d'erreur.
+ * @return Pointer to the new heredoc structure,
+ * NULL if allocation fails
  */
 t_heredoc	*ft_init_heredoc(void)
 {
@@ -50,11 +50,11 @@ t_heredoc	*ft_init_heredoc(void)
 }
 
 /**
- * @brief Initialise et assigne la structure heredoc à la redirection.
+ * @brief Initializes and assigns heredoc structure to redirection
  *
- * @param redir_list La redirection heredoc à traiter.
- * @return t_heredoc* Un pointeur vers la structure heredoc
- * initialisée, ou NULL en cas d'erreur.
+ * @param redir_list The heredoc redirection to process
+ * @return t_heredoc* Pointer to initialized heredoc structure,
+ * NULL if initialization fails
  */
 t_heredoc	*initialize_heredoc(t_redir *redir_list)
 {

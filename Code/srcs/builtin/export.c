@@ -6,12 +6,23 @@
 /*   By: cmegret <cmegret@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/22 18:40:16 by cmegret           #+#    #+#             */
-/*   Updated: 2024/12/20 15:43:52 by cmegret          ###   ########.fr       */
+/*   Updated: 2025/01/04 10:45:39 by cmegret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../header/Minishell.h"
 
+/**
+ * @brief Validates a variable name for export
+ *
+ * This function checks if a variable name follows shell naming rules:
+ * - Must not be empty 
+ * - Must start with a letter or underscore
+ * - Can only contain alphanumeric characters and underscores
+ *
+ * @param name The variable name to validate
+ * @return 1 if name is valid, 0 otherwise
+ */
 int	is_valid_name(const char *name)
 {
 	int	i;

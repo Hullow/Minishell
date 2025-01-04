@@ -6,18 +6,17 @@
 /*   By: cmegret <cmegret@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/17 15:59:00 by cmegret           #+#    #+#             */
-/*   Updated: 2024/12/24 13:46:03 by cmegret          ###   ########.fr       */
+/*   Updated: 2025/01/04 10:50:03 by cmegret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../header/Minishell.h"
 
 /**
- * @brief Alloue une nouvelle ligne de heredoc et l'ajoute à la liste.
+ * @brief Allocates a new heredoc line and adds it to the list
  *
- * @param heredoc_line La ligne actuelle du heredoc.
- * @return Un pointeur vers la nouvelle ligne de heredoc,
- * ou NULL en cas d'erreur.
+ * @param heredoc_line Current heredoc line
+ * @return Pointer to the new heredoc line, NULL if error
  */
 t_heredoc	*ft_malloc_new_heredoc_line(t_heredoc *heredoc_line)
 {
@@ -31,11 +30,12 @@ t_heredoc	*ft_malloc_new_heredoc_line(t_heredoc *heredoc_line)
 }
 
 /**
- * @brief Lit une ligne de heredoc et la traite.
+ * @brief Reads and processes a heredoc line
  *
- * @param heredoc_line Le pointeur vers la ligne actuelle de heredoc.
- * @param redir_list La redirection heredoc à traiter.
- * @return true si le délimiteur a été trouvé, false sinon.
+ * @param heredoc_line Pointer to current heredoc line
+ * @param redir_list Heredoc redirection to process
+ * @param shell_state Current shell state
+ * @return true if delimiter found, false otherwise
  */
 bool	read_and_process_line(t_heredoc **heredoc_line, t_redir *redir_list,
 			t_shell_state *shell_state)

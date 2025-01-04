@@ -6,12 +6,23 @@
 /*   By: cmegret <cmegret@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/12 17:27:25 by fallan            #+#    #+#             */
-/*   Updated: 2025/01/03 09:02:53 by cmegret          ###   ########.fr       */
+/*   Updated: 2025/01/04 10:49:27 by cmegret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../header/Minishell.h"
 
+/**
+ * @brief Process a single heredoc input
+ *
+ * Reads user input until delimiter is found or signal interrupts.
+ * Handles signal interruption and sets appropriate flags.
+ *
+ * @param heredoc_line Double pointer to heredoc structure
+ * @param redir_list Redirection list containing heredoc info
+ * @param shell_state Current shell state
+ * @return 0 on success, -1 on interrupt, 1 on other errors
+ */
 int	process_heredoc(t_heredoc **heredoc_line, t_redir *redir_list,
 	t_shell_state *shell_state)
 {
@@ -35,6 +46,15 @@ int	process_heredoc(t_heredoc **heredoc_line, t_redir *redir_list,
 	return (1);
 }
 
+/**
+ * @brief Handles heredoc input for a single redirection
+ *
+ * Sets up signal handling, initializes heredoc structure
+ * and processes heredoc input until completion.
+ *
+ * @param redir_list Current redirection to process
+ * @param shell_state Current shell state
+ */
 void	ft_handle_heredoc_input(t_redir *redir_list, t_shell_state *shell_state)
 {
 	t_heredoc	*heredoc_line;
@@ -54,11 +74,14 @@ void	ft_handle_heredoc_input(t_redir *redir_list, t_shell_state *shell_state)
 }
 
 /**
- * @brief Traite tous les heredocs dans la liste de commandes.
+ * @brief Process all heredocs in the command list
  *
- * Parcourt chaque commande et ses redirections pour gérer les heredocs.
+ * Iterates through each command and its redirections
+ * to handle heredoc processing. Handles syntax errors
+ * and sets execution flags accordingly.
  *
- * @param cmd_list La liste des commandes à traiter.
+ * @param cmd_list List of commands to process
+ * @param shell_state Current shell state
  */
 void	ft_open_heredocs(t_command *cmd_list, t_shell_state *shell_state)
 {

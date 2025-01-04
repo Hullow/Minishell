@@ -6,7 +6,7 @@
 /*   By: cmegret <cmegret@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/07 14:37:29 by francis           #+#    #+#             */
-/*   Updated: 2024/12/24 14:08:54 by cmegret          ###   ########.fr       */
+/*   Updated: 2025/01/04 10:46:34 by cmegret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,15 @@ int	is_valid_filename(const char *filename)
 	return (1);
 }
 
+/**
+ * @brief Restores standard input/output file descriptors
+ *
+ * Restores the saved file descriptors for stdin and stdout
+ * and closes the saved descriptors if they were above 2.
+ * Resets the saved descriptors to -1.
+ *
+ * @param cmd_list Command structure containing saved file descriptors
+ */
 void	restore_redirections(t_command *cmd_list)
 {
 	if (cmd_list->saved_input > 2)
@@ -69,6 +78,15 @@ void	restore_redirections(t_command *cmd_list)
 	cmd_list->saved_output = -1;
 }
 
+/**
+ * @brief Saves the current standard input/output file descriptors
+ *
+ * Duplicates stdin and stdout file descriptors and stores them
+ * in the command structure for later restoration.
+ *
+ * @param cmd Command structure to store the saved descriptors
+ * @return 0 on success, -1 on error
+ */
 int	save_standard_fds(t_command *cmd)
 {
 	cmd->saved_input = dup(STDIN_FILENO);
@@ -83,6 +101,18 @@ int	save_standard_fds(t_command *cmd)
 	return (0);
 }
 
+/**
+ * @brief Processes a single redirection operation
+ *
+ * Validates and handles a single redirection based on its type:
+ * - Output redirection (>)
+ * - Append redirection (>>)
+ * - Input redirection (<)
+ *
+ * @param redir Redirection structure to process
+ * @param shell_state Current shell state
+ * @return 0 on success, -1 on error
+ */
 int	process_single_redirection(t_redir *redir, t_shell_state *shell_state)
 {
 	if (validate_redirection(redir, shell_state) == -1)

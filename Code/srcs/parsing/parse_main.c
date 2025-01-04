@@ -6,13 +6,18 @@
 /*   By: cmegret <cmegret@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/17 15:35:01 by francis           #+#    #+#             */
-/*   Updated: 2025/01/04 10:42:24 by cmegret          ###   ########.fr       */
+/*   Updated: 2025/01/04 10:55:01 by cmegret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../header/Minishell.h"
 
-// parses operator tokens and assigns them the appropriate token type
+/**
+ * @brief Assigns operator types to tokens based on their string content
+ *
+ * @param head Start of token list
+ * @return t_token* Updated token list with operator types assigned
+ */
 t_token	*ft_parse_operators(t_token *head)
 {
 	t_token	*iterator;
@@ -40,7 +45,11 @@ t_token	*ft_parse_operators(t_token *head)
 	return (head);
 }
 
-// Initializes our cmd_list (everything to NULL except input, output)
+/**
+ * @brief Initializes all fields of a command structure
+ *
+ * @param cmd_list Command structure to initialize
+ */
 void	ft_initialize_cmd_list(t_command *cmd_list)
 {
 	cmd_list->cmd_name = NULL;
@@ -54,7 +63,12 @@ void	ft_initialize_cmd_list(t_command *cmd_list)
 	cmd_list->next = NULL;
 }
 
-// add a command sequence/pipe to our linked list of commands
+/**
+ * @brief Creates and initializes a new command after a pipe
+ *
+ * @param cmd_list Current command structure
+ * @return t_command* New command structure or NULL if allocation fails
+ */
 t_command	*ft_add_pipe(t_command *cmd_list)
 {
 	int	cmd_index;
@@ -69,6 +83,12 @@ t_command	*ft_add_pipe(t_command *cmd_list)
 	return (cmd_list);
 }
 
+/**
+ * @brief Validates redirection syntax in token list
+ *
+ * @param tokens Token list to validate
+ * @return int 0 if valid, 2 if syntax error found
+ */
 int	validate_redirections(t_token *tokens)
 {
 	t_token	*current;
@@ -98,34 +118,13 @@ int	validate_redirections(t_token *tokens)
 	return (0);
 }
 
-// MAIN PARSING FUNCTION
-// Mallocs and returns a linked list of commands t_command *
-// 
-// Each node of t_command * corresponds to a pipe
-// Each node contains:
-//  - Command name (char *cmd_name)
-//  - Command arguments (t_cmd_args* arg_list)
-//   (n.b.: parsing stores argument in the list t_cmd_args* arg_list;
-//   after parsing, arguments are expanded, and finally, copied in char **args
-//   which is actually used to execute the command using execve()
-//  - Redirections (t_redir *redir_list), which include heredocs
-//	 (n.b.: heredocs are opened and filled right after parsing)
-//  - File descriptors to save stdin and stdout before redirections/pipes
-//
-// HOW IT WORKS:
-// Parses our linked list of tokens, starting from left (head)
-// Extracts the command, its arguments, redirections, and pipes(other commands)
-//
-// STEP BY STEP:
-// ft_parse_operators assigns the correct token type to operator tokens
-// while() loop:
-// 	- goes over each token of our tokenized prompt (t_token *tok: linked list)
-//	- checks token type
-//	- then, depending on type:
-//		- adds a redirection to our redirection list
-//		- adds a command name/arguments to our command arguments list
-//		- adds a new command (pipe) to our list of commands
-// return: the first node of our list of commands (t_command *head_cmd)
+/**
+ * @brief Main parsing function for command input
+ *
+ * @param tok Token list to parse
+ * @param shell_state Current shell state
+ * @return t_command* Parsed command list or NULL if error
+ */
 t_command	*ft_parse(t_token *tok, t_shell_state *shell_state)
 {
 	t_command	*cmd_list;

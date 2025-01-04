@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expansion_main.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
+/*   By: cmegret <cmegret@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/17 12:41:47 by cmegret           #+#    #+#             */
-/*   Updated: 2025/01/03 18:22:03 by fallan           ###   ########.fr       */
+/*   Updated: 2025/01/04 10:47:51 by cmegret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,15 @@ void	fill_table_heredocs(t_command *cmd_list, t_shell_state *shell_state)
 	}
 }
 
+/**
+ * @brief Processes redirections for a single command
+ *
+ * Handles expansion of variables in redirection arguments.
+ * Checks for ambiguous redirects and sets error status if needed.
+ *
+ * @param cmd Command structure to process
+ * @param sh Current shell state
+ */
 void	process_command_redirections(t_command *cmd, t_shell_state *sh)
 {
 	t_redir	*redir;
@@ -80,6 +89,15 @@ void	process_command_redirections(t_command *cmd, t_shell_state *sh)
 	}
 }
 
+/**
+ * @brief Expands variables in command arguments
+ *
+ * Processes each argument in the command's argument list.
+ * Updates command name with first expanded argument.
+ *
+ * @param cmd Command structure containing arguments
+ * @param shell_state Current shell state
+ */
 void	process_command_args(t_command *cmd, t_shell_state *shell_state)
 {
 	t_cmd_args	*current;
@@ -101,6 +119,16 @@ void	process_command_args(t_command *cmd, t_shell_state *shell_state)
 	}
 }
 
+/**
+ * @brief Main argument expansion processor
+ *
+ * Iterates through command list to expand variables in:
+ * - Command arguments
+ * - Redirection arguments
+ *
+ * @param cmd_list List of commands to process
+ * @param shell_state Current shell state
+ */
 void	fill_table(t_command *cmd_list, t_shell_state *shell_state)
 {
 	t_command	*cmd;

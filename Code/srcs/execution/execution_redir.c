@@ -6,7 +6,7 @@
 /*   By: cmegret <cmegret@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/07 14:37:29 by francis           #+#    #+#             */
-/*   Updated: 2025/01/03 08:58:35 by cmegret          ###   ########.fr       */
+/*   Updated: 2025/01/04 10:47:02 by cmegret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,6 +124,17 @@ int	validate_redirection(t_redir *redir, t_shell_state *shell_state)
 	return (0);
 }
 
+/**
+ * @brief Configures redirections for a command
+ *
+ * Processes all redirections in the command's redirection list:
+ * - Saves current standard file descriptors
+ * - Processes each redirection except heredocs
+ * - Handles redirection errors
+ *
+ * @param cmd Command structure containing redirection list
+ * @param shell_state Current shell state for error handling
+ */
 void	configure_redirections(t_command *cmd, t_shell_state *shell_state)
 {
 	t_redir	*redir;
