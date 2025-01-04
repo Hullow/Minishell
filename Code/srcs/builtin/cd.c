@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
+/*   By: cmegret <cmegret@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/22 18:40:16 by cmegret           #+#    #+#             */
-/*   Updated: 2025/01/03 22:32:10 by fallan           ###   ########.fr       */
+/*   Updated: 2025/01/04 10:43:12 by cmegret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,7 +102,8 @@ void	ft_cd(t_command *cmd, t_shell_state *shell_state)
 	oldpwd = getcwd(NULL, 0);
 	if (!oldpwd)
 	{
-		perror("cd: error retrieving current directory: getcwd: cannot access parent directories");
+		perror("cd: error retrieving current directory:");
+		perror(" getcwd: cannot access parent directories");
 		return ;
 	}
 	path = get_cd_path(cmd, shell_state);

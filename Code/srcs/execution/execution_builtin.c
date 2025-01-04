@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution_builtin.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
+/*   By: cmegret <cmegret@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/07 14:36:57 by francis           #+#    #+#             */
-/*   Updated: 2025/01/03 21:51:32 by fallan           ###   ########.fr       */
+/*   Updated: 2025/01/04 11:01:44 by cmegret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,8 @@ void	ft_execute_builtin(t_command *cmd, t_shell_state *shell_state)
  */
 int	handle_parent_builtin(t_command *cmd_list, t_shell_state *shell_state)
 {
-	if (cmd_list->cmd_index == 1 && cmd_list->next == NULL && ft_is_builtin(cmd_list->cmd_name) == 0)
+	if (cmd_list->cmd_index == 1 && cmd_list->next == NULL
+		&& ft_is_builtin(cmd_list->cmd_name) == 0)
 	{
 		shell_state->last_exit_status = 0;
 		configure_redirections(cmd_list, shell_state);
