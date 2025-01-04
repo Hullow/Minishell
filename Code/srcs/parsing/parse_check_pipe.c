@@ -6,7 +6,7 @@
 /*   By: cmegret <cmegret@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/03 17:53:29 by cmegret           #+#    #+#             */
-/*   Updated: 2025/01/04 10:33:52 by cmegret          ###   ########.fr       */
+/*   Updated: 2025/01/04 10:40:53 by cmegret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ int	check_consecutive_pipes(t_token *current)
 
 int	check_previous_token(t_token *prev)
 {
-	if (!prev || is_redirection(prev))
+	if (!prev || !prev->str || prev->str[0] == '\0' || is_redirection(prev))
 	{
 		ft_putstr_fd("minishell: syntax error near unexpected token `|'\n", 2);
 		return (2);

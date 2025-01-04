@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_main.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
+/*   By: cmegret <cmegret@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/17 15:35:01 by francis           #+#    #+#             */
-/*   Updated: 2025/01/03 21:48:49 by fallan           ###   ########.fr       */
+/*   Updated: 2025/01/04 10:42:24 by cmegret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,6 @@ t_command	*ft_add_pipe(t_command *cmd_list)
 	cmd_list = cmd_list->next;
 	ft_initialize_cmd_list(cmd_list);
 	cmd_list->cmd_index = cmd_index + 1;
-	// printf("initializing cmd #%d: {%s}\n", cmd_list->cmd_index, cmd_list->cmd_name);
 	return (cmd_list);
 }
 
@@ -138,7 +137,7 @@ t_command	*ft_parse(t_token *tok, t_shell_state *shell_state)
 	ft_initialize_cmd_list(cmd_list);
 	head_cmd = cmd_list;
 	ft_parse_operators(tok);
-	if (validate_redirections(tok) != 0) // || validate_pipes(tok, 0) != 0)
+	if (validate_redirections(tok) != 0 || validate_pipes(tok, 0) != 0)
 	{
 		shell_state->last_exit_status = 2;
 		return (NULL);
