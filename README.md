@@ -19,3 +19,6 @@ A simple shell in C emulating the behavior of bash, featuring:
 The shell interprets single and double quotes, but not parentheses, wildcards, semicolons and backslashes.
 
 The prompt is managed using the [Readline library](https://tiswww.case.edu/php/chet/readline/rltop.html).
+
+## Usage
+To use the shell, simply run `make` in /Code to build it, and open it using `./minishell`. Enjoy ;)
